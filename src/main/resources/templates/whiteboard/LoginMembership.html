@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-4">회원가입</h2>
+                <!-- 회원가입 폼 시작 -->
+                <form>
+                    <!-- 이름 입력 -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">이름</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <!-- 이메일 입력 -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">이메일 주소</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <!-- 비밀번호 입력 -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">비밀번호</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <!-- 비밀번호 확인 입력 -->
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label">비밀번호 확인</label>
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                            required>
+                    </div>
+                    <!-- 회원가입 버튼 -->
+                    <button type="submit" class="btn btn-primary btn-block">회원가입</button>
+                </form>
+                <!-- 회원가입 폼 끝 -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
