@@ -34,9 +34,16 @@ public class WhiteboardServiceImpl implements WhiteboardService {
         return member.getId();
     }
 
+    // 회원 삭제
     @Override
     public void deleteMember(String memberId) {
         memberRepository.deleteById(memberId);
+    }
+
+    //회원정보 수정
+    @Override
+    public void updateMember(String memberId) {
+        memberRepository.findById(memberId);
     }
 
 }

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
@@ -16,6 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @ToString
 //회원정보
 public class Member extends BaseEntity{
