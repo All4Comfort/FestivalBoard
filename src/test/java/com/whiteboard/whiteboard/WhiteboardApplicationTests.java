@@ -43,10 +43,10 @@ class WhiteboardApplicationTests {
 	// }
 
 	// 회원조회 테스트
-	// @Test
+	@Test
 	public void memberRE() {
 		// 조회하려는 회원의 id (기본 키)를 알고 있다고 가정
-		String memberId = "chanol91@naver.com";
+		String memberId = "chansol91@naver.com";
 
 		// 해당 ID로 회원 정보 조회
 		Member member = memberRepository.findById(memberId).orElse(null);
@@ -69,9 +69,9 @@ class WhiteboardApplicationTests {
 	}
 
 	// 회원 삭제 테스트
-	@Test
+	//@Test
 	public void deleteMember() {
-		String memberId = "chanol91@naver.com";
+		String memberId = "chasol91@naver.com";
 		Member member = memberRepository.findById(memberId).orElse(null);
 		
 		System.out.println("DB에 담겨있는 아이디: "+member);
