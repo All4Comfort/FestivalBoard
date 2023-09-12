@@ -73,7 +73,7 @@ class WhiteboardApplicationTests {
 	// 회원 삭제 테스트
 	// @Test
 	public void deleteMember() {
-		String memberId = "chasol91@naver.com";
+		String memberId = "chansol91@naver.com";
 		Member member = memberRepository.findById(memberId).orElse(null);
 
 		System.out.println("DB에 담겨있는 아이디: " + member);
