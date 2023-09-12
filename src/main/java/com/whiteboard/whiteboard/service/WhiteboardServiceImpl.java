@@ -1,5 +1,6 @@
 package com.whiteboard.whiteboard.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.whiteboard.whiteboard.dto.MemberDTO;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 public class WhiteboardServiceImpl implements WhiteboardService {
 
     private final MemberRepository memberRepository;
+
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public String memberRegister(MemberDTO memberDTO) {
@@ -29,6 +32,11 @@ public class WhiteboardServiceImpl implements WhiteboardService {
                 .build();
         memberRepository.save(member);
         return member.getId();
+    }
+
+    @Override
+    public void deleteMember(String memberId) {
+        memberRepository.deleteById(memberId);
     }
 
 }

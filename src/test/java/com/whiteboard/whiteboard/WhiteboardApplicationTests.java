@@ -7,9 +7,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
+import com.whiteboard.whiteboard.service.WhiteboardService;
 
 @SpringBootTest
 class WhiteboardApplicationTests {
+
+	@Autowired
+	private WhiteboardService whiteboardService;
 
 	@Autowired
 	private MemberRepository memberRepository;// 멤버 레포지토리
@@ -38,8 +42,8 @@ class WhiteboardApplicationTests {
 	// System.err.println(member);
 	// }
 
-	@Test
-
+	// 회원조회 테스트
+	// @Test
 	public void memberRE() {
 		// 조회하려는 회원의 id (기본 키)를 알고 있다고 가정
 		String memberId = "chanol91@naver.com";
@@ -57,8 +61,39 @@ class WhiteboardApplicationTests {
 			System.out.println("생년월일: " + member.getBirthDay());
 			System.out.println("이름: " + member.getName());
 			System.out.println("sns로그인: " + member.isSns());
+			System.out.println("비밀번호: " + member.getPassword());
+
 		} else {
 			System.out.println("해당 ID에 해당하는 회원 정보가 없습니다.");
+		}
+	}
+
+	// 회원 삭제 테스트
+	@Test
+	public void deleteMember() {
+		String memberId = "chanol91@naver.com";
+		Member member = memberRepository.findById(memberId).orElse(null);
+		
+		System.out.println("DB에 담겨있는 아이디: "+member);
+
+		if (member == null) {
+			System.err.println("DB에 해당 아이디가 없습니다.");
+			return;
+		}
+
+		// 입력한 패스워드
+		String inputPassword = "77777"; // 입력한 패스워드를 직접 입력
+
+		// 저장된 회원의 패스워드와 입력한 패스워드를 비교
+		boolean isPasswordCorrect = passwordEncoder.matches(inputPassword, member.getPassword());
+
+		if (isPasswordCorrect) {
+			// 비밀번호가 일치하면 회원 삭제
+			whiteboardService.deleteMember(memberId);
+			System.err.println("비밀번호가 일치해서 삭제됨");
+		} else {
+			// 비밀번호가 일치하지 않을 때
+			System.err.println("비밀번호가 틀렸습니다. 확인해주세요.");
 		}
 	}
 }
