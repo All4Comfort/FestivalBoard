@@ -17,7 +17,7 @@ import lombok.ToString;
 @Getter
 @ToString
 //회원정보
-public class Member {
+public class Member extends BaseEntity{
 
 	@Id
 	private String id; //아이디 : 이메일주소로 받기
