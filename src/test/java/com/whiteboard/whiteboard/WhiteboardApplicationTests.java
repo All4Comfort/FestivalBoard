@@ -19,7 +19,7 @@ class WhiteboardApplicationTests {
 	public void memberregister() {//DB에 회원가입 member 테이블에 넣기
 
 		Member member = Member.builder()
-						.id("mingun91@naver.com")
+						.id("chanol91@naver.com")
 						.password("7777")
 						.phoneNum("01094800129")
 						.nickname("민건왕자")
