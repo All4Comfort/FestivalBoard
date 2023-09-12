@@ -10,6 +10,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 
 public class WhiteboardController {
-    
+    //커밋되나?
 
 }
