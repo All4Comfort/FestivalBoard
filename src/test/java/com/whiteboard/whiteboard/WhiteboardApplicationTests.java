@@ -16,7 +16,7 @@ class WhiteboardApplicationTests {
 	private MemberRepository memberRepository;//멤버 레포지토리
 
 	@Test
-	public void memberregister() {
+	public void memberregister() {//DB에 회원가입 member 테이블에 넣기
 
 		Member member = Member.builder()
 						.id("mingun91@naver.com")
