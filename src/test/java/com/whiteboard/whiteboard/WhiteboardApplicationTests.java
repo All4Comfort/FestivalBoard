@@ -25,6 +25,7 @@ class WhiteboardApplicationTests {
 						.nickname("민건왕자")
 						.gender("하남자")
 						.birthDay(LocalDate.parse("1991-05-02"))
+						.name("김민건")
 						.isSns(false)
 						.build();
 		memberRepository.save(member);
