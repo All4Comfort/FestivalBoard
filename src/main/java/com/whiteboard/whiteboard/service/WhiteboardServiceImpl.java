@@ -17,18 +17,18 @@ public class WhiteboardServiceImpl implements WhiteboardService {
     @Override
     public String memberRegister(MemberDTO memberDTO) {
 
-      	Member member = Member.builder()
-						.id(memberDTO.getId())
-						.password(memberDTO.getPassword())
-						.phoneNum(memberDTO.getPhoneNum())
-						.nickname(memberDTO.getNickname())
-						.gender(memberDTO.getGender())
-						.birthDay(memberDTO.getBirthDay())
-						.name(memberDTO.getName())
-						.isSns(memberDTO.isSns())
-						.build();
-         memberRepository.save(member);
-	    return member.getId();
+        Member member = Member.builder()
+                .id(memberDTO.getId())
+                .password(memberDTO.getPassword())
+                .phoneNum(memberDTO.getPhoneNum())
+                .nickname(memberDTO.getNickname())
+                .gender(memberDTO.getGender())
+                .birthDay(memberDTO.getBirthDay())
+                .name(memberDTO.getName())
+                .isSns(memberDTO.isSns())
+                .build();
+        memberRepository.save(member);
+        return member.getId();
     }
 
 }

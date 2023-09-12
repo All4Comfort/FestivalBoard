@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.whiteboard.whiteboard.entity.Member;
 
+
 public interface MemberRepository extends JpaRepository<Member,String>{
   
   //@EntityGraph : 내부적으로 lazy 조인이 걸린 엔티티 간의 left join을 자동으로 수행함

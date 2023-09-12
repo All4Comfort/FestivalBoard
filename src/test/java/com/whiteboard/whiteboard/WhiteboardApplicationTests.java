@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
@@ -15,12 +16,18 @@ class WhiteboardApplicationTests {
 	@Autowired
 	private MemberRepository memberRepository;//멤버 레포지토리
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	@Test
 	public void memberregister() {//DB에 회원가입 member 테이블에 넣기
 
+		//password 테스트
+		String hashedPassword = passwordEncoder.encode("77777");
+
 		Member member = Member.builder()
 						.id("chanol91@naver.com")
-						.password("7777")
+						.password(hashedPassword)
 						.phoneNum("01094800129")
 						.nickname("민건왕자")
 						.gender("하남자")
