@@ -11,14 +11,8 @@ public interface MemberRepository extends JpaRepository<Member,String>{
 	//별도의 조인 쿼리를 JPQL에 설정하지 않더라도, 연관 테이블의 FK(Foreign Key)를 찾아서 LEFT JOIN함
 	//속성path와 ...Graph 로더를 넘기는 속성이 있는데 일반적으로 아래처럼 사용합니다.
 	
-<<<<<<< HEAD
 	//@EntityGraph(attributePaths = {"roleSet"}, type = EntityGraph.EntityGraphType.LOAD)
 	//@Query("SELECT m FROM member m WHERE m.isSocial = :isSocial AND m.id = :id")
 	//Optional<Member> findByEmail(@Param("id") String id, @Param("isSocial") boolean isSocial);
-=======
-	// @EntityGraph(attributePaths = {"roleSet"}, type = EntityGraph.EntityGraphType.LOAD)
-	// @Query("SELECT m FROM member m WHERE m.isSocial = :isSocial AND m.id = :id")
-	// Optional<Member> findByEmail(@Param("id") String id, @Param("isSocial") boolean isSocial);
->>>>>>> b1b29906c94ac2ff2a58403f2320bbcbf7cf5882
 
 }

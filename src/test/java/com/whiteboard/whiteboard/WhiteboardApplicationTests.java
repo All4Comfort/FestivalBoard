@@ -1,5 +1,7 @@
 package com.whiteboard.whiteboard;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,26 +23,26 @@ class WhiteboardApplicationTests {
 	@Autowired
 	private PasswordEncoder passwordEncoder;// 비밀번호 인코더
 
-	// @Test
-	// public void memberregister() {//DB에 회원가입 member 테이블에 넣기
+	//@Test
+	public void memberregister() {// DB에 회원가입 member 테이블에 넣기
 
-	// //password 테스트
-	// String hashedPassword = passwordEncoder.encode("77777");
+		// password 테스트
+		String hashedPassword = passwordEncoder.encode("7777");
 
-	// Member member = Member.builder()
-	// .id("chanol91@naver.com")
-	// .password(hashedPassword)
-	// .phoneNum("01094800129")
-	// .nickname("민건왕자")
-	// .gender("하남자")
-	// .birthDay(LocalDate.parse("1991-05-02"))
-	// .name("김민건")
-	// .isSns(false)
-	// .build();
-	// memberRepository.save(member);
+		Member member = Member.builder()
+				.id("chansol91@naver.com")
+				.password(hashedPassword)
+				.phoneNum("01094800129")
+				.nickname("민건왕자")
+				.gender("하남자")
+				.birthDay(LocalDate.parse("1991-05-02"))
+				.name("김민건")
+				.isSns(false)
+				.build();
+		memberRepository.save(member);
 
-	// System.err.println(member);
-	// }
+		System.err.println(member);
+	}
 
 	// 회원조회 테스트
 	// @Test
@@ -69,12 +71,12 @@ class WhiteboardApplicationTests {
 	}
 
 	// 회원 삭제 테스트
-	@Test
+	//@Test
 	public void deleteMember() {
 		String memberId = "chanol91@naver.com";
 		Member member = memberRepository.findById(memberId).orElse(null);
-		
-		System.out.println("DB에 담겨있는 아이디: "+member);
+
+		System.out.println("DB에 담겨있는 아이디: " + member);
 
 		if (member == null) {
 			System.err.println("DB에 해당 아이디가 없습니다.");
@@ -95,5 +97,11 @@ class WhiteboardApplicationTests {
 			// 비밀번호가 일치하지 않을 때
 			System.err.println("비밀번호가 틀렸습니다. 확인해주세요.");
 		}
+	}
+
+	// 회원정보 수정 테스트
+	@Test
+	public void modifyMember(){
+		
 	}
 }
