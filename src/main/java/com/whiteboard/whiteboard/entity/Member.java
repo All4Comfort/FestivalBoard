@@ -1,8 +1,12 @@
 package com.whiteboard.whiteboard.entity;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -24,7 +28,7 @@ import lombok.ToString;
 @Setter
 @ToString
 //회원정보
-public class Member extends BaseEntity{
+public class Member extends BaseEntity implements UserDetails{
 
 	@Id
 	private String id; //아이디 : 이메일주소로 받기
@@ -83,6 +87,48 @@ private Set<AuthoritySet> authority = new HashSet<>();
 //회원이 DB에 인서트(생성) 시 권한 부여 메서드
 public void addAuthority(AuthoritySet authoritySet){
 	authority.add(authoritySet);
+}
+
+@Override
+public Collection<? extends GrantedAuthority> getAuthorities() {
+	// TODO Auto-generated method stub
+	throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
+}
+
+@Override
+public String getPassword() {
+	// TODO Auto-generated method stub
+	throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
+}
+
+@Override
+public String getUsername() {
+	// TODO Auto-generated method stub
+	throw new UnsupportedOperationException("Unimplemented method 'getUsername'");
+}
+
+@Override
+public boolean isAccountNonExpired() {
+	// TODO Auto-generated method stub
+	throw new UnsupportedOperationException("Unimplemented method 'isAccountNonExpired'");
+}
+
+@Override
+public boolean isAccountNonLocked() {
+	// TODO Auto-generated method stub
+	throw new UnsupportedOperationException("Unimplemented method 'isAccountNonLocked'");
+}
+
+@Override
+public boolean isCredentialsNonExpired() {
+	// TODO Auto-generated method stub
+	throw new UnsupportedOperationException("Unimplemented method 'isCredentialsNonExpired'");
+}
+
+@Override
+public boolean isEnabled() {
+	// TODO Auto-generated method stub
+	throw new UnsupportedOperationException("Unimplemented method 'isEnabled'");
 }
 
 }
