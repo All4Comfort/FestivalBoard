@@ -25,6 +25,4 @@ public class MemberDTO {
 	private LocalDate birthDay; //생년월일
 	private boolean isSns; //소셜계정 인증을 통한 가입 여부
 	
-	private String authority; //member, admin 중 하나 입력. 회원가입한 사람의 데이터이므로 all은 불가능
-	
 }
