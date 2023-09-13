@@ -31,7 +31,9 @@ public class SecurityConfig  {
 
         https.formLogin(); // 로그인 페이지로 반환
         https.csrf().disable();
-        https.logout();
+        https.logout()//로그아웃하고 페이지 이동
+        .logoutUrl("/logout")
+        .logoutSuccessUrl("/main.html");
 
         return https.build();
     }
