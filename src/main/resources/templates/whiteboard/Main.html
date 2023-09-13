@@ -13,7 +13,16 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
 
-       
+    <script>
+        // Main.html 페이지에서 사용자 정보를 가져와 화면에 표시
+        document.addEventListener('DOMContentLoaded', function () {
+            var username = sessionStorage.getItem('username');
+            if (username) {
+                // 사용자 정보가 세션 스토리지에 있을 경우 화면에 표시
+                document.getElementById('welcome-message').textContent = '환영합니다, ' + username + '님!';
+            }
+        });
+    </script>
 
     <style>
         /* 푸터를 브라우저 맨 아래로 고정합니다. */
@@ -50,6 +59,7 @@
         <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
             <a class="navbar-brand" href="#"><b>Fullstival</b></a>
             <ul class="nav nav-pills">
+                <div id="welcome-message">??</div>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
                         aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
@@ -102,8 +112,8 @@
         <h2>진행중 축제</h2>
         <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active" >
-                    <div class="card" >
+                <div class="carousel-item active">
+                    <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">축제 1</h5>
                             <p class="card-text">축제 1에 대한 설명</p>

@@ -34,6 +34,15 @@ public class Notice extends BaseEntity{
 
     @Column(nullable = false)
     private String content;//글내용
-   
+    
+    // 제목 업데이트 메서드
+    public void updateTitle(String title){
+        this.title = title;
+    }
+
+    // 글내용 업데이트 메서드
+    public void updateNContent(String Ncontent){
+        this.content = Ncontent;
+    }
 }
 

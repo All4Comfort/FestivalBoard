@@ -106,7 +106,7 @@
             /* 오른쪽에 선 배치 */
         }
 
-        .form-group3 a{
+        .form-group3 a {
             text-decoration: none;
             /* 밑줄 제거 */
             color: #000;
@@ -115,10 +115,10 @@
             /* 커서 스타일 변경 (선택 사항) */
         }
 
-        .form-group4 a{
+        .form-group4 a {
             text-decoration: none;
             /* 밑줄 제거 */
-            
+
         }
     </style>
 
@@ -161,13 +161,30 @@
             }
         }  
     </script>
+    <script>
+        // 로그인 버튼을 클릭할 때 호출되는 함수
+        function login() {
+            // 사용자 이름을 가져와서 변수에 저장
+            var username = document.getElementById('username').value;
+
+            // 사용자 정보를 세션 스토리지에 저장
+            sessionStorage.setItem('username', username);
+
+            // 로그인 후 Main.html로 이동
+            window.location.href = 'Main.html';
+        }
+
+    </script>
+
+
+
 </head>
 
 <body>
 
     <div class="container">
         <h1>Fullstival</h1>
-        <form action="login_process.php" method="POST">
+        <form action="Main.html" method="POST">
             <div class="form-group">
                 <input type="text" id="username" name="username" required placeholder="이메일">
             </div>
