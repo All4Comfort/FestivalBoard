@@ -28,7 +28,7 @@ public class Festival extends BaseEntity {
 	@Column(nullable = false, name = "festival_title")
 	private String festivalTitle; // 축제명
 
-	//@Column(nullable = false)
+
 	private String region; // 지역
 	
 	//@Column(nullable = false)
