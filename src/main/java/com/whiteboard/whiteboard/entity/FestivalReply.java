@@ -27,9 +27,12 @@ public class FestivalReply extends BaseEntity {
 	private Long replyNum; //축제댓글번호
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Festival festivalNum; //축제번호
+	private Festival from; //축제번호
 	
+	@Column(name = "reply_level")
 	private	int replyLevel; //댓글수준 : 댓글(1)/대댓글(2)까지만
+	
+	@Column(name = "reply_step")
 	private int replyStep; //댓글순서 : 댓글1/댓글1-1/댓글1-2/댓글2/댓글2-1
 	
 	@ManyToOne(fetch = FetchType.LAZY)

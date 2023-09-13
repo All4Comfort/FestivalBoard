@@ -6,6 +6,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,12 +28,17 @@ public class ReviewReply extends BaseEntity{
 	private Long replyNum;//리뷰댓글번호
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Review reviewNum;//리뷰번호
+	@JoinColumn(name = "from_review_num")
+	private Review from;//리뷰번호
 	
+	@Column(name = "reply_level")
 	private int replyLevel;//댓글수준
-	private int replyStep;//댓글순서 
+
+	@Column(name = "reply_step")
+	private int replyStep;//댓글순서
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "writer_id")
 	private Member writer; //작성자 : Member 엔티티의 id 컬럼
 
 	@Column(nullable = false)
