@@ -53,4 +53,7 @@ public class QandA extends BaseEntity{ //작성일,수정일은 BaseEntity로 �
     }
 
     // 비밀글 여부 업데이트 메서드
+    public void updateIsSecret (boolean newIsSecret){
+        this.isSecret = newIsSecret;
+    }
 }
