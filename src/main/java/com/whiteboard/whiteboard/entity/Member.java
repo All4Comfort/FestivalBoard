@@ -49,7 +49,7 @@ public class Member extends BaseEntity{
 	private boolean isSns; //소셜계정 인증을 통한 가입 여부
 	
 	// 여기에 비밀번호 업데이트 로직을 추가할 수 있음
-	public void updatepw(String newPW) {
+	public void updatePw(String newPW) {
 
 		this.pw = newPW;
 }
