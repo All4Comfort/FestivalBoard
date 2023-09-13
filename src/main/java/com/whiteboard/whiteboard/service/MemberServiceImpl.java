@@ -23,7 +23,7 @@ public class MemberServiceImpl implements MemberService {
 
         Member member = Member.builder()
                 .id(memberDTO.getId())
-                .pw(memberDTO.getPassword())
+                .pw(memberDTO.getPw())
                 .phoneNum(memberDTO.getPhoneNum())
                 .nickname(memberDTO.getNickname())
                 .gender(memberDTO.getGender())
