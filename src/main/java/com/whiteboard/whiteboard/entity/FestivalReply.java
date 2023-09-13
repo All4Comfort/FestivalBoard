@@ -36,6 +36,10 @@ public class FestivalReply extends BaseEntity {
 	private Member writer; //작성자 : Member 엔티티의 id 컬럼
 
 	@Column(nullable = false)
-	private String content; //내용 
+	private String content; //내용
 	
+	// 내용 업데이트 메서드
+	public void updateFContent(String Fcontent){
+		this.content = Fcontent;
+	}
 }
