@@ -5,20 +5,31 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class UserDetailSevice implements UserDetailsService{
+
+public class UserDetailSeviceImpl implements UserDetailsService{
     
     private final MemberRepository memberRepository;
+    
+    
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'loadUserByUsername'");
+    public UserDetails loadUserByUsername(String id){
+        Member member = memberRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("찾을수없는 아이디: "+id));
+        
+        return UserDetailSeviceImpl(member);
+    }
+
+
+
+    private UserDetails UserDetailSeviceImpl(Member member) {
+        return null;
     }
 
     
