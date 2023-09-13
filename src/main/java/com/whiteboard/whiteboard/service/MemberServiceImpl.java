@@ -13,16 +13,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
-    private final MemberRepository memberRepository;        
+    private final MemberRepository memberRepository;
 
     private final PasswordEncoder passwordEncoder;
 
-    //회원가입
+    // 회원가입
     @Override
     public String memberRegister(MemberDTO memberDTO) {
 
         Member member = Member.builder()
-                .(memberDTO.getId())
+                .email(memberDTO.getEmail())
                 .pw(memberDTO.getPw())
                 .phoneNum(memberDTO.getPhoneNum())
                 .nickname(memberDTO.getNickname())
@@ -32,7 +32,7 @@ public class MemberServiceImpl implements MemberService {
                 .isSns(memberDTO.isSns())
                 .build();
         memberRepository.save(member);
-        return member.getId();
+        return member.getEmail();
     }
 
     // 회원 삭제
@@ -41,12 +41,10 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.deleteById(memberId);
     }
 
-    //회원정보 수정
+    // 회원정보 수정
     @Override
     public void memberUpdate(String memberId) {
         memberRepository.findById(memberId);
     }
 
-
-    
 }
