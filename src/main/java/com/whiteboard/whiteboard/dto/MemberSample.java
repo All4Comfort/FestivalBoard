@@ -5,9 +5,11 @@ import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.whiteboard.whiteboard.entity.Member;
 
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,8 +17,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Entity
 //권한까지 부여된 memberDTO 샘플....
-public class MemberSample extends User{
+public class MemberSample extends User implements UserDetails{
   
   //User 객체에 내부에 설정된 필드명(name, password, authorities)는 사용하지 말 것!!!
 	private String id; //아이디 : 이메일주소로 받기

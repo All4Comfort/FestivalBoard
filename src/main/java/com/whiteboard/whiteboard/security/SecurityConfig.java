@@ -23,6 +23,7 @@ public class SecurityConfig  {
         //각 경로마다 접근 가능한 권한 설정인가(authorization) 메서드
         https.authorizeHttpRequests((auth) -> {
 
+            auth.requestMatchers("/whiteboard/login").permitAll(); // 모두에게 허용
             auth.requestMatchers("/whiteboard/Main").permitAll(); // 모두에게 허용
             auth.requestMatchers("/whiteboard/myPage").hasRole("MEMBER");// 회원에게만 허용
             auth.requestMatchers("/whiteboard/dashBoard").hasRole("ADMIN");//관리자에게만 허용
@@ -37,4 +38,6 @@ public class SecurityConfig  {
 
         return https.build();
     }
+
+
 }
