@@ -6,6 +6,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +28,7 @@ public class FestivalReply extends BaseEntity {
 	private Long replyNum; //축제댓글번호
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "from_festival_num")
 	private Festival from; //축제번호
 	
 	@Column(name = "reply_level")
@@ -36,6 +38,7 @@ public class FestivalReply extends BaseEntity {
 	private int replyStep; //댓글순서 : 댓글1/댓글1-1/댓글1-2/댓글2/댓글2-1
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "writer_id")
 	private Member writer; //작성자 : Member 엔티티의 id 컬럼
 
 	@Column(nullable = false)

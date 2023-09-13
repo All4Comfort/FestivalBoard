@@ -5,6 +5,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,9 +27,11 @@ public class KeepList {
 	private Long keepNum;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_id")
 	private Member id; // 회원아이디
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "from_festival_num")
 	private Festival festivalNum; // 축제번호
 	
 }

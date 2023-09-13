@@ -44,23 +44,23 @@ public class Review extends BaseEntity {
    private Long goodCount; //좋아요 수
    
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "link1_feststival_num")
+   @JoinColumn(name = "link1_festival_num")
    private Festival link1; //축제번호1 //축제정보게시판과의 연동 목적
 
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "link2_feststival_num")
+   @JoinColumn(name = "link2_festival_num")
    private Festival link2; //축제번호2
 
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "link3_feststival_num")
+   @JoinColumn(name = "link3_festival_num")
    private Festival link3; //축제번호3
 
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "link4_feststival_num")
+   @JoinColumn(name = "link4_festival_num")
    private Festival link4; //축제번호4
 
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "link5_feststival_num")
+   @JoinColumn(name = "link5_festival_num")
    private Festival link5; //축제번호5
 
    private String hashTag1; //해시태그1 //검색목적
