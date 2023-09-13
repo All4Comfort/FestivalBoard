@@ -16,7 +16,7 @@ import lombok.ToString;
 //회원정보 DTO
 public class MemberDTO {
 
-	private String id; //아이디 : 이메일주소로 받기
+	private String email; //아이디 : 이메일주소로 받기
 	private String pw; //비밀번호 : 암호화해줘야 함
 	private String name; //실명
 	private String phoneNum; //전화번호
