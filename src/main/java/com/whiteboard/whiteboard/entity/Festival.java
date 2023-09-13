@@ -46,4 +46,8 @@ public class Festival extends BaseEntity {
 	private String poster; // 포스터링크
 	private Long readCount; // 조회수
 	
+	// 진행상태 업데이트 메서드
+	public void updateState(String state){
+		this.state = state;
+	}
 }
