@@ -31,7 +31,6 @@ public class Festival extends BaseEntity {
 
 	private String region; // 지역
 	
-	//@Column(nullable = false)
 	private String venue; // 개최장소
 
 	private String period; // 기간
