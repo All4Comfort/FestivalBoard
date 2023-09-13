@@ -105,6 +105,21 @@
             right: 0;
             /* 오른쪽에 선 배치 */
         }
+
+        .form-group3 a{
+            text-decoration: none;
+            /* 밑줄 제거 */
+            color: #000;
+            /* 원하는 텍스트 색상으로 변경 (예: 검정색) */
+            cursor: pointer;
+            /* 커서 스타일 변경 (선택 사항) */
+        }
+
+        .form-group4 a{
+            text-decoration: none;
+            /* 밑줄 제거 */
+            
+        }
     </style>
 
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -174,8 +189,12 @@
                 </div>
             </div>
         </form>
-        <p><a href="forgot_password.php">비밀번호를 잊으셨나요?</a></p>
-        <p>계정이 없으신가요? <a href="register.php">회원가입</a></p>
+        <div class="form-group3">
+            <p><a class="ps" text-decoration: none href="forgot_password.php">비밀번호를 잊으셨나요?</a></p>
+        </div>
+        <div class="form-group4">
+            <p>계정이 없으신가요? <a href="register.php">가입하기</a></p>
+        </div>
     </div>
 </body>
 
