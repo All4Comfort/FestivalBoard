@@ -2,16 +2,12 @@ package com.whiteboard.whiteboard.entity;
 
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +27,7 @@ import lombok.ToString;
 public class Member extends BaseEntity implements UserDetails{
 
 	@Id
-	private String id; //아이디 : 이메일주소로 받기
+	private String email; //아이디 : 이메일주소로 받기
 	
 	private String pw; //비밀번호 : 암호화해줘야 함
 
@@ -79,56 +75,49 @@ public void updatePhoneNum(String newPhoneNum) {
 //회원이 DB에 인서트(생성)될 때 권한 부여하기
 
 //권한 엔티티를 제네릭으로 준 컬랙션 생성
-@Builder.Default
+//@Builder.Default
 //아래 어노테이션은 자동으로 참조를 걸어줌
-@ElementCollection(fetch = FetchType.LAZY) //권한값을 항상 가져올 텐데 LAZY가 꼭 필요한가..? 추후 수정할 수도...
-private Set<AuthoritySet> authority = new HashSet<>(); 
+//@ElementCollection(fetch = FetchType.LAZY) //권한값을 항상 가져올 텐데 LAZY가 꼭 필요한가..? 추후 수정할 수도...
+//private Set<AuthoritySet> authority = new HashSet<>(); 
 
 //회원이 DB에 인서트(생성) 시 권한 부여 메서드
-public void addAuthority(AuthoritySet authoritySet){
-	authority.add(authoritySet);
-}
+//public void addAuthority(AuthoritySet authoritySet){
+	//authority.add(authoritySet);
+//}
 
 @Override
 public Collection<? extends GrantedAuthority> getAuthorities() {
-	// TODO Auto-generated method stub
 	throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
 }
 
 @Override
 public String getPassword() {
-	// TODO Auto-generated method stub
-	throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
+	return pw;
 }
 
 @Override
 public String getUsername() {
-	// TODO Auto-generated method stub
-	throw new UnsupportedOperationException("Unimplemented method 'getUsername'");
+	return email;
 }
 
 @Override
 public boolean isAccountNonExpired() {
-	// TODO Auto-generated method stub
-	throw new UnsupportedOperationException("Unimplemented method 'isAccountNonExpired'");
+	return true;
 }
 
 @Override
 public boolean isAccountNonLocked() {
-	// TODO Auto-generated method stub
-	throw new UnsupportedOperationException("Unimplemented method 'isAccountNonLocked'");
+	return true;
 }
 
 @Override
 public boolean isCredentialsNonExpired() {
-	// TODO Auto-generated method stub
-	throw new UnsupportedOperationException("Unimplemented method 'isCredentialsNonExpired'");
+	return true;
 }
 
 @Override
 public boolean isEnabled() {
-	// TODO Auto-generated method stub
-	throw new UnsupportedOperationException("Unimplemented method 'isEnabled'");
+	return true;
 }
 
 }

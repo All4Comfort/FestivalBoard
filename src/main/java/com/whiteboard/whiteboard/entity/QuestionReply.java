@@ -21,7 +21,7 @@ import lombok.ToString;
 @Getter
 @ToString
 //질의응답댓글
-public class QandAReply extends BaseEntity {
+public class QuestionReply extends BaseEntity {
     
     @Id //PK 기본키
     @GeneratedValue(strategy = GenerationType.IDENTITY) //auto_increment 자동증가
@@ -29,7 +29,7 @@ public class QandAReply extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY) //FK 외래키
     @JoinColumn(name = "from_question_num" )
-    private QandA questionNum; //질문번호
+    private Question questionNum; //질문번호
 
     @Column(name = "reply_level")
     private int replyLevel; //댓글수준

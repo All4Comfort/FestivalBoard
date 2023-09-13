@@ -21,7 +21,7 @@ import lombok.ToString;
 @Getter
 @ToString
 //질의응답게시판
-public class QandA extends BaseEntity{ //작성일,수정일은 BaseEntity로 자동 기입
+public class Question extends BaseEntity{ //작성일,수정일은 BaseEntity로 자동 기입
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
