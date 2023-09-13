@@ -20,8 +20,8 @@ public class UserDetailSeviceImpl implements UserDetailsService{
     
 
     @Override
-    public UserDetails loadUserByUsername(String id){
-        Member member = memberRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("찾을수없는 아이디: "+id));
+    public UserDetails loadUserByUsername(String email){
+        Member member = memberRepository.findById(email).orElseThrow(() -> new UsernameNotFoundException("찾을수없는 아이디: "+email));
         
         return UserDetailSeviceImpl(member);
     }
