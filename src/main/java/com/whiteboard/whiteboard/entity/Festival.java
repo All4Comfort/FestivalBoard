@@ -28,19 +28,21 @@ public class Festival extends BaseEntity {
 	@Column(nullable = false, name = "festival_title")
 	private String festivalTitle; // 축제명
 
-	@Column(nullable = false)
+	//@Column(nullable = false)
 	private String region; // 지역
 	
-	@Column(nullable = false)
+	//@Column(nullable = false)
 	private String venue; // 개최장소
 
-	@Column(nullable = false)
+	//@Column(nullable = false)
 	private String period; // 기간
 
-	@Column(nullable = false)
+	//@Column(nullable = false)
 	private String state; // 진행상태
 
-	@Column(nullable = false)
+	private String description; // 설명(묘사)
+
+	//@Column(nullable = false)
 	private String link; // 홈페이지
 
 	private String poster; // 포스터링크
