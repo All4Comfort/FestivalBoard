@@ -1,5 +1,6 @@
 package com.whiteboard.whiteboard.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +29,10 @@ public class Notice extends BaseEntity{
     @ManyToOne(fetch = FetchType.LAZY)
 	private Member writer; //DB에만 저장될 작성자(어느 관리자계정인지) : Member 엔티티의 id 컬럼
     
+    @Column(nullable = false)
     private String title;//제목
+
+    @Column(nullable = false)
     private String content;//글내용
    
 }
