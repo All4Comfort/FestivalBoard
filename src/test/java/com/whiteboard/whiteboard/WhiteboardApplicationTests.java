@@ -31,7 +31,7 @@ class WhiteboardApplicationTests {
 
 		Member member = Member.builder()
 				.id("chansol91@naver.com")
-				.password(hashedPassword)
+				.pw(hashedPassword)
 				.phoneNum("01094800129")
 				.nickname("민건왕자")
 				.gender("하남자")
@@ -63,7 +63,7 @@ class WhiteboardApplicationTests {
 			System.out.println("생년월일: " + member.getBirthDay());
 			System.out.println("이름: " + member.getName());
 			System.out.println("sns로그인: " + member.isSns());
-			System.out.println("비밀번호: " + member.getPassword());
+			System.out.println("비밀번호: " + member.getPw());
 
 		} else {
 			System.out.println("해당 ID에 해당하는 회원 정보가 없습니다.");
@@ -87,7 +87,7 @@ class WhiteboardApplicationTests {
 		String inputPassword = "7777"; // 입력한 패스워드를 직접 입력
 
 		// 저장된 회원의 패스워드와 입력한 패스워드를 비교
-		boolean isPasswordCorrect = passwordEncoder.matches(inputPassword, member.getPassword());
+		boolean isPasswordCorrect = passwordEncoder.matches(inputPassword, member.getPw());
 
 		if (isPasswordCorrect) {
 			// 비밀번호가 일치하면 회원 삭제
@@ -116,7 +116,7 @@ public void modifyMember() {
     String inputPassword = "7777"; // 입력한 패스워드를 직접 입력
 
     // 저장된 회원의 패스워드와 입력한 패스워드를 비교
-    boolean isPasswordCorrect = passwordEncoder.matches(inputPassword, member.getPassword());
+    boolean isPasswordCorrect = passwordEncoder.matches(inputPassword, member.getPw());
 
     if (isPasswordCorrect) {
         // 비밀번호가 일치하면 회원 정보 수정 시도
