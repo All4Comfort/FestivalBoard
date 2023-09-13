@@ -34,7 +34,6 @@ public class Festival extends BaseEntity {
 	//@Column(nullable = false)
 	private String venue; // 개최장소
 
-	//@Column(nullable = false)
 	private String period; // 기간
 
 	//@Column(nullable = false)
