@@ -17,6 +17,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final PasswordEncoder passwordEncoder;
 
+    //회원가입
     @Override
     public String memberRegister(MemberDTO memberDTO) {
 

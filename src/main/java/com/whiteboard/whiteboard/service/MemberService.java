@@ -1,6 +1,10 @@
 package com.whiteboard.whiteboard.service;
 
+import org.springframework.stereotype.Service;
+
 import com.whiteboard.whiteboard.dto.MemberDTO;
+
+@Service
 
 public interface MemberService {
     
