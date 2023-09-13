@@ -25,7 +25,7 @@ public class Festival extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long festivalNum; // 축제번호
 
-	@Column(nullable = false)
+	@Column(nullable = false, name = "festival_title")
 	private String festivalTitle; // 축제명
 
 	@Column(nullable = false)
@@ -44,6 +44,8 @@ public class Festival extends BaseEntity {
 	private String link; // 홈페이지
 
 	private String poster; // 포스터링크
+
+	@Column(name = "read_count", nullable = false)
 	private Long readCount; // 조회수
 	
 	// 진행상태 업데이트 메서드

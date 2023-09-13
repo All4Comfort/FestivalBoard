@@ -17,12 +17,13 @@ public class MemberServiceImpl implements MemberService {
 
     private final PasswordEncoder passwordEncoder;
 
+    //회원가입
     @Override
     public String memberRegister(MemberDTO memberDTO) {
 
         Member member = Member.builder()
                 .id(memberDTO.getId())
-                .pw(memberDTO.getPassword())
+                .pw(memberDTO.getPw())
                 .phoneNum(memberDTO.getPhoneNum())
                 .nickname(memberDTO.getNickname())
                 .gender(memberDTO.getGender())
