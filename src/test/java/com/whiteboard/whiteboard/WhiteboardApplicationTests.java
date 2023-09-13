@@ -9,13 +9,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
-import com.whiteboard.whiteboard.service.WhiteboardService;
+import com.whiteboard.whiteboard.service.MemberService;
 
 @SpringBootTest
 class WhiteboardApplicationTests {
 
 	@Autowired
-	private WhiteboardService whiteboardService;
+	private MemberService whiteboardService;
 
 	@Autowired
 	private MemberRepository memberRepository;// 멤버 레포지토리
@@ -91,7 +91,7 @@ class WhiteboardApplicationTests {
 
 		if (isPasswordCorrect) {
 			// 비밀번호가 일치하면 회원 삭제
-			whiteboardService.deleteMember(memberId);
+			whiteboardService.memberDelete(memberId);
 			System.err.println("비밀번호가 일치해서 삭제됨");
 		} else {
 			// 비밀번호가 일치하지 않을 때

@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class WhiteboardServiceImpl implements WhiteboardService {
+public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
@@ -36,13 +36,13 @@ public class WhiteboardServiceImpl implements WhiteboardService {
 
     // 회원 삭제
     @Override
-    public void deleteMember(String memberId) {
+    public void memberDelete(String memberId) {
         memberRepository.deleteById(memberId);
     }
 
     //회원정보 수정
     @Override
-    public void updateMember(String memberId) {
+    public void memberUpdate(String memberId) {
         memberRepository.findById(memberId);
     }
 
