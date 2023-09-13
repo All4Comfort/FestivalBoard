@@ -1,5 +1,6 @@
 package com.whiteboard.whiteboard.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,15 +27,19 @@ public class ReviewReply extends BaseEntity{
 	private Long replyNum;//리뷰댓글번호
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	private Review reviewNum;//리뷰번호  
+	private Review reviewNum;//리뷰번호
 	
 	private int replyLevel;//댓글수준
 	private int replyStep;//댓글순서 
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Member writer; //작성자 : Member 엔티티의 id 컬럼
+
+	@Column(nullable = false)
 	private String content;//내용
 	
-	
-	
+	public void updateContent(String newContent) {
+			this.content = newContent;
+	}
+
 }

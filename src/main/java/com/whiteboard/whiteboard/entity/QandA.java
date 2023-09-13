@@ -1,5 +1,6 @@
 package com.whiteboard.whiteboard.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,8 +28,13 @@ public class QandA extends BaseEntity{ //작성일,수정일은 BaseEntity로 �
 
     @ManyToOne(fetch = FetchType.LAZY)
 	private Member writer; //작성자 : Member 엔티티의 id 컬럼
+
+    @Column(nullable = false)
     private String title;//제목
+
+    @Column(nullable = false)
     private String content;//글내용
+    
     private Boolean isSecret;//비밀글 여부
     private String state;//진행상태 : 답변미완료, 답변완료
 
