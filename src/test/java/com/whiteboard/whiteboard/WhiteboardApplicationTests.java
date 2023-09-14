@@ -23,7 +23,7 @@ class WhiteboardApplicationTests {
 	@Autowired
 	private PasswordEncoder passwordEncoder;// 비밀번호 인코더
 
-	// @Test
+	 @Test
 	public void memberregister() {// DB에 회원가입 member 테이블에 넣기
 
 		// password 테스트
@@ -100,7 +100,7 @@ class WhiteboardApplicationTests {
 	}
 
 	// 회원정보 수정 테스트
-@Test
+//@Test
 public void modifyMember() {
     String memberId = "chansol91@naver.com";
     Member member = memberRepository.findById(memberId).orElse(null);
