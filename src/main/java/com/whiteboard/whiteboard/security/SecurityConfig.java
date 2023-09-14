@@ -8,6 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import jakarta.servlet.DispatcherType;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig  {
@@ -17,27 +19,25 @@ public class SecurityConfig  {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity https) throws Exception{
+   @Bean
+   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        http.csrf().disable().cors().disable()
+                .authorizeHttpRequests(request  -> request.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                                        .requestMatchers(null, null).permitAll()
+                                        .anyRequest().authenticated()
+                )
+                .formLogin(login -> login
+                                .loginPage("/login")
+                                .loginProcessingUrl("/login")
+                                .usernameParameter("email")
+                                .passwordParameter("pw")
+                                .defaultSuccessUrl("/dashBoard", true)
+                                .permitAll()
+                )
+                .logout();
 
-        //각 경로마다 접근 가능한 권한 설정인가(authorization) 메서드
-        https.authorizeHttpRequests((auth) -> {
-
-            auth.requestMatchers("/whiteboard/login").permitAll(); // 모두에게 허용
-            auth.requestMatchers("/whiteboard/Main").permitAll(); // 모두에게 허용
-            auth.requestMatchers("/whiteboard/myPage").hasRole("MEMBER");// 회원에게만 허용
-            auth.requestMatchers("/whiteboard/dashBoard").hasRole("ADMIN");//관리자에게만 허용
-        
-        });
-
-        https.formLogin(); // 로그인 페이지로 반환
-        https.csrf().disable();
-        https.logout()//로그아웃하고 페이지 이동
-        .logoutUrl("/logout")
-        .logoutSuccessUrl("/main.html");
-
-        return https.build();
-    }
+                return http.build();
+   }
 
 
 }
