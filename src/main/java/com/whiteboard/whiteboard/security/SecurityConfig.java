@@ -12,32 +12,29 @@ import jakarta.servlet.DispatcherType;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig  {
+public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-   @Bean
-   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable().cors().disable()
-                .authorizeHttpRequests(request  -> request.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-                                        .requestMatchers(null, null).permitAll()
-                                        .anyRequest().authenticated()
-                )
+                .authorizeHttpRequests(request -> request.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+                        .requestMatchers("/login", "/**").permitAll()
+                        .anyRequest().authenticated())
                 .formLogin(login -> login
-                                .loginPage("/login")
-                                .loginProcessingUrl("/login")
-                                .usernameParameter("email")
-                                .passwordParameter("pw")
-                                .defaultSuccessUrl("/dashBoard", true)
-                                .permitAll()
-                )
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .usernameParameter("email")
+                        .passwordParameter("pw")
+                        .defaultSuccessUrl("/dashBoard", true)
+                        .permitAll())
                 .logout();
 
-                return http.build();
-   }
-
+        return http.build();
+    }
 
 }

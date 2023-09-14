@@ -1,5 +1,7 @@
 package com.whiteboard.whiteboard.service;
 
+import java.util.Optional;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +47,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void memberUpdate(String memberId) {
         memberRepository.findById(memberId);
+    }
+
+    public Optional<Member> findOne(String email){
+        return memberRepository.findByEmail(email);
     }
 
 }
