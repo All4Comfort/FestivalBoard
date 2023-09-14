@@ -39,18 +39,20 @@ public class MemberServiceImpl implements MemberService {
 
     // 회원 삭제
     @Override
-    public void memberDelete(String memberId) {
-        memberRepository.deleteById(memberId);
+    public void memberDelete(String email) {
+        memberRepository.deleteById(email);
     }
 
     // 회원정보 수정
     @Override
-    public void memberUpdate(String memberId) {
-        memberRepository.findById(memberId);
+    public void memberUpdate(String email) {
+        memberRepository.findByEmail(email);
     }
 
     public Optional<Member> findOne(String email){
         return memberRepository.findByEmail(email);
     }
+
+    
 
 }

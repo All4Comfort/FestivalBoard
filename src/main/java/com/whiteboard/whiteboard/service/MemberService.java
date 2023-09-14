@@ -12,10 +12,14 @@ public interface MemberService {
     String memberRegister(MemberDTO memberDTO);
 
     //회원이  삭제하는 메서드
-    void memberDelete(String memberId);
+    void memberDelete(String email);
 
     //회원 수정 메서드
-    void memberUpdate(String memberId);
+    void memberUpdate(String email);
+
+    static boolean isValidMember(String email, String pw) {
+        return false;
+    }
 
 
 

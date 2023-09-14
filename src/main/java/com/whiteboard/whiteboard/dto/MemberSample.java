@@ -19,6 +19,8 @@
 // @Entity
 // //권한까지 부여된 memberDTO 샘플....
 // public class MemberSample extends User {
+
+    
   
 //   //User 객체에 내부에 설정된 필드명(name, password, authorities)는 사용하지 말 것!!!
 // 	private String email; //아이디 : 이메일주소로 받기
@@ -29,6 +31,8 @@
 // 	private String gender; //성별
 // 	private LocalDate birthDay; //생년월일
 // 	private boolean isSns; //소셜계정 인증을 통한 가입 여부
+
+//     private Member member;
 	
 // 	public MemberSample(Member member,
 // 			Collection<? extends GrantedAuthority> authorities){
