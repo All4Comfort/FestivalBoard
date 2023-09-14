@@ -16,6 +16,6 @@ public class Membercontroller {
     @GetMapping("/login")
     public String loging(){
 
-        return "loging";
+        return "login";
     }
 }
