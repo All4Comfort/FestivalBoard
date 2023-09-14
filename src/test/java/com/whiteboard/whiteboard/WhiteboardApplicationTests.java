@@ -30,7 +30,7 @@ class WhiteboardApplicationTests {
 		String hashedPassword = passwordEncoder.encode("7777");
 
 		Member member = Member.builder()
-				.id("chansol91@naver.com")
+				.email("chansol91@naver.com")
 				.pw(hashedPassword)
 				.phoneNum("01094800129")
 				.nickname("민건왕자")
@@ -56,7 +56,7 @@ class WhiteboardApplicationTests {
 		// 조회된 회원 정보가 null이 아니라면 정보를 출력
 		if (member != null) {
 			System.out.println("회원 정보: ");
-			System.out.println("아이디: " + member.getId());
+			System.out.println("아이디: " + member.getEmail());
 			System.out.println("전화번호: " + member.getPhoneNum());
 			System.out.println("닉네임: " + member.getNickname());
 			System.out.println("성별: " + member.getGender());
