@@ -45,7 +45,7 @@ public class Festival extends BaseEntity {
 
 	private String poster; // 포스터링크
 
-	@Column(name = "read_count", nullable = false)
+	@Column(name = "read_count", nullable = false, columnDefinition = "integer default 0")
 	private Long readCount; // 조회수
 	
 	// 진행상태 업데이트 메서드
