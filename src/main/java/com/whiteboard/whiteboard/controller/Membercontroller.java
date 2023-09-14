@@ -73,6 +73,7 @@ public class Membercontroller {
             model.addAttribute("loginRoles", user.getAuthorities());
             model.addAttribute("phoneNumber", member.getPhoneNum());
             model.addAttribute("nickname", member.getNickname());
+            model.addAttribute("birthDay", member.getBirthDay());
         }
         return "user";
     }
