@@ -23,7 +23,7 @@ class SecurityApplicaitonTests {
   void contextLoads() {
     IntStream.rangeClosed(2, 10).forEach(i -> 
     {Member member = Member.builder().
-                    id("회원" + i).
+                    email("회원" + i).
                     pw(passwordEncoder.encode("1234")).
                     name("이름" + i).
                     phoneNum("1234567890" + i).
