@@ -26,13 +26,16 @@ public class SecurityConfig {
         http.csrf().disable().cors().disable()
                 .authorizeHttpRequests(request -> request.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
                         .requestMatchers("/Main", "//**", "/view/join", "/auth/join").permitAll()
+                        .requestMatchers("/dashBoard").hasRole("ADMIN")
+                        .requestMatchers("/user").hasRole("USER")
                         .anyRequest().authenticated())
                 .formLogin(login -> login
                         .loginPage("/login")
+                        
                         .loginProcessingUrl("/login-process")
                         .usernameParameter("email")
                         .passwordParameter("pw")
-                        .defaultSuccessUrl("/Main", true)
+                        .defaultSuccessUrl("/user", true)
                         .permitAll())
                 .logout()
                     .logoutUrl("logout")
