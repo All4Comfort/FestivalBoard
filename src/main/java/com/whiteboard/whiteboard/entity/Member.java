@@ -2,8 +2,10 @@ package com.whiteboard.whiteboard.entity;
 
 import java.time.LocalDate;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
@@ -13,22 +15,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Entity
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor //(access = AccessLevel.PROTECTED) : 외부(다른 패키지)에서 생성 불가하도록 막아놓을 수도. 
 @Getter
-@Setter
+//@Setter //조작 방지를 위해 주석. 필드값 수정을 위해서는 별도로 메서드를 정의하기로 함. ex) updateName, updatePhoneNum
 @ToString
 //회원정보
-public class Member extends BaseEntity implements UserDetails{
+public class Member extends BaseEntity implements UserDetails{ //security설정을 위해 UserDetail 상속
 
 	@Id
+	@Column(updatable = false)
 	private String email; //아이디 : 이메일주소로 받기
 	
+	//소셜계정인증 로그인의 경우 비밀번호 값이 없으므로 pw는 null허용해줘야 함(?)
 	private String pw; //비밀번호 : 암호화해줘야 함
 
 	@Column(nullable = false, length = 10)
@@ -50,7 +53,6 @@ public class Member extends BaseEntity implements UserDetails{
 	
 	// 여기에 비밀번호 업데이트 로직을 추가할 수 있음
 	public void updatePw(String newPW) {
-
 		this.pw = newPW;
 }
 
@@ -85,36 +87,48 @@ public void updatePhoneNum(String newPhoneNum) {
 	//authority.add(authoritySet);
 //}
 
-@Override
+//이하 7개의 메서드는 UserDetail 인터페이스의 "필수" 오버라이드 메서드이므로
+//정의하지 않을 경우 오류 발생. 즉, 주석처리하지 말 것!
+
+@Override //권한 반환 메서드 오버라이드
 public Collection<? extends GrantedAuthority> getAuthorities() {
-	throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
+	//회원가입 시(회원DB에 인서트 시) 권한 기본값을 USER에 해당하는 "ROLE_USER"로 설정
+	return List.of(new SimpleGrantedAuthority(AuthoritySet.USER.getValue()));
 }
 
-@Override
-public String getPassword() {
-	return pw;
-}
-
+//사용자의 ID(PK값) 반환
 @Override
 public String getUsername() {
 	return email;
 }
 
+//사용자의 패스워드 반환
+@Override
+public String getPassword() {
+	return pw;
+}
+
+//이하 4개의 필수 오버라이드 메서드는 기본적으로 true값을 반환하도록 정의한 것.
+
+//계정 만료 여부 반환
 @Override
 public boolean isAccountNonExpired() {
 	return true;
 }
 
+//계정 잠금 여부 반환
 @Override
 public boolean isAccountNonLocked() {
 	return true;
 }
 
+//패스워드 만료 여부 반환
 @Override
 public boolean isCredentialsNonExpired() {
 	return true;
 }
 
+//계정 사용 가능 여부 반환
 @Override
 public boolean isEnabled() {
 	return true;

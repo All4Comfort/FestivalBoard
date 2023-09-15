@@ -1,4 +1,4 @@
-package com.whiteboard.whiteboard.service;
+package com.whiteboard.whiteboard.security;
 
 import java.util.ArrayList;
 import java.util.List;
