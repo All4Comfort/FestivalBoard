@@ -26,14 +26,14 @@ import com.whiteboard.whiteboard.service.MemberService;
 public class Membercontroller {
     
 
-    @GetMapping("/Main")
+    @GetMapping("/main")
     public String main(){
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         String userName = auth.getName();
 
-        return "Main";
+        return "main";
     }
 
     @GetMapping("/login")
