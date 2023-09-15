@@ -52,7 +52,7 @@
                         <label for="email">이메일 (로그인 ID)</label>
                         <input type="email" class="form-control" id="email" placeholder="" required>
                         <div class="invalid-feedback">
-                            이메일 주소를 입력해주세요.
+                            올바른 이메일 주소를 입력하세요.
                         </div>
                     </div>
                     <div class="row">
@@ -60,7 +60,7 @@
                             <label for="name">이름</label>
                             <input type="text" class="form-control" id="name" placeholder="" value="" required>
                             <div class="invalid-feedback">
-                                이름을 입력해주세요.
+                                이름은 2글자 이상의 한글 또는 영문 대/소문자만 허용됩니다.
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -91,7 +91,7 @@
                             <input type="tel" class="form-control" id="phoneNumber" placeholder="-없이 입력해 주세여" value=""
                                 required>
                             <div class="invalid-feedback">
-                                별명을 입력해주세요.
+                                휴대전화 번호는 숫자 10자 또는 11자로 입력하세요.
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
@@ -105,7 +105,6 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div class="mb-3">
                         <label for="birth_day">생년월일</label>
                         <input type="date" class="form-control" id="birth_day" placeholder="" required>
@@ -128,40 +127,86 @@
         </footer>
     </div>
 
-
+    
     <script>
         window.addEventListener('load', () => {
             const forms = document.getElementsByClassName('validation-form');
-    
+
             Array.prototype.filter.call(forms, (form) => {
                 form.addEventListener('submit', function (event) {
+                    const passwordInput = form.querySelector('#pw');
+                    const confirmPasswordInput = form.querySelector('#pw2');
+                    const password = passwordInput.value;
+                    const confirmPassword = confirmPasswordInput.value;
+
+                    // 이름 필드의 정규식 검증
+                    const nameInput = form.querySelector('#name');
+                    const nameValue = nameInput.value;
+                    const namePattern = /^[가-힝a-zA-Z]{2,}$/;
+
+                    if (!namePattern.test(nameValue)) {
+                        nameInput.setCustomValidity('이름은 2글자 이상의 한글 또는 영문 대/소문자만 허용됩니다.');
+                        nameInput.classList.add('is-invalid');
+                    } else {
+                        nameInput.setCustomValidity('');
+                        nameInput.classList.remove('is-invalid');
+                    }
+
+                    // 이메일 필드의 정규식 검증
+                    const emailInput = form.querySelector('#email');
+                    const emailValue = emailInput.value;
+                    const emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+
+                    if (!emailPattern.test(emailValue)) {
+                        emailInput.setCustomValidity('올바른 이메일 주소를 입력하세요.');
+                        emailInput.classList.add('is-invalid');
+                    } else {
+                        emailInput.setCustomValidity('');
+                        emailInput.classList.remove('is-invalid');
+                    }
+
+                    // 휴대전화 번호 입력란의 값을 가져옴
+                    const phoneNumberInput = form.querySelector('#phoneNumber');
+                    let phoneNumberValue = phoneNumberInput.value;
+
+                    // 입력된 값에서 하이픈 제거
+                    phoneNumberValue = phoneNumberValue.replace(/-/g, '');
+
+                    // 정규식 패턴을 사용하여 유효성 검사
+                    const phoneNumberPattern = /^[0-9]{10,11}$/; // 10자 또는 11자의 숫자만 허용
+
+                    if (!phoneNumberPattern.test(phoneNumberValue)) {
+                        phoneNumberInput.setCustomValidity('휴대전화 번호는 숫자 10자 또는 11자로 입력하세요.');
+                        phoneNumberInput.classList.add('is-invalid');
+                    } else {
+                        phoneNumberInput.setCustomValidity('');
+                        phoneNumberInput.classList.remove('is-invalid');
+                    }
+
+                    // 하이픈 제거한 번호를 다시 입력란에 설정
+                    phoneNumberInput.value = phoneNumberValue;
+
+                    // 비밀번호와 비밀번호 확인이 같은지 확인합니다.
+                    if (password !== confirmPassword) {
+                        event.preventDefault();
+                        confirmPasswordInput.setCustomValidity('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+                    } else {
+                        confirmPasswordInput.setCustomValidity(''); // 유효성 검사 오류를 제거합니다.
+                    }
+
                     if (form.checkValidity() === false) {
                         event.preventDefault();
                         event.stopPropagation();
-                    } else {
-                        // 비밀번호와 비밀번호 확인 필드의 값을 가져옵니다.
-                        const passwordInput = form.querySelector('#pw');
-                        const confirmPasswordInput = form.querySelector('#pw2');
-                        const password = passwordInput.value;
-                        const confirmPassword = confirmPasswordInput.value;
-    
-                        // 비밀번호와 비밀번호 확인이 같은지 확인합니다.
-                        if (password !== confirmPassword) {
-                            event.preventDefault();
-                            console.log('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
-                            // 비밀번호 확인 필드를 초기화하거나 사용자에게 알림을 주세요.
-                            confirmPasswordInput.value = '';
-                            confirmPasswordInput.focus();
-                        }
                     }
-    
+
                     form.classList.add('was-validated');
                 }, false);
             });
         }, false);
     </script>
-    
-    
+
+
+
 
 
 
