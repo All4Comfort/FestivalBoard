@@ -101,53 +101,53 @@ class WhiteboardApplicationTests {
 
 	// 회원정보 수정 테스트
 //@Test
-public void modifyMember() {
-    String memberId = "chansol91@naver.com";
-    Member member = memberRepository.findById(memberId).orElse(null);
+// public void modifyMember() {
+//     String memberId = "chansol91@naver.com";
+//     Member member = memberRepository.findById(memberId).orElse(null);
 
-    System.out.println("DB에 담겨있는 아이디: " + member);
+//     System.out.println("DB에 담겨있는 아이디: " + member);
 
-    if (member == null) {
-        System.err.println("DB에 해당 아이디가 없습니다.");
-        return;
-    }
+//     if (member == null) {
+//         System.err.println("DB에 해당 아이디가 없습니다.");
+//         return;
+//     }
 
-    // 입력한 패스워드
-    String inputPassword = "7777"; // 입력한 패스워드를 직접 입력
+//     // 입력한 패스워드
+//     String inputPassword = "7777"; // 입력한 패스워드를 직접 입력
 
-    // 저장된 회원의 패스워드와 입력한 패스워드를 비교
-    boolean isPasswordCorrect = passwordEncoder.matches(inputPassword, member.getPw());
+//     // 저장된 회원의 패스워드와 입력한 패스워드를 비교
+//     boolean isPasswordCorrect = passwordEncoder.matches(inputPassword, member.getPw());
 
-    if (isPasswordCorrect) {
-        // 비밀번호가 일치하면 회원 정보 수정 시도
-        try {
-            // 수정할 회원 정보 가져오기
-            Member updatedMember = memberRepository.findById(memberId).orElse(null);
+//     if (isPasswordCorrect) {
+//         // 비밀번호가 일치하면 회원 정보 수정 시도
+//         try {
+//             // 수정할 회원 정보 가져오기
+//             Member updatedMember = memberRepository.findById(memberId).orElse(null);
 
-            if (updatedMember != null) {
-                // 회원 정보 수정
-                updatedMember.setPhoneNum("01094800129"); // 수정할 내용 입력
-                updatedMember.setNickname("민건왕자");
-                updatedMember.setGender("천사");
-                updatedMember.setBirthDay(LocalDate.parse("2002-05-02")); // 수정할 내용 입력
-                updatedMember.setName("김민건");
-                updatedMember.setSns(false); // 수정할 내용 입력
+//             if (updatedMember != null) {
+//                 // 회원 정보 수정
+//                 updatedMember.setPhoneNum("01094800129"); // 수정할 내용 입력
+//                 updatedMember.setNickname("민건왕자");
+//                 updatedMember.setGender("천사");
+//                 updatedMember.setBirthDay(LocalDate.parse("2002-05-02")); // 수정할 내용 입력
+//                 updatedMember.setName("김민건");
+//                 updatedMember.setSns(false); // 수정할 내용 입력
 
-                // 수정된 정보 저장
-                memberRepository.save(updatedMember);
+//                 // 수정된 정보 저장
+//                 memberRepository.save(updatedMember);
 
-                System.err.println("회원 정보가 수정되었습니다.");
-            } else {
-                System.err.println("회원 정보가 존재하지 않습니다.");
-            }
-        } catch (Exception e) {
-            // 회원 정보 수정 중 오류 발생 시
-            System.err.println("회원 정보 수정 중 오류 발생: " + e.getMessage());
-        }
-    } else {
-        // 비밀번호가 일치하지 않을 때
-        System.err.println("비밀번호가 틀렸습니다. 확인해주세요.");
-    }
-}
+//                 System.err.println("회원 정보가 수정되었습니다.");
+//             } else {
+//                 System.err.println("회원 정보가 존재하지 않습니다.");
+//             }
+//         } catch (Exception e) {
+//             // 회원 정보 수정 중 오류 발생 시
+//             System.err.println("회원 정보 수정 중 오류 발생: " + e.getMessage());
+//         }
+//     } else {
+//         // 비밀번호가 일치하지 않을 때
+//         System.err.println("비밀번호가 틀렸습니다. 확인해주세요.");
+//     }
+// }
 
 }

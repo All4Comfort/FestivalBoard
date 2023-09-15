@@ -47,7 +47,7 @@
         <div class="input-form-backgroud row">
             <div class="input-form col-md-12 mx-auto">
                 <h4 class="mb-3">회원가입</h4>
-                <form class="validation-form" novalidate>
+                <form class="validation-form" novalidate id="registration-form">
                     <div class="mb-3">
                         <label for="email">이메일 (로그인 ID)</label>
                         <input type="email" class="form-control" id="email" placeholder="" required>
@@ -127,7 +127,7 @@
         </footer>
     </div>
 
-    
+
     <script>
         window.addEventListener('load', () => {
             const forms = document.getElementsByClassName('validation-form');
@@ -205,6 +205,31 @@
         }, false);
     </script>
 
+    <script>
+        document.getElementById('registration-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // 폼의 기본 동작을 중지
+
+            const form = this;
+            const formData = new FormData(form);
+
+            // 서버로 데이터 전송
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Object.fromEntries(formData)), // FormData를 JSON 형식으로 변환
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // 응답 처리
+                    alert(data); // 서버로부터 받은 응답을 알림으로 표시
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
 
 
 
