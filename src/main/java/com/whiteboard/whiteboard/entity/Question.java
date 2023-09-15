@@ -28,8 +28,8 @@ public class Question extends BaseEntity{ //작성일,수정일은 BaseEntity로
     private Long from;//질문번호
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "writer_id")
-	private Member writer; //작성자 : Member 엔티티의 id 컬럼
+    @JoinColumn(name = "writer_email")
+	private Member writer; //작성자 : Member 엔티티의 email 컬럼
 
     @Column(nullable = false)
     private String title;//제목

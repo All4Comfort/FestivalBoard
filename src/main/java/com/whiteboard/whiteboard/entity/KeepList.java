@@ -27,8 +27,8 @@ public class KeepList {
 	private Long keepNum;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_writer")
-	private Member writer; // 회원아이디
+	@JoinColumn(name = "writer_email")
+	private Member writer; // 축제글을 담은 회원 email
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "from_festival_num")

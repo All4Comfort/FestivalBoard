@@ -25,10 +25,12 @@ public class SecurityConfig {
     ////whiteboard의 모든 페이지의 기본값으로 스프링 시큐리티 기능 비활성화 메서드
     //인증을 위해 필요(?)
     @Bean
-    public WebSecurityCustomizer inactvatSecurity() {
-        return (web) -> web.ignoring() //비활성화메서드
+    public WebSecurityCustomizer inactvatSecurity() { 
+        //WebSecurityCustomizer는 Spring Security의 설정을 사용자 정의하기 위한 함수형 인터페이스
+
+        return (web) -> web.ignoring() //web 파라미터는 WebSecurity 객체
                 //.requestMatchers(toH2Console())
-                .requestMatchers("/whiteboard/**");
+                .requestMatchers("/whiteboard/**"); ///whiteboard/" 경로로 시작하는 모든 요청을 무시하도록 설정
                 
     }
     

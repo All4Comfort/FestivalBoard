@@ -28,8 +28,8 @@ public class Review extends BaseEntity {
    private Long from; //리뷰번호
    
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(nullable = false, name = "writer_id")
-   private Member writer; //작성자 : Member 엔티티의 id 컬럼
+   @JoinColumn(nullable = false, name = "writer_email")
+   private Member writer; //작성자 : Member 엔티티의 email 컬럼
 
    @Column(nullable = false)
    private String title; //제목

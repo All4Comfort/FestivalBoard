@@ -38,8 +38,8 @@ public class ReviewReply extends BaseEntity{
 	private int replyStep;//댓글순서
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "writer_id")
-	private Member writer; //작성자 : Member 엔티티의 id 컬럼
+	@JoinColumn(name = "writer_email")
+	private Member writer; //작성자 : Member 엔티티의 email 컬럼
 
 	@Column(nullable = false)
 	private String content;//내용
