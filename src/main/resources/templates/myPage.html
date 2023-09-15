@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko"  xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-	<h1>회원(member)만 접근 가능한 페이지</h1>
+  
+<h3 class="overview-normalize">이름</h3>
+<p th:text="${loginName}"></p>
+<hr/>
+<h3 class="overview-normalize">접속 아이디</h3>
+<p th:text="${loginId}"></p>
+<hr/>
+<h3 class="overview-normalize">역할</h3>
+<p th:text="${loginRoles}"></p>
+<hr/>
+<h3 class="overview-normalize">전화번호</h3>
+<p th:text="${phoneNumber}"></p>
+<hr/>
+<h3 class="overview-normalize">생일</h3>
+<p th:text="${birthDay}"></p>
+<hr/>
+<h3 class="overview-normalize">닉네임</h3>
+<p th:text="${nickname}"></p>
+<hr/>
+
 </body>
 </html>
