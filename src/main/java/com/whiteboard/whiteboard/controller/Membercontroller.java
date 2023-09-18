@@ -1,9 +1,10 @@
 package com.whiteboard.whiteboard.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -114,12 +115,11 @@ public class Membercontroller {
     }
 
     @PostMapping("/registerMember")
-    public ResponseEntity<String> memberRegister(@RequestBody Member member) {
+    public ResponseEntity<?> memberRegister(@RequestBody Member member) {
         String email = member.getEmail();
         String phoneNum = member.getPhoneNum();
         String nickname = member.getNickname();
         String name = member.getName();
-        String pw = member.getPw();
 
         // 이메일, 전화번호, 닉네임 중복 확인
         if (memberService.isEmailRegistered(email)) {
@@ -137,11 +137,16 @@ public class Membercontroller {
         // 회원가입 메서드 호출
         memberService.memberRegister(member);
 
-        // 회원가입이 성공하면 회원가입 축하 메시지와 함께 로그인 페이지로 리디렉션
-        String successMessage = name + "님, 회원가입 축하드립니다.";
-        return ResponseEntity.status(HttpStatus.FOUND)
-                .header(HttpHeaders.LOCATION, "/login")
-                .body(successMessage);
+        // // 회원가입이 성공하면 회원가입 축하 메시지와 함께 로그인 페이지로 리디렉션
+        // String successMessage = name + "님, 회원가입 축하드립니다.";
+        // return ResponseEntity.status(HttpStatus.FOUND)
+        //         .header(HttpHeaders.LOCATION, "/login")
+        //         .body(successMessage);
+
+          // 회원가입이 성공하면 JSON 응답 반환
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        return ResponseEntity.ok(response);
     }
 
 }
