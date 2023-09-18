@@ -4,7 +4,6 @@ package com.whiteboard.whiteboard.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -86,24 +85,46 @@ public class Membercontroller {
         return "user";
     }
 
+//시큐리티 때 활용할 회원가입..
+//     //회원가입 창 가져오기
+//     @GetMapping("/registerMember")
+//     public ModelAndView showRegistrationForm(){
+//         return new ModelAndView("registerMember");
+//     }
 
-    //회원가입
+//  // 회원가입
+// @PostMapping("/registerMember")
+// public ResponseEntity<String> registerMember(@RequestBody Member member) {
+//     // 회원 정보를 저장하고 결과를 반환
+//     try {
+//         memberRepository.save(member);
+//         return ResponseEntity.ok("회원 가입이 완료되었습니다.");
+//     } catch (Exception e) {
+//         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 가입 중 오류가 발생했습니다.");
+//     }
+// }
+
+
+@Autowired
+    private MemberService memberService;
+
+    //회원가입창 가져오기
     @GetMapping("/registerMember")
     public ModelAndView showRegistrationForm(){
         return new ModelAndView("registerMember");
+     }
+
+
+
+     @PostMapping("/registerMember")
+    public ResponseEntity<String> registerMember(@RequestBody MemberDTO memberDTO) {
+        //회원가입 메서드 호출.
+        String email = memberService.memberRegister(memberDTO);
+        return ResponseEntity.ok("회원 가입이 완료되었습니다. 회원 이메일: " + email);
     }
 
- // 회원가입
-@PostMapping("/registerMember")
-public ResponseEntity<String> registerMember(@RequestBody Member member) {
-    // 회원 정보를 저장하고 결과를 반환
-    try {
-        memberRepository.save(member);
-        return ResponseEntity.ok("회원 가입이 완료되었습니다.");
-    } catch (Exception e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 가입 중 오류가 발생했습니다.");
-    }
-}
+
+
 }
 
 
