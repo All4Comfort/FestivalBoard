@@ -46,7 +46,7 @@ public class Membercontroller {
 
         return "login";
     }
-    @PostMapping("/login-process")
+    @PostMapping("login")
     public String login (MemberDTO dto){
         boolean isValidMember = MemberService.isValidMember(dto.getEmail(),dto.getPw());
         if(isValidMember)

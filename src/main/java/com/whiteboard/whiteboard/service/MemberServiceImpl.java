@@ -2,7 +2,6 @@ package com.whiteboard.whiteboard.service;
 
 import java.util.Optional;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.whiteboard.whiteboard.dto.MemberDTO;
@@ -17,7 +16,7 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
-    private final PasswordEncoder passwordEncoder;
+    //private final PasswordEncoder passwordEncoder;
 
     // 회원가입
     @Override
