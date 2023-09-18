@@ -14,14 +14,14 @@ import lombok.Getter;
 @EntityListeners(value = {AuditingEntityListener.class})
 @Getter
 //공통 컬럼을 정의한 엔티티로, 자체 테이블 생성하지 않고 다른 테이블에 컬럼을 상속함. 
-public class BaseEntity {
+public abstract class BaseEntity {
 	
 	@CreatedDate //해당 필드 즉 컬럼에 날짜값이 자동 반영되도록 선언
-	@Column(name = "registerDate", updatable = false)
+	@Column(updatable = false)
 	//DB에 registerDate 컬럼 생성하도록 선언 및 값이 처음 insert 이후엔 자동 update 불가하도록 설정
 	private LocalDateTime registerDate; //작성일
 	
 	@CreatedDate 
-	@Column(name = "modifyDate")
+	@Column
 	private LocalDateTime modifyDate; //수정일
 }
