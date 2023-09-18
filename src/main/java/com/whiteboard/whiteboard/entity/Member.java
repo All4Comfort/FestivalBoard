@@ -134,4 +134,10 @@ public boolean isEnabled() {
 	return true;
 }
 
+
+//일단 주석..
+// public static Member createUser(String email, String pw , PasswordEncoder passwordEncoder){
+// 	return new Member(null, email, passwordEncoder.encode(pw), "USER");
+
 }
+

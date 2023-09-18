@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.whiteboard.whiteboard.dto.MemberDTO;
@@ -67,7 +67,7 @@ public class Membercontroller {
         this.memberRepository = memberRepository;
     }
 
-     MemberRepository memberRepository;
+    private MemberRepository memberRepository;
 
     @GetMapping("/user")
     public String dashBoardPage(@AuthenticationPrincipal UserDetails user, Model model) {
@@ -93,17 +93,39 @@ public class Membercontroller {
         return new ModelAndView("registerMember");
     }
 
-    //회원가입
-    @PostMapping("/registerMember")
-    public ResponseEntity<String> registerMember(@RequestBody Member member) {
-        // 회원 정보를 저장하고 결과를 반환
-        try {
-            memberRepository.save(member);
-            return ResponseEntity.ok("회원 가입이 완료되었습니다.");
-            
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 가입 중 오류가 발생했습니다.");
-        }
+    // 회원가입
+@PostMapping("/registerMember")
+public ResponseEntity<String> registerMember(
+        @RequestParam String email,
+        @RequestParam String pw,
+        @RequestParam String name,
+        @RequestParam String nickname,
+        @RequestParam String gender,
+        @RequestParam String birthDay,
+        @RequestParam String phoneNumber) {
+    // 회원 정보를 저장하고 결과를 반환
+    try {
+        Member member = new Member();
+        member.s(email);
+        member.setPw(pw);
+        member.setName(name);
+        member.setNickname(nickname);
+        member.setGender(gender);
+        member.setBirthDay(birthDay);
+        member.setPhoneNumber(phoneNumber);
+
+        memberRepository.save(member);
+        
+        return ResponseEntity.ok("회원 가입이 완료되었습니다.");
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 가입 중 오류가 발생했습니다.");
     }
+}
+
+
+
+
+
+
 
 }
