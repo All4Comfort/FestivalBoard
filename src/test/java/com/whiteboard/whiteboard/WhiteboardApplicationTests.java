@@ -164,7 +164,7 @@ void contextLoads() {
 						 .nickname("닉네임" + i)
 						 .phoneNum("010-0000-000" + i)
 						 .gender("남")
-						 .birthDay(LocalDate.parse("200"+i+"-01-01"))
+						 .birthDay(LocalDate.parse("2000-01-01"))
 						 .isSns(false)
 						 .build();
 		 memberRepository.save(member);
