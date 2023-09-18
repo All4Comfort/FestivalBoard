@@ -24,6 +24,8 @@ public interface MemberService {
         return false;
     }
 
+    // 이메일 중복 확인 메서드
+    public boolean isEmailAlreadyExists(String email);
  
 
 
