@@ -32,7 +32,9 @@ public class MemberServiceImpl implements MemberService {
                 .name(memberDTO.getName())
                 .isSns(memberDTO.isSns())
                 .build();
+            // 회원 정보를 저장        
         memberRepository.save(member);
+
         return member.getEmail();
     }
 
