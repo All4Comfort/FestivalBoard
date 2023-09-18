@@ -22,15 +22,15 @@ public class MemberServiceImpl implements MemberService {
     public String memberRegister(Member member) {
 
         // Member member = Member.builder()
-        //         .email(memberDTO.getEmail())
-        //         .pw(memberDTO.getPw())
-        //         .phoneNum(memberDTO.getPhoneNum())
-        //         .nickname(memberDTO.getNickname())
-        //         .gender(memberDTO.getGender())
-        //         .birthDay(memberDTO.getBirthDay())
-        //         .name(memberDTO.getName())
-        //         .isSns(memberDTO.isSns())
-        //         .build();
+        // .email(memberDTO.getEmail())
+        // .pw(memberDTO.getPw())
+        // .phoneNum(memberDTO.getPhoneNum())
+        // .nickname(memberDTO.getNickname())
+        // .gender(memberDTO.getGender())
+        // .birthDay(memberDTO.getBirthDay())
+        // .name(memberDTO.getName())
+        // .isSns(memberDTO.isSns())
+        // .build();
         // 회원 정보를 저장
         memberRepository.save(member);
 
@@ -83,6 +83,15 @@ public class MemberServiceImpl implements MemberService {
         } else {
             return false; // 중복된 닉네임이 없음을 나타내는 false 반환
         }
+    }
+
+   @Override
+    public Optional<Member> login(String email, String pw) {
+        // 이메일로 사용자 검색
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+
+        // 사용자가 존재하고 비밀번호가 일치하는 경우 Optional<Member> 반환
+        return optionalMember.filter(member -> member.getPw().equals(pw));
     }
 
 }
