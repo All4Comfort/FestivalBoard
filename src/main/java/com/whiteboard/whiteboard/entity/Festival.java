@@ -36,7 +36,7 @@ public class Festival extends BaseEntity {
 	private String period; // 기간
 
 	//@Column(nullable = false)
-	private String state; // 진행상태
+	private String state; // 진행상태 : 진행예정, 진행중, 종료
 
 	private String description; // 설명(묘사)
 
