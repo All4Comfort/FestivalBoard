@@ -43,6 +43,7 @@ public class Member extends BaseEntity{ //security설정을 위해 UserDetail �
 	@Column(nullable = false)
 	private LocalDate birthDay; //생년월일
 
+	@Column(nullable = false)
 	private boolean isSns; //소셜계정 인증을 통한 가입 여부
 	
 	// 여기에 비밀번호 업데이트 로직을 추가할 수 있음

@@ -1,16 +1,16 @@
-package com.whiteboard.whiteboard.entity;
+// package com.whiteboard.whiteboard.entity;
 
-import lombok.Getter;
+// import lombok.Getter;
 
-@Getter
-public enum AuthoritySet {
+// @Getter
+// public enum AuthoritySet {
 
-    ADMIN("ROLE_ADMIN"),
-    USER("ROLE_USER");
+//     ADMIN("ROLE_ADMIN"),
+//     USER("ROLE_USER");
 
-    AuthoritySet(String value) {
-        this.value = value;
-    }
+//     AuthoritySet(String value) {
+//         this.value = value;
+//     }
 
-    private String value;
-}
+//     private String value;
+// }
