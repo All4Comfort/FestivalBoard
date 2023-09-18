@@ -247,7 +247,11 @@
                         return response.json(); // JSON 형식의 응답을 파싱
                     } else {
                         // 오류 응답 처리
-                        throw new Error('회원가입 요청이 실패하였습니다.');
+                        return response.text().then(errorText => {
+                            // 서버에서 반환한 텍스트 오류 메시지를 사용하여 처리
+                            alert("회원가입 실패: " + errorText);
+                            throw new Error('회원가입 요청이 실패하였습니다.');
+                        });
                     }
                 })
                 .then(data => {
@@ -256,22 +260,6 @@
                         // 회원가입 성공 처리
                         alert("회원가입 성공");
                         window.location.href = '/login'; // 로그인 페이지로 리디렉션
-                    } else {
-                        // 회원가입 실패 처리
-                        if (data.error) {
-                            // 서버에서 반환한 오류 메시지를 사용하여 처리
-                            if (data.error === 'email_already_exists') {
-                                alert("회원가입 실패: 이미 존재하는 이메일 주소입니다.");
-                            } else if (data.error === 'phone_number_already_exists') {
-                                alert("회원가입 실패: 이미 존재하는 전화번호입니다.");
-                            } else if (data.error === 'nickname_already_exists') {
-                                alert("회원가입 실패: 이미 존재하는 닉네임입니다.");
-                            } else {
-                                alert("회원가입 실패: 서버 오류");
-                            }
-                        } else {
-                            alert("회원가입 실패: 서버 오류");
-                        }
                     }
                 })
                 .catch(error => {
@@ -281,6 +269,7 @@
                 });
         });
     </script>
+
 
 
 
