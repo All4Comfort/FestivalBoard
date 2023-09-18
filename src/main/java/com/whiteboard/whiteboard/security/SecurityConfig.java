@@ -30,7 +30,11 @@ public class SecurityConfig {
         //WebSecurityCustomizer는 Spring Security의 설정을 사용자 정의하기 위한 함수형 인터페이스
 
         return (web) -> web.ignoring() //web 파라미터는 WebSecurity 객체
+<<<<<<< HEAD
                 .requestMatchers("/main", "//**", "/view/join", "/auth/join","/login","/registerMember","/**");
+=======
+                .requestMatchers("/main", "//**", "/login", "/registerMember");
+>>>>>>> 54ffdf02b8d6530373d1211b6f8ae26e60157d20
                 ///whiteboard/" 경로로 시작하는 모든 url은 인증, 인가 없이 접근 가능
                 
     }
