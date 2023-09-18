@@ -53,7 +53,7 @@ public class MemberServiceImpl implements MemberService {
     public Optional<Member> findOne(String email){
         return memberRepository.findByEmail(email);
     }
-
+    //이메일 중복 검사 TEST
 	@Override
 	public boolean isEmailAlreadyExists(String email) {
         Optional<Member> existingMember = memberRepository.findByEmail(email);
