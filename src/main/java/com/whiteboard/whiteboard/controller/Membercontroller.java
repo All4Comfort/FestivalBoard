@@ -119,6 +119,7 @@ public class Membercontroller {
         String phoneNum = member.getPhoneNum();
         String nickname = member.getNickname();
         String name = member.getName();
+        String pw = member.getPw();
 
         // 이메일, 전화번호, 닉네임 중복 확인
         if (memberService.isEmailRegistered(email)) {
