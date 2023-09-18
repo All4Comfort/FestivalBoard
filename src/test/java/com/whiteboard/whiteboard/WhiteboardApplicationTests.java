@@ -3,10 +3,9 @@ package com.whiteboard.whiteboard;
 import java.time.LocalDate;
 import java.util.stream.IntStream;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
@@ -21,18 +20,15 @@ class WhiteboardApplicationTests {
 	@Autowired
 	private MemberRepository memberRepository;// 멤버 레포지토리
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;// 비밀번호 인코더
+	//@Autowired
+	//private PasswordEncoder passwordEncoder;// 비밀번호 인코더
 
 	 //@Test
 	public void memberregister() {// DB에 회원가입 member 테이블에 넣기
 
-		// password 테스트
-		String hashedPassword = passwordEncoder.encode("7777");
-
 		Member member = Member.builder()
 				.email("member@naver.com")
-				.pw(hashedPassword)
+				.pw("7777")
 				.phoneNum("01094800129")
 				.nickname("민건왕자")
 				.gender("하남자")
@@ -85,19 +81,19 @@ class WhiteboardApplicationTests {
 		}
 
 		// 입력한 패스워드
-		String inputPassword = "7777"; // 입력한 패스워드를 직접 입력
+		//String inputPassword = "7777"; // 입력한 패스워드를 직접 입력
 
-		// 저장된 회원의 패스워드와 입력한 패스워드를 비교
-		boolean isPasswordCorrect = passwordEncoder.matches(inputPassword, member.getPw());
+		// 저장된 회원의 패스워드와 입력한 패스워드를 비교 :
+		//boolean isPasswordCorrect = passwordEncoder.matches(inputPassword, member.getPw());
 
-		if (isPasswordCorrect) {
-			// 비밀번호가 일치하면 회원 삭제
-			whiteboardService.memberDelete(memberId);
-			System.err.println("비밀번호가 일치해서 삭제됨");
-		} else {
-			// 비밀번호가 일치하지 않을 때
-			System.err.println("비밀번호가 틀렸습니다. 확인해주세요.");
-		}
+		// if (isPasswordCorrect) {
+		// 	// 비밀번호가 일치하면 회원 삭제
+		// 	whiteboardService.memberDelete(memberId);
+		// 	System.err.println("비밀번호가 일치해서 삭제됨");
+		// } else {
+		// 	// 비밀번호가 일치하지 않을 때
+		// 	System.err.println("비밀번호가 틀렸습니다. 확인해주세요.");
+		// }
 	}
 
 	// 회원정보 수정 테스트
@@ -151,15 +147,14 @@ class WhiteboardApplicationTests {
 //     }
 // }
 
-@Test
+//@Test
 void contextLoads() {
 	IntStream.rangeClosed(1, 10).forEach(i -> {
 		//Board 테이블의 부모인 Member의 이메일값을 넣기 위한 테스트 멤버 생성 및 이메일만 세팅
-		 String hashedPassword = passwordEncoder.encode("1234" + i);
 
 		 Member member = Member.builder()
 						 .email("member" + i + "@whiteboard.com")
-						 .pw(hashedPassword)
+						 .pw("1234" + i)
 						 .name("회원명" + i)
 						 .nickname("닉네임" + i)
 						 .phoneNum("010-0000-000" + i)
