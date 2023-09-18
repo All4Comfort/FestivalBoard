@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="UTF-8">
 
 <head>
@@ -11,6 +12,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <!--부트스트랩-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
 
 
     <style>
@@ -47,7 +52,7 @@
         <div class="input-form-backgroud row">
             <div class="input-form col-md-12 mx-auto">
                 <h4 class="mb-3">회원가입</h4>
-                <form class="validation-form" novalidate id="registration-form">
+                <form class="validation-form" novalidate id="registration-form" action="/registerMember" method="post">
                     <div class="mb-3">
                         <label for="email">이메일 (로그인 ID)</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="" required>
@@ -215,7 +220,7 @@
 
             const form = this;
 
-            // 폼의 각 필드에서 값을 가져와 JSON 객체를 만듭니다.
+            // 폼의 각 필드에서 값을 가져와 객체를 만듭니다.
             const data = {
                 email: form.querySelector('#email').value,
                 pw: form.querySelector('#pw').value,
@@ -227,46 +232,59 @@
             };
 
             // 서버로 데이터 전송
+            // POST 요청을 보냅니다.
             fetch('/registerMember', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json', // JSON 형식으로 데이터 전송
                 },
-                body: JSON.stringify(data),
+                body: JSON.stringify(data), // 데이터를 JSON 문자열로 변환하여 전송
             })
-                .then(response => response.json())
-                .then(data => {
-                    // 응답 처리
-                    if (data.success) {
-                        // 회원가입이 성공한 경우
-                        if (confirm("회원가입이 완료되었습니다. 로그인 페이지로 이동하시겠습니까?")) {
-                            // 사용자가 확인을 누른 경우 login.html 페이지로 이동
-                            window.location.href = 'login.html';
-                        }
+                .then(response => {
+                    // 서버 응답을 처리합니다.
+                    if (response.ok) {
+                        // 성공적인 응답 처리
+                        return response.json(); // JSON 형식의 응답을 파싱
                     } else {
-                        alert("회원가입 실패: " + data.message);
+                        // 오류 응답 처리
+                        throw new Error('회원가입 요청이 실패하였습니다.');
+                    }
+                })
+                .then(data => {
+                    // 서버 응답 데이터를 처리합니다.
+                    if (data.success) {
+                        // 회원가입 성공 처리
+                        alert("회원가입 성공");
+                        window.location.href = '/login'; // 로그인 페이지로 리디렉션
+                    } else {
+                        // 회원가입 실패 처리
+                        if (data.error) {
+                            // 서버에서 반환한 오류 메시지를 사용하여 처리
+                            if (data.error === 'email_already_exists') {
+                                alert("회원가입 실패: 이미 존재하는 이메일 주소입니다.");
+                            } else if (data.error === 'phone_number_already_exists') {
+                                alert("회원가입 실패: 이미 존재하는 전화번호입니다.");
+                            } else if (data.error === 'nickname_already_exists') {
+                                alert("회원가입 실패: 이미 존재하는 닉네임입니다.");
+                            } else {
+                                alert("회원가입 실패: 서버 오류");
+                            }
+                        } else {
+                            alert("회원가입 실패: 서버 오류");
+                        }
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
+                    // 오류 처리
+                    console.error('에러:', error);
+                    alert("회원가입 실패: 서버 오류");
                 });
         });
-
-
-        // 이메일 중복 검사를 수행하는 함수
-        async function checkEmailExists(email) {
-            const response = await fetch(`/checkEmail?email=${email}`);
-            const data = await response.json();
-            return data.exists;
-        }
-
     </script>
 
 
-    <!--부트스트랩-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
+
+
 </body>
 
 </html>
