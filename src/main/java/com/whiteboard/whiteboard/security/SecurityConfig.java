@@ -30,11 +30,7 @@ public class SecurityConfig {
         //WebSecurityCustomizer는 Spring Security의 설정을 사용자 정의하기 위한 함수형 인터페이스
 
         return (web) -> web.ignoring() //web 파라미터는 WebSecurity 객체
-<<<<<<< HEAD
-                .requestMatchers("/main", "//**", "/view/join", "/auth/join","/login","/registerMember","/**");
-=======
-                .requestMatchers("/main", "//**", "/login", "/registerMember");
->>>>>>> 54ffdf02b8d6530373d1211b6f8ae26e60157d20
+                .requestMatchers("/","/main", "//**", "/login", "/registerMember");
                 ///whiteboard/" 경로로 시작하는 모든 url은 인증, 인가 없이 접근 가능
                 
     }
@@ -55,7 +51,7 @@ public class SecurityConfig {
         .loginProcessingUrl("/login-process") //로그인 성공 시 이동 경로
         .usernameParameter("email")
         .passwordParameter("pw")
-        .defaultSuccessUrl("/user", true) //로그인 성공 시 리다이렉트할 URL
+        .defaultSuccessUrl("/main", true) //로그인 성공 시 리다이렉트할 URL
         .permitAll()
         ) // 로그인 페이지와 로그인 처리 URL은 모든 사용자에게 접근을 허용
         .logout() //로그아웃 설정 구성

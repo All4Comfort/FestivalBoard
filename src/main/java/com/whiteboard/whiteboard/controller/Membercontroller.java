@@ -6,15 +6,14 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.entity.Member;
@@ -26,15 +25,21 @@ import com.whiteboard.whiteboard.service.MemberService;
 public class Membercontroller {
     
 
-    @GetMapping("/main")
+
+    @GetMapping({"/",""})//모든 요청에서 메인으로 갈수있게.
     public String main(){
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        String userName = auth.getName();
-
         return "main";
     }
+
+    // @GetMapping("/main")
+    // public String main(){
+
+    //     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+    //     String userName = auth.getName();
+
+    //     return "main";
+    // }
 
     @GetMapping("/login")
     public String loging(){
@@ -45,8 +50,8 @@ public class Membercontroller {
     public String login (MemberDTO dto){
         boolean isValidMember = MemberService.isValidMember(dto.getEmail(),dto.getPw());
         if(isValidMember)
-         return "dashBoard";
-        return "login";
+         return "main.";
+        return "login.html";
     }
 
     // @GetMapping("/user")
@@ -81,13 +86,21 @@ public class Membercontroller {
         return "user";
     }
 
+
     //회원가입
-    @PostMapping("/register")
+    @GetMapping("/registerMember")
+    public ModelAndView showRegistrationForm(){
+        return new ModelAndView("registerMember");
+    }
+
+    //회원가입
+    @PostMapping("/registerMember")
     public ResponseEntity<String> registerMember(@RequestBody Member member) {
         // 회원 정보를 저장하고 결과를 반환
         try {
             memberRepository.save(member);
             return ResponseEntity.ok("회원 가입이 완료되었습니다.");
+            
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("회원 가입 중 오류가 발생했습니다.");
         }

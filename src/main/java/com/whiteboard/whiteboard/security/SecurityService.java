@@ -26,8 +26,12 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class SecurityService implements UserDetailsService {
 
+    
     //@RequiredArgsConstructor로 MemberRepository 인스턴스를 주입받아 이 클래스에서 사용
     private final MemberRepository memberRepository;
+
+   
+    
 
     //UserDetailsService 인터페이스의 메서드로, 인증을 수행할 때 호출
     //파라미터는 User객체의 username 즉 회원의 PK인 email로 받아야 한다.
