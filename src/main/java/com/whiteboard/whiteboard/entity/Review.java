@@ -25,7 +25,7 @@ public class Review extends BaseEntity {
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private Long from; //리뷰번호
+   private Long reviewNum; //리뷰번호
    
    @ManyToOne(fetch = FetchType.LAZY)
    @JoinColumn(nullable = false, name = "writer_email")
@@ -37,10 +37,10 @@ public class Review extends BaseEntity {
    @Column(nullable = false)
    private String content; //내용
 
-   @Column(name = "read_count")
+   @Column(name = "read_count", nullable = false, columnDefinition = "integer default 0")
    private Long readCount; //조회수
 
-   @Column(name = "good_count")
+   @Column(name = "good_count", nullable = false, columnDefinition = "integer default 0")
    private Long goodCount; //좋아요 수
    
    @ManyToOne(fetch = FetchType.LAZY)

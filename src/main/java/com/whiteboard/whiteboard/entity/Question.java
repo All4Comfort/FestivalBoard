@@ -25,7 +25,7 @@ public class Question extends BaseEntity{ //작성일,수정일은 BaseEntity로
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long from;//질문번호
+    private Long questionNum;//질문번호
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_email")
