@@ -1,6 +1,7 @@
 package com.whiteboard.whiteboard;
 
 import java.time.LocalDate;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,5 +150,25 @@ class WhiteboardApplicationTests {
 //         System.err.println("비밀번호가 틀렸습니다. 확인해주세요.");
 //     }
 // }
+
+@Test
+void contextLoads() {
+	IntStream.rangeClosed(1, 10).forEach(i -> {
+		//Board 테이블의 부모인 Member의 이메일값을 넣기 위한 테스트 멤버 생성 및 이메일만 세팅
+		 String hashedPassword = passwordEncoder.encode("1234" + i);
+
+		 Member member = Member.builder()
+						 .email("member" + i + "@whiteboard.com")
+						 .pw(hashedPassword)
+						 .name("회원명" + i)
+						 .nickname("닉네임" + i)
+						 .phoneNum("010-0000-000" + i)
+						 .gender("남")
+						 .birthDay(LocalDate.parse("200"+i+"-01-01"))
+						 .isSns(false)
+						 .build();
+		 memberRepository.save(member);
+	 });
+}
 
 }
