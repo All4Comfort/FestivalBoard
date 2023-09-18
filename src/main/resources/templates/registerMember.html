@@ -205,44 +205,54 @@
                 }, false);
             });
         }, false);
+
+
     </script>
 
-<script>
-    document.getElementById('registration-form').addEventListener('submit', function (event) {
-        event.preventDefault(); // 폼의 기본 동작을 중지
+    <script>
+        document.getElementById('registration-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // 폼의 기본 동작을 중지
 
-        const form = this;
+            const form = this;
 
-        // 폼의 각 필드에서 값을 가져와 JSON 객체를 만듭니다.
-        const data = {
-            email: form.querySelector('#email').value,
-            pw: form.querySelector('#pw').value,
-            phoneNum: form.querySelector('#phoneNum').value,
-            gender: form.querySelector('#gender').value,
-            birthDay: form.querySelector('#birthDay').value,
-            name: form.querySelector('#name').value,
-            nickname: form.querySelector('#nickname').value,
-            // 나머지 필드들도 포함
-        };
+            // 폼의 각 필드에서 값을 가져와 JSON 객체를 만듭니다.
+            const data = {
+                email: form.querySelector('#email').value,
+                pw: form.querySelector('#pw').value,
+                phoneNum: form.querySelector('#phoneNum').value,
+                gender: form.querySelector('#gender').value,
+                birthDay: form.querySelector('#birthDay').value,
+                name: form.querySelector('#name').value,
+                nickname: form.querySelector('#nickname').value,
+                // 나머지 필드들도 포함
+            };
 
-        // 서버로 데이터 전송
-        fetch('/registerMember', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response => response.json())
-            .then(data => {
-                // 응답 처리
-                alert(data); // 서버로부터 받은 응답을 알림으로 표시
+            // 서버로 데이터 전송
+            fetch('/registerMember', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
             })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    });
-</script>
+                .then(response => response.json())
+                .then(data => {
+                    // 응답 처리
+                    alert("회원가입 성공"); // 서버로부터 받은 응답을 알림으로 표시
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+        // 이메일 중복 검사를 수행하는 함수
+        async function checkEmailExists(email) {
+            const response = await fetch(`/checkEmail?email=${email}`);
+            const data = await response.json();
+            return data.exists;
+        }
+
+    </script>
 
 
     <!--부트스트랩-->

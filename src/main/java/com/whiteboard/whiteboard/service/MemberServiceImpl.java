@@ -54,6 +54,13 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findByEmail(email);
     }
 
+	@Override
+	public boolean isEmailAlreadyExists(String email) {
+        Optional<Member> existingMember = memberRepository.findByEmail(email);
+        return existingMember.isPresent();
+	}
+
+
     
 
 }
