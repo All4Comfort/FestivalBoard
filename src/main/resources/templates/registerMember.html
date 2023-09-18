@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="UTF-8">
 
 <head>
     <meta charset="UTF-8">
@@ -50,7 +50,7 @@
                 <form class="validation-form" novalidate id="registration-form">
                     <div class="mb-3">
                         <label for="email">이메일 (로그인 ID)</label>
-                        <input type="email" class="form-control" id="email" placeholder="" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="" required>
                         <div class="invalid-feedback">
                             올바른 이메일 주소를 입력하세요.
                         </div>
@@ -58,14 +58,16 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="name">이름</label>
-                            <input type="text" class="form-control" id="name" placeholder="" value="" required>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="" value=""
+                                required>
                             <div class="invalid-feedback">
                                 이름은 2글자 이상의 한글 또는 영문 대/소문자만 허용됩니다.
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="nickname">별명</label>
-                            <input type="text" class="form-control" id="nickname" placeholder="" value="" required>
+                            <input type="text" class="form-control" id="nickname" name="nickname" placeholder=""
+                                value="" required>
                             <div class="invalid-feedback">
                                 별명을 입력해주세요.
                             </div>
@@ -73,7 +75,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="pw">비밀번호</label>
-                        <input type="password" class="form-control" id="pw" placeholder="" required>
+                        <input type="password" class="form-control" id="pw" name="pw" placeholder="" required>
                         <div class="invalid-feedback">
                             비밀번호를 입력해주세요
                         </div>
@@ -87,16 +89,16 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="phoneNumber">전화번호</label>
-                            <input type="tel" class="form-control" id="phoneNumber" placeholder="-없이 입력해 주세여" value=""
-                                required>
+                            <label for="phoneNum">전화번호</label>
+                            <input type="tel" class="form-control" id="phoneNum" name="phoneNum"
+                                placeholder="-없이 입력해 주세여" required>
                             <div class="invalid-feedback">
                                 휴대전화 번호는 숫자 10자 또는 11자로 입력하세요.
                             </div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="root">성별</label>
-                            <select class="custom-select d-block w-100" id="root">
+                            <label for="gender">성별</label>
+                            <select class="custom-select d-block w-100" name="gender" id="gender">
                                 <option>남자</option>
                                 <option>여자</option>
                             </select>
@@ -106,8 +108,8 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="birth_day">생년월일</label>
-                        <input type="date" class="form-control" id="birth_day" placeholder="" required>
+                        <label for="birthDay">생년월일</label>
+                        <input type="date" class="form-control" id="birthDay" name="birthDay" placeholder="" required>
                         <div class="invalid-feedback">
                             생년월일을 선택해주세요
                         </div>
@@ -166,7 +168,7 @@
                     }
 
                     // 휴대전화 번호 입력란의 값을 가져옴
-                    const phoneNumberInput = form.querySelector('#phoneNumber');
+                    const phoneNumberInput = form.querySelector('#phoneNum');
                     let phoneNumberValue = phoneNumberInput.value;
 
                     // 입력된 값에서 하이픈 제거
@@ -205,17 +207,31 @@
         }, false);
     </script>
 
-   <script>
+<script>
     document.getElementById('registration-form').addEventListener('submit', function (event) {
         event.preventDefault(); // 폼의 기본 동작을 중지
 
         const form = this;
-        const formData = new FormData(form);
+
+        // 폼의 각 필드에서 값을 가져와 JSON 객체를 만듭니다.
+        const data = {
+            email: form.querySelector('#email').value,
+            pw: form.querySelector('#pw').value,
+            phoneNum: form.querySelector('#phoneNum').value,
+            gender: form.querySelector('#gender').value,
+            birthDay: form.querySelector('#birthDay').value,
+            name: form.querySelector('#name').value,
+            nickname: form.querySelector('#nickname').value,
+            // 나머지 필드들도 포함
+        };
 
         // 서버로 데이터 전송
         fetch('/registerMember', {
             method: 'POST',
-            body: formData, // FormData를 그대로 전송
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
         })
             .then(response => response.json())
             .then(data => {
@@ -227,14 +243,6 @@
             });
     });
 </script>
-
-
-
-
-
-
-
-
 
 
     <!--부트스트랩-->
