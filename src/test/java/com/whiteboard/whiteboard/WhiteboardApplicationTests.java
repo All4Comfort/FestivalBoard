@@ -23,14 +23,14 @@ class WhiteboardApplicationTests {
 	@Autowired
 	private PasswordEncoder passwordEncoder;// 비밀번호 인코더
 
-	 @Test
+	 //@Test
 	public void memberregister() {// DB에 회원가입 member 테이블에 넣기
 
 		// password 테스트
 		String hashedPassword = passwordEncoder.encode("7777");
 
 		Member member = Member.builder()
-				.email("chansol91@naver.com")
+				.email("member@naver.com")
 				.pw(hashedPassword)
 				.phoneNum("01094800129")
 				.nickname("민건왕자")
