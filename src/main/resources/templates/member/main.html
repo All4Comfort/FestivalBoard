@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -71,6 +71,9 @@
                     </ul>
                 </li>
                 <li class="nav-item">
+                    <!-- session 추가 -->
+                    session 값 확인 : <p th:text="${session.loginEmail}"></p>
+                    <!-- 세션 추가-->
                     <a class="nav-link" id="login-link" href="#scrollspyHeading5"><svg
                             xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
                             viewBox="0 0 16 16">
@@ -179,7 +182,7 @@
                 event.preventDefault(); // 기본 동작 방지
 
                 // 로그인 페이지로 이동
-                window.location.href = "/login";
+                window.location.href = "/member/login";
             } else {
                 // 로그인 정보가 있을 경우 해당 섹션으로 이동
                 var scrollspyHeading5 = document.getElementById('scrollspyHeading5');
@@ -213,7 +216,7 @@
                 event.preventDefault(); // 기본 동작 방지
 
                 // 로그인 정보가 있으면 마이페이지로 이동
-                window.location.href = "/mypage";
+                window.location.href = "/member/mypage";
             });
         }
     });

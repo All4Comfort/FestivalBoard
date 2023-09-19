@@ -31,7 +31,7 @@ public class MemberController {
     @Autowired
     private final MemberRepository memberRepository;
 
-    @GetMapping({ "/", "" }) // 모든 요청에서 메인으로 갈수있게.
+    @GetMapping({ "/", "", "main" }) // 모든 요청에서 메인으로 갈수있게.
     public String main() {
         return "/member/main";
     }
@@ -52,7 +52,7 @@ public class MemberController {
         return "/member/login";
     }
 
-    @PostMapping("/member/login-process")
+    @PostMapping("/member/login")
     public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
             HttpSession session, Model model) {
         // 이메일과 비밀번호를 사용하여 로그인 검증
@@ -66,7 +66,7 @@ public class MemberController {
         } else {
             // 로그인 실패
             model.addAttribute("loginError", true);
-            return "login"; // 로그인 페이지로 다시 이동
+            return "/member/login"; // 로그인 페이지로 다시 이동
         }
     }
 
@@ -121,7 +121,7 @@ public class MemberController {
     // 회원가입창 가져오기
     @GetMapping("/member/registerMember")
     public ModelAndView showRegistrationForm() {
-        return new ModelAndView("registerMember");
+        return new ModelAndView("/member/registerMember");
     }
 
     @PostMapping("/member/registerMember")

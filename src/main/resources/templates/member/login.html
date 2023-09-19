@@ -173,7 +173,7 @@
             sessionStorage.setItem('username', username);
 
             // 로그인 후 Main.html로 이동
-            window.location.href = 'main.html';
+            window.location.href = '/member/main';
         }
 
     </script>
@@ -186,7 +186,7 @@
 
     <div class="container">
         <h1>Fullstival</h1>
-        <form action="/login-process" method="POST">
+        <form action="/member/login" method="POST">
             <div class="form-group">
                 <input type="text" id="username" name="email" required placeholder="이메일">
             </div>
@@ -211,7 +211,7 @@
             <p><a class="ps" text-decoration: none href="forgot_password.php">비밀번호를 잊으셨나요?</a></p>
         </div>
         <div class="form-group4">
-            <p>계정이 없으신가요? <a href="/registerMember">가입하기</a></p>
+            <p>계정이 없으신가요? <a href="/member/registerMember">가입하기</a></p>
         </div>
     </div>
 
@@ -225,7 +225,7 @@
             sessionStorage.setItem('username', username);
     
             // 로그인 후 Main.html로 이동
-            window.location.href = 'main';
+            window.location.href = '/member/main';
         }
     </script>
 </body>
