@@ -59,7 +59,7 @@
                         aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                             fill="black" class="bi bi-list" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
-                                d="M2.5 12a.5.5 0 0 1 .5-.5h10 a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.a.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                                d="M2.5 12a.5.5 0 0 1 .5-.5h10 a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.a.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.a.5 0 0 1-.5-.5z" />
                         </svg></a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#scrollspyHeading3">축제게시판</a></li>
@@ -97,27 +97,34 @@
         <h2>Q&A</h2>
         <br>
         <br>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h4 class="mb-1">1. 첫 번째 게시물 제목</h4>
-                        <small class="text-muted">작성자: 홍길동 | 작성일: 2023-09-18</small>
-                    </div>
-                    <span class="badge bg-success">진행중</span>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h4 class="mb-1">2. 두 번째 게시물 제목</h4>
-                        <small class="text-muted">작성자: 아무개 | 작성일: 2023-09-18</small>
-                    </div>
-                    <span class="badge bg-success">진행중</span>
-                </div>
-            </li>
-            <!-- 필요한 만큼 게시물을 추가할 수 있습니다. -->
-        </ul>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">작성일</th>
+                    <th scope="col">진행상태</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>첫 번째 게시물 제목</td>
+                    <td>홍길동</td>
+                    <td>2023-09-18</td>
+                    <td><span class="badge bg-success">답변완료</span></td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>두 번째 게시물 제목</td>
+                    <td>아무개</td>
+                    <td>2023-09-18</td>
+                    <td><span class="badge bg-dark-subtle">답변대기</span></td>
+                </tr>
+                <!-- 필요한 만큼 게시물을 추가할 수 있습니다. -->
+            </tbody>
+        </table>
     </section>
 
     <footer class="bg-dark text-light text-center py-3">
@@ -133,19 +140,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- 글쓰기 내용 입력 폼 -->
-                    <div class="mb-3">
-                        <label for="title" class="form-label">제목</label>
-                        <input type="text" class="form-control" id="title">
-                    </div>
-                    <div class="mb-3">
-                        <label for="content" class="form-label">내용</label>
-                        <textarea class="form-control" id="content" rows="5"></textarea>
-                    </div>
+                    <!-- 글쓰기 내용 입력 폼을 여기에 추가하세요 -->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary" id="submitPost">작성 완료</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary">작성 완료</button>
                 </div>
             </div>
         </div>
