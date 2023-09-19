@@ -1,5 +1,8 @@
 package com.whiteboard.whiteboard.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
@@ -16,8 +20,9 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @ToString
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 // 축제 정보 게시판
 public class Festival extends BaseEntity {
 
@@ -26,23 +31,31 @@ public class Festival extends BaseEntity {
 	private Long festivalNum; // 축제번호
 
 	@Column(nullable = false, name = "festival_title")
+	@JsonProperty("TITLE")
 	private String festivalTitle; // 축제명
 
-
+	@JsonProperty("GUGUN_NM")
 	private String region; // 지역
 	
+	@JsonProperty("MAIN_PLACE")
 	private String venue; // 개최장소
 
+	@JsonProperty("USAGE_DAY_WEEK_AND_TIME")
 	private String period; // 기간
 
-	//@Column(nullable = false)
+	@Column(nullable = true)
+	@JsonProperty("USAGE_DAY")
 	private String state; // 진행상태 : 진행예정, 진행중, 종료
 
+	@Column(length = 5000) // 2000자로 제한
+	@JsonProperty("ITEMCNTNTS")
 	private String description; // 설명(묘사)
 
-	//@Column(nullable = false)
+	//@Column(nullable = true)
+	@JsonProperty("HOMEPAGE_URL")
 	private String link; // 홈페이지
 
+	@JsonProperty("MAIN_IMG_NORMAL")
 	private String poster; // 포스터링크
 
 	@Column(name = "read_count", nullable = false, columnDefinition = "integer default 0")
@@ -52,4 +65,6 @@ public class Festival extends BaseEntity {
 	public void updateState(String state){
 		this.state = state;
 	}
+
+	
 }
