@@ -37,8 +37,9 @@ public class FestivalServiceImpl implements FestivalService {
                 festival.setFestivalTitle(festivalJson.get("TITLE").asText());
                 festival.setRegion(festivalJson.get("GUGUN_NM").asText());
                 festival.setVenue("부산광역시: " + festivalJson.get("MAIN_PLACE").asText());
-                festival.setPeriod(festivalJson.get("USAGE_DAY_WEEK_AND_TIME").asText());
-                festival.setState(festivalJson.get("USAGE_DAY").asText());
+                festival.setFirstPeriod(festivalJson.get("USAGE_DAY_WEEK_AND_TIME").asText());
+                festival.setSecondPeriod(festivalJson.get("USAGE_DAY").asText());
+                //festival.setState(festivalJson.get("USAGE_DAY").asText());
                 festival.setDescription(festivalJson.get("ITEMCNTNTS").asText());
                 festival.setLink(festivalJson.get("HOMEPAGE_URL").asText());
                 festival.setPoster(festivalJson.get("HOMEPAGE_URL").asText());
