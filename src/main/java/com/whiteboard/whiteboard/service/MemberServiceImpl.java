@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 
@@ -85,14 +86,33 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
-    @Override
+   @Override
     public Optional<Member> login(String email, String pw) {
         // 이메일로 사용자 검색
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
-        
 
         // 사용자가 존재하고 비밀번호가 일치하는 경우 Optional<Member> 반환
         return optionalMember.filter(member -> member.getPw().equals(pw));
+    }
+
+     public MemberDTO login(MemberDTO memberDTO){ //entity객체는 service에서만
+        Optional<Member> byMemberEmail = memberRepository.findByEmail(memberDTO.getEmail());
+        if(byMemberEmail.isPresent()){
+            // 조회 결과가 있다
+            Member member = byMemberEmail.get(); // Optional에서 꺼냄
+            if(member.getPw().equals(memberDTO.getPw())) {
+                //비밀번호 일치
+                //entity -> dto 변환 후 리턴
+                MemberDTO dto = MemberDTO.toMemberDTO(member);
+                return dto;
+            } else {
+                //비밀번호 불일치
+                return null;
+            }
+        } else {
+            // 조회 결과가 없다
+            return null;
+        }
     }
 
 }

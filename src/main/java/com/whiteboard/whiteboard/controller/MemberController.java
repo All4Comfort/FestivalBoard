@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.service.MemberService;
+import com.whiteboard.whiteboard.service.MemberServiceImpl;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -46,29 +47,34 @@ public class MemberController {
     // return "main";
     // }
 
-    @GetMapping("/member/login")
-    public String loging() {
-
-        return "/member/login";
-    }
-
     @PostMapping("/member/login")
     public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
-            HttpSession session, Model model) {
-        // 이메일과 비밀번호를 사용하여 로그인 검증
-        Optional<Member> memberOptional = memberService.login(email, pw);
+        HttpSession session, Model model) {
+    Optional<Member> memberOptional = memberService.login(email, pw);
     
-        if (memberOptional.isPresent()) {
-            // 로그인 성공
-            Member member = memberOptional.get();
-            session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
-            return "/member/main"; // 로그인 후 메인 페이지로 리다이렉트
-        } else {
-            // 로그인 실패
-            model.addAttribute("loginError", true);
-            return "/member/login"; // 로그인 페이지로 다시 이동
-        }
+    //로그인 됐는지 확인
+    System.err.println("!!!!!! =---> "  + memberOptional.isPresent());
+
+    if (memberOptional.isPresent()) {
+        Member member = memberOptional.get();
+        session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
+
+        //로그인 유저 정보 확인
+        System.err.println("!!----> " + session.getAttribute("loggedInUser"));
+        
+
+        
+
+
+        return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
+    } else {
+        model.addAttribute("loginError", true);
+        return "/member/login"; // 로그인 실패 시 로그인 페이지로 이동
     }
+}
+
+    
+
 
     // @GetMapping("/user")
     // public String dashBoardPage(@AuthenticationPrincipal UserDetails user, Model
@@ -118,6 +124,9 @@ public class MemberController {
     @Autowired
     private final MemberService memberService;
 
+    @Autowired
+    private final MemberServiceImpl memberServiceImpl;
+
     // 회원가입창 가져오기
     @GetMapping("/member/registerMember")
     public ModelAndView showRegistrationForm() {
@@ -158,5 +167,8 @@ public class MemberController {
         response.put("success", true);
         return ResponseEntity.ok(response);
     }
+    
+    
+    
 
 }

@@ -54,6 +54,7 @@
                         <path fill-rule="evenodd"
                         d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
                     </svg></a>
+                    <!-- 게시판 햄버거 -->
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#scrollspyHeading1">축제게시판</a></li>
                         <li>
@@ -71,9 +72,6 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <!-- session 추가 -->
-                    session 값 확인 : <p th:text="${session.loginEmail}"></p>
-                    <!-- 세션 추가-->
                     <a class="nav-link" id="login-link" href="#scrollspyHeading5"><svg
                             xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
                             viewBox="0 0 16 16">
@@ -199,6 +197,7 @@
             // 예를 들어, 쿠키, 세션 또는 로컬 스토리지를 사용하여 로그인 상태를 확인할 수 있습니다.
             // 로그인 정보가 있으면 true를 반환하고, 없으면 false를 반환해야 합니다.
             // 예제에서는 임의로 true 또는 false를 반환하도록 설정합니다.
+
             return false; // 로그인 정보가 없다고 가정
         }
     </script>
@@ -221,6 +220,7 @@
         }
     });
 </script>
+
 </body>
 
 </html>
