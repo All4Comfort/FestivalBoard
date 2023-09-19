@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,7 +25,6 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/member/")
 @RequiredArgsConstructor
 public class MemberController {
 
@@ -35,7 +33,7 @@ public class MemberController {
 
     @GetMapping({ "/", "" }) // 모든 요청에서 메인으로 갈수있게.
     public String main() {
-        return "main";
+        return "/member/main";
     }
 
     // @GetMapping("/main")
@@ -48,13 +46,13 @@ public class MemberController {
     // return "main";
     // }
 
-    @GetMapping("/login")
+    @GetMapping("/member/login")
     public String loging() {
 
-        return "login";
+        return "/member/login";
     }
 
-    @PostMapping("/login-process")
+    @PostMapping("/member/login-process")
     public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
             HttpSession session, Model model) {
         // 이메일과 비밀번호를 사용하여 로그인 검증
@@ -64,7 +62,7 @@ public class MemberController {
             // 로그인 성공
             Member member = memberOptional.get();
             session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
-            return "main"; // 로그인 후 메인 페이지로 리다이렉트
+            return "/member/main"; // 로그인 후 메인 페이지로 리다이렉트
         } else {
             // 로그인 실패
             model.addAttribute("loginError", true);
@@ -80,7 +78,7 @@ public class MemberController {
     // return "user";
     // }
 
-    @GetMapping("/myPage")
+    @GetMapping("/member/myPage")
     public String dashBoardPage(@AuthenticationPrincipal UserDetails user, Model model) {
 
         // 사용자 이름을 기반으로 데이터베이스에서 정보 가져오기
@@ -94,7 +92,7 @@ public class MemberController {
             model.addAttribute("nickname", member.getNickname());
             model.addAttribute("birthDay", member.getBirthDay());
         }
-        return "myPage";
+        return "/member/myPage";
     }
 
     // 시큐리티 때 활용할 회원가입..
@@ -121,12 +119,12 @@ public class MemberController {
     private final MemberService memberService;
 
     // 회원가입창 가져오기
-    @GetMapping("/registerMember")
+    @GetMapping("/member/registerMember")
     public ModelAndView showRegistrationForm() {
         return new ModelAndView("registerMember");
     }
 
-    @PostMapping("/registerMember")
+    @PostMapping("/member/registerMember")
     public ResponseEntity<?> memberRegister(@RequestBody Member member) {
         String email = member.getEmail();
         String phoneNum = member.getPhoneNum();
