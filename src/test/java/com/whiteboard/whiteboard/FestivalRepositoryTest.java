@@ -23,7 +23,6 @@ public class FestivalRepositoryTest {
     @Autowired
     private FestivalRepository festivalRepository;
 
-
     @Autowired
     private ObjectMapper objectMapper; // ObjectMapper 주입
 
@@ -89,8 +88,6 @@ public class FestivalRepositoryTest {
     // Assertions.assertThat(savedFestival.getFestivalTitle()).isEqualTo("부산바다축제");
     // }
 
-    
-
     @Test
     public void testImportFestivalsFromJson() {
         try {
@@ -101,37 +98,44 @@ public class FestivalRepositoryTest {
             // ObjectMapper를 사용하여 JSON 데이터 파싱
             JsonNode jsonNode = objectMapper.readTree(inputStream);
 
-            // 필드 가져오기
-            String festivalTitle = jsonNode.get("TITLE").asText();
-            String region = jsonNode.get("GUGUN_NM").asText();
-            String venue = jsonNode.get("MAIN_PLACE").asText();
-            String period = jsonNode.get("USAGE_DAY_WEEK_AND_TIME").asText();
-            String state = jsonNode.get("USAGE_DAY").asText();
-            String description = jsonNode.get("ITEMCNTNTS").asText();
-            String link = jsonNode.get("HOMEPAGE_URL").asText();
-            String poster = jsonNode.get("MAIN_IMG_NORMAL").asText();
+            // "item" 배열에 있는 모든 아이템을 가져옴
+            JsonNode items = jsonNode.at("/getFestivalKr/item");
 
-            // 필드 값을 이용하여 Festival 엔티티 생성 및 저장
-            Festival festival = Festival.builder()
-                    .festivalTitle(festivalTitle)
-                    .region(region)
-                    .venue(venue)
-                    .period(period)
-                    .state(state)
-                    .description(description)
-                    .link(link)
-                    .poster(poster)
-                    .readCount(0L)
-                    .build();
+            // 모든 아이템을 처리
+            for (JsonNode item : items) {
+                // 필드 가져오기 및 널 체크
+                String festivalTitle = getValueFromJson(item, "TITLE");
+                String region = getValueFromJson(item, "GUGUN_NM");
+                String venue = getValueFromJson(item, "MAIN_PLACE");
+                String period = getValueFromJson(item, "USAGE_DAY_WEEK_AND_TIME");
+                String state = getValueFromJson(item, "USAGE_DAY");
+                String description = getValueFromJson(item, "ITEMCNTNTS");
+                String link = getValueFromJson(item, "HOMEPAGE_URL");
+                String poster = getValueFromJson(item, "MAIN_IMG_NORMAL");
 
-            festivalRepository.save(festival); // 데이터베이스에 저장
+                // 필드 값을 이용하여 Festival 엔티티 생성 및 저장
+                Festival festival = Festival.builder()
+                        .festivalTitle(festivalTitle)
+                        .region("부산광역시 " + region)
+                        .venue(venue)
+                        .period(period)
+                        .state(state)
+                        .description(description)
+                        .link(link)
+                        .poster(poster)
+                        .readCount(0L)
+                        .build();
 
-            // 저장한 엔티티를 다시 조회하여 확인
-            Festival savedFestival = festivalRepository.findById(festival.getFestivalNum()).orElse(null);
-            
+                festivalRepository.save(festival); // 데이터베이스에 저장
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String getValueFromJson(JsonNode jsonNode, String fieldName) {
+        JsonNode fieldNode = jsonNode.get(fieldName);
+        return fieldNode != null ? fieldNode.asText() : "";
     }
 
 }
