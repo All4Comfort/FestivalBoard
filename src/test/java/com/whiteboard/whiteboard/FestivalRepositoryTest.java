@@ -23,7 +23,6 @@ public class FestivalRepositoryTest {
     @Autowired
     private FestivalRepository festivalRepository;
 
-
     @Autowired
     private ObjectMapper objectMapper; // ObjectMapper 주입
 
@@ -89,8 +88,6 @@ public class FestivalRepositoryTest {
     // Assertions.assertThat(savedFestival.getFestivalTitle()).isEqualTo("부산바다축제");
     // }
 
-    
-
     @Test
     public void testImportFestivalsFromJson() {
         try {
@@ -101,15 +98,15 @@ public class FestivalRepositoryTest {
             // ObjectMapper를 사용하여 JSON 데이터 파싱
             JsonNode jsonNode = objectMapper.readTree(inputStream);
 
-            // 필드 가져오기
-            String festivalTitle = jsonNode.get("TITLE").asText();
-            String region = jsonNode.get("GUGUN_NM").asText();
-            String venue = jsonNode.get("MAIN_PLACE").asText();
-            String period = jsonNode.get("USAGE_DAY_WEEK_AND_TIME").asText();
-            String state = jsonNode.get("USAGE_DAY").asText();
-            String description = jsonNode.get("ITEMCNTNTS").asText();
-            String link = jsonNode.get("HOMEPAGE_URL").asText();
-            String poster = jsonNode.get("MAIN_IMG_NORMAL").asText();
+            // 필드 가져오기 및 널 체크
+            String festivalTitle = getValueFromJson(jsonNode, "/getFestivalKr/item/0/TITLE");
+            String region = getValueFromJson(jsonNode, "/getFestivalKr/item/0/GUGUN_NM");
+            String venue = getValueFromJson(jsonNode, "/getFestivalKr/item/0/MAIN_PLACE");
+            String period = getValueFromJson(jsonNode, "/getFestivalKr/item/0/USAGE_DAY_WEEK_AND_TIME");
+            String state = getValueFromJson(jsonNode, "/getFestivalKr/item/0/USAGE_DAY");
+            String description = getValueFromJson(jsonNode, "/getFestivalKr/item/0/ITEMCNTNTS");
+            String link = getValueFromJson(jsonNode, "/getFestivalKr/item/0/HOMEPAGE_URL");
+            String poster = getValueFromJson(jsonNode, "/getFestivalKr/item/0/MAIN_IMG_NORMAL");
 
             // 필드 값을 이용하여 Festival 엔티티 생성 및 저장
             Festival festival = Festival.builder()
@@ -128,10 +125,15 @@ public class FestivalRepositoryTest {
 
             // 저장한 엔티티를 다시 조회하여 확인
             Festival savedFestival = festivalRepository.findById(festival.getFestivalNum()).orElse(null);
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private String getValueFromJson(JsonNode jsonNode, String fieldPath) {
+        JsonNode fieldNode = jsonNode.at(fieldPath);
+        return fieldNode.isMissingNode() ? "" : fieldNode.asText();
     }
 
 }
