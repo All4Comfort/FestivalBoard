@@ -85,10 +85,11 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
-   @Override
+    @Override
     public Optional<Member> login(String email, String pw) {
         // 이메일로 사용자 검색
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
+        
 
         // 사용자가 존재하고 비밀번호가 일치하는 경우 Optional<Member> 반환
         return optionalMember.filter(member -> member.getPw().equals(pw));
