@@ -57,7 +57,7 @@ public class Membercontroller {
             // 로그인 성공
             Member member = memberOptional.get();
             session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
-            return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
+            return "main"; // 로그인 후 메인 페이지로 리다이렉트
         } else {
             // 로그인 실패
             model.addAttribute("loginError", true);

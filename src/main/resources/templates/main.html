@@ -207,6 +207,14 @@
         if (username) {
             // 사용자 정보가 세션 스토리지에 있을 경우 화면에 표시
             document.getElementById('welcome-message').textContent = '환영합니다, ' + username + '님!';
+            
+            // 로그인 버튼 클릭 시 마이페이지로 이동
+            document.getElementById('login-link').addEventListener('click', function (event) {
+                event.preventDefault(); // 기본 동작 방지
+
+                // 로그인 정보가 있으면 마이페이지로 이동
+                window.location.href = "/mypage";
+            });
         }
     });
 </script>
