@@ -1,5 +1,7 @@
 package com.whiteboard.whiteboard.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.whiteboard.whiteboard.entity.Member;
@@ -32,5 +34,8 @@ public interface MemberService {
 
     // 이메일 중복 확인 메서드
     public boolean isEmailRegistered(String email);
+
+    //로그인 메서드
+    public Optional<Member> login(String email, String pw);
 
 }

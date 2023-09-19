@@ -14,12 +14,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.service.MemberService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class Membercontroller {
@@ -45,12 +47,22 @@ public class Membercontroller {
         return "login";
     }
 
-    @PostMapping("login")
-    public String login(MemberDTO dto) {
-        boolean isValidMember = MemberService.isValidMember(dto.getEmail(), dto.getPw());
-        if (isValidMember)
-            return "main.";
-        return "login.html";
+    @PostMapping("/login-process")
+    public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
+            HttpSession session, Model model) {
+        // 이메일과 비밀번호를 사용하여 로그인 검증
+        Optional<Member> memberOptional = memberService.login(email, pw);
+    
+        if (memberOptional.isPresent()) {
+            // 로그인 성공
+            Member member = memberOptional.get();
+            session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
+            return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
+        } else {
+            // 로그인 실패
+            model.addAttribute("loginError", true);
+            return "login"; // 로그인 페이지로 다시 이동
+        }
     }
 
     // @GetMapping("/user")
@@ -140,10 +152,10 @@ public class Membercontroller {
         // // 회원가입이 성공하면 회원가입 축하 메시지와 함께 로그인 페이지로 리디렉션
         // String successMessage = name + "님, 회원가입 축하드립니다.";
         // return ResponseEntity.status(HttpStatus.FOUND)
-        //         .header(HttpHeaders.LOCATION, "/login")
-        //         .body(successMessage);
+        // .header(HttpHeaders.LOCATION, "/login")
+        // .body(successMessage);
 
-          // 회원가입이 성공하면 JSON 응답 반환
+        // 회원가입이 성공하면 JSON 응답 반환
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         return ResponseEntity.ok(response);

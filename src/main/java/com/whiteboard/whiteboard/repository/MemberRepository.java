@@ -14,4 +14,5 @@ public interface MemberRepository extends JpaRepository<Member,String>{
 	Optional<Member> findBynickname(String nickname); //닉네임(PK)을 이용해서 사용자 정보 가져오기.
   
 	
+	
 }
