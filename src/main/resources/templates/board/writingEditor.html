@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+<!-- 에디터만 정의한 것으로, 추후 각 게시판 작성 페이지에 include 또는 iframe 이용해서 동일하게 넣을 것 -->
 <html lang="ko">
   <head>
     <meta charset="utf-8">
-    <title>게시글 작성 페이지</title>
+    <title>게시글 작성 editor</title>
 
     <!-- 라이브러리 코드(jQuery, bootstrap) -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -13,24 +14,9 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
-    <!-- 한국어 에디터 summernote js
-    <script src="lang/summernote-ko-KR.js"></script> -->
-    
-  </head>
-  <body>
-    <form method="post">
-      <textarea id="title" name="title"></textarea>
-    </form>
-    <!-- 에디터 작성창에 내용 집어 넣기.
-      게시글을 작성하면 아래 내용 뒤에 이어서 적힘. 즉 아래 내용 지워고 글 작성해야 함.
-      <div id="summernote"><p>Hello Summernote</p></div> -->
+   
     <script>
       $(document).ready(function() {
-
-        var fonts = ['맑은 고딕', '돋움', '궁서', '굴림', '굴림체', '궁서체', '나눔 고딕', 
-        '바탕', '바탕체', '새굴림', 'HY견고딕', 'HY견명조', 'HY궁서B', 'HY그래픽M', 'HY목각파임B', 
-        'HY신명조', 'HY얕은샘물M', 'HY엽서L', 'HY엽서M', 'HY중고딕', 'HY헤드라인M', 
-        '휴먼매직체', '휴먼모음T', '휴먼아미체', '휴먼둥근헤드라인', '휴먼편지체', '휴먼옛체'];
 
         //에디터 삽입
           $('#summernote').summernote({ //에디터 id는 summernote , 에디터 기본설정
@@ -62,7 +48,8 @@
 
       //$('#summernote').summernote('destroy');
     </script>
-    
-
+  </head>
+  <body>
+      <div id="summernote"></div>
   </body>
 </html>
