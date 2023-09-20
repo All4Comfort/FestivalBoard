@@ -18,7 +18,7 @@ public class NoticeController {
 
   @GetMapping("/notice1")
   public String notice(PageRequestDTO pageRequestDTO, Model model){
-    //model.addAttribute("result", noticeService.getList(pageRequestDTO));
+    model.addAttribute("result", noticeService.getList(pageRequestDTO));
     return "/notice1";
   }
 
