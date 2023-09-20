@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Data
@@ -13,6 +15,8 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 
 // 축제정보게시판 DTO
 public class FestivalDTO {
@@ -28,6 +32,20 @@ public class FestivalDTO {
 	private LocalDateTime registerDate; // 작성일
 	private LocalDateTime modifyDate; // 수정일
 	private Long readCount; // 조회수
-	
-	
+
+	public String getFestivalTitle() {
+		return festivalTitle;
+	}
+
+	public void setFestivalTitle(String festivalTitle) {
+		this.festivalTitle = festivalTitle;
+	}
+
+	public String getPoster() {
+		return poster;
+	}
+
+	public void setPoster(String poster) {
+		this.poster = poster;
+	}
 }
