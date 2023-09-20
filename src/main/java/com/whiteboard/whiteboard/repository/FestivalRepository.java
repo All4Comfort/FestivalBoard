@@ -15,8 +15,8 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
     List<Festival> findRandomFestival();
 
     // @Modifying
-    // @Query("update Festival e set e.read_count = e.read_count + 1 where e.festival_num = :festival_num")
+    // @Query("update Festival e set e.read_count = e.read_count + 1 where
+    // e.festival_num = :festival_num")
     // int updateReadCount(Long festivalNum);
 
-    
 }
