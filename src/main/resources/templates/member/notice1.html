@@ -52,6 +52,20 @@
             height: 40px; /* 높이 설정 */
         }
 
+        /* 작성자와 작성일 열의 스타일 수정 */
+        .table th:nth-child(3),
+        .table td:nth-child(3),
+        .table th:nth-child(4),
+        .table td:nth-child(4) {
+            text-align: right;
+        }
+
+        /* 작성일 열의 왼쪽 마진 조절 */
+        .table th:nth-child(4),
+        .table td:nth-child(4) {
+            margin-left: 10px; /* 원하는 만큼 조절하세요 */
+        }
+
         /* Pagination 색상 수정 */
         .pagination .page-link {
             color: black;
@@ -105,14 +119,12 @@
                 </li>
             </ul>
         </nav>
+    </header>
 
     <section class="container my-5">
         <div class="d-flex justify-content-end mb-3">
-            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal">
-                글쓰기
-            </button>
         </div>
-        <h2>Q&A</h2>
+        <h2>NOTICE</h2>
         <br>
         <br>
         <table class="table">
@@ -122,7 +134,6 @@
                     <th scope="col">제목</th>
                     <th scope="col">작성자</th>
                     <th scope="col">작성일</th>
-                    <th scope="col">진행상태</th>
                 </tr>
             </thead>
             <tbody>
@@ -131,14 +142,12 @@
                     <td>첫 번째 게시물 제목</td>
                     <td>홍길동</td>
                     <td>2023-09-18</td>
-                    <td><span class="badge bg-success">답변완료</span></td>
                 </tr>
                 <tr>
                     <th scope="row">2</th>
                     <td>두 번째 게시물 제목</td>
                     <td>아무개</td>
                     <td>2023-09-18</td>
-                    <td><span class="badge bg-dark-subtle">답변대기</span></td>
                 </tr>
                 <!-- 필요한 만큼 게시물을 추가할 수 있습니다. -->
                 <tr>
@@ -146,21 +155,18 @@
                     <td>세 번째 게시물 제목</td>
                     <td>오아연</td>
                     <td>2023-09-18</td>
-                    <td><span class="badge bg-dark-subtle">답변대기</span></td>
                 </tr>
                 <tr>
                     <th scope="row">4</th>
                     <td>네 번째 게시물 제목</td>
                     <td>정용화</td>
                     <td>2023-09-18</td>
-                    <td><span class="badge bg-dark-subtle">답변대기</span></td>
                 </tr>
                 <tr>
                     <th scope="row">5</th>
                     <td>다섯 번째 게시물 제목</td>
                     <td>이정신</td>
                     <td>2023-09-18</td>
-                    <td><span class="badge bg-dark-subtle">답변대기</span></td>
                 </tr>
             </tbody>
         </table>
