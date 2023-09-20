@@ -60,10 +60,10 @@ public class FestivalBusanDTO {
 	private String link; // 홈페이지
 
 	@JsonProperty("MAIN_IMG_NORMAL")
-	private String poster; // 포스터링크
+	private String poster; // 메인 포스터링크
 
 	@JsonProperty("MAIN_IMG_THUMB")
-	private String thumnail;
+	private String thumnail;//
 
 	private LocalDateTime registerDate; // 작성일
 	private LocalDateTime modifyDate; // 수정일

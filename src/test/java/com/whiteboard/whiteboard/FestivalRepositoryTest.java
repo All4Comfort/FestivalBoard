@@ -10,6 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.whiteboard.whiteboard.dto.FestivalBusanDTO;
 import com.whiteboard.whiteboard.entity.Festival;
 import com.whiteboard.whiteboard.repository.FestivalRepository;
 import com.whiteboard.whiteboard.service.FestivalService;
@@ -104,32 +105,40 @@ public class FestivalRepositoryTest {
             // 모든 아이템을 처리
             for (JsonNode item : items) {
                 // 필드 가져오기 및 널 체크
-                String festivalTitle = getValueFromJson(item, "TITLE");
-                String region = getValueFromJson(item, "GUGUN_NM");
-                String venue = getValueFromJson(item, "MAIN_PLACE");
-                String period = getValueFromJson(item, "USAGE_DAY_WEEK_AND_TIME");
-                String state = getValueFromJson(item, "USAGE_DAY");
+                String festivalTitle = getValueFromJson(item, "MAIN_TITLE");
+                String region = "부산광역시 " + getValueFromJson(item, "GUGUN_NM");
+                String venue = getValueFromJson(item, "ADDR1");
+                //String period = getValueFromJson(item, "USAGE_DAY_WEEK_AND_TIME");
+                String firstPeriod = getValueFromJson(item, "USAGE_DAY_WEEK_AND_TIME");
+                String secondPeriod = getValueFromJson(item, "USAGE_DAY");
                 String description = getValueFromJson(item, "ITEMCNTNTS");
                 String link = getValueFromJson(item, "HOMEPAGE_URL");
                 String poster = getValueFromJson(item, "MAIN_IMG_NORMAL");
+                String thumbnail = getValueFromJson(item, "MAIN_IMG_THUMB");
 
-                // 필드 값을 이용하여 Festival 엔티티 생성 및 저장
-                Festival festival = Festival.builder()
+                // FestivalBusanDTO 생성
+                FestivalBusanDTO festivalDTO = FestivalBusanDTO.builder()
                         .festivalTitle(festivalTitle)
-                        .region("부산광역시 " + region)
+                        .region(region)
                         .venue(venue)
-                        .period(period)
-                        .state(state)
+                        //.period(period)
+                        .firstPeriod(firstPeriod)
+                        .secondPeriod(secondPeriod)
                         .description(description)
                         .link(link)
                         .poster(poster)
+                        .thumnail(thumbnail)
                         .readCount(0L)
                         .build();
 
-                // 진행상태 설정
-                //festival.setState();
+                // DTO를 엔티티로 변환하여 저장
+                Festival festival = convertDtoToEntity(festivalDTO);
 
-                festivalRepository.save(festival); // 데이터베이스에 저장
+                // 진행상태 설정
+                // festival.setState();
+
+                // Festival 엔티티를 저장
+                festivalRepository.save(festival);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -141,6 +150,22 @@ public class FestivalRepositoryTest {
     private String getValueFromJson(JsonNode jsonNode, String fieldName) {
         JsonNode fieldNode = jsonNode.get(fieldName);
         return fieldNode != null ? fieldNode.asText() : "";
+    }
+
+    // FestivalBusanDTO를 Festival 엔티티로 변환하는 메서드
+    private Festival convertDtoToEntity(FestivalBusanDTO festivalDTO) {
+        Festival festival = Festival.builder()
+                .festivalTitle(festivalDTO.getFestivalTitle())
+                .region(festivalDTO.getRegion())
+                .venue(festivalDTO.getVenue())
+                .period(festivalDTO.getPeriod())
+                .description(festivalDTO.getDescription())
+                .link(festivalDTO.getLink())
+                .poster(festivalDTO.getPoster())
+                .readCount(festivalDTO.getReadCount())
+                .build();
+
+        return festival;
     }
 
 }
