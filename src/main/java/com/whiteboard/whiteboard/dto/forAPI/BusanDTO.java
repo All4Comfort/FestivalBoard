@@ -82,6 +82,7 @@ public class BusanDTO {
 
                 String region = getValueFromJson(item, "GUGUN_NM");
                 String venue = getValueFromJson(item, "ADDR1");
+								String period = "";
                 String firstPeriod = getValueFromJson(item, "USAGE_DAY_WEEK_AND_TIME");
                 String secondPeriod = getValueFromJson(item, "USAGE_DAY");
                 String description = getValueFromJson(item, "ITEMCNTNTS");
@@ -89,40 +90,52 @@ public class BusanDTO {
                 String poster = getValueFromJson(item, "MAIN_IMG_NORMAL");
                 String thumnail = getValueFromJson(item, "MAIN_IMG_THUMB");
 
-                // JSON 파일 DTO에 담기
-                BusanDTO dto = new BusanDTO();
-                dto.setFestivalTitle(festivalTitle);
-                dto.setRegion(region);
-                dto.setVenue(venue);
-                dto.setDescription(description);
-                dto.setLink(link);
-                dto.setPoster(poster);
-                dto.setThumnail(thumnail);
-                dto.setFirstPeriod(firstPeriod);
-                dto.setSecondPeriod(secondPeriod);
-                if (dto.getFirstPeriod() != null) {
-                    dto.setPeriod(dto.getFirstPeriod());
+								if (firstPeriod != "") {
+                    period = firstPeriod;
                 } else {
-                    dto.setPeriod(dto.getSecondPeriod());
+                    period = secondPeriod;
                 }
 
-                //System.out.println("부산축제 기간 : " + dto.getPeriod());
-
-                // DTO 에서 ENTITY로 변환
-                Festival festival = Festival.builder()
-                        .festivalTitle(dto.getFestivalTitle())
-                        .region("부산광역시 " + dto.getRegion())
-                        .venue(dto.getVenue())
-                        .period(dto.getPeriod())
-                        .description(dto.getDescription())
-                        .link(dto.getLink())
-                        .poster(dto.getPoster())
-                        .thumnail(dto.getThumnail())
+                // JSON 파일 DTO에 담기
+                BusanDTO dto = BusanDTO.builder()
+                        .festivalTitle(festivalTitle)
+                        .region(region)
+                        .venue(venue)
+                        //.period(period)
+                        .firstPeriod(firstPeriod)
+                        .secondPeriod(secondPeriod)
+                        .description(description)
+                        .link(link)
+                        .poster(poster)
+                        .thumnail(thumbnail)
                         .readCount(0L)
                         .build();
 
+								// DTO를 엔티티로 변환하여 저장
+                Festival festival = convertDtoToEntity(festivalDTO);
+
                 festivalRepository.save(festival);
             }
+						 } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+						// FestivalBusanDTO를 Festival 엔티티로 변환하는 메서드
+    private Festival convertDtoToEntity(FestivalBusanDTO festivalDTO) {
+        Festival festival = Festival.builder()
+                .festivalTitle(festivalDTO.getFestivalTitle())
+                .region(festivalDTO.getRegion())
+                .venue(festivalDTO.getVenue())
+                .period(festivalDTO.getPeriod())
+                .description(festivalDTO.getDescription())
+                .link(festivalDTO.getLink())
+                .poster(festivalDTO.getPoster())
+                .readCount(festivalDTO.getReadCount())
+                .build();
+
+        return festival;
+    }
 	 * 
 	 */
 

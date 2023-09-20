@@ -11,6 +11,7 @@ import org.springframework.core.io.ClassPathResource;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.whiteboard.whiteboard.dto.forAPI.DaejeonDTO;
+import com.whiteboard.whiteboard.entity.Festival;
 import com.whiteboard.whiteboard.repository.FestivalRepository;
 
 @SpringBootTest
@@ -45,7 +46,7 @@ public class FestivalRepositoryTest {
                 String festivalTitle = getValueFromJson(item, "festvNm");
                 String region = getValueFromJson(item, "festvAddr");
 
-                //festvAddr 필드 값에서 "~구"까지만 추출하기 ex) 대전 중구
+                // festvAddr 필드 값에서 "~구"까지만 추출하기 ex) 대전 중구
                 int index = region.indexOf("구");
                 if (index != -1) {
                     region = region.substring(0, index + 1); // '구'를 포함하여 추출
@@ -55,41 +56,33 @@ public class FestivalRepositoryTest {
                 String period = getValueFromJson(item, "festvPrid");
                 String description = getValueFromJson(item, "festvSumm");
                 String link = getValueFromJson(item, "hmpgAddr");
+                String venue = "";
                 String venue1 = getValueFromJson(item, "festvPlcNm");
                 String venue2 = getValueFromJson(item, "festvAddr");
 
-                // JSON 파일 DTO에 담기
-                DaejeonDTO dto = new DaejeonDTO();
-                dto.setFestivalTitle(festivalTitle);
-                dto.setRegion(region);
-                dto.setPeriod(period);
-                dto.setDescription(description);
-                dto.setLink(link);
-                dto.setVenue1(venue1);
-                dto.setVenue2(venue2);
-                if (dto.getVenue1() != null) {
-                    dto.setVenue(dto.getVenue1());
+                if (venue1 != "") {
+                    venue = venue1;
                 } else {
-                    dto.setVenue(dto.getVenue2());
+                    venue = venue2;
                 }
 
+                // FestivalBusanDTO 생성
+                DaejeonDTO dto = DaejeonDTO.builder()
+                        .festivalTitle(festivalTitle)
+                        .region(region)
+                        .venue(venue)
+                        .period(period)
+                        .description(description)
+                        .link(link)
+                        .readCount(0L)
+                        .build();
+
                 System.err.println("대전축제 장소 : " + dto.getVenue());
-                /*
-                 * // DTO 에서 ENTITY로 변환
-                 * Festival festival = Festival.builder()
-                 * .festivalTitle(dto.getFestivalTitle())
-                 * .region("부산광역시 " + dto.getRegion())
-                 * .venue(dto.getVenue())
-                 * .period(dto.getPeriod())
-                 * .description(dto.getDescription())
-                 * .link(dto.getLink())
-                 * .poster(dto.getPoster())
-                 * .thumnail(dto.getThumnail())
-                 * .readCount(0L)
-                 * .build();
-                 * 
-                 * festivalRepository.save(festival);
-                 */
+
+                // DTO를 엔티티로 변환하여 저장
+                Festival festival = convertDtoToEntity(dto);
+
+                festivalRepository.save(festival);
             } // for문 끝
 
         } catch (IOException e) {
@@ -103,6 +96,21 @@ public class FestivalRepositoryTest {
     private String getValueFromJson(JsonNode jsonNode, String fieldName) {
         JsonNode fieldNode = jsonNode.get(fieldName);
         return fieldNode != null ? fieldNode.asText() : "";
+    }
+
+    // FestivalBusanDTO를 Festival 엔티티로 변환하는 메서드
+    private Festival convertDtoToEntity(DaejeonDTO festivalDTO) {
+        Festival festival = Festival.builder()
+                .festivalTitle(festivalDTO.getFestivalTitle())
+                .region(festivalDTO.getRegion())
+                .venue(festivalDTO.getVenue())
+                .period(festivalDTO.getPeriod())
+                .description(festivalDTO.getDescription())
+                .link(festivalDTO.getLink())
+                .readCount(festivalDTO.getReadCount())
+                .build();
+
+        return festival;
     }
 
 }
