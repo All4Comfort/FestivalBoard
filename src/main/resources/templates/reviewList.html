@@ -111,13 +111,10 @@
         .write-review-button a:hover {
             background-color:black; /* 마우스 오버 시 배경색 변경 */
         }
-        /* 오른쪽 상단의 리뷰 작성하기 버튼 스타일 */
+        /* 리뷰 작성하기 버튼 스타일 */
     .write-review-button {
-        position: absolute;
-        top: 20px;
-        right: 20px;
+        right: 10px;
     }
-
     .write-review-button a {
         display: inline-block;
         padding: 10px 20px;
@@ -179,14 +176,12 @@
     /* 페이징 스타일 */
     .pagination {
         text-align: center;
-        margin-top: 20px;
-        margin-bottom: 20px;
+        margin-top: 30px;
+        margin-bottom: 40px;
         display: flex;
         justify-content: center; /* 가로 가운데 정렬 */
         align-items: center; /* 세로 가운데 정렬 */
     }
-    
-
         
     </style>
 </head>
@@ -229,10 +224,6 @@
         </nav>
     </header>
     <div class="container">
-           <!-- 리뷰 작성하기 버튼 -->
-           <div class="write-review-button">
-            <a href="reviewWrite.html">리뷰 작성하기</a>
-        </div>
     </div>
         <h1 style="text-align: center;">리뷰 게시판 목록</h1>
         
@@ -343,6 +334,10 @@
             <!-- 필요한 만큼 페이지 링크 추가 -->
             <a href="#" class="page-link next">다음</a>
         </div>
+             <!-- 리뷰 작성하기 버튼 -->
+             <div class="write-review-button">
+                <a href="reviewWrite.html">리뷰 작성하기</a>
+            </div>
 
         </div>
 
