@@ -47,45 +47,34 @@ public class MemberController {
     // return "main";
     // }
 
-
-    
     // main.html에서 login.html 로 넘어가는 메서드
     @GetMapping("/member/login")
     public String loginPage() {
         return "/member/login";
     }
 
-
-
     // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
     @PostMapping("/member/login")
     public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
-        HttpSession session, Model model) {
-    Optional<Member> memberOptional = memberService.login(email, pw);
-    
-    //로그인 됐는지 확인
-    System.err.println("!!!!!! =---> "  + memberOptional.isPresent());
+            HttpSession session, Model model) {
+        Optional<Member> memberOptional = memberService.login(email, pw);
 
-    if (memberOptional.isPresent()) {
-        Member member = memberOptional.get();
-        session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
+        // 로그인 됐는지 확인
+        System.err.println("!!!!!! 로그인 확인~~~~~~~~~ =---> " + memberOptional.isPresent());
 
-        //로그인 유저 정보 확인
-        System.err.println("!!----> " + session.getAttribute("loggedInUser"));
-        
+        if (memberOptional.isPresent()) {
+            Member member = memberOptional.get();
+            session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
 
-        
+            // 로그인 유저 정보 확인
+            System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
 
-
-        return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
-    } else {
-        model.addAttribute("loginError", true);
-        return "/member/login"; // 로그인 실패 시 로그인 페이지로 이동
+            return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
+        } else {
+            model.addAttribute("loginError", true);
+            return "/member/login"; // 로그인 실패 시 로그인 페이지로 이동
+        }
     }
-}
-
-    
-
 
     // @GetMapping("/user")
     // public String dashBoardPage(@AuthenticationPrincipal UserDetails user, Model
@@ -111,6 +100,8 @@ public class MemberController {
         }
         return "/member/myPage";
     }
+
+    
 
     // 시큐리티 때 활용할 회원가입..
     // //회원가입 창 가져오기
@@ -178,8 +169,5 @@ public class MemberController {
         response.put("success", true);
         return ResponseEntity.ok(response);
     }
-    
-    
-    
 
 }
