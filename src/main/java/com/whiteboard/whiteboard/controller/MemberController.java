@@ -47,6 +47,17 @@ public class MemberController {
     // return "main";
     // }
 
+
+    
+    // main.html에서 login.html 로 넘어가는 메서드
+    @GetMapping("/member/login")
+    public String loginPage() {
+        return "/member/login";
+    }
+
+
+
+    // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
     @PostMapping("/member/login")
     public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
         HttpSession session, Model model) {
