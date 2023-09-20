@@ -133,6 +133,8 @@ public class FestivalRepositoryTest {
         }
     }
 
+    // getValueFromJson 메서드는 주어진 JsonNode 객체에서 특정 필드의 값을 가져오는 데 사용되는 보조 메서드입니다. 이
+    // 메서드는 JSON 데이터에서 필드 값을 가져오는 과정을 단순화하고 널 값 검사를 수행하기 위해 작성되었습니다.
     private String getValueFromJson(JsonNode jsonNode, String fieldName) {
         JsonNode fieldNode = jsonNode.get(fieldName);
         return fieldNode != null ? fieldNode.asText() : "";
