@@ -49,32 +49,23 @@
         <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
             <a class="navbar-brand" href="#"><b>Fullstival</b></a>
             <ul class="nav nav-pills">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                            fill="black" class="bi bi-list" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                        </svg></a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#scrollspyHeading3">축제게시판</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#scrollspyHeading4">리뷰게시판</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#scrollspyHeading4">자유게시판</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#scrollspyHeading5">공지사항&QnA</a></li>
-                    </ul>
+                <div id="welcome-message"></div>
+                <li class="nav-item">
+                    <a class="nav-link" href="#scrollspyHeading1">축제게시판</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#scrollspyHeading1"><svg xmlns="http://www.w3.org/2000/svg" width="30"
-                            height="30" fill="black" class="bi bi-person" viewBox="0 0 16 16">
+                    <a class="nav-link" href="#scrollspyHeading2">리뷰게시판</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#scrollspyHeading3">자유게시판</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#scrollspyHeading4">공지사항&QnA</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="login-link" href="#scrollspyHeading5"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
+                            viewBox="0 0 16 16">
                             <path
                                 d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                         </svg></a>
@@ -82,6 +73,7 @@
             </ul>
         </nav>
     </header>
+
 
     <section class="container my-5">
         <h1>Fullstival 웹사이트</h1>
@@ -92,7 +84,7 @@
     <div class="container" style="width: 70%; margin-top: 150px;">
         <form class="d-flex">
             <input class="form-control me-1" type="search" placeholder="축제검색" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit" >Search</button>
+            <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
     </div>
 
@@ -160,6 +152,41 @@
     <footer class="bg-dark text-light text-center py-3">
         <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
     </footer>
+    <script>
+        // 서버에서 축제 정보를 가져오는 함수
+        function fetchOngoingFestivals() {
+            fetch('/test')
+                .then(response => response.json())
+                .then(data => {
+                    const ongoingFestivalsDiv = document.getElementById('ongoingFestivals');
+                    ongoingFestivalsDiv.innerHTML = ''; // 기존 내용 초기화
+
+                    // 축제 정보를 동적으로 생성하여 웹 페이지에 추가
+                    data.forEach(festival => {
+                        const festivalCard = document.createElement('div');
+                        festivalCard.className = 'col-md-4 mb-4';
+                        festivalCard.innerHTML = `
+                    <div class="card">
+                        <img src="${festival.poster}" class="card-img-top" alt="${festival.festivalTitle}">
+                        <div class="card-body">
+                            <h5 class="card-title">${festival.festivalTitle}</h5>
+                            <p class="card-text">${festival.description}</p>
+                            <a href="${festival.link}" class="btn btn-primary">축제 자세히 보기</a>
+                        </div>
+                    </div>
+                `;
+                        ongoingFestivalsDiv.appendChild(festivalCard);
+                    });
+                })
+                .catch(error => console.error('Error fetching ongoing festivals:', error));
+        }
+
+        // 페이지가 로드될 때 축제 정보를 가져와 표시
+        window.addEventListener('DOMContentLoaded', function () {
+            fetchOngoingFestivals();
+        });
+    </script>
+
 </body>
 
 </html>

@@ -126,6 +126,9 @@ public class FestivalRepositoryTest {
                         .readCount(0L)
                         .build();
 
+                // 진행상태 설정
+                //festival.setState();
+
                 festivalRepository.save(festival); // 데이터베이스에 저장
             }
         } catch (IOException e) {
