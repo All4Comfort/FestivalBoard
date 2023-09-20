@@ -1,7 +1,6 @@
 package com.whiteboard.whiteboard.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -57,6 +56,8 @@ public class Festival extends BaseEntity {
 
 	//@JsonProperty("MAIN_IMG_NORMAL")
 	private String poster; // 포스터링크
+
+	private String thumnail;
 
 	@Column(name = "read_count", nullable = false, columnDefinition = "integer default 0")
 	private Long readCount; // 조회수

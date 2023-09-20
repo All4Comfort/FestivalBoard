@@ -25,7 +25,7 @@ public class FestivalBusanDTO {
 	private String festivalTitle; // 축제명
 
 	@JsonProperty("GUGUN_NM")
-	private String region; // 지역
+	private String region; // 지역 : "부산광역시 " + "**구"
 
 	@JsonProperty("ADDR1")
 	private String venue; // 개최장소
@@ -41,13 +41,14 @@ public class FestivalBusanDTO {
 		private String secondPeriod;
 
 	//축제기간 setter
-	public void setPeriod(String firstPeriod) {
+	public String setPeriod(String firstPeriod) {
     if (firstPeriod == null || firstPeriod.isEmpty()) {
         // "USAGE_DAY_WEEK_AND_TIME" 필드가 null이거나 값이 없으면 "USAGE_DAY" 필드를 가져와서 설정
         this.period = getSecondPeriod();
     } else {
         this.period = getFirstPeriod();
     }
+		return period;
 }
 
 	@JsonProperty("ITEMCNTNTS")
@@ -66,7 +67,7 @@ public class FestivalBusanDTO {
 
 	private LocalDateTime registerDate; // 작성일
 	private LocalDateTime modifyDate; // 수정일
-	
+
 	private Long readCount; // 조회수
 	
 	
