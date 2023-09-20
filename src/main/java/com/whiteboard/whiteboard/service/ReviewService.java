@@ -2,7 +2,7 @@ package com.whiteboard.whiteboard.service;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Review;
-
+ 
 public interface ReviewService {
   // 새로운 리뷰 생성
   Long Review(ReviewDTO reviewDTO);
