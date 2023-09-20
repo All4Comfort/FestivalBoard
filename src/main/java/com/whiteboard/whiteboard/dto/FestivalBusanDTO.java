@@ -40,7 +40,7 @@ public class FestivalBusanDTO {
 		//"USAGE_DAY_WEEK_AND_TIME"키워드에 값이 없는 경우 "USAGE_DAY"키워드를 매핑할 필드
 		@JsonProperty("USAGE_DAY")
 		private String secondPeriod;
-
+	/*
 	//축제기간 setter
 	public String setPeriod(String firstPeriod) {
     if (firstPeriod == null || firstPeriod.isEmpty()) {
@@ -50,7 +50,7 @@ public class FestivalBusanDTO {
         return getFirstPeriod();
     }
 }
-
+*/
 	@JsonProperty("ITEMCNTNTS")
 	private String description; // 설명(묘사)
 
@@ -58,10 +58,10 @@ public class FestivalBusanDTO {
 	private String link; // 홈페이지
 
 	@JsonProperty("MAIN_IMG_NORMAL")
-	private String poster; // 포스터링크
+	private String poster; // 메인 포스터링크
 
 	@JsonProperty("MAIN_IMG_THUMB")
-	private String thumnail;
+	private String thumnail;//
 
 	private LocalDateTime registerDate; // 작성일
 	private LocalDateTime modifyDate; // 수정일
