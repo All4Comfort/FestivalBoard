@@ -2,6 +2,7 @@ package com.whiteboard.whiteboard.dto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 // 축제정보게시판 DTO
 public class FestivalBusanDTO {
 
@@ -44,17 +45,14 @@ public class FestivalBusanDTO {
 	public String setPeriod(String firstPeriod) {
     if (firstPeriod == null || firstPeriod.isEmpty()) {
         // "USAGE_DAY_WEEK_AND_TIME" 필드가 null이거나 값이 없으면 "USAGE_DAY" 필드를 가져와서 설정
-        this.period = getSecondPeriod();
+        return getSecondPeriod();
     } else {
-        this.period = getFirstPeriod();
+        return getFirstPeriod();
     }
-		return period;
 }
 
 	@JsonProperty("ITEMCNTNTS")
 	private String description; // 설명(묘사)
-
-	//private String state; // 진행상태 아오 안해!!
 
 	@JsonProperty("HOMEPAGE_URL")
 	private String link; // 홈페이지

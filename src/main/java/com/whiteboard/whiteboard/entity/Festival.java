@@ -1,7 +1,5 @@
 package com.whiteboard.whiteboard.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,7 +19,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@JsonIgnoreProperties(ignoreUnknown = true)
 // 축제 정보 게시판
 public class Festival extends BaseEntity {
 
@@ -41,11 +38,6 @@ public class Festival extends BaseEntity {
 
 	private String period; // 기간
 	
-	//포기....ㅎㅎ
-	//@Column(nullable = true)
-	//private String state; // 진행상태 : 진행예정, 진행중, 종료
-	
-
 	@Column(length = 5000) // 2000자로 제한
 	//@JsonProperty("ITEMCNTNTS")
 	private String description; // 설명(묘사)
@@ -59,7 +51,7 @@ public class Festival extends BaseEntity {
 
 	private String thumnail;
 
-	@Column(name = "read_count", nullable = false, columnDefinition = "integer default 0")
+	//@Column(name = "read_count", nullable = false, columnDefinition = "integer default 0")
 	private Long readCount; // 조회수
 	
 }
