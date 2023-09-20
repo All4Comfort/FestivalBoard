@@ -15,7 +15,7 @@ public class ReviewController {
 
    @Autowired
     private ReviewRepository reviewRepository;
-
+ 
   @GetMapping("/reviewList")
     public String getReviews() {
         // 여기에 리뷰 목록을 가져오는 로직을 추가하세요.

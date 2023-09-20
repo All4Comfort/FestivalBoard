@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class ReviewServiceImpl implements ReviewService{
-
+ 
   private final ReviewRepository reviewRepository;
 
   private final List<ReviewDTO> reviewDTOList = new ArrayList<ReviewDTO>();
