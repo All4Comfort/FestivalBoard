@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fullstival</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+
+    <style>
+        /* 푸터를 브라우저 맨 아래로 고정합니다. */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #f8f9fa;
+            /* 푸터의 배경색 설정 */
+            text-align: center;
+            /* 푸터 내용 가운데 정렬 */
+            padding: 10px;
+            /* 원하는 여백 설정 */
+        }
+
+        /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        /* 드롭다운 메뉴의 위치를 조절합니다. */
+        .dropdown-menu {
+            left: 0;
+            /* 드롭다운 메뉴가 화면 왼쪽에 정렬되도록 설정합니다. */
+            margin-left: -30px;
+            /* 원하는 만큼 왼쪽으로 이동시킵니다. */
+        }
+
+        /* 링크 스타일 수정 */
+        a {
+            color: inherit; /* 부모 요소의 텍스트 색상을 상속받음 */
+            text-decoration: none; /* 링크의 밑줄을 제거함 */
+        }
+
+        .input-group .form-control {
+            max-width: 150px; /* 최대 너비 설정 */
+            height: 40px; /* 높이 설정 */
+        }
+
+        /* 작성자와 작성일 열의 스타일 수정 */
+        .table th:nth-child(3),
+        .table td:nth-child(3),
+        .table th:nth-child(4),
+        .table td:nth-child(4) {
+            text-align: right;
+        }
+
+        /* 작성일 열의 왼쪽 마진 조절 */
+        .table th:nth-child(4),
+        .table td:nth-child(4) {
+            margin-left: 10px; /* 원하는 만큼 조절하세요 */
+        }
+
+        /* Pagination 색상 수정 */
+        .pagination .page-link {
+            color: black;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: black;
+            border-color: black;
+        }
+
+        .pagination .page-link:focus {
+            box-shadow: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
+            <a class="navbar-brand" href="#"><b>Fullstival</b></a>
+            <ul class="nav nav-pills">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                        aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                            fill="black" class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                        </svg></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#scrollspyHeading3">축제게시판</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#scrollspyHeading4">리뷰게시판</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#scrollspyHeading4">자유게시판</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#scrollspyHeading5">공지사항&QnA</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#scrollspyHeading1"><svg xmlns="http://www.w3.org/2000/svg" width="30"
+                            height="30" fill="black" class="bi bi-person" viewBox="0 0 16 16">
+                            <path
+                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                        </svg></a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="container my-5">
+        <div class="d-flex justify-content-end mb-3">
+        </div>
+        <h2>NOTICE</h2>
+        <br>
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">작성일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>첫 번째 게시물 제목</td>
+                    <td>홍길동</td>
+                    <td>2023-09-18</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>두 번째 게시물 제목</td>
+                    <td>아무개</td>
+                    <td>2023-09-18</td>
+                </tr>
+                <!-- 필요한 만큼 게시물을 추가할 수 있습니다. -->
+                <tr>
+                    <th scope="row">3</th>
+                    <td>세 번째 게시물 제목</td>
+                    <td>오아연</td>
+                    <td>2023-09-18</td>
+                </tr>
+                <tr>
+                    <th scope="row">4</th>
+                    <td>네 번째 게시물 제목</td>
+                    <td>정용화</td>
+                    <td>2023-09-18</td>
+                </tr>
+                <tr>
+                    <th scope="row">5</th>
+                    <td>다섯 번째 게시물 제목</td>
+                    <td>이정신</td>
+                    <td>2023-09-18</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+
+    <div class="container">
+        <div class="d-flex justify-content-end mb-3">
+            <div class="ms-auto"> <!-- ms-auto 클래스 추가 -->
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+                        aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-light text-center py-3">
+        <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gg6vUz1rTL5UHVbNXLKwgpAYNr2NvTAPC5JiKc+2aX8Cxl+U7v2+nSvzvIMnJvWR" crossorigin="anonymous"></script>
+</body>
+
+</html>
