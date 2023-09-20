@@ -47,4 +47,6 @@ public class FestivalDTO {
 	public void setPoster(String poster) {
 		this.poster = poster;
 	}
+
+	
 }

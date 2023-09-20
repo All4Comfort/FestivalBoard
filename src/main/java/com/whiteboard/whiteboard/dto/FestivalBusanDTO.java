@@ -33,24 +33,24 @@ public class FestivalBusanDTO {
 
 	private String period; // 기간
 
-		//"USAGE_DAY_WEEK_AND_TIME"키워드에 값이 있는 경우 매핑할 필드
-		@JsonProperty("USAGE_DAY_WEEK_AND_TIME")
-		private String firstPeriod;
-	
-		//"USAGE_DAY_WEEK_AND_TIME"키워드에 값이 없는 경우 "USAGE_DAY"키워드를 매핑할 필드
-		@JsonProperty("USAGE_DAY")
-		private String secondPeriod;
+	// "USAGE_DAY_WEEK_AND_TIME"키워드에 값이 있는 경우 매핑할 필드
+	@JsonProperty("USAGE_DAY_WEEK_AND_TIME")
+	private String firstPeriod;
+
+	// "USAGE_DAY_WEEK_AND_TIME"키워드에 값이 없는 경우 "USAGE_DAY"키워드를 매핑할 필드
+	@JsonProperty("USAGE_DAY")
+	private String secondPeriod;
 	/*
-	//축제기간 setter
-	public String setPeriod(String firstPeriod) {
-    if (firstPeriod == null || firstPeriod.isEmpty()) {
-        // "USAGE_DAY_WEEK_AND_TIME" 필드가 null이거나 값이 없으면 "USAGE_DAY" 필드를 가져와서 설정
-        return getSecondPeriod();
-    } else {
-        return getFirstPeriod();
-    }
-}
-*/
+	 * //축제기간 setter
+	 * public String setPeriod(String firstPeriod) {
+	 * if (firstPeriod == null || firstPeriod.isEmpty()) {
+	 * // "USAGE_DAY_WEEK_AND_TIME" 필드가 null이거나 값이 없으면 "USAGE_DAY" 필드를 가져와서 설정
+	 * return getSecondPeriod();
+	 * } else {
+	 * return getFirstPeriod();
+	 * }
+	 * }
+	 */
 	@JsonProperty("ITEMCNTNTS")
 	private String description; // 설명(묘사)
 
@@ -67,6 +67,20 @@ public class FestivalBusanDTO {
 	private LocalDateTime modifyDate; // 수정일
 
 	private Long readCount; // 조회수
-	
-	
+
+	// 타이틀 정보를 가져오는 getter 메서드
+	public String getFestivalTitle() {
+		return festivalTitle;
+	}
+
+	// 포스터 정보를 가져오는 getter 메서드
+	public String getPoster() {
+		return poster;
+	}
+
+	// 타이틀과, 포스터
+	public void festivalTitleandPoster(String festivalTitle, String poster) {
+		this.festivalTitle = festivalTitle;
+		this.poster = poster;
+	}
 }
