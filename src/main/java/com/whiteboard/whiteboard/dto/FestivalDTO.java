@@ -26,7 +26,6 @@ public class FestivalDTO {
 	private String region; // 지역
 	private String venue; // 개최장소
 	private String period; // 기간
-	private String state; // 진행상태
 	private String link; // 홈페이지
 	private String poster; // 포스터링크
 	private LocalDateTime registerDate; // 작성일
