@@ -2,6 +2,7 @@ package com.whiteboard.whiteboard.dto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 // 축제정보게시판 DTO
 public class FestivalBusanDTO {
 
@@ -25,7 +26,7 @@ public class FestivalBusanDTO {
 	private String festivalTitle; // 축제명
 
 	@JsonProperty("GUGUN_NM")
-	private String region; // 지역
+	private String region; // 지역 : "부산광역시 " + "**구"
 
 	@JsonProperty("ADDR1")
 	private String venue; // 개최장소
@@ -41,19 +42,17 @@ public class FestivalBusanDTO {
 		private String secondPeriod;
 
 	//축제기간 setter
-	public void setPeriod(String firstPeriod) {
+	public String setPeriod(String firstPeriod) {
     if (firstPeriod == null || firstPeriod.isEmpty()) {
         // "USAGE_DAY_WEEK_AND_TIME" 필드가 null이거나 값이 없으면 "USAGE_DAY" 필드를 가져와서 설정
-        this.period = getSecondPeriod();
+        return getSecondPeriod();
     } else {
-        this.period = getFirstPeriod();
+        return getFirstPeriod();
     }
 }
 
 	@JsonProperty("ITEMCNTNTS")
 	private String description; // 설명(묘사)
-
-	//private String state; // 진행상태 아오 안해!!
 
 	@JsonProperty("HOMEPAGE_URL")
 	private String link; // 홈페이지
@@ -66,7 +65,7 @@ public class FestivalBusanDTO {
 
 	private LocalDateTime registerDate; // 작성일
 	private LocalDateTime modifyDate; // 수정일
-	
+
 	private Long readCount; // 조회수
 	
 	
