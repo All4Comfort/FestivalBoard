@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰 게시판 목록</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firefly 웹사이트</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+
+    <style>
+        
+
+        /* 푸터를 브라우저 맨 아래로 고정합니다. */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #f8f9fa;
+            /* 푸터의 배경색 설정 */
+            text-align: center;
+            /* 푸터 내용 가운데 정렬 */
+            padding: 10px;
+            /* 원하는 여백 설정 */
+        }
+
+        /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        /* 드롭다운 메뉴의 위치를 조절합니다. */
+        .dropdown-menu {
+            left: 0;
+            /* 드롭다운 메뉴가 화면 왼쪽에 정렬되도록 설정합니다. */
+            margin-left: -30px;
+            /* 원하는 만큼 왼쪽으로 이동시킵니다. */
+        }
+
+        /* 이미지 썸네일 스타일 */
+        .thumbnail {
+            max-width: 100px; /* 이미지 썸네일의 최대 너비 */
+            max-height: 100px; /* 이미지 썸네일의 최대 높이 */
+        }
+
+        /* 리뷰 목록 스타일 */
+        .review-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        /* 리뷰 아이템 스타일 */
+        .review-item {
+        flex-basis: calc(33.33% - 20px); /* 3개씩 가로로 정렬하므로 33.33%의 폭을 가짐 */
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        border: 1px solid #e1e1e1;
+        border-radius: 4px;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+        text-align: center; /* 글씨를 가운데 정렬 */
+    }
+
+        /* 검색 입력 상자 스타일 */
+            .search-box {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .search-button {
+            background-color: black;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+          /* 검색 입력 상자 크기 조절 */
+          #search-input {
+            width: 800px; /* 원하는 폭으로 조절 (예: 300px) */
+            padding: 10px; /* 내부 여백 추가 */
+            font-size: 16px; /* 글꼴 크기 조절 */
+            margin-bottom: 40px;
+
+        }
+
+        /* 버튼 디자인 스타일 */
+        .write-review-button a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: black; /* 버튼 배경색 */
+            color: #fff; /* 버튼 텍스트 색상 */
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .write-review-button a:hover {
+            background-color:black; /* 마우스 오버 시 배경색 변경 */
+        }
+        /* 리뷰 작성하기 버튼 스타일 */
+    .write-review-button {
+        right: 10px;
+    }
+    .write-review-button a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: transparent; /* 배경색을 투명으로 설정 */
+        color: #000; /* 텍스트 색상을 검정색으로 설정 */
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .write-review-button a:hover {
+        background-color: #333; /* 마우스 오버 시 배경색 변경 */
+        color: #fff; /* 텍스트 색상 변경 */
+    }
+
+
+ /* 이전/다음 페이지 링크 스타일 */
+ .page-link.prev,
+    .page-link.next {
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 5px 10px;
+        margin-right: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        color: #333;
+        transition: background-color 0.3s ease;
+    }
+
+    /* 활성화된 페이지 링크 스타일 */
+    .page-link.active {
+        background-color: black;
+        color: #fff;
+        border-color: black;
+    }
+
+    /* 페이지 링크 스타일 */
+    .page-link:not(.prev):not(.next) {
+        background-color: #f0f0f0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        padding: 5px 10px;
+        margin-right: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        color: #333;
+        transition: background-color 0.3s ease;
+    }
+
+    /* 페이지 링크 스타일 - 호버 시 */
+    .page-link:not(.prev):not(.next):hover {
+        background-color: #333;
+        color: #fff;
+        border-color: black;
+    }
+
+    /* 페이징 스타일 */
+    .pagination {
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: center; /* 가로 가운데 정렬 */
+        align-items: center; /* 세로 가운데 정렬 */
+    }
+        
+    </style>
+</head>
+<body>
+    <header>
+        <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
+            <a class="navbar-brand" href="#"><b>Fullstival</b></a>
+            <ul class="nav nav-pills">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                        aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                            fill="black" class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                        </svg></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#scrollspyHeading3">축제게시판</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#scrollspyHeading4">리뷰게시판</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#scrollspyHeading4">자유게시판</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#scrollspyHeading5">공지사항&QnA</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#scrollspyHeading1"><svg xmlns="http://www.w3.org/2000/svg" width="30"
+                            height="30" fill="black" class="bi bi-person" viewBox="0 0 16 16">
+                            <path
+                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                        </svg></a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+    </div>
+        <h1 style="text-align: center;">리뷰 게시판 목록</h1>
+        
+        <div class="search-box">
+            <input type="text" id="search-input" placeholder="상품을 검색하세요">
+            <button class="search-button" onclick="searchReviews()">검색</button>
+        </div>
+
+        <!-- 리뷰 목록 -->
+        <div id="review-list" class="review-container">
+            <!-- 리뷰 목록 아이템들 -->
+            <div class="review-item">
+                <!-- 이미지 썸네일 추가 -->
+                <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
+                <h2><a href="review_detail.html?id=1">리뷰 제목 1</a></h2>
+                <p>작성자: 작성자 이름 1</p>
+                <p>내용: 리뷰 내용 1</p>
+                <p>조회수: 100</p>
+                <p>좋아요 수: 50</p>
+            </div>
+            
+            <div class="review-item">
+                <!-- 이미지 썸네일 추가 -->
+                <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
+                <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
+                <p>작성자: 작성자 이름 2</p>
+                <p>내용: 리뷰 내용 2</p>
+                <p>조회수: 75</p>
+                <p>좋아요 수: 30</p>
+            </div>
+
+            <div class="review-item">
+              <!-- 이미지 썸네일 추가 -->
+              <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
+              <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
+              <p>작성자: 작성자 이름 3</p>
+              <p>내용: 리뷰 내용 3</p>
+              <p>조회수: 75</p>
+              <p>좋아요 수: 30</p>
+          </div>
+
+          <div class="review-item">
+            <!-- 이미지 썸네일 추가 -->
+            <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
+            <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
+            <p>작성자: 작성자 이름 4</p>
+            <p>내용: 리뷰 내용 3</p>
+            <p>조회수: 75</p>
+            <p>좋아요 수: 30</p>
+        </div>
+
+          <div class="review-item">
+            <!-- 이미지 썸네일 추가 -->
+            <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
+            <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
+            <p>작성자: 작성자 이름 5</p>
+            <p>내용: 리뷰 내용 4</p>
+            <p>조회수: 75</p>
+            <p>좋아요 수: 30</p>
+        </div>
+
+        <div class="review-item">
+            <!-- 이미지 썸네일 추가 -->
+            <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
+            <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
+            <p>작성자: 작성자 이름 3</p>
+            <p>내용: 리뷰 내용 6</p>
+            <p>조회수: 75</p>
+            <p>좋아요 수: 30</p>
+        </div>
+
+        <div class="review-item">
+            <!-- 이미지 썸네일 추가 -->
+            <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
+            <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
+            <p>작성자: 작성자 이름 7</p>
+            <p>내용: 리뷰 내용 3</p>
+            <p>조회수: 75</p>
+            <p>좋아요 수: 30</p>
+        </div>
+
+        <div class="review-item">
+            <!-- 이미지 썸네일 추가 -->
+            <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
+            <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
+            <p>작성자: 작성자 이름 8</p>
+            <p>내용: 리뷰 내용 3</p>
+            <p>조회수: 75</p>
+            <p>좋아요 수: 30</p>
+        </div>
+
+        <div class="review-item">
+            <!-- 이미지 썸네일 추가 -->
+            <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
+            <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
+            <p>작성자: 작성자 이름 9</p>
+            <p>내용: 리뷰 내용 3</p>
+            <p>조회수: 75</p>
+            <p>좋아요 수: 30</p>
+        </div>
+
+        <!-- 페이징 -->
+        <div class="pagination">
+            <a href="#" class="page-link prev">이전</a>
+            <a href="#" class="page-link active">1</a>
+            <a href="#" class="page-link">2</a>
+            <a href="#" class="page-link">3</a>
+            <!-- 필요한 만큼 페이지 링크 추가 -->
+            <a href="#" class="page-link next">다음</a>
+        </div>
+             <!-- 리뷰 작성하기 버튼 -->
+             <div class="write-review-button">
+                <a href="reviewWrite.html">리뷰 작성하기</a>
+            </div>
+
+        </div>
+
+</body>
+</html>
