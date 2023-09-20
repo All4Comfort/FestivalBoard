@@ -52,7 +52,7 @@
         <div class="input-form-backgroud row">
             <div class="input-form col-md-12 mx-auto">
                 <h4 class="mb-3">회원가입</h4>
-                <form class="validation-form" novalidate id="registration-form" action="/registerMember" method="post">
+                <form class="validation-form" novalidate id="registration-form" action="/member/registerMember" method="post">
                     <div class="mb-3">
                         <label for="email">이메일 (로그인 ID)</label>
                         <input type="email" class="form-control" id="email" name="email" placeholder="" required>
@@ -233,7 +233,7 @@
 
             // 서버로 데이터 전송
             // POST 요청을 보냅니다.
-            fetch('/registerMember', {
+            fetch('/member/registerMember', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // JSON 형식으로 데이터 전송
@@ -259,7 +259,7 @@
                     if (data.success) {
                         // 회원가입 성공 처리
                         alert("회원가입 성공");
-                        window.location.href = '/login'; // 로그인 페이지로 리디렉션
+                        window.location.href = '/member/login'; // 로그인 페이지로 리디렉션
                     }
                 })
                 

@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.service.MemberService;
+import com.whiteboard.whiteboard.service.MemberServiceImpl;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class MemberController {
     @Autowired
     private final MemberRepository memberRepository;
 
-    @GetMapping({ "/", "" }) // 모든 요청에서 메인으로 갈수있게.
+    @GetMapping({ "/", "", "main" }) // 모든 요청에서 메인으로 갈수있게.
     public String main() {
         return "/member/main";
     }
@@ -46,27 +47,32 @@ public class MemberController {
     // return "main";
     // }
 
+    // main.html에서 login.html 로 넘어가는 메서드
     @GetMapping("/member/login")
-    public String loging() {
-
+    public String loginPage() {
         return "/member/login";
     }
 
-    @PostMapping("/member/login-process")
+    // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
+    @PostMapping("/member/login")
     public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
             HttpSession session, Model model) {
-        // 이메일과 비밀번호를 사용하여 로그인 검증
         Optional<Member> memberOptional = memberService.login(email, pw);
-    
+
+        // 로그인 됐는지 확인
+        System.err.println("!!!!!! 로그인 확인~~~~~~~~~ =---> " + memberOptional.isPresent());
+
         if (memberOptional.isPresent()) {
-            // 로그인 성공
             Member member = memberOptional.get();
             session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
-            return "/member/main"; // 로그인 후 메인 페이지로 리다이렉트
+
+            // 로그인 유저 정보 확인
+            System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
+
+            return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
         } else {
-            // 로그인 실패
             model.addAttribute("loginError", true);
-            return "login"; // 로그인 페이지로 다시 이동
+            return "/member/login"; // 로그인 실패 시 로그인 페이지로 이동
         }
     }
 
@@ -95,6 +101,8 @@ public class MemberController {
         return "/member/myPage";
     }
 
+    
+
     // 시큐리티 때 활용할 회원가입..
     // //회원가입 창 가져오기
     // @GetMapping("/registerMember")
@@ -118,10 +126,13 @@ public class MemberController {
     @Autowired
     private final MemberService memberService;
 
+    @Autowired
+    private final MemberServiceImpl memberServiceImpl;
+
     // 회원가입창 가져오기
     @GetMapping("/member/registerMember")
     public ModelAndView showRegistrationForm() {
-        return new ModelAndView("registerMember");
+        return new ModelAndView("/member/registerMember");
     }
 
     @PostMapping("/member/registerMember")
