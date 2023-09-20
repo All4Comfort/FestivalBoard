@@ -10,8 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.whiteboard.whiteboard.dto.FestivalBusanDTO;
-import com.whiteboard.whiteboard.entity.Festival;
+import com.whiteboard.whiteboard.dto.forAPI.DaejeonDTO;
 import com.whiteboard.whiteboard.repository.FestivalRepository;
 
 @SpringBootTest
@@ -26,28 +25,12 @@ public class FestivalRepositoryTest {
     @Autowired
     private ObjectMapper objectMapper; // ObjectMapper 주입
 
-    // @Test
-    // public void insertFestivalAPI() {
-    // festivalService.importFestivalsFromJson();
-    // }
-
-    // @MockBean
-    // private FestivalRepository festivalRepository;
-
-    // System.err.println(festival);
-
-    // // 저장한 엔티티를 다시 조회하여 확인
-    // Festival savedFestival =
-    // festivalRepository.findById(festival.getFestivalNum()).orElse(null);
-    // // assertThat을 사용하여 테스트 검증
-    // Assertions.assertThat(savedFestival).isNotNull();
-    // Assertions.assertThat(savedFestival.getFestivalTitle()).isEqualTo("부산바다축제");
-
     @Test
     public void testImportFestivalsFromJson() {
         try {
             // JSON 파일을 클래스 경로에서 읽어옴
-            ClassPathResource resource = new ClassPathResource("templates/festivalAPI/busanFestivalOpenAPI.json");
+            ClassPathResource resource = new ClassPathResource(
+                    "templates/festivalAPI/daejeonFestivalOpenAPI.json");
 
             InputStream inputStream = resource.getInputStream();
             // ObjectMapper를 사용하여 JSON 데이터 파싱
@@ -59,88 +42,56 @@ public class FestivalRepositoryTest {
             // 모든 아이템을 처리
             for (JsonNode item : items) {
                 // 필드 가져오기 및 널 체크
-                String festivalTitle = getValueFromJson(item, "MAIN_TITLE");
+                String festivalTitle = getValueFromJson(item, "festvNm");
+                String region = getValueFromJson(item, "festvAddr");
 
-                // MAIN_TITLE 필드의 값 가공 : "(한,영, 중간,중번,일)" 부분 잘라내기
-                // 정규식을 사용하여 괄호와 괄호 안의 내용 제거
-                festivalTitle = festivalTitle.replaceAll("\\([^)]*\\)", "").trim();
+                //festvAddr 필드 값에서 "~구"까지만 추출하기 ex) 대전 중구
+                int index = region.indexOf("구");
+                if (index != -1) {
+                    region = region.substring(0, index + 1); // '구'를 포함하여 추출
+                    System.out.println(region);
+                }
 
-                String region = getValueFromJson(item, "GUGUN_NM");
-                String venue = getValueFromJson(item, "ADDR1");
-                String firstPeriod = getValueFromJson(item, "USAGE_DAY_WEEK_AND_TIME");
-                String secondPeriod = getValueFromJson(item, "USAGE_DAY");
-                String description = getValueFromJson(item, "ITEMCNTNTS");
-                String link = getValueFromJson(item, "HOMEPAGE_URL");
-                String poster = getValueFromJson(item, "MAIN_IMG_NORMAL");
-                String thumnail = getValueFromJson(item, "MAIN_IMG_THUMB");
+                String period = getValueFromJson(item, "festvPrid");
+                String description = getValueFromJson(item, "festvSumm");
+                String link = getValueFromJson(item, "hmpgAddr");
+                String venue1 = getValueFromJson(item, "festvPlcNm");
+                String venue2 = getValueFromJson(item, "festvAddr");
 
                 // JSON 파일 DTO에 담기
-                FestivalBusanDTO dto = new FestivalBusanDTO();
+                DaejeonDTO dto = new DaejeonDTO();
                 dto.setFestivalTitle(festivalTitle);
                 dto.setRegion(region);
-                dto.setVenue(venue);
+                dto.setPeriod(period);
                 dto.setDescription(description);
                 dto.setLink(link);
-                dto.setPoster(poster);
-                dto.setThumnail(thumnail);
-                // period 값 세팅하기
-                if (firstPeriod != "") {
-
+                dto.setVenue1(venue1);
+                dto.setVenue2(venue2);
+                if (dto.getVenue1() != null) {
+                    dto.setVenue(dto.getVenue1());
                 } else {
-
+                    dto.setVenue(dto.getVenue2());
                 }
-                dto.setFirstPeriod(firstPeriod);
-                dto.setSecondPeriod(secondPeriod);
-                dto.setPeriod(dto.getFirstPeriod());
 
-                // System.out.println("부산축제 기간 : " + dto.getPeriod()); //모든값이 null
-
-                // DTO 에서 ENTITY로 변환
-                Festival festival = Festival.builder()
-                        .festivalTitle(dto.getFestivalTitle())
-                        .region("부산광역시 " + dto.getRegion())
-                        .venue(dto.getVenue())
-                        .period(dto.getPeriod())
-                        .description(dto.getDescription())
-                        .link(dto.getLink())
-                        .poster(dto.getPoster())
-                        .thumnail(dto.getThumnail())
-                        .readCount(0L)
-                        .build();
-
+                System.err.println("대전축제 장소 : " + dto.getVenue());
                 /*
+                 * // DTO 에서 ENTITY로 변환
+                 * Festival festival = Festival.builder()
+                 * .festivalTitle(dto.getFestivalTitle())
+                 * .region("부산광역시 " + dto.getRegion())
+                 * .venue(dto.getVenue())
+                 * .period(dto.getPeriod())
+                 * .description(dto.getDescription())
+                 * .link(dto.getLink())
+                 * .poster(dto.getPoster())
+                 * .thumnail(dto.getThumnail())
+                 * .readCount(0L)
+                 * .build();
                  * 
-                 * Festival festival = new Festival();
-                 * festival.setFestivalTitle(dto.getFestivalTitle());
-                 * festival.setRegion("부산광역시 " + dto.getRegion());
-                 * festival.setVenue(dto.getVenue());
-                 * festival.setPeriod(dto.getPeriod());
-                 * festival.setDescription(dto.getDescription());
-                 * festival.setLink(dto.getLink());
-                 * festival.setPoster(dto.getPoster());
-                 * festival.setThumnail(dto.getThumnail());
-                 * festival.setReadCount(0L);
+                 * festivalRepository.save(festival);
                  */
+            } // for문 끝
 
-                festivalRepository.save(festival);
-            }
-
-            /*
-             * // 필드 값을 이용하여 Festival 엔티티 생성 및 저장
-             * Festival festival = Festival.builder()
-             * .festivalTitle(festivalTitle)
-             * .region("부산광역시 " + region)
-             * .venue(venue)
-             * .period(period)
-             * .description(description)
-             * .link(link)
-             * .poster(poster)
-             * .readCount(0L)
-             * .build();
-             */
-
-            // festivalRepository.save(festival); // 데이터베이스에 저장
-            // }
         } catch (IOException e) {
             e.printStackTrace();
         }
