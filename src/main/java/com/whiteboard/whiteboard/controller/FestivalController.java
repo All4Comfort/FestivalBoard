@@ -19,8 +19,8 @@ public class FestivalController {
 
     @GetMapping("/test")
     public List<Festival> getOngoingFestivals(){
-        //축제 API데이터 를 DB에서 가져옴
-        List<Festival> ongoingFestivals = festivalRepository.findOngoingFestivals();
-        return ongoingFestivals;
+        // 랜덤한 5개의 진행중 축제 가져오기
+        List<Festival> randomOngoingFestivals = festivalRepository.findRandomFestival();
+        return randomOngoingFestivals;
     }
 }

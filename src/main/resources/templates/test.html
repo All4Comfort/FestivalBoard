@@ -89,7 +89,7 @@
     </div>
 
     <section class="container my-5">
-        <h2>진행중 축제</h2>
+        <h2>축제</h2>
         <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
@@ -152,40 +152,52 @@
     <footer class="bg-dark text-light text-center py-3">
         <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
     </footer>
-    <script>
-        // 서버에서 축제 정보를 가져오는 함수
-        function fetchOngoingFestivals() {
-            fetch('/test')
-                .then(response => response.json())
-                .then(data => {
-                    const ongoingFestivalsDiv = document.getElementById('ongoingFestivals');
-                    ongoingFestivalsDiv.innerHTML = ''; // 기존 내용 초기화
 
-                    // 축제 정보를 동적으로 생성하여 웹 페이지에 추가
-                    data.forEach(festival => {
-                        const festivalCard = document.createElement('div');
-                        festivalCard.className = 'col-md-4 mb-4';
-                        festivalCard.innerHTML = `
-                    <div class="card">
-                        <img src="${festival.poster}" class="card-img-top" alt="${festival.festivalTitle}">
-                        <div class="card-body">
-                            <h5 class="card-title">${festival.festivalTitle}</h5>
-                            <p class="card-text">${festival.description}</p>
-                            <a href="${festival.link}" class="btn btn-primary">축제 자세히 보기</a>
-                        </div>
-                    </div>
-                `;
-                        ongoingFestivalsDiv.appendChild(festivalCard);
-                    });
-                })
-                .catch(error => console.error('Error fetching ongoing festivals:', error));
-        }
+    <script>
+        // fetchOngoingFestivals 함수가 이미 선언되어 있다고 가정합니다.
 
         // 페이지가 로드될 때 축제 정보를 가져와 표시
         window.addEventListener('DOMContentLoaded', function () {
-            fetchOngoingFestivals();
+            getOngoingFestivals().then(function (data) {
+                const carouselInner = document.querySelector('.carousel-inner');
+
+                // 축제 정보를 이용하여 카드 타이틀과 이미지 동적 생성
+                data.forEach(function (festival, index) {
+                    const carouselItem = document.createElement('div');
+                    carouselItem.className = 'carousel-item' + (index === 0 ? ' active' : '');
+
+                    const card = document.createElement('div');
+                    card.className = 'card';
+
+                    const cardBody = document.createElement('div');
+                    cardBody.className = 'card-body';
+
+                    // 이미지 엘리먼트를 생성하고 소스와 대체 텍스트 설정
+                    const festivalImage = document.createElement('img');
+                    festivalImage.src = festival.imageLink; // 이미지 링크는 데이터에서 가져온 것으로 설정
+                    festivalImage.alt = festival.festivalTitle; // 축제 제목을 대체 텍스트로 설정
+
+                    const cardTitle = document.createElement('h5');
+                    cardTitle.className = 'card-title';
+                    cardTitle.textContent = festival.festivalTitle;
+
+                    const cardText = document.createElement('p');
+                    cardText.className = 'card-text';
+                    cardText.textContent = festival.description;
+
+                    cardBody.appendChild(festivalImage); // 이미지를 카드 본문에 추가
+                    cardBody.appendChild(cardTitle);
+                    cardBody.appendChild(cardText);
+                    card.appendChild(cardBody);
+                    carouselItem.appendChild(card);
+
+                    carouselInner.appendChild(carouselItem);
+                });
+            });
         });
+
     </script>
+
 
 </body>
 
