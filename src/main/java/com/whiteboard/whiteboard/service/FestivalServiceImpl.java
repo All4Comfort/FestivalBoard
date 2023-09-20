@@ -6,8 +6,8 @@ import java.io.IOException;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.whiteboard.whiteboard.dto.FestivalBusanDTO;
 import com.whiteboard.whiteboard.entity.Festival;
 import com.whiteboard.whiteboard.repository.FestivalRepository;
 
@@ -26,10 +26,31 @@ public class FestivalServiceImpl implements FestivalService {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
         try {
+
+            // JSON 파일을 읽어와서 FestivalDTO 리스트로 파싱
+            File jsonFile = new File("C:\\Users\\Manic-063\\Documents\\GitHub\\web\\whiteboard\\src\\main\\resources\\templates\\festivalAPI\\busanFestivalOpenAPI.json");
+            FestivalBusanDTO[] festivalDTOs = objectMapper.readValue(jsonFile, FestivalBusanDTO[].class);
+
+            // FestivalDTO를 Festival 엔티티로 변환하여 저장
+            for (FestivalBusanDTO busanDTO : festivalDTOs) {
+                Festival festival = new Festival();
+                festival.setFestivalTitle(busanDTO.getFestivalTitle());
+                festival.setRegion("부산광역시 " + busanDTO.getRegion());
+                festival.setVenue(busanDTO.getVenue());
+                festival.setPeriod(busanDTO.setPeriod(busanDTO.getFirstPeriod()));
+                festival.setDescription(busanDTO.getDescription());
+                festival.setLink(busanDTO.getLink());
+                festival.setPoster(busanDTO.getPoster());
+                festival.setThumnail(busanDTO.getThumnail());
+                // 필요한 필드 설정
+
+                festivalRepository.save(festival);
+            }
+
+            /*
             // JSON 파일을 읽어와서 JsonNode로 파싱
             JsonNode jsonNode = objectMapper.readTree(new File(
                 "C:\\Users\\Manic-063\\Documents\\GitHub\\web\\whiteboard\\src\\main\\resources\\templates\\festivalAPI\\busanFestivalOpenAPI.json"));
-
             // JSON 데이터를 필요한 필드만 선택하여 엔티티로 매핑
             for (JsonNode festivalJson : jsonNode) {
                 // 필요한 필드만 추출하여 Festival 엔티티 객체 생성
@@ -48,7 +69,7 @@ public class FestivalServiceImpl implements FestivalService {
                 // 데이터베이스에 저장
                 festivalRepository.save(festival);
             }
-
+ */
             System.out.println("축제 데이터를 데이터베이스에 저장했습니다.");
         } catch (IOException e) {
             e.printStackTrace();
