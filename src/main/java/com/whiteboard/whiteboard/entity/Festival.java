@@ -36,7 +36,7 @@ public class Festival extends BaseEntity {
 	//@JsonProperty("MAIN_PLACE")
 	private String venue; // 개최장소
 
-	private String period; // 기간
+	//private String period; // 기간
 	
 	@Column(length = 5000) // 2000자로 제한
 	//@JsonProperty("ITEMCNTNTS")

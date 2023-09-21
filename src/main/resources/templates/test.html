@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="UTF-8" xmlns:th="http://www.thymeleaf.org">
+
 
 <head>
     <meta charset="UTF-8">
@@ -104,10 +105,9 @@
                 <div th:each="festival, iterStat : ${festivals}"
                     th:classappend="${iterStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
                     <div class="card">
-                        <img class="card-img-top" th:src="${festival.poster}" alt="Festival Poster">
+                        <img class="card-img-top" th:src="${festival.thumbnail}" alt="Festival Poster">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${festival.festivalTitle}"></h5>
-                            <p class="card-text" th:text="${festival.thumnail}"></p>
                         </div>
                     </div>
                 </div>
@@ -137,48 +137,60 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // 서버에서 가져온 랜덤 축제 정보를 담은 배열 (예: festivals)
-        // 배열의 각 요소는 축제 정보 객체여야 합니다.
+        $(document).ready(function () {
+            // 서버에서 데이터를 가져옵니다.
+            $.ajax({
+                url: '/test',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    const festivals = data; // 서버에서 받아온 데이터를 festivals 배열에 할당
+                    const carouselInner = document.querySelector(".carousel-inner");
+                    const randomFestivals = festivals.sort(() => Math.random() - 0.5).slice(0, 5);
 
-        // JavaScript를 사용하여 카드를 동적으로 생성하고 표시
-        const festivals = [
-            { title: "축제 1", description: "축제 1에 대한 설명", poster: "축제 1 포스터 링크" },
-            { title: "축제 2", description: "축제 2에 대한 설명", poster: "축제 2 포스터 링크" },
-            { title: "축제 3", description: "축제 3에 대한 설명", poster: "축제 3 포스터 링크" },
-            { title: "축제 4", description: "축제 4에 대한 설명", poster: "축제 4 포스터 링크" },
-            { title: "축제 5", description: "축제 5에 대한 설명", poster: "축제 5 포스터 링크" }
-        ];
+                    // 캐러셀 내용을 초기화합니다.
+                    carouselInner.innerHTML = "";
 
-        const carouselInner = document.querySelector(".carousel-inner");
+                    randomFestivals.forEach((festival, index) => {
+                        // 각 축제 정보를 카드로 만들어 캐러셀에 추가합니다.
+                        const carouselItem = document.createElement("div");
+                        carouselItem.classList.add("carousel-item");
+                        if (index === 0) {
+                            carouselItem.classList.add("active");
+                        }
 
-        // 랜덤으로 5개의 축제 정보를 선택
-        const randomFestivals = festivals.sort(() => Math.random() - 0.5).slice(0, 5);
+                        const card = document.createElement("div");
+                        card.classList.add("card");
 
-        randomFestivals.forEach((festival, index) => {
-            const card = document.createElement("div");
-            card.classList.add("carousel-item");
-            if (index === 0) {
-                card.classList.add("active");
-            }
+                        const image = document.createElement("img");
+                        image.classList.add("card-img-top");
+                        image.src = festival.thumbnail;
+                        image.alt = "Festival Poster";
 
-            const cardBody = document.createElement("div");
-            cardBody.classList.add("card-body");
+                        const cardBody = document.createElement("div");
+                        cardBody.classList.add("card-body");
 
-            const cardTitle = document.createElement("h5");
-            cardTitle.classList.add("card-title");
-            cardTitle.textContent = festival.title;
+                        const title = document.createElement("h5");
+                        title.classList.add("card-title");
+                        title.innerText = festival.festivalTitle;
 
-            const cardDescription = document.createElement("p");
-            cardDescription.classList.add("card-text");
-            cardDescription.textContent = festival.description;
-
-            cardBody.appendChild(cardTitle);
-            cardBody.appendChild(cardDescription);
-            card.appendChild(cardBody);
-            carouselInner.appendChild(card);
+                        cardBody.appendChild(title);
+                        card.appendChild(image);
+                        card.appendChild(cardBody);
+                        carouselItem.appendChild(card);
+                        carouselInner.appendChild(carouselItem);
+                    });
+                },
+                error: function (error) {
+                    console.error('데이터를 가져오는 중 에러 발생:', error);
+                }
+            });
         });
     </script>
+
+
 
 
 </body>

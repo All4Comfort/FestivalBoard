@@ -53,7 +53,6 @@ public class FestivalRepositoryTest {
                     System.out.println(region);
                 }
 
-                String period = getValueFromJson(item, "festvPrid");
                 String description = getValueFromJson(item, "festvSumm");
                 String link = getValueFromJson(item, "hmpgAddr");
                 String venue = "";
@@ -71,7 +70,6 @@ public class FestivalRepositoryTest {
                         .festivalTitle(festivalTitle)
                         .region(region)
                         .venue(venue)
-                        .period(period)
                         .description(description)
                         .link(link)
                         .readCount(0L)
@@ -104,7 +102,6 @@ public class FestivalRepositoryTest {
                 .festivalTitle(daejeonDTO.getFestivalTitle())
                 .region(daejeonDTO.getRegion())
                 .venue(daejeonDTO.getVenue())
-                .period(daejeonDTO.getPeriod())
                 .description(daejeonDTO.getDescription())
                 .link(daejeonDTO.getLink())
                 .readCount(daejeonDTO.getReadCount())
