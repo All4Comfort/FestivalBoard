@@ -3,13 +3,13 @@ package com.whiteboard.whiteboard;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.whiteboard.whiteboard.dto.forAPI.BusanDTO;
 import com.whiteboard.whiteboard.dto.forAPI.DaejeonDTO;
 import com.whiteboard.whiteboard.entity.Festival;
 import com.whiteboard.whiteboard.repository.FestivalRepository;
@@ -26,9 +26,70 @@ public class FestivalRepositoryTest {
     @Autowired
     private ObjectMapper objectMapper; // ObjectMapper 주입
 
-    @Test
+    //@Test
     public void testImportFestivalsFromJson() {
         try {
+
+            // JSON 파일을 클래스 경로에서 읽어옴
+            ClassPathResource resource = new ClassPathResource("templates/festivalAPI/busanFestivalOpenAPI.json");
+
+            InputStream inputStream = resource.getInputStream();
+            // ObjectMapper를 사용하여 JSON 데이터 파싱
+            JsonNode jsonNode = objectMapper.readTree(inputStream);
+
+            // "item" 배열에 있는 모든 아이템을 가져옴
+            JsonNode items = jsonNode.at("/getFestivalKr/item");
+
+            // 모든 아이템을 처리
+            for (JsonNode item : items) {
+                // 필드 가져오기 및 널 체크
+                String festivalTitle = getValueFromJson(item, "MAIN_TITLE");
+
+                // MAIN_TITLE 필드의 값 가공 : "(한,영, 중간,중번,일)" 부분 잘라내기
+                // 정규식을 사용하여 괄호와 괄호 안의 내용 제거
+                festivalTitle = festivalTitle.replaceAll("\\([^)]*\\)", "").trim();
+
+                String region = getValueFromJson(item, "GUGUN_NM");
+                String venue = getValueFromJson(item, "ADDR1");
+                String period = "";
+                String firstPeriod = getValueFromJson(item, "USAGE_DAY_WEEK_AND_TIME");
+                String secondPeriod = getValueFromJson(item, "USAGE_DAY");
+                String description = getValueFromJson(item, "ITEMCNTNTS");
+                String link = getValueFromJson(item, "HOMEPAGE_URL");
+                String poster = getValueFromJson(item, "MAIN_IMG_NORMAL");
+                String thumbnail = getValueFromJson(item, "MAIN_IMG_THUMB");
+
+                if (firstPeriod != "") {
+                    period = firstPeriod;
+                } else {
+                    period = secondPeriod;
+                }
+
+                // JSON 파일 DTO에 담기
+                BusanDTO dto = BusanDTO.builder()
+                        .festivalTitle(festivalTitle)
+                        .region(region)
+                        .venue(venue)
+                        .period(period)
+                        .description(description)
+                        .link(link)
+                        .poster(poster)
+                        .thumnail(thumbnail)
+                        .readCount(0L)
+                        .build();
+
+                // DTO를 엔티티로 변환하여 저장
+                Festival festival = convertDtoToBusanDTO(dto);
+
+                festivalRepository.save(festival);
+            }
+        } catch (IOException e) {
+            System.out.println("부산축제 insert 에러");
+            e.printStackTrace();
+        }
+
+        try {
+
             // JSON 파일을 클래스 경로에서 읽어옴
             ClassPathResource resource = new ClassPathResource(
                     "templates/festivalAPI/daejeonFestivalOpenAPI.json");
@@ -84,10 +145,13 @@ public class FestivalRepositoryTest {
 
                 festivalRepository.save(festival);
             } // for문 끝
+        } catch (
 
-        } catch (IOException e) {
+        IOException e) {
+            System.out.println("대전축제 insert 에러");
             e.printStackTrace();
         }
+
     }
 
     // // getValueFromJson 메서드는 주어진 JsonNode 객체에서 특정 필드의 값을 가져오는 데 사용되는 보조 메서드입니다. 이
@@ -108,9 +172,26 @@ public class FestivalRepositoryTest {
                 .description(daejeonDTO.getDescription())
                 .link(daejeonDTO.getLink())
                 .readCount(daejeonDTO.getReadCount())
+                .thumnail(daejeonDTO.getThumnail())
                 .build();
 
         return festival;
     }
 
+    // FestivalBusanDTO를 Festival 엔티티로 변환하는 메서드
+    private Festival convertDtoToBusanDTO(BusanDTO festivalDTO) {
+        Festival festival = Festival.builder()
+                .festivalTitle(festivalDTO.getFestivalTitle())
+                .region(festivalDTO.getRegion())
+                .venue(festivalDTO.getVenue())
+                .period(festivalDTO.getPeriod())
+                .description(festivalDTO.getDescription())
+                .link(festivalDTO.getLink())
+                .poster(festivalDTO.getPoster())
+                .readCount(festivalDTO.getReadCount())
+                .thumnail(festivalDTO.getThumnail())
+                .build();
+
+        return festival;
+    }
 }
