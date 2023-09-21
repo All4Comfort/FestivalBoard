@@ -91,9 +91,9 @@ public class BusanDTO {
                 String thumnail = getValueFromJson(item, "MAIN_IMG_THUMB");
 
 								if (firstPeriod != "") {
-                    period = firstPeriod;
+                    return period = firstPeriod;
                 } else {
-                    period = secondPeriod;
+                    return period = secondPeriod;
                 }
 
                 // JSON 파일 DTO에 담기
@@ -101,9 +101,7 @@ public class BusanDTO {
                         .festivalTitle(festivalTitle)
                         .region(region)
                         .venue(venue)
-                        //.period(period)
-                        .firstPeriod(firstPeriod)
-                        .secondPeriod(secondPeriod)
+                        .period(period)
                         .description(description)
                         .link(link)
                         .poster(poster)
