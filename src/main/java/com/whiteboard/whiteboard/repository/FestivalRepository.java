@@ -12,8 +12,8 @@ import com.whiteboard.whiteboard.entity.Festival;
 @Repository
 public interface FestivalRepository extends JpaRepository<Festival, Long> {
 //1번째 시도
-    @Query(value = "SELECT * FROM festival ORDER BY RAND() LIMIT 5", nativeQuery = true)
-    List<FestivalDTO> findRandomFive();
+   // @Query(value = "SELECT * FROM festival ORDER BY RAND() LIMIT 5", nativeQuery = true)
+   // List<FestivalDTO> findRandomFive();
 
 //2번째 시도
     @Query("SELECT new com.whiteboard.whiteboard.dto.FestivalDTO(f.festivalTitle, f.thumnail) FROM Festival f")

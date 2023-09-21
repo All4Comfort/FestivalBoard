@@ -181,7 +181,7 @@ public class FestivalRepositoryTest {
                 .festivalTitle(festivalDTO.getFestivalTitle())
                 .region(festivalDTO.getRegion())
                 .venue(festivalDTO.getVenue())
-                .period(festivalDTO.getPeriod())
+                
                 .description(festivalDTO.getDescription())
                 .link(festivalDTO.getLink())
                 .poster(festivalDTO.getPoster())

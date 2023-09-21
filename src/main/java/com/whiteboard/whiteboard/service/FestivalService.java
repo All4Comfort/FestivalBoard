@@ -9,7 +9,7 @@ import com.whiteboard.whiteboard.dto.FestivalDTO;
 @Service
 public interface FestivalService {
 
-       public List<FestivalDTO> getRandomFestivals();
+      // public List<FestivalDTO> getRandomFestivals();
 
        public List<FestivalDTO> getAllFestivalsAsDTO();
    

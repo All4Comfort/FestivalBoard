@@ -11,26 +11,26 @@ import com.whiteboard.whiteboard.entity.Festival;
 import com.whiteboard.whiteboard.repository.FestivalRepository;
 
 @Service
-//@RequiredArgsConstructor
+// @RequiredArgsConstructor
 public class FestivalServiceImpl implements FestivalService {
 
     private final FestivalRepository festivalRepository;
-    
-     @Autowired
+
+    @Autowired
     public FestivalServiceImpl(FestivalRepository festivalRepository) {
         this.festivalRepository = festivalRepository;
     }
- 
-    //1번째 시도
-	 @Override
-    public List<FestivalDTO> getRandomFestivals() {
-        return festivalRepository.findRandomFive();
-    }
 
-    //2번째 시도
+    // 1번째 시도
+    // @Override
+    // public List<FestivalDTO> getRandomFestivals() {
+    //// return festivalRepository.findRandomFive();
+    // }
+
+    // 2번째 시도
     @Override
     public List<FestivalDTO> getAllFestivalsAsDTO() {
-         List<Festival> festivals = festivalRepository.findAll();
+        List<Festival> festivals = festivalRepository.findAll();
         List<FestivalDTO> festivalDTOs = new ArrayList<>();
 
         for (Festival festival : festivals) {
@@ -40,6 +40,5 @@ public class FestivalServiceImpl implements FestivalService {
 
         return festivalDTOs;
     }
-    
-    
+
 }
