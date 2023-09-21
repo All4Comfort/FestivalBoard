@@ -28,6 +28,7 @@ public class FestivalDTO {
 	private String period; // 기간
 	private String link; // 홈페이지
 	private String poster; // 포스터링크
+	private String thumnail; // 포스터링크
 	private LocalDateTime registerDate; // 작성일
 	private LocalDateTime modifyDate; // 수정일
 	private Long readCount; // 조회수
