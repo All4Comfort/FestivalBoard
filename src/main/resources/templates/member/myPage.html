@@ -11,18 +11,28 @@
      <table class="table table=striped">
         <!-- PageResultDTO.dtoList 의 이름으로 호출한다.. -->
         <tbody>
-           <tr>
-              <th scope="row"> 이름 </th>
-              <td>[[${member.name}]]</td>
+            <tr>
+                <th scope="row"> 아이디 </th>
+                <td>[[${member.email}]]</td>
             </tr>
-           <tr>
-              <th scope="row"> 아이디 </th>
-              <td>[[${member.email}]]</td>
+            <tr> <!-- 비밀번호 처리하기!!!!!! -->
+                <th scope="row"> 비밀번호 </th>
+                <td>
+                    <span th:if="${member.pw != null}">
+                        <!-- 비밀번호 길이에 따라 X 문자를 반복하여 표시
+
+                            별표(*)로 표시하지 않는 이유.... 
+                        Thymeleaf에서는 * 문자를 기본적으로 변수 또는 속성을 평가하는 데 사용. 
+                        th:text="*"와 같은 코드는 Thymeleaf에서 잘못 해석된다. -->
+                        <span th:text="X" 
+                              th:each="i : ${#numbers.sequence(1, member.pw.length())}"></span>
+                    </span>
+                </td>
             </tr>
-           <tr> <!-- 비밀번호 처리하기!!!!!! -->
-              <th scope="row"> 비밀번호 </th>
-              <td>[[${member.pw}]]</td>
-            </tr>
+            <tr>
+               <th scope="row"> 이름 </th>
+               <td>[[${member.name}]]</td>
+             </tr>
            <tr>
               <th scope="row"> 닉네임 </th>
               <td>[[${member.nickname}]]</td>
@@ -41,31 +51,14 @@
             </tr>
               
 
-            <span> 
-                <a th:href="@{/member/delete}">
-                    <button type="button">회원 탈퇴</button>
-                </a>
-            </span>
         </tbody>
-     </table>
-<h3 class="overview-normalize">이름</h3>
-<p th:text="${loginName}"></p>
-<hr/>
-<h3 class="overview-normalize">접속 아이디</h3>
-<p th:text="${loginId}"></p>
-<hr/>
-<h3 class="overview-normalize">역할</h3>
-<p th:text="${loginRoles}"></p>
-<hr/>
-<h3 class="overview-normalize">전화번호</h3>
-<p th:text="${phoneNumber}"></p>
-<hr/>
-<h3 class="overview-normalize">생일</h3>
-<p th:text="${birthDay}"></p>
-<hr/>
-<h3 class="overview-normalize">닉네임</h3>
-<p th:text="${nickname}"></p>
-<hr/>
-
+    </table>
+<div>
+    <span> 
+        <a th:href="@{/member/delete}">
+            <button type="button">회원 탈퇴</button>
+        </a>
+    </span>
+</div>
 </body>
 </html>
