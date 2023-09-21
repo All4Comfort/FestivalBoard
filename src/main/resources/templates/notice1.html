@@ -190,17 +190,19 @@
         </nav>
     </section>
 
-    <div class="container">
-        <div class="d-flex justify-content-end mb-3">
-            <div class="ms-auto"> <!-- ms-auto 클래스 추가 -->
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-                        aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+    <form action="/search" method="get"> <!-- action 속성은 검색 결과를 전송할 URL을 지정합니다. method는 HTTP 메서드를 지정합니다 (여기서는 get을 사용합니다). -->
+        <div class="container">
+            <div class="d-flex justify-content-end mb-3">
+                <div class="ms-auto"> <!-- ms-auto 클래스 추가 -->
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="query" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
+    
 
     <footer class="bg-dark text-light text-center py-3">
         <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
