@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.whiteboard.whiteboard.dto.FestivalBusanDTO;
 import com.whiteboard.whiteboard.dto.FestivalDTO;
+import com.whiteboard.whiteboard.dto.forAPI.BusanDTO;
 
 @Service
 //@RequiredArgsConstructor
@@ -21,7 +21,7 @@ public class FestivalServiceImpl implements FestivalService {
     }
 
 	@Override
-	public List<FestivalBusanDTO> getRandomFestivals() {
+	public List<BusanDTO> getRandomFestivals() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'getRandomFestivals'");
 	}

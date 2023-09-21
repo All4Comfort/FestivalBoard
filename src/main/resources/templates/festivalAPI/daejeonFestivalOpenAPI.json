@@ -193,15 +193,3 @@
     }
   }
 }
-{
-  "response": {
-    "header": {
-      "resultCode": "C00",
-      "resultMsg": "NORMAL SERVICE"
-    },
-    "body": {
-      "totalCount": 13,
-      "items": []
-    }
-  }
-}
