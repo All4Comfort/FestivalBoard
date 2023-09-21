@@ -12,11 +12,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.service.MemberService;
@@ -56,7 +58,7 @@ public class MemberController {
     // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
     @PostMapping("/member/login")
     public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
-            HttpSession session, Model model) {
+            HttpSession session, Model model, @ModelAttribute("MemberDTO") MemberDTO memberDTO) {
         Optional<Member> memberOptional = memberService.login(email, pw);
 
         // 로그인 됐는지 확인
@@ -68,11 +70,6 @@ public class MemberController {
 
             // 로그인 유저 정보 확인
             System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
-
-
-            //session 값 얻어오기
-            String loggedInUser = session.getId();
-            System.out.println(session.getId());
 
             return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
         } else {
@@ -105,8 +102,6 @@ public class MemberController {
         }
         return "/member/myPage";
     }
-
-    
 
     // 시큐리티 때 활용할 회원가입..
     // //회원가입 창 가져오기
