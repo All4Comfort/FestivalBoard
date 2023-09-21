@@ -69,6 +69,11 @@ public class MemberController {
             // 로그인 유저 정보 확인
             System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
 
+
+            //session 값 얻어오기
+            String loggedInUser = session.getId();
+            System.out.println(session.getId());
+
             return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
         } else {
             model.addAttribute("loginError", true);

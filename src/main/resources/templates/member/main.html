@@ -73,7 +73,7 @@
                 </li>
                 <!-- 로그인하지 않은 사용자에게 보여질 메뉴 -->
                 <li class="nav-item" th:unless="${loggedInUser != null}">
-                    <h3>로그인 해주세요</h3>
+                    <!-- <h3>로그인 해주세요</h3> -->
                     <a class="nav-link" id="login-link" href="#scrollspyHeading5"><svg
                             xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
                             viewBox="0 0 16 16">
@@ -82,9 +82,9 @@
                         </svg></a>
                 </li>
 
-                <!-- 로그인한 사용자에게 보여질 메뉴 -->
+                <!-- 로그인한 사용자에게 보여질 메뉴 #scrollspyHeading5 -->
                 <li class="nav-item" th:if="${loggedInUser != null}">
-                    <h3>로그인 완료</h3>
+                    <!-- <h3>로그인 완료</h3> -->
                     <a class="nav-link" id="login-link" href="#scrollspyHeading5"><svg
                             xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
                             viewBox="0 0 16 16">
@@ -194,8 +194,7 @@
             // 예제에서는 임의로 true 또는 false를 반환하도록 설정합니다.
 
             //로그인 정보 if에 넣기
-            var a = 50;
-            if(a == 0){
+            if(loggedInUser != null){
                  return true; //로그인 정보가 있는 경우
             }
 
