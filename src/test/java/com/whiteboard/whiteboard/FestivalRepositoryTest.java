@@ -1,6 +1,7 @@
 package com.whiteboard.whiteboard;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +33,12 @@ public class FestivalRepositoryTest {
             ClassPathResource resource = new ClassPathResource(
                     "templates/festivalAPI/daejeonFestivalOpenAPI.json");
 
-    //         InputStream inputStream = resource.getInputStream();
-    //         // ObjectMapper를 사용하여 JSON 데이터 파싱
-    //         JsonNode jsonNode = objectMapper.readTree(inputStream);
+            InputStream inputStream = resource.getInputStream();
+            // // ObjectMapper를 사용하여 JSON 데이터 파싱
+            JsonNode jsonNode = objectMapper.readTree(inputStream);
 
-    //         // "item" 배열에 있는 모든 아이템을 가져옴
-    //         JsonNode items = jsonNode.at("/getFestivalKr/item");
+            // // "item" 배열에 있는 모든 아이템을 가져옴
+            JsonNode items = jsonNode.at("/response/body/items");
 
             // 모든 아이템을 처리
             for (JsonNode item : items) {
@@ -92,24 +93,24 @@ public class FestivalRepositoryTest {
     // // getValueFromJson 메서드는 주어진 JsonNode 객체에서 특정 필드의 값을 가져오는 데 사용되는 보조 메서드입니다. 이
     // // 메서드는 JSON 데이터에서 필드 값을 가져오는 과정을 단순화하고 널 값 검사를 수행하기 위해 작성되었습니다.
 
-    // private String getValueFromJson(JsonNode jsonNode, String fieldName) {
-    //     JsonNode fieldNode = jsonNode.get(fieldName);
-    //     return fieldNode != null ? fieldNode.asText() : "";
-    // }
+    private String getValueFromJson(JsonNode jsonNode, String fieldName) {
+        JsonNode fieldNode = jsonNode.get(fieldName);
+        return fieldNode != null ? fieldNode.asText() : "";
+    }
 
     // FestivalBusanDTO를 Festival 엔티티로 변환하는 메서드
-    private Festival convertDtoToEntity(DaejeonDTO festivalDTO) {
+    private Festival convertDtoToEntity(DaejeonDTO daejeonDTO) {
         Festival festival = Festival.builder()
-                .festivalTitle(festivalDTO.getFestivalTitle())
-                .region(festivalDTO.getRegion())
-                .venue(festivalDTO.getVenue())
-                .period(festivalDTO.getPeriod())
-                .description(festivalDTO.getDescription())
-                .link(festivalDTO.getLink())
-                .readCount(festivalDTO.getReadCount())
+                .festivalTitle(daejeonDTO.getFestivalTitle())
+                .region(daejeonDTO.getRegion())
+                .venue(daejeonDTO.getVenue())
+                .period(daejeonDTO.getPeriod())
+                .description(daejeonDTO.getDescription())
+                .link(daejeonDTO.getLink())
+                .readCount(daejeonDTO.getReadCount())
                 .build();
 
-    //     return festival;
-    // }
+        return festival;
+    }
 
 }

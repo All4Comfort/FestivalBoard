@@ -98,21 +98,28 @@
     </div>
 
     <section class="container my-5">
-        <div class="container my-5">
-            <h2>랜덤 축제 정보</h2>
-            <div id="carousel" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <!-- JavaScript를 통해 동적으로 생성될 카드 -->
+        <h2>진행중 축제</h2>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div th:each="festival, iterStat : ${festivals}"
+                    th:classappend="${iterStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
+                    <div class="card">
+                        <img class="card-img-top" th:src="${festival.poster}" alt="Festival Poster">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${festival.festivalTitle}"></h5>
+                            <p class="card-text" th:text="${festival.thumnail}"></p>
+                        </div>
+                    </div>
                 </div>
-                <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </a>
             </div>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
         </div>
     </section>
 

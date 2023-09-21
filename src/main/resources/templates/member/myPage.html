@@ -3,10 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>My Page</title>
 </head>
 <body>
-  
+    <h1> 개인 정보 </h1>
+
+     <table class="table table=striped">
+        <!-- PageResultDTO.dtoList 의 이름으로 호출한다.. -->
+        <tbody>
+           <tr>
+              <th scope="row"> 이름 </th>
+              <td>[[${member.name}]]</td>
+            </tr>
+           <tr>
+              <th scope="row"> 아이디 </th>
+              <td>[[${member.email}]]</td>
+            </tr>
+           <tr> <!-- 비밀번호 처리하기!!!!!! -->
+              <th scope="row"> 비밀번호 </th>
+              <td>[[${member.pw}]]</td>
+            </tr>
+           <tr>
+              <th scope="row"> 닉네임 </th>
+              <td>[[${member.nickname}]]</td>
+            </tr>
+           <tr>
+              <th scope="row"> 생년월일 </th>
+              <td>[[${member.birthDay}]]</td>
+            </tr>
+           <tr>
+              <th scope="row"> 성별 </th>
+              <td>[[${member.gender}]]</td>
+            </tr>
+           <tr>
+              <th scope="row"> 전화번호 </th>
+              <td>[[${member.phoneNum}]]</td>
+            </tr>
+              
+
+            <span> 
+                <a th:href="@{/member/delete}">
+                    <button type="button">회원 탈퇴</button>
+                </a>
+            </span>
+        </tbody>
+     </table>
 <h3 class="overview-normalize">이름</h3>
 <p th:text="${loginName}"></p>
 <hr/>
