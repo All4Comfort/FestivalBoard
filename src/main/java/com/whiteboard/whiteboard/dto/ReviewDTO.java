@@ -3,7 +3,6 @@ package com.whiteboard.whiteboard.dto;
 import java.time.LocalDateTime;
 
 import com.whiteboard.whiteboard.entity.Festival;
-import com.whiteboard.whiteboard.entity.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +23,7 @@ public class ReviewDTO {
 	private int replyStep;//댓글순서 
 	private LocalDateTime regDate,modDate;
 
-	private Member writer;// 작성자 : Member 엔티티의 id 컬럼
+	private String writer;// 작성자 : Member 엔티티의 id 컬럼
 	private String title;// 제목
 	private String content;// 내용
 	private Long readCount;// 조회수

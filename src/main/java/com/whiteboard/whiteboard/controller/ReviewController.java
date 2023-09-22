@@ -64,5 +64,4 @@ public class ReviewController {
         // 작성 후 리뷰 목록 페이지로 리다이렉트
         return "redirect:/reviewList";
     }
-
 }
