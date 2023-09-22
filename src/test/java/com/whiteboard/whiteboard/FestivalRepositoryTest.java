@@ -170,7 +170,7 @@ public class FestivalRepositoryTest {
                 .description(daejeonDTO.getDescription())
                 .link(daejeonDTO.getLink())
                 .readCount(daejeonDTO.getReadCount())
-                .thumbnail(daejeonDTO.getthumbnail())
+                .thumbnail(daejeonDTO.getThumbnail())
                 .build();
 
         return festival;
@@ -186,7 +186,7 @@ public class FestivalRepositoryTest {
                 .link(festivalDTO.getLink())
                 .poster(festivalDTO.getPoster())
                 .readCount(festivalDTO.getReadCount())
-                .thumbnail(festivalDTO.getthumbnail())
+                .thumbnail(festivalDTO.getThumbnail())
                 .build();
 
         return festival;
@@ -197,7 +197,7 @@ public class FestivalRepositoryTest {
     public void festival(){
         
         //조회 하려는 축제 넘버
-        Long festivalNumId = '14L';
+        Long festivalNumId = 14L;
         
         Festival festival = festivalRepository.findByFestivalNum(festivalNumId).orElse(null);
 
