@@ -127,7 +127,7 @@
 
     <section class="container my-5 text-center">
         <div class="d-flex justify-content-end mb-3">
-            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal">
+            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal" th:if="${session.loggdInUser}">
                 글쓰기
             </button>
         </div>
@@ -147,10 +147,10 @@
             </thead>
             <tbody>
                 <tr th:each="notice : ${notices}">
-                    <th scope="row" th:text="${notice.number}"></th>
+                    <th scope="row" th:text="${noticeNum}"></th>
                     <td th:text="${notice.title}"></td>
-                    <td th:text="${notice.author}"></td>
-                    <td th:text="${notice.date}"></td>
+                    <td th:text="${notice.writer}"></td>
+                    <td th:text="${notice.registerDate}"></td>
                 </tr>
             </tbody>
         </table>
