@@ -7,16 +7,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.service.MemberService;
@@ -54,27 +54,27 @@ public class MemberController {
     }
 
     // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
-    @PostMapping("/member/login")
-    public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
-            HttpSession session, Model model) {
-        Optional<Member> memberOptional = memberService.login(email, pw);
+        @PostMapping("/member/login")
+        public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
+                HttpSession session, Model model, @ModelAttribute("MemberDTO") MemberDTO memberDTO) {
+            Optional<Member> memberOptional = memberService.login(email, pw);
 
-        // 로그인 됐는지 확인
-        System.err.println("!!!!!! 로그인 확인~~~~~~~~~ =---> " + memberOptional.isPresent());
+            // 로그인 됐는지 확인
+            System.err.println("!!!!!! 로그인 확인~~~~~~~~~ =---> " + memberOptional.isPresent());
 
-        if (memberOptional.isPresent()) {
-            Member member = memberOptional.get();
-            session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
+            if (memberOptional.isPresent()) {
+                Member member = memberOptional.get();
+                session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
 
-            // 로그인 유저 정보 확인
-            System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
+                // 로그인 유저 정보 확인
+                System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
 
-            return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
-        } else {
-            model.addAttribute("loginError", true);
-            return "/member/login"; // 로그인 실패 시 로그인 페이지로 이동
+                return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
+            } else {
+                model.addAttribute("loginError", true);
+                return "/member/login"; // 로그인 실패 시 로그인 페이지로 이동
+            }
         }
-    }
 
     // @GetMapping("/user")
     // public String dashBoardPage(@AuthenticationPrincipal UserDetails user, Model
@@ -85,23 +85,39 @@ public class MemberController {
     // }
 
     @GetMapping("/member/myPage")
-    public String dashBoardPage(@AuthenticationPrincipal UserDetails user, Model model) {
+    public String dashBoardPage(HttpSession session, Model model) {
+        //myPage에서 세션 정보 읽어오기
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
 
-        // 사용자 이름을 기반으로 데이터베이스에서 정보 가져오기
-        Optional<Member> memberOptional = memberRepository.findByEmail(user.getUsername());
-        if (memberOptional.isPresent()) {
-            Member member = memberOptional.get();
-            model.addAttribute("loginName", member.getName());
-            model.addAttribute("loginId", member.getEmail());
-            model.addAttribute("loginRoles", user.getAuthorities());
-            model.addAttribute("phoneNumber", member.getPhoneNum());
-            model.addAttribute("nickname", member.getNickname());
-            model.addAttribute("birthDay", member.getBirthDay());
+        if (loggedInUser != null) {
+            // 로그인된 사용자 정보를 모델에 추가
+            model.addAttribute("member", loggedInUser);
+            return "/member/myPage";
+        } else {
+            // 로그인되지 않았을 경우 로그인 페이지로 리다이렉트 또는 처리
+            return "redirect:/member/login";
         }
-        return "/member/myPage";
     }
 
-    
+    /*
+     * public String dashBoardPage(@AuthenticationPrincipal UserDetails user, Model
+     * model) {
+     * 
+     * // 사용자 이름을 기반으로 데이터베이스에서 정보 가져오기
+     * Optional<Member> memberOptional =
+     * memberRepository.findByEmail(user.getUsername());
+     * if (memberOptional.isPresent()) {
+     * Member member = memberOptional.get();
+     * model.addAttribute("loginName", member.getName());
+     * model.addAttribute("loginId", member.getEmail());
+     * model.addAttribute("loginRoles", user.getAuthorities());
+     * model.addAttribute("phoneNumber", member.getPhoneNum());
+     * model.addAttribute("nickname", member.getNickname());
+     * model.addAttribute("birthDay", member.getBirthDay());
+     * }
+     * return "/member/myPage";
+     * }
+     */
 
     // 시큐리티 때 활용할 회원가입..
     // //회원가입 창 가져오기

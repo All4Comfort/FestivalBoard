@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -86,42 +86,51 @@
     <header>
         <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
             <a class="navbar-brand" href="#"><b>Fullstival</b></a>
-            <ul class="nav nav-pills">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                            fill="black" class="bi bi-list" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                        </svg></a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#scrollspyHeading3">축제게시판</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#scrollspyHeading4">리뷰게시판</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#scrollspyHeading4">자유게시판</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#scrollspyHeading5">공지사항&QnA</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#scrollspyHeading1"><svg xmlns="http://www.w3.org/2000/svg" width="30"
-                            height="30" fill="black" class="bi bi-person" viewBox="0 0 16 16">
-                            <path
-                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
-                        </svg></a>
-                </li>
-            </ul>
+            <form class="" novalidate id="tset-form" action="/test" method="get">
+                <ul class="nav nav-pills">
+                    <div id="welcome-message"></div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                fill="black" class="bi bi-list" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                            </svg></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#scrollspyHeading1">축제게시판</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#scrollspyHeading2">리뷰게시판</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#scrollspyHeading3">자유게시판</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="#scrollspyHeading4">공지사항&QnA</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="login-link" href="#scrollspyHeading5"><svg
+                                xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black"
+                                class="bi bi-person" viewBox="0 0 16 16">
+                                <path
+                                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                            </svg></a>
+                    </li>
+                </ul>
+            </form>
         </nav>
     </header>
 
-    <section class="container my-5">
+    <section class="container my-5 text-center">
+        <div class="d-flex justify-content-end mb-3">
+            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal">
+                글쓰기
+            </button>
+        </div>
         <div class="d-flex justify-content-end mb-3">
         </div>
         <h2>NOTICE</h2>
@@ -137,36 +146,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>첫 번째 게시물 제목</td>
-                    <td>홍길동</td>
-                    <td>2023-09-18</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>두 번째 게시물 제목</td>
-                    <td>아무개</td>
-                    <td>2023-09-18</td>
-                </tr>
-                <!-- 필요한 만큼 게시물을 추가할 수 있습니다. -->
-                <tr>
-                    <th scope="row">3</th>
-                    <td>세 번째 게시물 제목</td>
-                    <td>오아연</td>
-                    <td>2023-09-18</td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td>네 번째 게시물 제목</td>
-                    <td>정용화</td>
-                    <td>2023-09-18</td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td>다섯 번째 게시물 제목</td>
-                    <td>이정신</td>
-                    <td>2023-09-18</td>
+                <tr th:each="notice : ${notices}">
+                    <th scope="row" th:text="${notice.number}"></th>
+                    <td th:text="${notice.title}"></td>
+                    <td th:text="${notice.author}"></td>
+                    <td th:text="${notice.date}"></td>
                 </tr>
             </tbody>
         </table>
@@ -190,18 +174,19 @@
         </nav>
     </section>
 
-    <div class="container">
-        <div class="d-flex justify-content-end mb-3">
-            <div class="ms-auto"> <!-- ms-auto 클래스 추가 -->
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" aria-label="Search"
-                        aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
+    <form action="/search" method="get">
+        <div class="container">
+            <div class="d-flex justify-content-end mb-3">
+                <div class="ms-auto">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="query" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </form>
+    
     <footer class="bg-dark text-light text-center py-3">
         <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
     </footer>

@@ -27,7 +27,8 @@ public class FestivalDTO {
 	private String venue; // 개최장소
 	private String period; // 기간
 	private String link; // 홈페이지
-	private String poster; // 포스터링크
+	private String poster; // 메인 포스터링크
+	private String thumnail; // 썸네일 포스터링크
 	private LocalDateTime registerDate; // 작성일
 	private LocalDateTime modifyDate; // 수정일
 	private Long readCount; // 조회수
@@ -48,5 +49,9 @@ public class FestivalDTO {
 		this.poster = poster;
 	}
 
-	
+	//2번째 방법
+	public FestivalDTO(String festivalTitle, String thumnail) {
+		this.festivalTitle = festivalTitle;
+		this.thumnail = thumnail;
+	}
 }

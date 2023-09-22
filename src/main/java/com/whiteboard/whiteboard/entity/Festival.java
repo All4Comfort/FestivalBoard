@@ -36,7 +36,7 @@ public class Festival extends BaseEntity {
 	//@JsonProperty("MAIN_PLACE")
 	private String venue; // 개최장소
 
-	private String period; // 기간
+	//private String period; // 기간
 	
 	@Column(length = 5000) // 2000자로 제한
 	//@JsonProperty("ITEMCNTNTS")
@@ -49,7 +49,7 @@ public class Festival extends BaseEntity {
 	//@JsonProperty("MAIN_IMG_NORMAL")
 	private String poster; // 포스터링크
 
-	private String thumnail;
+	private String thumbnail;
 
 	//@Column(name = "read_count", nullable = false, columnDefinition = "integer default 0")
 	private Long readCount; // 조회수

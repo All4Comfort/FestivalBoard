@@ -108,7 +108,7 @@
             </ul>
         </nav>
 
-    <section class="container my-5">
+    <section class="container my-5 text-center">
         <div class="d-flex justify-content-end mb-3">
             <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal">
                 글쓰기
@@ -188,15 +188,17 @@
 
     <div class="container">
         <div class="d-flex justify-content-end mb-3">
-            <div class="ms-auto"> <!-- ms-auto 클래스 추가 -->
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" aria-label="Search"
+            <div class="ms-auto">
+                <form class="input-group" action="/search" method="GET">
+                    <input type="text" class="form-control" name="query" placeholder="Search" aria-label="Search"
                         aria-describedby="button-addon2">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">검색</button>
-                </div>
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
+                </form>
             </div>
         </div>
     </div>
+    
+    
 
     <footer class="bg-dark text-light text-center py-3">
         <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>

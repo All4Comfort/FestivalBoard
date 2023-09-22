@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.whiteboard.whiteboard.dto.forAPI.BusanDTO;
+import com.whiteboard.whiteboard.dto.FestivalDTO;
 
 @Service
 public interface FestivalService {
 
-       public List<BusanDTO> getRandomFestivals();
+      // public List<FestivalDTO> getRandomFestivals();
+
+       public List<FestivalDTO> getAllFestivalsAsDTO();
    
 }

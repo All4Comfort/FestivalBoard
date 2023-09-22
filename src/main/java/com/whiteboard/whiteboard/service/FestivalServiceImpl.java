@@ -3,28 +3,42 @@ package com.whiteboard.whiteboard.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.whiteboard.whiteboard.dto.FestivalDTO;
-import com.whiteboard.whiteboard.dto.forAPI.BusanDTO;
+import com.whiteboard.whiteboard.entity.Festival;
+import com.whiteboard.whiteboard.repository.FestivalRepository;
 
 @Service
-//@RequiredArgsConstructor
+// @RequiredArgsConstructor
 public class FestivalServiceImpl implements FestivalService {
 
-     // 축제 정보를 담을 리스트
-    private final List<FestivalDTO> festivals = new ArrayList<>();
+    private final FestivalRepository festivalRepository;
 
-    public void FestivalService() {
-        // 여기서 festivals 리스트를 초기화할 수 있습니다.
-        // 예를 들어, 데이터베이스에서 가져온 축제 정보를 초기화할 수 있습니다.
+    @Autowired
+    public FestivalServiceImpl(FestivalRepository festivalRepository) {
+        this.festivalRepository = festivalRepository;
     }
 
-	@Override
-	public List<BusanDTO> getRandomFestivals() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'getRandomFestivals'");
-	}
-    
-    
+    // 1번째 시도
+    // @Override
+    // public List<FestivalDTO> getRandomFestivals() {
+    //// return festivalRepository.findRandomFive();
+    // }
+
+    // 2번째 시도
+    @Override
+    public List<FestivalDTO> getAllFestivalsAsDTO() {
+        List<Festival> festivals = festivalRepository.findAll();
+        List<FestivalDTO> festivalDTOs = new ArrayList<>();
+
+        for (Festival festival : festivals) {
+            FestivalDTO festivalDTO = new FestivalDTO(festival.getFestivalTitle(), festival.getThumbnail());
+            festivalDTOs.add(festivalDTO);
+        }
+
+        return festivalDTOs;
+    }
+
 }
