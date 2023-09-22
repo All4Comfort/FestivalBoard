@@ -2,6 +2,18 @@
 <!-- 에디터만 정의한 것으로, 추후 각 게시판 작성 페이지에 include 또는 iframe 이용해서 동일하게 넣을 것 -->
 <html lang="ko">
   <head>
+  <style>
+    body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+  </style>
+
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>게시글 작성 editor</title>
@@ -76,10 +88,10 @@
     <!-- 글 내용 작성란 -->
     <div id="summernote" name="content" class="center-block"></div>
     <!-- 작성버튼 : 작성 시 전송 -->
-    <button type="button" class="btn btn-primary" id="submit">작성</button>
+    <button type="button" class="btn btn-light" id="submit">작성</button>
     <!-- 목록버튼 : 게시글 목록 페이지로 돌아가기 -->
-    <a href="/boardList" class="btn btn-secondary">
-      <button type="button" class="btn btn-primary" id="boardList">목록</button>
+    <a href="/notice1" class="btn btn-secondary">
+      <button type="button" class="btn btn-light" id="boardList">목록</button>
     </a>
 
   </body>

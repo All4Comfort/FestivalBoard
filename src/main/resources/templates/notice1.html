@@ -127,8 +127,8 @@
 
     <section class="container my-5 text-center">
         <div class="d-flex justify-content-end mb-3">
-            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal" th:if="${session.loggdInUser}">
-                글쓰기
+            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal">
+                <a th:href="@{/noticeWrite}">글쓰기</a>
             </button>
         </div>
         <div class="d-flex justify-content-end mb-3">
@@ -146,13 +146,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="notice : ${notices}">
-                    <th scope="row" th:text="${noticeNum}"></th>
-                    <td th:text="${notice.title}"></td>
-                    <td th:text="${notice.writer}"></td>
-                    <td th:text="${notice.registerDate}"></td>
-                </tr>
-            </tbody>
+				<tr th:each="dto : ${result}">
+					<th scope="row">
+						<!-- 아래는 글번호에 페이지 넘버와 글번호를 추가로 설정하는것...List 를 모두 확인 후 추가 작업할것. -->
+						<a th:href="@{/notice1Detail}">[[${dto.noticeNum}]]</a>
+					</th>
+					<td><a th:href="@{/notice1Detail}">[[${dto.title}]]</a></td>
+					<td>[[${dto.writer}]]</td>
+				</tr>
+			</tbody>
         </table>
 
         <nav aria-label="Page navigation example">
