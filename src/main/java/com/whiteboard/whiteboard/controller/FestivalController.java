@@ -14,13 +14,13 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-// @RequestMapping("/test")
+//@RequestMapping("/member")
 public class FestivalController {
 
     private final FestivalService festivalService;
 
     //한울쓰
-    @GetMapping("/test")
+    @GetMapping("/member/main")
     public void getFestivals(Model model) {
         
 
