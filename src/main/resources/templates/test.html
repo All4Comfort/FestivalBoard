@@ -109,8 +109,8 @@
                         <div class="card-body">
                             <h5 class="card-title">[[${festival.festivalTitle}]]</h5>
                             <p class="card-text">[[${festival.period}]]</p>
+                            <img class="card-img-top" th:src="${festival.poster}" alt="축제 썸네일" width="200" height="400">
                         </div>
-                        <img class="card-img-top" th:src="${festival.poster}" alt="축제 썸네일" width="200" height="400">
                     </div>
                 </div>
             </div>
@@ -125,11 +125,7 @@
         </div>
     </section>
 
-    <section class="container my-5">
-        <h2>고객센터</h2>
-        <p>고객센터 내용</p>
-    </section>
-
+    
     <footer class="bg-dark text-light text-center py-3">
         <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
     </footer>
