@@ -49,7 +49,7 @@ public class DaejeonDTO {
 
 	private String poster; // 포스터링크
 
-	private String thumnail;
+	private String thumbnail;
 
 	private LocalDateTime registerDate; // 작성일
 	private LocalDateTime modifyDate; // 수정일
