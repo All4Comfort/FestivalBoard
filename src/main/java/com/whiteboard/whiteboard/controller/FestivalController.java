@@ -35,7 +35,7 @@ public class FestivalController {
     // }
 
     @GetMapping("/member/main")
-    @ResponseBody // 이 어노테이션을 추가하여 메서드가 JSON 데이터를 반환함을 명시합니다.
+    @ResponseBody // 이 어노테이션을 추가하여 메서드가 JSON 데이터를 반환함
     public List<FestivalDTO> getFestivals() {
         List<FestivalDTO> festivals = festivalService.getFiveDTOs();
        // logger.info("축제 목록: {}", festivals); //콘솔에 찍히나 확인했습니다.

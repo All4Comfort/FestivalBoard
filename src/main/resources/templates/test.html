@@ -109,7 +109,7 @@
                         <div class="card-body">
                             <h5 class="card-title">[[${festival.festivalTitle}]]</h5>
                             <p class="card-text">[[${festival.period}]]</p>
-                            <img class="card-img-top" th:src="${festival.poster}" alt="축제 썸네일" width="200" height="400">
+                            <img class="card-img-top" th:src="${festival.poster}" alt="축제 포스터">
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
         </div>
     </section>
 
-    
+
     <footer class="bg-dark text-light text-center py-3">
         <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
     </footer>
@@ -162,11 +162,6 @@
                         const card = document.createElement("div");
                         card.classList.add("card");
 
-                        const image = document.createElement("img");
-                        image.classList.add("card-img-top");
-                        image.src = festival.thumbnail;
-                        image.alt = "Festival Poster";
-
                         const cardBody = document.createElement("div");
                         cardBody.classList.add("card-body");
 
@@ -174,12 +169,23 @@
                         title.classList.add("card-title");
                         title.innerText = festival.festivalTitle;
 
+                        const period = document.createElement("p");
+                        period.classList.add("card-text");
+                        period.innerText = festival.period;
+
+                        const image = document.createElement("img");
+                        image.classList.add("card-img-top");
+                        image.src = festival.thumbnail;
+                        image.alt = "Festival Poster";
+
                         cardBody.appendChild(title);
-                        card.appendChild(image);
+                        cardBody.appendChild(period);
                         card.appendChild(cardBody);
+                        card.appendChild(image);
                         carouselItem.appendChild(card);
                         carouselInner.appendChild(carouselItem);
                     });
+
                 },
                 error: function (error) {
                     console.error('데이터를 가져오는 중 에러 발생:', error);
