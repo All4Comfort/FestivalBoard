@@ -40,7 +40,7 @@ public class Review extends BaseEntity {
    @Column(name = "read_count", nullable = false, columnDefinition = "integer default 0")
    private Long readCount; //조회수
 
-   @Column(name = "good_count", nullable = false, columnDefinition = "integer default 0")
+   @Column(name = "good_count", nullable = true, columnDefinition = "integer default 0")
    private Long goodCount; //좋아요 수
    
    @ManyToOne(fetch = FetchType.LAZY)
@@ -85,14 +85,6 @@ public class Review extends BaseEntity {
 
    public void setContent(String content){
       this.content = content;
-   }
-
-   public String getContent() {
-      return content;
-   }
-
-   public Long getId(){
-      return id;
    }
    
 
