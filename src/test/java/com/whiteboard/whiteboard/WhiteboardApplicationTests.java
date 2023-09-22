@@ -42,7 +42,7 @@ class WhiteboardApplicationTests {
 	}
 
 	// 회원조회 테스트
-	// @Test
+	//@Test
 	public void memberRE() {
 		// 조회하려는 회원의 id (기본 키)를 알고 있다고 가정
 		String memberId = "chansol91@naver.com";

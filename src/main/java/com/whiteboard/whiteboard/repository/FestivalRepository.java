@@ -1,13 +1,10 @@
 package com.whiteboard.whiteboard.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.whiteboard.whiteboard.dto.FestivalDTO;
 import com.whiteboard.whiteboard.entity.Festival;
 
 @Repository
@@ -17,8 +14,8 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
    // List<FestivalDTO> findRandomFive();
 
 //2번째 시도
-    @Query("SELECT new com.whiteboard.whiteboard.dto.FestivalDTO(f.festivalTitle, f.thumbnail) FROM Festival f")
-    List<FestivalDTO> findAllAsDTO();
+    // @Query("SELECT new com.whiteboard.whiteboard.dto.FestivalDTO(f.festivalTitle, f.thumnail) FROM Festival f")
+    // List<FestivalDTO> findAllAsDTO();
 
     Optional<Festival>  findByFestivalNum(Long festivalNum);
 
