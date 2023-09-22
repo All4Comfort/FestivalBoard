@@ -10,18 +10,44 @@
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
     <style>
-        /* 푸터를 브라우저 맨 아래로 고정합니다. */
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+        /* 중앙 정렬 스타일 */
+        .console-container {
+            width: 50%;
+            /* 콘솔의 가로 크기를 60%로 설정합니다. */
+            margin:  auto;
+            /* 가로 중앙 정렬을 위해 margin을 자동으로 설정합니다. */
+            text-align: left;
+            /* 텍스트 정렬을 왼쪽으로 설정합니다. */
+        }
+
+        /* 중요: 화면이 짤리지 않도록 스타일을 조정합니다. */
+        .carousel-item {
+            text-align: left;
+            /* 이미지 위 여백 추가 */
             background-color: #f8f9fa;
-            /* 푸터의 배경색 설정 */
-            text-align: center;
-            /* 푸터 내용 가운데 정렬 */
-            padding: 10px;
-            /* 원하는 여백 설정 */
+        }
+
+        .card {
+            width: 100%;
+            /* 카드가 100% 폭을 차지하도록 설정 */
+        }
+
+        .card-img-top {
+            max-width: 100%;
+            /* 이미지가 카드 내에 맞게 크기 조절 */
+            height: 300px;
+            margin: auto;
+        }
+
+        /* 중간 검색 폼 관련 스타일 수정 */
+        .search-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-form input[type="search"] {
+            max-width: 80%;
         }
 
         /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
@@ -110,12 +136,12 @@
     </header>
 
     <section class="container my-5">
-        <h1>Fullstival</h1>
-        <p>전국 축제</p>
+        <h1>Fullstival 프로젝트</h1>
+        <p>축제 게시판</p>
     </section>
 
     <!-- 중간에 검색 폼을 추가하고 화면의 80% 폭으로 설정합니다. -->
-    <div class="container" style="width: 70%; margin-top: 150px;">
+    <div class="container" style="width: 60%; margin-top: 100px;">
         <form class="d-flex">
             <input class="form-control me-1" type="search" placeholder="축제검색" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
@@ -131,9 +157,9 @@
                     th:classappend="${iterStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">[[${festival.festivalTitle}]]</h5>
-                            <p class="card-text">[[${festival.period}]]</p>
-                            <img class="card-img-top" th:src="${festival.poster}" alt="축제 썸네일" width="200" height="400">
+                            <h5 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목"></h5>
+                            <p class="card-text" th:text="${festival.period}" alt="축제 기간"></p>
+                            <img class="card-img-top" th:src="${festival.poster}" alt="축제 썸네일">
                         </div>
                     </div>
                 </div>
@@ -203,8 +229,6 @@
     <script>
         // 문서 로딩 후 실행
         document.addEventListener('DOMContentLoaded', function () {
-            console.log('서버에서 데이터 가져오는 중...');
-
             $.ajax({
                 url: '/member/main',
                 type: 'GET',
@@ -228,11 +252,6 @@
                         const card = document.createElement("div");
                         card.classList.add("card");
 
-                        const image = document.createElement("img");
-                        image.classList.add("card-img-top");
-                        image.src = festival.thumbnail;
-                        image.alt = "Festival Poster";
-
                         const cardBody = document.createElement("div");
                         cardBody.classList.add("card-body");
 
@@ -240,9 +259,19 @@
                         title.classList.add("card-title");
                         title.innerText = festival.festivalTitle;
 
+                        const period = document.createElement("p");
+                        period.classList.add("card-text");
+                        period.innerText = festival.period;
+
+                        const image = document.createElement("img");
+                        image.classList.add("card-img-top");
+                        image.src = festival.thumbnail;
+                        image.alt = "Festival Poster";
+
                         cardBody.appendChild(title);
-                        card.appendChild(image);
+                        cardBody.appendChild(period);
                         card.appendChild(cardBody);
+                        card.appendChild(image);
                         carouselItem.appendChild(card);
                         carouselInner.appendChild(carouselItem);
                     });
