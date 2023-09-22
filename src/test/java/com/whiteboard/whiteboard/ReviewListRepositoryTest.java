@@ -18,7 +18,7 @@ public class ReviewListRepositoryTest {
   @Test
    void contextLoads() {
     IntStream.rangeClosed(1, 10).forEach(i -> {
-      
+        
      Review review = Review.builder()
                      .writer(null)
                      .title("제목" + i + "입니다.")
