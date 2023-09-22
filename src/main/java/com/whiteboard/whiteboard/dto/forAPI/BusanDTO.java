@@ -51,7 +51,7 @@ public class BusanDTO {
 	private String poster; // 포스터링크
 
 	@JsonProperty("MAIN_IMG_THUMB")
-	private String thumnail;
+	private String thumbnail;
 
 	private LocalDateTime registerDate; // 작성일
 	private LocalDateTime modifyDate; // 수정일

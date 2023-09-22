@@ -75,7 +75,7 @@ public class FestivalRepositoryTest {
                         .description(description)
                         .link(link)
                         .poster(poster)
-                        .thumnail(thumbnail)
+                        .thumbnail(thumbnail)
                         .readCount(0L)
                         .build();
 
@@ -170,7 +170,7 @@ public class FestivalRepositoryTest {
                 .description(daejeonDTO.getDescription())
                 .link(daejeonDTO.getLink())
                 .readCount(daejeonDTO.getReadCount())
-                .thumbnail(daejeonDTO.getThumnail())
+                .thumbnail(daejeonDTO.getthumbnail())
                 .build();
 
         return festival;
@@ -186,7 +186,7 @@ public class FestivalRepositoryTest {
                 .link(festivalDTO.getLink())
                 .poster(festivalDTO.getPoster())
                 .readCount(festivalDTO.getReadCount())
-                .thumbnail(festivalDTO.getThumnail())
+                .thumbnail(festivalDTO.getthumbnail())
                 .build();
 
         return festival;
