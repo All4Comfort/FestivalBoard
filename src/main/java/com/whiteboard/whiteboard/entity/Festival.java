@@ -26,7 +26,7 @@ public class Festival extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long festivalNum; // 축제번호
 
-	@Column(nullable = false, name = "festival_title")
+	@Column(nullable = false)
 	//@JsonProperty("TITLE")
 	private String festivalTitle; // 축제명
 
@@ -36,7 +36,7 @@ public class Festival extends BaseEntity {
 	//@JsonProperty("MAIN_PLACE")
 	private String venue; // 개최장소
 
-	//private String period; // 기간
+	private String period; // 기간
 	
 	@Column(length = 5000) // 2000자로 제한
 	//@JsonProperty("ITEMCNTNTS")

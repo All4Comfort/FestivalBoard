@@ -69,6 +69,10 @@ public void updatePhoneNum(String newPhoneNum) {
 		this.phoneNum = newPhoneNum;
 }
 
+public void setEmail(String email){
+	this.email=email;
+}
+
 //회원이 DB에 인서트(생성)될 때 권한 부여하기
 
 //권한 엔티티를 제네릭으로 준 컬랙션 생성
