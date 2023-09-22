@@ -121,7 +121,7 @@
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
     </div>
-    
+
     <section class="container my-5">
         <h2>축제</h2>
         <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -149,6 +149,7 @@
         </div>
     </section>
 
+
     <section class="container my-5">
         <h2>고객센터</h2>
         <p>고객센터 내용</p>
@@ -159,10 +160,12 @@
     </footer>
 
 
+    <!-- jQuery 라이브러리를 먼저 로드합니다. -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- 그 다음 Bootstrap 스크립트를 로드합니다. -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
         </script>
-
 
 
     <!--로그인 로직 같은경우 페이지가 다 로딩된 다음에 실행되어야 해서
@@ -197,13 +200,69 @@
     </script>
 
 
+    <script>
+        // 문서 로딩 후 실행
+        document.addEventListener('DOMContentLoaded', function () {
+            console.log('서버에서 데이터 가져오는 중...');
+
+            $.ajax({
+                url: '/member/main',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    console.log('데이터 가져옴:', data);
+
+                    // 캐러셀 내용을 초기화합니다.
+                    const carouselInner = document.querySelector(".carousel-inner");
+                    const randomFestivals = data.sort(() => Math.random() - 0.5).slice(0, 5);
+                    carouselInner.innerHTML = "";
+
+                    randomFestivals.forEach((festival, index) => {
+                        // 각 축제 정보를 카드로 만들어 캐러셀에 추가합니다.
+                        const carouselItem = document.createElement("div");
+                        carouselItem.classList.add("carousel-item");
+                        if (index === 0) {
+                            carouselItem.classList.add("active");
+                        }
+
+                        const card = document.createElement("div");
+                        card.classList.add("card");
+
+                        const image = document.createElement("img");
+                        image.classList.add("card-img-top");
+                        image.src = festival.thumbnail;
+                        image.alt = "Festival Poster";
+
+                        const cardBody = document.createElement("div");
+                        cardBody.classList.add("card-body");
+
+                        const title = document.createElement("h5");
+                        title.classList.add("card-title");
+                        title.innerText = festival.festivalTitle;
+
+                        cardBody.appendChild(title);
+                        card.appendChild(image);
+                        card.appendChild(cardBody);
+                        carouselItem.appendChild(card);
+                        carouselInner.appendChild(carouselItem);
+                    });
+                },
+                error: function (error) {
+                    console.error('데이터를 가져오는 중 에러 발생:', error);
+                }
+            });
+        });
+    </script>
 
 
 
 
 
 
-    <!-- <script>
+
+
+    <!--
+    <script>
         //로그인 체크 후 비로그인 시 login 으로 이동
         //로그인 시 myPage 로 이동
         // 앵커 태그를 클릭할 때 이벤트 리스너를 추가
@@ -267,67 +326,14 @@
                 }
             });
         });
-    </script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // 서버에서 데이터를 가져옵니다.
-            $.ajax({
-                url: '/member/main',
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
-                    const festivals = data; // 서버에서 받아온 데이터를 festivals 배열에 할당
-                    const carouselInner = document.querySelector(".carousel-inner");
-                    const randomFestivals = festivals.sort(() => Math.random() - 0.5).slice(0, 5);
-
-                    // 캐러셀 내용을 초기화합니다.
-                    carouselInner.innerHTML = "";
-
-                    randomFestivals.forEach((festival, index) => {
-                        // 각 축제 정보를 카드로 만들어 캐러셀에 추가합니다.
-                        const carouselItem = document.createElement("div");
-                        carouselItem.classList.add("carousel-item");
-                        if (index === 0) {
-                            carouselItem.classList.add("active");
-                        }
-
-                        const card = document.createElement("div");
-                        card.classList.add("card");
-
-                        const image = document.createElement("img");
-                        image.classList.add("card-img-top");
-                        image.src = festival.thumbnail;
-                        image.alt = "Festival Poster";
-
-                        const cardBody = document.createElement("div");
-                        cardBody.classList.add("card-body");
-
-                        const title = document.createElement("h5");
-                        title.classList.add("card-title");
-                        title.innerText = festival.festivalTitle;
-
-                        cardBody.appendChild(title);
-                        card.appendChild(image);
-                        card.appendChild(cardBody);
-                        carouselItem.appendChild(card);
-                        carouselInner.appendChild(carouselItem);
-                    });
-                },
-                error: function (error) {
-                    console.error('데이터를 가져오는 중 에러 발생:', error);
-                }
-            });
-        });
-    </script>
+    </script> 
 
 
 
 
 
 
-    <!-- <script>
+     <script>
         //로그인 체크 후 비로그인 시 login 으로 이동
         //로그인 시 myPage 로 이동
         // 앵커 태그를 클릭할 때 이벤트 리스너를 추가
