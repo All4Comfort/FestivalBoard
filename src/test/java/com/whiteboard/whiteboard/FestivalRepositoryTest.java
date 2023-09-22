@@ -27,11 +27,7 @@ public class FestivalRepositoryTest {
     @Autowired
     private ObjectMapper objectMapper; // ObjectMapper 주입
 
-<<<<<<< HEAD
    // @Test
-=======
-    // @Test
->>>>>>> 2d50884493d91d31d94df70c86aaadd5cad70231
     public void testImportFestivalsFromJson() {
         try {
 
@@ -79,11 +75,7 @@ public class FestivalRepositoryTest {
                         .description(description)
                         .link(link)
                         .poster(poster)
-<<<<<<< HEAD
                         .thumbnail(thumbnail)
-=======
-                        .Thumbnail(thumbnail)
->>>>>>> 2d50884493d91d31d94df70c86aaadd5cad70231
                         .readCount(0L)
                         .build();
 
