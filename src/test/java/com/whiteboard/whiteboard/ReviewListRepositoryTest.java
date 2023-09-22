@@ -15,7 +15,7 @@ public class ReviewListRepositoryTest {
   @Autowired
   private ReviewRepository reviewRepository;
 
-  @Test
+ // @Test
   void contextLoads() {
     IntStream.rangeClosed(1, 10).forEach(i -> {
 
@@ -23,10 +23,29 @@ public class ReviewListRepositoryTest {
           .writer(null)
           .title("제목" + i + "입니다.")
           .content("이건" + i + " 번째 글입니다.")
-          .goodCount(1L)
+          .readCount(0L)
+          .goodCount(0L)
           .build();
       reviewRepository.save(review);
     });
   }
+
+  @Test
+public void contextLoads2() {
+    
+
+    // Review 엔티티를 생성하고 writer 필드를 초기화
+    Review review = Review.builder()
+            .writer("123@123.com") // 작성자 설정
+            .title("Sample Title")
+            .content("Sample Content")
+            .readCount(0L) // readCount 필드를 초기화
+            .goodCount(0L) // 나머지 필드도 초기화
+            .build();
+
+            reviewRepository.save(review);
+    
+    // Review 엔티티를 저장하는 로직을 추가
+}
 
 }

@@ -37,11 +37,12 @@ public class Review extends BaseEntity {
    @Column(nullable = false)
    private String content; // 내용
 
-  // @Column(name = "read_count", nullable = false, columnDefinition = "integer default 0")
-  // private Long readCount; // 조회수
+   // @Column(name = "read_count", nullable = false, columnDefinition = "integer
+   // default 0")
+   // private Long readCount; // 조회수
 
    @Column(name = "read_count", nullable = false, columnDefinition = "bigint default 0")
-   private Long readCount; // 조회수
+   private Long readCount; // 조회수 (기본값 설정)
 
    @Column(name = "good_count", nullable = false, columnDefinition = "integer default 0")
    private Long goodCount; // 좋아요 수
@@ -71,8 +72,6 @@ public class Review extends BaseEntity {
    private String hashTag3; // 해시태그3
    private String hashTag4; // 해시태그4
    private String hashTag5; // 해시태그5
-
-  
 
    public void updateContent(String newContent) {
       this.content = newContent;
