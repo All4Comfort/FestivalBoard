@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+
 @Entity
 @Getter
 @Builder
@@ -28,7 +29,7 @@ public class Review extends BaseEntity {
    private Long reviewNum; // 리뷰번호
 
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(nullable = false, name = "writer_email")
+   @JoinColumn(nullable = false, name = "writer_email", referencedColumnName = "email")
    private Member writer; // 작성자 : Member 엔티티의 email 컬럼
 
    @Column(nullable = false)
@@ -37,12 +38,12 @@ public class Review extends BaseEntity {
    @Column(nullable = false)
    private String content; // 내용
 
-   // @Column(name = "read_count", nullable = false, columnDefinition = "integer
-   // default 0")
-   // private Long readCount; // 조회수
+   @Column(name = "read_count", nullable = false, columnDefinition = "integer default 0")
+    private Long readCount; // 조회수
 
-   @Column(name = "read_count", nullable = false, columnDefinition = "bigint default 0")
-   private Long readCount; // 조회수 (기본값 설정)
+   // @Column(name = "read_count", nullable = false, columnDefinition = "bigint
+   // default 0")
+   // private Long readCount; // 조회수 (기본값 설정)
 
    @Column(name = "good_count", nullable = false, columnDefinition = "integer default 0")
    private Long goodCount; // 좋아요 수

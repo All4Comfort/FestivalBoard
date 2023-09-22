@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Review;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 
@@ -32,11 +33,13 @@ public class ReviewListRepositoryTest {
 
   @Test
 public void contextLoads2() {
-    
 
+  Member member = new Member(); // Member 객체 생성
+// 필요한 Member 객체의 속성(예: email) 설정
+member.setEmail("123@123.com");
     // Review 엔티티를 생성하고 writer 필드를 초기화
     Review review = Review.builder()
-            .writer("123@123.com") // 작성자 설정
+            .writer(member) // 작성자 설정
             .title("Sample Title")
             .content("Sample Content")
             .readCount(0L) // readCount 필드를 초기화
