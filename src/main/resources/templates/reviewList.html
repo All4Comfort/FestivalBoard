@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -229,103 +229,40 @@
         <h1 style="text-align: center;">리뷰 게시판 목록</h1>
         
         <div class="search-box">
-            <input type="text" id="search-input" placeholder="상품을 검색하세요">
-            <button class="search-button" onclick="searchReviews()">검색</button>
+            <form id="search-form" method="get" action="/search_reviews">
+                <input type="text" id="search-input" placeholder="상품을 검색하세요" name="searchQuery">
+                <button type="submit" class="search-button">검색</button>
+            </form>
         </div>
 
-        <!-- 리뷰 목록 -->
-        <div id="review-list" class="review-container">
-            <!-- 리뷰 목록 아이템들 -->
-            <div class="review-item">
-                <!-- 이미지 썸네일 추가 -->
-                <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
-                <h2><a href="review_detail.html?id=1">리뷰 제목 1</a></h2>
-                <p>작성자: 작성자 이름 1</p>
-                <p>내용: 리뷰 내용 1</p>
-                <p>조회수: 100</p>
-                <p>좋아요 수: 50</p>
-            </div>
-            
-            <div class="review-item">
-                <!-- 이미지 썸네일 추가 -->
-                <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
-                <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
-                <p>작성자: 작성자 이름 2</p>
-                <p>내용: 리뷰 내용 2</p>
-                <p>조회수: 75</p>
-                <p>좋아요 수: 30</p>
-            </div>
-
-            <div class="review-item">
-              <!-- 이미지 썸네일 추가 -->
-              <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
-              <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
-              <p>작성자: 작성자 이름 3</p>
-              <p>내용: 리뷰 내용 3</p>
-              <p>조회수: 75</p>
-              <p>좋아요 수: 30</p>
-          </div>
-
-          <div class="review-item">
-            <!-- 이미지 썸네일 추가 -->
-            <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
-            <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
-            <p>작성자: 작성자 이름 4</p>
-            <p>내용: 리뷰 내용 3</p>
-            <p>조회수: 75</p>
-            <p>좋아요 수: 30</p>
+      <!-- 리뷰 목록 -->
+      <div id="review-list" class="review-container">
+        <!-- 리뷰 목록 아이템들 -->
+        <div class="review-item" th:each="review : ${reviews}">
+            <h2><a href="#" onclick="'showReviewDetail(${review.id})'">${review.title}</a></h2>
+            <h2 th:text="${review.title}"></h2>
+            <p th:text="${'작성자: ' + review.author}"></p>
+            <p th:text="${'내용: ' + review.content}"></p>
+            <p th:text="${'조회수: ' + review.views}"></p>
+            <p th:text="${'좋아요 수: ' + review.likes}"></p>
         </div>
-
-          <div class="review-item">
-            <!-- 이미지 썸네일 추가 -->
-            <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
-            <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
-            <p>작성자: 작성자 이름 5</p>
-            <p>내용: 리뷰 내용 4</p>
-            <p>조회수: 75</p>
-            <p>좋아요 수: 30</p>
+         <!-- 리뷰 목록 아이템들 -->
+         <div class="review-item" th:each="review : ${reviews}">
+            <h2 th:text="${review.title}"></h2>
+            <p th:text="${'작성자: ' + review.author}"></p>
+            <p th:text="${'내용: ' + review.content}"></p>
+            <p th:text="${'조회수: ' + review.views}"></p>
+            <p th:text="${'좋아요 수: ' + review.likes}"></p>
         </div>
-
-        <div class="review-item">
-            <!-- 이미지 썸네일 추가 -->
-            <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
-            <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
-            <p>작성자: 작성자 이름 3</p>
-            <p>내용: 리뷰 내용 6</p>
-            <p>조회수: 75</p>
-            <p>좋아요 수: 30</p>
+         <!-- 리뷰 목록 아이템들 -->
+         <div class="review-item" th:each="review : ${reviews}">
+            <h2 th:text="${review.title}"></h2>
+            <p th:text="${'작성자: ' + review.author}"></p>
+            <p th:text="${'내용: ' + review.content}"></p>
+            <p th:text="${'조회수: ' + review.views}"></p>
+            <p th:text="${'좋아요 수: ' + review.likes}"></p>
         </div>
-
-        <div class="review-item">
-            <!-- 이미지 썸네일 추가 -->
-            <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
-            <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
-            <p>작성자: 작성자 이름 7</p>
-            <p>내용: 리뷰 내용 3</p>
-            <p>조회수: 75</p>
-            <p>좋아요 수: 30</p>
-        </div>
-
-        <div class="review-item">
-            <!-- 이미지 썸네일 추가 -->
-            <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
-            <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
-            <p>작성자: 작성자 이름 8</p>
-            <p>내용: 리뷰 내용 3</p>
-            <p>조회수: 75</p>
-            <p>좋아요 수: 30</p>
-        </div>
-
-        <div class="review-item">
-            <!-- 이미지 썸네일 추가 -->
-            <img class="thumbnail" src="이미지_링크_주소_여기에_대체" alt="리뷰 이미지 썸네일">
-            <h2><a href="review_detail.html?id=2">리뷰 제목 2</a></h2>
-            <p>작성자: 작성자 이름 9</p>
-            <p>내용: 리뷰 내용 3</p>
-            <p>조회수: 75</p>
-            <p>좋아요 수: 30</p>
-        </div>
-
+    </div>
         <!-- 페이징 --> 
         <div class="pagination">
             <a href="#" class="page-link prev">이전</a>
@@ -337,7 +274,7 @@
         </div>
              <!-- 리뷰 작성하기 버튼 -->
              <div class="write-review-button">
-                <a href="reviewWrite.html">리뷰 작성하기</a>
+                <a href="/reviewWrite.html">리뷰 작성하기</a>
             </div>
         </div>
 
@@ -407,6 +344,43 @@
                 createPagination();
                 displayReviews();
             };
+
+            // 서버에서 리뷰 데이터를 가져오는 함수 (예시)
+function fetchReviewsData() {
+    // 서버 API 엔드포인트 URL (서버에서 해당 URL을 제공해야 함)
+    const apiUrl = '/api/reviews';
+
+    return fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // 리뷰 데이터를 받아와서 리뷰 목록 업데이트
+            reviewsData = data.reviews; // 서버에서 받은 리뷰 데이터를 전역 변수에 저장
+            loadReviews();
+        })
+        .catch(error => {
+            console.error('Error fetching reviews data:', error);
+        });
+}
+
+// 페이지 로드 시 리뷰 데이터를 서버에서 가져오고 목록을 표시
+window.onload = function () {
+    fetchReviewsData(); // 서버에서 리뷰 데이터를 가져오는 함수 호출
+};
+// 리뷰 상세 페이지로 이동하는 함수
+function showReviewDetail(reviewId) {
+    // reviewId를 사용하여 게시물 상세 페이지 URL을 생성
+    const reviewDetailUrl = '/reviewDetail.html?id=/' + reviewId; // 예시 URL
+
+    // 페이지를 해당 URL로 이동
+    window.location.href = reviewDetailUrl;
+}
+
+
         </script>
 </body>
 </html>
