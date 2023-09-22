@@ -197,14 +197,14 @@ public class FestivalRepositoryTest {
     public void festival(){
         
         //조회 하려는 축제 넘버
-        Long festivalNumId = '14L';
-        
-        Festival festival = festivalRepository.findByFestivalNum(festivalNumId).orElse(null);
+        Long festivalNumId = 14L;
+        //축제 넘버를 기준으로 값땡겨와 지는지 테스트
+        Festival festival = festivalRepository.findByFestivalNum(festivalNumId).orElseGet(null);
 
         if(festival != null){
-            System.out.println("축제 정보");
-            System.out.println("축제 타이틀: " +festival.getFestivalTitle());
-            //System.out.println("축제 썸네일: " +festival.getThumbnail());
+            System.err.println("축제 정보");
+            System.err.println("축제 타이틀: " +festival.getFestivalTitle());
+            System.err.println("축제 썸네일: " +festival.getThumbnail());
         }else{
             System.err.println("없는 정보 입니다.");
         }
