@@ -1,6 +1,7 @@
 package com.whiteboard.whiteboard.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +19,8 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
 //2번째 시도
     @Query("SELECT new com.whiteboard.whiteboard.dto.FestivalDTO(f.festivalTitle, f.thumnail) FROM Festival f")
     List<FestivalDTO> findAllAsDTO();
+
+    Optional<Festival>  findByFestivalNum(Long festivalNum);
 
     // @Modifying
     // @Query("update Festival e set e.read_count = e.read_count + 1 where

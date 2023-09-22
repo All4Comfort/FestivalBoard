@@ -3,6 +3,7 @@ package com.whiteboard.whiteboard;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
@@ -26,7 +27,7 @@ public class FestivalRepositoryTest {
     @Autowired
     private ObjectMapper objectMapper; // ObjectMapper 주입
 
-    //@Test
+    // @Test
     public void testImportFestivalsFromJson() {
         try {
 
@@ -169,7 +170,7 @@ public class FestivalRepositoryTest {
                 .description(daejeonDTO.getDescription())
                 .link(daejeonDTO.getLink())
                 .readCount(daejeonDTO.getReadCount())
-                .thumnail(daejeonDTO.getThumnail())
+                .thumbnail(daejeonDTO.getThumnail())
                 .build();
 
         return festival;
@@ -181,14 +182,32 @@ public class FestivalRepositoryTest {
                 .festivalTitle(festivalDTO.getFestivalTitle())
                 .region(festivalDTO.getRegion())
                 .venue(festivalDTO.getVenue())
-                
                 .description(festivalDTO.getDescription())
                 .link(festivalDTO.getLink())
                 .poster(festivalDTO.getPoster())
                 .readCount(festivalDTO.getReadCount())
-                .thumnail(festivalDTO.getThumnail())
+                .thumbnail(festivalDTO.getThumnail())
                 .build();
 
         return festival;
+    }
+    
+
+    @Test
+    public void festival(){
+        
+        //조회 하려는 축제 넘버
+        Long festivalNumId = '14L';
+        
+        Festival festival = festivalRepository.findByFestivalNum(festivalNumId).orElse(null);
+
+        if(festival != null){
+            System.out.println("축제 정보");
+            System.out.println("축제 타이틀: " +festival.getFestivalTitle());
+            //System.out.println("축제 썸네일: " +festival.getThumbnail());
+        }else{
+            System.err.println("없는 정보 입니다.");
+        }
+
     }
 }

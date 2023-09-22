@@ -34,7 +34,7 @@ public class FestivalServiceImpl implements FestivalService {
         List<FestivalDTO> festivalDTOs = new ArrayList<>();
 
         for (Festival festival : festivals) {
-            FestivalDTO festivalDTO = new FestivalDTO(festival.getFestivalTitle(), festival.getThumnail());
+            FestivalDTO festivalDTO = new FestivalDTO(festival.getFestivalTitle(), festival.getThumbnail());
             festivalDTOs.add(festivalDTO);
         }
 
