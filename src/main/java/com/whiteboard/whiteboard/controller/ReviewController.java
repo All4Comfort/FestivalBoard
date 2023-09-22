@@ -47,7 +47,7 @@ public class ReviewController {
     @GetMapping("/reviewWrite")
     public String postWriteReview(@ModelAttribute ReviewDTO reviewDTO) {
         // 리뷰 작성 페이지로 이동
-    return "redirect:/reviewWrite"; // 작성할 리뷰 페이지의 경로로 리다이렉트
+    return "/reviewWrite"; // 작성할 리뷰 페이지의 경로로 리다이렉트
     }
 
 }
