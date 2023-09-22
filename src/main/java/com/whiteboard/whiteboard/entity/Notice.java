@@ -28,7 +28,7 @@ public class Notice extends BaseEntity{
     private Long noticeNum;//공지번호
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "writer_email")
+    @JoinColumn(name = "nickname")
 	private Member writer; //DB에만 저장될 작성자(어느 관리자계정인지) : Member 엔티티의 email 컬럼
     
     @Column(nullable = false)

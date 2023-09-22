@@ -100,24 +100,25 @@
 
     <section class="container my-5">
         <h2>진행중 축제</h2>
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
                 <div th:each="festival, iterStat : ${festivals}"
                     th:classappend="${iterStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
                     <div class="card">
-                        <img class="card-img-top" th:src="${festival.thumbnail}" alt="Festival Poster">
                         <div class="card-body">
-                            <h5 class="card-title" th:text="${festival.festivalTitle}"></h5>
+                            <h5 class="card-title">[[${festival.festivalTitle}]]</h5>
+                            <p class="card-text">[[${festival.period}]]</p>
                         </div>
+                        <img class="card-img-top" th:src="${festival.poster}" alt="축제 썸네일" width="200" height="400">
                     </div>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </a>
-            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </a>

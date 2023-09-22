@@ -8,12 +8,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.whiteboard.whiteboard.dto.FestivalDTO;
+import com.whiteboard.whiteboard.service.FestivalService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 // @RequestMapping("/test")
 public class FestivalController {
 
+    private final FestivalService festivalService;
+
+    //한울쓰
+    @GetMapping("/test")
+    public void getFestivals(Model model) {
+        
+
+        // 모델에 데이터 추가
+        model.addAttribute("festivals", festivalService.getFiveDTOs());
+
+    }
+
     // 3번째 방법
+    /* 
     @GetMapping("/test")
     public String getFestivals(Model model) {
         // 랜덤한 축제 목록 생성 (실제로는 서비스 레이어를 통해 데이터를 가져옵니다)
@@ -24,6 +41,7 @@ public class FestivalController {
 
         return "test"; // 타임리프 템플릿 이름
     }
+    */
 
     // 실제 데이터를 가져오는 로직은 이곳에서 수행해야 합니다.
     private List<FestivalDTO> createRandomFestivals() {
