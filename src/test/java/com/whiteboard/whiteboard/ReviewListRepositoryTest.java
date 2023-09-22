@@ -12,23 +12,21 @@ import com.whiteboard.whiteboard.repository.ReviewRepository;
 @SpringBootTest
 public class ReviewListRepositoryTest {
 
-    @Autowired
+  @Autowired
   private ReviewRepository reviewRepository;
 
   @Test
-   void contextLoads() {
+  void contextLoads() {
     IntStream.rangeClosed(1, 10).forEach(i -> {
-        
-     Review review = Review.builder()
-                     .writer(null)
-                     .title("제목" + i + "입니다.")
-                     .content("이건" + i + " 번째 글입니다.")
-                     .goodCount(1L)
-                     .build();
+
+      Review review = Review.builder()
+          .writer(null)
+          .title("제목" + i + "입니다.")
+          .content("이건" + i + " 번째 글입니다.")
+          .goodCount(1L)
+          .build();
       reviewRepository.save(review);
-     });
- } 
-
-
+    });
+  }
 
 }
