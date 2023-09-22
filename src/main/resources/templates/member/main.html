@@ -70,10 +70,9 @@
                         <li><a class="dropdown-item" href="#scrollspyHeading4">공지사항&QnA</a></li>
                     </ul>
                 </li>
-                <!-- 로그인하지 않은 사용자에게 보여질 메뉴 href="#scrollspyHeading5"-->
+                <!-- 로그인하지 않은 사용자에게 보여질 메뉴-->
                 <li class="nav-item" th:unless="${session.loggedInUser != null}">
-                    <!-- <h3>로그인 해주세요</h3> -->
-                    <a class="nav-link" id="login-link1">
+                    <a class="nav-link" id="login-link1" href="#scrollspyHeading5">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
                             viewBox="0 0 16 16">
                             <path
@@ -82,10 +81,9 @@
                     </a>
                 </li>
 
-                <!-- 로그인한 사용자에게 보여질 메뉴  href="#scrollspyHeading5" -->
+                <!-- 로그인한 사용자에게 보여질 메뉴 -->
                 <li class="nav-item" th:if="${session.loggedInUser != null}">
-                    <!-- <h3>로그인 완료</h3>  onclick="()=>alert('test');" -->
-                    <a class="nav-link" id="login-link2">
+                    <a class="nav-link" id="login-link2" href="#scrollspyHeading5">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
                             viewBox="0 0 16 16">
                             <path
@@ -187,6 +185,8 @@
     페이지 로딩이 다 끝난후 스크립트문 실행 해야함-->
 
     <script>
+        //로그인 체크 후 비로그인 시 login 으로 이동
+        //로그인 시 myPage 로 이동
         document.addEventListener('DOMContentLoaded', function () {
             
             if (document.getElementById('login-link1')) {
@@ -207,6 +207,51 @@
             }
 
         });
+
+
+          //게시판 햄버거
+    // 모든 클래스가 "dropdown-item"인 요소를 선택합니다.
+    var dropdownItems = document.querySelectorAll('.dropdown-item');
+
+// 각 요소에 대해 이벤트 리스너를 추가합니다.
+dropdownItems.forEach(function (item) {
+    item.addEventListener('click', function (event) {
+        // 현재 페이지 URL의 해시 (예: #scrollspyHeading1)를 가져옴
+        var currentHash = window.location.hash;
+        // 클릭한 앵커 태그의 href 속성 값을 가져옴
+        var href = this.getAttribute('href');
+
+        
+        if (currentHash === href) {
+            
+            if(href === '#scrollspyHeading1'){
+                
+            alert('축제게시판으로 이동합니다.');
+            window.location.href = "/test";
+            event.preventDefault();
+
+        }else if(href === '#scrollspyHeading2'){
+
+            alert('리뷰게시판으로 이동합니다.');
+            window.location.href = "/reviewList";
+            event.preventDefault();
+
+        }else if(href === '#scrollspyHeading3'){
+
+            alert('자유게시판으로 이동합니다.');
+            window.location.href = "/board/boardList";
+            event.preventDefault();
+
+        }else{
+
+            alert('공지게시판으로 이동합니다.');
+            window.location.href = "/notice1";
+            event.preventDefault();
+        }
+
+    }
+    });
+});
     </script>
 
 
@@ -217,6 +262,8 @@
 
 
     <!-- <script>
+        //로그인 체크 후 비로그인 시 login 으로 이동
+        //로그인 시 myPage 로 이동
         // 앵커 태그를 클릭할 때 이벤트 리스너를 추가
         document.querySelector('#login-link').addEventListener('click', function (event) {
             // 현재 페이지 URL의 해시 (예: #scrollspyHeading5)를 가져옴
