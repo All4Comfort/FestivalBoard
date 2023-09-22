@@ -142,6 +142,7 @@
     </header>
     <!-- 글 제목 입력란 
     부트스트랩의 form-control 클래스를 사용하여 제목을 입력할 수 있는 텍스트 입력 필드 -->
+    <form id="search-form" method="post" action="/reviewWrite">
     <div class="form-group" width="500">
       <h3><label for="title">제목</label></h3>
       <input type="text" class="form-control" id="title" name="title" width="500" placeholder="글 제목을 입력하세요">
@@ -151,9 +152,9 @@
     <!-- 작성버튼 : 작성 시 전송 -->
     <button type="button" class="btn btn-primary" id="submit">작성</button>
     <!-- 목록버튼 : 게시글 목록 페이지로 돌아가기 -->
-    <a href="/boardList" class="btn btn-secondary">
+    <a href="/reviewList" class="btn btn-secondary">
       <button type="button" class="btn btn-primary" id="boardList">목록</button>
     </a>
-
+    </form>
   </body>
 </html>

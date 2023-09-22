@@ -51,4 +51,6 @@ public interface ReviewService {
                     .build();
     return review;
   }
+
+  Long saveReview(ReviewDTO reviewDTO);
 }

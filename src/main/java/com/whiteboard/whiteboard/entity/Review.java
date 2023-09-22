@@ -69,6 +69,8 @@ public class Review extends BaseEntity {
    private String hashTag4; //해시태그4
    private String hashTag5; //해시태그5
 
+   private Long id;
+   
    public void updateContent(String newContent) {
       this.content = newContent;
    }
@@ -76,5 +78,22 @@ public class Review extends BaseEntity {
    public void updateTitle(String newTitle) {
       this.title = newTitle;
    }
+
+   public void setTitle(String title) {
+      this.title =title;
+   }
+
+   public void setContent(String content){
+      this.content = content;
+   }
+
+   public String getContent() {
+      return content;
+   }
+
+   public Long getId(){
+      return id;
+   }
+   
 
 }
