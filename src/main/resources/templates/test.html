@@ -106,7 +106,7 @@
                 <div th:each="festival, iterStat : ${festivals}"
                     th:classappend="${iterStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
                     <div class="card">
-                        <img class="card-img-top" th:src="${festival.thumbnail}" alt="Festival Poster">
+                        <img class="card-img-top" th:src="${festival.thumbnail}" alt="thumbnail">
                         <div class="card-body">
                             <h5 class="card-title" th:text="${festival.festivalTitle}"></h5>
                         </div>
