@@ -161,7 +161,6 @@
 //         return fieldNode != null ? fieldNode.asText() : "";
 //     }
 
-<<<<<<< HEAD
 //     // FestivalBusanDTO를 Festival 엔티티로 변환하는 메서드
 //     private Festival convertDtoToEntity(DaejeonDTO daejeonDTO) {
 //         Festival festival = Festival.builder()
@@ -173,24 +172,10 @@
 //                 .readCount(daejeonDTO.getReadCount())
 //                 .thumbnail(daejeonDTO.getThumnail())
 //                 .build();
-=======
-    // FestivalBusanDTO를 Festival 엔티티로 변환하는 메서드
-    private Festival convertDtoToEntity(DaejeonDTO daejeonDTO) {
-        Festival festival = Festival.builder()
-                .festivalTitle(daejeonDTO.getFestivalTitle())
-                .region(daejeonDTO.getRegion())
-                .venue(daejeonDTO.getVenue())
-                .description(daejeonDTO.getDescription())
-                .link(daejeonDTO.getLink())
-                .readCount(daejeonDTO.getReadCount())
-                .thumbnail(daejeonDTO.getThumbnail())
-                .build();
->>>>>>> 4e23d0641e4705a2d2697820038fa546b98d73d5
 
 //         return festival;
 //     }
 
-<<<<<<< HEAD
 //     // FestivalBusanDTO를 Festival 엔티티로 변환하는 메서드
 //     private Festival convertDtoToBusanDTO(BusanDTO festivalDTO) {
 //         Festival festival = Festival.builder()
@@ -203,20 +188,6 @@
 //                 .readCount(festivalDTO.getReadCount())
 //                 .thumbnail(festivalDTO.getThumnail())
 //                 .build();
-=======
-    // FestivalBusanDTO를 Festival 엔티티로 변환하는 메서드
-    private Festival convertDtoToBusanDTO(BusanDTO festivalDTO) {
-        Festival festival = Festival.builder()
-                .festivalTitle(festivalDTO.getFestivalTitle())
-                .region(festivalDTO.getRegion())
-                .venue(festivalDTO.getVenue())
-                .description(festivalDTO.getDescription())
-                .link(festivalDTO.getLink())
-                .poster(festivalDTO.getPoster())
-                .readCount(festivalDTO.getReadCount())
-                .thumbnail(festivalDTO.getThumbnail())
-                .build();
->>>>>>> 4e23d0641e4705a2d2697820038fa546b98d73d5
 
 //         return festival;
 //     }
@@ -225,7 +196,6 @@
 //     @Test
 //     public void festival(){
         
-<<<<<<< HEAD
 //         //조회 하려는 축제 넘버
 //         Long festivalNumId = '14L';
         
@@ -238,20 +208,6 @@
 //         }else{
 //             System.err.println("없는 정보 입니다.");
 //         }
-=======
-        //조회 하려는 축제 넘버
-        Long festivalNumId = 14L;
-        //축제 넘버를 기준으로 값땡겨와 지는지 테스트
-        Festival festival = festivalRepository.findByFestivalNum(festivalNumId).orElseGet(null);
-
-        if(festival != null){
-            System.err.println("축제 정보");
-            System.err.println("축제 타이틀: " +festival.getFestivalTitle());
-            System.err.println("축제 썸네일: " +festival.getThumbnail());
-        }else{
-            System.err.println("없는 정보 입니다.");
-        }
->>>>>>> 4e23d0641e4705a2d2697820038fa546b98d73d5
 
 //     }
 // }

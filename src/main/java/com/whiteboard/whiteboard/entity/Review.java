@@ -68,8 +68,6 @@ public class Review extends BaseEntity {
    private String hashTag3; //해시태그3
    private String hashTag4; //해시태그4
    private String hashTag5; //해시태그5
-
-   private Long id;
    
    public void updateContent(String newContent) {
       this.content = newContent;
