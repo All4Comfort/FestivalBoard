@@ -23,8 +23,8 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
    // List<FestivalDTO> findRandomFive();
 
 //2번째 시도
-    // @Query("SELECT new com.whiteboard.whiteboard.dto.FestivalDTO(f.festivalTitle, f.thumnail) FROM Festival f")
-    // List<FestivalDTO> findAllAsDTO();
+   // @Query("SELECT new com.whiteboard.whiteboard.dto.FestivalDTO(f.festivalTitle, f.thumnail) FROM Festival f")
+   // List<FestivalDTO> findAllAsDTO();
 
     Optional<Festival> findByFestivalNum(@Param("festivalNum") Long festivalNum);
 

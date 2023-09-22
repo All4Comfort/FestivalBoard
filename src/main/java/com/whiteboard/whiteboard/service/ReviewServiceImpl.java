@@ -54,12 +54,12 @@ public class ReviewServiceImpl implements ReviewService{
     reviewRepository.deleteById(reviewId);   
   }
 
-  @Override
-  public Long saveReview(ReviewDTO reviewDTO) {
-    Review review = dtoToEntity(reviewDTO, null);
-    Review saveReview = reviewRepository.save(review);
-    return saveReview.getId();
-  }
+  // @Override
+  // public Long saveReview(ReviewDTO reviewDTO) {
+  //   Review review = dtoToEntity(reviewDTO, null);
+  //   Review saveReview = reviewRepository.save(review);
+  //   return saveReview.getId();
+  // }
     
 
 }
