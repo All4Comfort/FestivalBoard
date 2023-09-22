@@ -62,7 +62,7 @@
             <a class="navbar-brand" href="#"><b>Fullstival</b></a>
             <ul class="nav nav-pills">
                 <div id="welcome-message" th:if="${session.loggedInUser != null}"
-                    th:text="${session.loggedInUser.name} + '님 환영합니다.'" style="display: flex; align-items: center;">
+                    th:text="${session.loggedInUser.name} + '님 환영합니다'" style="display: flex; align-items: center;">
                 </div>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
