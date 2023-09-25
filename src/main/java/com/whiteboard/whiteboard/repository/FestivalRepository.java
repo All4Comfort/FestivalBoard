@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.whiteboard.whiteboard.dto.FestivalDTO;
 import com.whiteboard.whiteboard.entity.Festival;
 
 @Repository
@@ -25,7 +24,7 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
 
     //민건 리스트로 가져오는 축제게시물~~~~~
     @Query("SELECT f FROM Festival f ORDER BY f.festivalNum ASC")
-    List<FestivalDTO> findAllByOrderByFestivalNumAsc();
+    List<Festival> findAllByOrderByFestivalNumAsc();
 
     //
 
