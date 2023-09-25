@@ -1,10 +1,11 @@
 package com.whiteboard.whiteboard.controller;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.whiteboard.whiteboard.dto.FestivalDTO;
@@ -14,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-// @RequestMapping("/member")
+ @RequestMapping("/member")
 public class FestivalController {
 
     private final FestivalService festivalService;
@@ -34,13 +35,34 @@ public class FestivalController {
 
     // }
 
-    @GetMapping("/member/main")
+    @GetMapping("/main")
     @ResponseBody // 이 어노테이션을 추가하여 메서드가 JSON 데이터를 반환함
     public List<FestivalDTO> getFestivals() {
         List<FestivalDTO> festivals = festivalService.getFiveDTOs();
        // logger.info("축제 목록: {}", festivals); //콘솔에 찍히나 확인했습니다.
         return festivals; // JSON 형식의 데이터를 반환합니다.
     }
+
+
+    @GetMapping("/festivalList")
+     @ResponseBody
+    public void getFestivals(Model model) {
+
+        // 모델에 데이터 추가
+        List<FestivalDTO> festivals = festivalService.findAllByOrderByFestivalNumAsc();
+       
+        // 모델에 데이터 추가
+        model.addAttribute("festivals", festivalService.findAllByOrderByFestivalNumAsc());
+
+    }
+
+    // @GetMapping("/festivalList")
+    // @ResponseBody // 이 어노테이션을 추가하여 메서드가 JSON 데이터를 반환함
+    // public List<FestivalDTO> getFestivals2() {
+    //     List<FestivalDTO> festivals = festivalService.getFiveDTOs();
+    //    // logger.info("축제 목록: {}", festivals); //콘솔에 찍히나 확인했습니다.
+    //     return festivals; // JSON 형식의 데이터를 반환합니다.
+    // }
 
     // 3번째 방법
     /*
@@ -57,14 +79,14 @@ public class FestivalController {
      */
 
     // 실제 데이터를 가져오는 로직은 이곳에서 수행해야 합니다.
-    private List<FestivalDTO> createRandomFestivals() {
-        // 랜덤한 축제 목록 생성 및 반환
-        // 실제 데이터를 조회하거나 서비스를 통해 데이터를 가져오는 로직을 구현해야 합니다.
-        return Arrays.asList(
-                new FestivalDTO("축제 1", "링크 1"),
-                new FestivalDTO("축제 2", "링크 2"),
-                new FestivalDTO("축제 3", "링크 3"),
-                new FestivalDTO("축제 4", "링크 4"),
-                new FestivalDTO("축제 5", "링크 5"));
-    }
+    // private List<FestivalDTO> createRandomFestivals() {
+    //     // 랜덤한 축제 목록 생성 및 반환
+    //     // 실제 데이터를 조회하거나 서비스를 통해 데이터를 가져오는 로직을 구현해야 합니다.
+    //     return Arrays.asList(
+    //             new FestivalDTO("축제 1", "링크 1"),
+    //             new FestivalDTO("축제 2", "링크 2"),
+    //             new FestivalDTO("축제 3", "링크 3"),
+    //             new FestivalDTO("축제 4", "링크 4"),
+    //             new FestivalDTO("축제 5", "링크 5"));
+    // }
 }

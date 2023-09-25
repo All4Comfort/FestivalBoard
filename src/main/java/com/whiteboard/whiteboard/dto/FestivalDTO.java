@@ -51,8 +51,9 @@ public class FestivalDTO {
 	}
 
 	//2번째 방법
-	public FestivalDTO(String festivalTitle, String thumbnail) {
+	public FestivalDTO(String festivalTitle, String thumbnail, String poster) {
 		this.festivalTitle = festivalTitle;
 		this.thumbnail = thumbnail;
+		this.poster = poster;
 	}
 }

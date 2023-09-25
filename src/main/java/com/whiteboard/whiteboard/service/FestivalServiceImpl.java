@@ -18,26 +18,14 @@ public class FestivalServiceImpl implements FestivalService {
 
     private final FestivalRepository festivalRepository;
 
-/* 안쓰는.... 위에 선언됐으니...
-    @Autowired
-    public FestivalServiceImpl(FestivalRepository festivalRepository) {
-        this.festivalRepository = festivalRepository;
-    }
-*/
-    // 1번째 시도
-    // @Override
-    // public List<FestivalDTO> getRandomFestivals() {
-    //// return festivalRepository.findRandomFive();
-    // }
 
-    // 2번째 시도
     @Override
     public List<FestivalDTO> getAllFestivalsAsDTO() {
         List<Festival> festivals = festivalRepository.findAll();
         List<FestivalDTO> festivalDTOs = new ArrayList<>();
 
         for (Festival festival : festivals) {
-            FestivalDTO festivalDTO = new FestivalDTO(festival.getFestivalTitle(), festival.getThumbnail());
+            FestivalDTO festivalDTO = new FestivalDTO(festival.getFestivalTitle(), festival.getThumbnail(),festival.getPoster());
             festivalDTOs.add(festivalDTO);
         }
 
@@ -50,6 +38,13 @@ public class FestivalServiceImpl implements FestivalService {
         List<Festival> fetival5List = festivalRepository.getFiveEntity();
 
         return fetival5List.stream().map(festivals -> entityToDTO(festivals)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<FestivalDTO> findAllByOrderByFestivalNumAsc() {
+
+        return festivalRepository.findAllByOrderByFestivalNumAsc();
+
     }
 
 }
