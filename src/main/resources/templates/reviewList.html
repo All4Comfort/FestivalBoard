@@ -54,27 +54,25 @@
             /* 이미지 썸네일의 최대 높이 */
         }
 
-        /* 리뷰 목록 스타일 */
-        .review-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
+   /* 리뷰 목록 스타일 */
+.review-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
 
-        /* 리뷰 아이템 스타일 */
-        .review-item {
-            flex-basis: calc(33.33% - 20px);
-            /* 3개씩 가로로 정렬하므로 33.33%의 폭을 가짐 */
-            margin-bottom: 20px;
-            box-sizing: border-box;
-            border: 1px solid #e1e1e1;
-            border-radius: 4px;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            /* 글씨를 가운데 정렬 */
-        }
+/* 리뷰 아이템 스타일 */
+.review-item {
+    flex-basis: calc(30.33% - 20px); /* 3개씩 가로로 정렬하므로 33.33%의 폭을 가짐 */
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+    text-align: center; /* 글씨를 가운데 정렬 */
+}
 
         /* 검색 입력 상자 스타일 */
         .search-box {
@@ -253,33 +251,24 @@
         </form>
     </div>
 
-    <!-- 리뷰 목록 -->
-    <div id="review-list" class="review-container">
-        <!-- 리뷰 목록 아이템들 -->
-        <div class="review-item" th:each="review : ${reviews}">
-            <h2><a href="#" th:onclick="'showReviewDetail(' + ${review.id} + ')'">[[${review.title}]]</a></h2>
-            <p th:text="${'작성자: ' + ${review.author}}"></p>
-            <p th:text="${'내용: ' + ${review.content}}"></p>
-            <p th:text="${'조회수: ' + ${review.views}}"></p>
-            <p th:text="${'좋아요 수: ' + ${review.likes}}"></p>
-        </div>
-        <!-- 리뷰 목록 아이템들 -->
-        <div class="review-item" th:each="review : ${reviews}">
-            <h2 th:text="${review.title}"></h2>
-            <p th:text="${'작성자: ' + review.author}"></p>
-            <p th:text="${'내용: ' + review.content}"></p>
-            <p th:text="${'조회수: ' + review.views}"></p>
-            <p th:text="${'좋아요 수: ' + review.likes}"></p>
-        </div>
-        <!-- 리뷰 목록 아이템들 -->
-        <div class="review-item" th:each="review : ${reviews}">
-            <h2 th:text="${review.title}"></h2>
-            <p th:text="${'작성자: ' + review.author}"></p>
-            <p th:text="${'내용: ' + review.content}"></p>
-            <p th:text="${'조회수: ' + review.views}"></p>
-            <p th:text="${'좋아요 수: ' + review.likes}"></p>
-        </div>
+<!-- 리뷰 목록 -->
+<div id="review-list" class="review-container" th:each="reviewArray : ${result}">
+    <!-- 리뷰 목록 아이템들 -->
+    <div class="review-item" th:each="review : ${reviewArray}" onclick="showReviewDetail(${review.reviewNum})">
+        
+        <!-- <th:block th:with="review=${reviewArray[0]}"> -->
+        <a th:href="@{/reviewDetail(reviewNum=${review.reviewNum})}">[[${review.reviewNum}]]</a>
+
+        <!-- <h2><a href="#" th:onclick="'showReviewDetail(' + ${review.id} + ')'">[[${review.title}]]</a></h2> -->
+        <p>작성자: [[${review.writer}]]</p>
+        <p>제목 : [[${review.title}]]</p>
+        <p>내용: [[${review.content}]]</p>
+        <!-- <p th:text="${'조회수: ' + ${review.readCount}}"></p>
+        <p th:text="${'좋아요 수: ' + ${review.goodCount}}"></p> -->
     </div>
+    
+</div>
+
         <!-- 페이징 --> 
         <div class="pagination">
             <a href="#" class="page-link prev">이전</a>
@@ -389,14 +378,15 @@
         window.onload = function () {
             fetchReviewsData(); // 서버에서 리뷰 데이터를 가져오는 함수 호출
         };
-        // 리뷰 상세 페이지로 이동하는 함수
-        function showReviewDetail(reviewId) {
-            // reviewId를 사용하여 게시물 상세 페이지 URL을 생성
-            const reviewDetailUrl = '/reviewDetail.html?id=/' + reviewId; // 예시 URL
 
-            // 페이지를 해당 URL로 이동
-            window.location.href = reviewDetailUrl;
-        }
+        // 리뷰 상세 페이지로 이동하는 함수
+function showReviewDetail(reviewId) {
+    // reviewId를 사용하여 게시물 상세 페이지 URL을 생성
+    const reviewDetailUrl = `/reviewDetail?id=${reviewId}`; // 리뷰 상세 페이지의 URL을 생성
+
+    // 페이지를 해당 URL로 이동
+    window.location.href = reviewDetailUrl;
+}
 
 
         </script>

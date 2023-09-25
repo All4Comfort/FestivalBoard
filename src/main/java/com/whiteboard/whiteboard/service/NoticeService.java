@@ -10,6 +10,9 @@ public interface NoticeService {
     // 신규글 등록 메서드
     Long register(NoticeDTO dto);
 
+    // 특정 게시물의 정보를 리턴라는 메서드 선언
+    NoticeDTO get(Long noticeNum);
+
     // list 페이지에서 페이지에 해당하는 글목록 조회 리스트 get 메서드 정의
     PageResultDTO<NoticeDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
 
@@ -17,10 +20,10 @@ public interface NoticeService {
     default NoticeDTO entityToDTO(Notice notice, Member member){
         NoticeDTO dto = NoticeDTO.builder()
                         .noticeNum(notice.getNoticeNum())
-                        .writer(member.getName())
                         .title(notice.getTitle())
                         .content(notice.getContent())
                         .registerDate(notice.getRegisterDate())
+                        //.writer(member.getNickname())
                         .build();
 
         return dto;

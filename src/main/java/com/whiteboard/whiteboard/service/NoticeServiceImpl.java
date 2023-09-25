@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+
 public class NoticeServiceImpl implements NoticeService{
 
   private final NoticeRepository noticeRepository;
@@ -42,5 +43,38 @@ public PageResultDTO<NoticeDTO, Object[]> getList(PageRequestDTO pageRequestDTO)
 
   return new PageResultDTO<>(result, fn);
 }
+/*
+ @Transactional
+    public List<NoticeDTO> findAll() {
+        List<Notice> noticeEntityList = noticeRepository.findAll();
+        List<NoticeDTO> noticeDTOList = new ArrayList<>();
+        for (Notice notice: noticeEntityList) {
+            noticeDTOList.add(entityToDTO(notice));
+        }
+        return noticeDTOList;
+    }
+*/
+@Override
+public NoticeDTO get(Long noticeNum) {
+    Object result = noticeRepository.getNoticeBynoticeNum(noticeNum);
+
+    Object[] arr = (Object[])result;
+
+    return entityToDTO((Notice)arr[0], (Member)arr[1]);
+    // if (result instanceof Object[]) {
+    //     Object[] arr = (Object[])result;
+
+    //     if (arr.length >= 2) {
+    //         return entityToDTO((Notice)arr[0], (Member)arr[1]);
+    //     }
+    // }
+
+    // // 유효한 데이터가 없을 때의 처리 (예외를 던지거나 null을 반환하는 등)
+    // // 예시로 null을 반환하도록 하겠습니다.
+    // return result;
+}
+
+
+
     
 }

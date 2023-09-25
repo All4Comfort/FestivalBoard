@@ -1,266 +1,81 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>리뷰 상세 페이지</title>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firefly 웹사이트</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-        crossorigin="anonymous"></script>
-    <style>
-        /* 푸터를 브라우저 맨 아래로 고정합니다. */
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #f8f9fa;
-            /* 푸터의 배경색 설정 */
-            text-align: center;
-            /* 푸터 내용 가운데 정렬 */
-            padding: 10px;
-            /* 원하는 여백 설정 */
-        }
-
-        /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
-        .dropdown-toggle::after {
-            display: none;
-        }
-
-        /* 드롭다운 메뉴의 위치를 조절합니다. */
-        .dropdown-menu {
-            left: 0;
-            /* 드롭다운 메뉴가 화면 왼쪽에 정렬되도록 설정합니다. */
-            margin-left: -30px;
-            /* 원하는 만큼 왼쪽으로 이동시킵니다. */
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: black;
-        }
-
-        .review-info {
-            margin-top: 20px;
-        }
-
-        .review-info h2 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
-        .review-info p {
-            color: #666;
-            font-size: 16px;
-        }
-
-        .review-image {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .review-image img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .festival-info, .hashtag-info {
-            margin-top: 20px;
-        }
-
-        .festival-info h2, .hashtag-info h2 {
-            color: #333;
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 5px;
-        }
-
-        li span {
-            color: blue;
-        }
-    </style>
+    <!-- 헤더 부분 생략 -->
 </head>
 <body>
-    <header>
-        <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
-            <a class="navbar-brand" href="#"><b>Fullstival</b></a>
-            <ul class="nav nav-pills">
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                            fill="black" class="bi bi-list" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                        </svg></a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#scrollspyHeading3">축제게시판</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#scrollspyHeading4">리뷰게시판</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#scrollspyHeading4">자유게시판</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#scrollspyHeading5">공지사항&QnA</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#scrollspyHeading1"><svg xmlns="http://www.w3.org/2000/svg" width="30"
-                            height="30" fill="black" class="bi bi-person" viewBox="0 0 16 16">
-                            <path
-                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
-                        </svg></a>
-                </li>
-            </ul>
-        </nav>
-    </header>
-    <div class="container">
-        <h1>리뷰 상세 페이지</h1>
-        
-        <!-- 리뷰 정보 표시 -->
-        <div class="review-info">
-            <h2>리뷰 제목: <span id="review-title"></span></h2>
-            <p>작성자: <span id="review-writer"></span></p>
-            <p>작성일: <span id="review-regDate"></span></p>
-            <p>수정일: <span id="review-modDate"></span></p>
-            <p>조회수: <span id="review-readCount"></span></p>
-            <p>좋아요 수: <span id="review-goodCount"></span></p>
-            <p>내용: <span id="review-content"></span></p>
-        </div>
-
-        <!-- 리뷰 이미지 표시 -->
-        <div class="review-image">
-            <img src="img/review-image.jpg" alt="리뷰 이미지">
-        </div>
-        
-        <!-- 축제 정보 표시 -->
-        <div class="festival-info">
-            <h2>관련 축제 정보</h2>
-            <ul>
-                <li><span id="festival-1"></span></li>
-                <li><span id="festival-2"></span></li>
-                <li><span id="festival-3"></span></li>
-                <li><span id="festival-4"></span></li>
-                <li><span id="festival-5"></span></li>
-            </ul>
-        </div>
-        
-        <!-- 해시태그 정보 표시 -->
-        <div class="hashtag-info">
-            <h2>해시태그</h2>
-            <ul>
-                <li><span id="hashtag-1"></span></li>
-                <li><span id="hashtag-2"></span></li>
-                <li><span id="hashtag-3"></span></li>
-                <li><span id="hashtag-4"></span></li>
-                <li><span id="hashtag-5"></span></li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- JavaScript 코드를 포함할 수 있습니다. -->
-    <script>
-        // 리뷰 데이터를 가져와서 페이지에 표시하는 함수
-        function displayReviewData() {
-            // 여기에서 리뷰 데이터를 가져오는 코드를 작성합니다.
-            // ReviewDTO 객체에서 필요한 정보를 추출하여 아래의 요소들에 표시합니다.
-            const reviewTitle = document.getElementById('review-title');
-            const reviewWriter = document.getElementById('review-writer');
-            const reviewRegDate = document.getElementById('review-regDate');
-            const reviewModDate = document.getElementById('review-modDate');
-            const reviewReadCount = document.getElementById('review-readCount');
-            const reviewGoodCount = document.getElementById('review-goodCount');
-            const reviewContent = document.getElementById('review-content');
-            const festival1 = document.getElementById('festival-1');
-            const festival2 = document.getElementById('festival-2');
-            const festival3 = document.getElementById('festival-3');
-            const festival4 = document.getElementById('festival-4');
-            const festival5 = document.getElementById('festival-5');
-            const hashtag1 = document.getElementById('hashtag-1');
-            const hashtag2 = document.getElementById('hashtag-2');
-            const hashtag3 = document.getElementById('hashtag-3');
-            const hashtag4 = document.getElementById('hashtag-4');
-            const hashtag5 = document.getElementById('hashtag-5');
-            
-            // ReviewDTO 객체로부터 필요한 정보를 추출하여 각 요소에 표시합니다.
-            const reviewData = {
-                reviewNum: 1,
-                writer: { id: 123, name: '작성자 이름' },
-                title: '리뷰 제목',
-                regDate: '2023-09-19 12:34:56',
-                modDate: '2023-09-20 10:23:45',
-                readCount: 100,
-                goodCount: 50,
-                content: '리뷰 내용입니다.',
-                festivalNum1: { name: '축제 1' },
-                festivalNum2: { name: '축제 2' },
-                festivalNum3: { name: '축제 3' },
-                festivalNum4: null,
-                festivalNum5: null,
-                hashTag1: '#해시태그1',
-                hashTag2: '#해시태그2',
-                hashTag3: null,
-                hashTag4: null,
-                hashTag5: null
-            };
-
-            reviewTitle.textContent = reviewData.title;
-            reviewWriter.textContent = reviewData.writer.name;
-            reviewRegDate.textContent = reviewData.regDate;
-            reviewModDate.textContent = reviewData.modDate;
-            reviewReadCount.textContent = reviewData.readCount;
-            reviewGoodCount.textContent = reviewData.goodCount;
-            reviewContent.textContent = reviewData.content;
-            festival1.textContent = reviewData.festivalNum1 ? reviewData.festivalNum1.name : '';
-            festival2.textContent = reviewData.festivalNum2 ? reviewData.festivalNum2.name : '';
-            festival3.textContent = reviewData.festivalNum3 ? reviewData.festivalNum3.name : '';
-            festival4.textContent = reviewData.festivalNum4 ? reviewData.festivalNum4.name : '';
-            festival5.textContent = reviewData.festivalNum5 ? reviewData.festivalNum5.name : '';
-            hashtag1.textContent = reviewData.hashTag1 || '';
-            hashtag2.textContent = reviewData.hashTag2 || '';
-            hashtag3.textContent = reviewData.hashTag3 || '';
-            hashtag4.textContent = reviewData.hashTag4 || '';
-            hashtag5.textContent = reviewData.hashTag5 || '';
+    <!-- 리뷰 상세 페이지 스타일 -->
+    <style>
+        /* 리뷰 상세 페이지 스타일 */
+        .review-detail-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
         }
 
-        // 페이지 로드 시 리뷰 데이터를 표시합니다.
-        window.onload = displayReviewData;
-    </script>
+        .review-detail-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .review-detail-author {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .review-detail-date {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .review-detail-content {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .review-detail-views {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .review-detail-hashtags {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .review-detail-likes {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <!-- 리뷰 상세 페이지 HTML -->
+    <div class="review-detail-container">
+        <h2 class="review-detail-title" th:text="${reviewDTO.title}">리뷰 제목</h2>
+        <p class="review-detail-author" th:text="'작성자: ' + ${reviewDTO.writer}">작성자: John Doe</p>
+        <!-- <p class="review-detail-date" th:text="'작성일: ' + ${reviewData.date}">작성일: 2023-09-25</p> -->
+        <p class="review-detail-content" th:text="${reviewDTO.content}">
+            리뷰 내용
+        </p>
+        <p class="review-detail-views" th:text="'조회수: ' + ${reviewDTO.readCount}">조회수: 100</p>
+        <p class="review-detail-hashtags" th:text="'해시태그: ' + ${reviewDTO.hashTag1}">해시태그: #프로젝트 #리뷰</p>
+        <p class="review-detail-likes" th:text="'좋아요 수: ' + ${reviewDTO.goodCount}">좋아요 수: 50</p>
+    </div>
+
+    <ul>
+        <!-- 리뷰 목록을 반복 -->
+        <li th:each="reviewDTO : ${reviewList}">
+            <!-- 리뷰 상세 페이지로 이동하는 하이퍼링크 생성 -->
+            <a th:href="@{'/reviewDetail?reviewNum=' + ${reviewDTO.reviewNum}}"> <!-- reviewDTO.id는 리뷰의 고유 ID라고 가정 -->
+                <h3 th:text="${reviewDTO.title}">리뷰 제목</h3>
+                <p th:text="'작성자: ' + ${reviewDTO.writer}">작성자: John Doe</p>
+                <!-- 필요한 리뷰 정보를 표시 -->
+            </a>
+        </li>
+    </ul>
 </body>
 </html>

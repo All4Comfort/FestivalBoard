@@ -96,6 +96,48 @@
         .pagination .page-link:focus {
             box-shadow: none;
         }
+        /* 중요: 화면이 짤리지 않도록 스타일을 조정합니다. */
+        .carousel-item {
+            text-align: left;
+            /* 이미지 위 여백 추가 */
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            width: 100%;
+            /* 카드가 100% 폭을 차지하도록 설정 */
+        }
+
+        .card-img-top {
+            max-width: 100%;
+            /* 이미지가 카드 내에 맞게 크기 조절 */
+            height: 300px;
+            margin: auto;
+        }
+
+        /* 중간 검색 폼 관련 스타일 수정 */
+        .search-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-form input[type="search"] {
+            max-width: 80%;
+        }
+
+        /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        /* 드롭다운 메뉴의 위치를 조절합니다. */
+        .dropdown-menu {
+            left: 0;
+            /* 드롭다운 메뉴가 화면 왼쪽에 정렬되도록 설정합니다. */
+            margin-left: -30px;
+            /* 원하는 만큼 왼쪽으로 이동시킵니다. */
+        }
 
         
     </style>
@@ -104,38 +146,79 @@
 <body>
     <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
         <a class="navbar-brand" href="#"><b>Fullstival</b></a>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ">
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="#">Festival</a>
-                        </li>
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="#">Review</a>
-                        </li>
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="#">Notice</a>
-                        </li>
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="#">My page</a>
-                        </li>
-                    </ul>
-                </div>
+        <ul class="nav nav-pills">
+            <div id="welcome-message" th:if="${session.loggedInUser != null}"
+                th:text="${session.loggedInUser.name} + '님 환영합니다'" style="display: flex; align-items: center;">
             </div>
-        </nav>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                        fill="black" class="bi bi-list" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    </svg></a>
+                <!-- 게시판 햄버거  -->
+                <ul class="dropdown-menu">
+                    <a class="dropdown-item" href="/test">
+                        <li>축제게시판</li>
+                    </a>
+                    <li>
+                        <!-- "#scrollspyHeading1" -->
+                        <hr class="dropdown-divider">
+                    </li>
+                    <!-- "#scrollspyHeading2" -->
+                    <a class="dropdown-item" href="/reviewList">
+                        <li>리뷰게시판</li>
+                    </a>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <!-- "#scrollspyHeading4 -->
+                    <a class="dropdown-item" href="/notice1">
+                        <li>공지사항&QnA</li>
+                    </a>
+                </ul>
+            </li>
+            <!-- 로그인하지 않은 사용자에게 보여질 메뉴   href="#scrollspyHeading5" -->
+            <li class="nav-item" th:unless="${session.loggedInUser != null}">
+                <a class="nav-link" id="login-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
+                        viewBox="0 0 16 16">
+                        <path
+                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                    </svg>
+                </a>
+            </li>
+
+            <!-- 로그인한 사용자에게 보여질 메뉴 -->
+            <!-- 마이페이지, 로그아웃  -->
+            <li class="nav-item dropdown" th:if="${session.loggedInUser != null}">
+                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                    aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                        fill="black" class="bi bi-person" viewBox="0 0 16 16">
+                        <path
+                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                    </svg>
+                </a>
+
+                <ul class="dropdown-menu">
+                    <a class="dropdown-item" id="myPage">
+                        <li>마이페이지</li>
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a class="dropdown-item" id="logout">
+                        <li>로그아웃</li>
+                    </a>
+                </ul>
+            </li>
+
+        </ul>
     </nav>
 
     <section class="container my-5 text-center">
         <div class="d-flex justify-content-end mb-3" style="margin-top: -55px;">
-            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal"  th:if="${session.loggdInUser}">
+            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal">
                 <a th:href="@{/noticeWrite}">글쓰기</a>
             </button>
         </div>
@@ -160,7 +243,7 @@
 						<a th:href="@{/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.noticeNum}]]</a>
 					</th>
 					<td><a th:href="@{/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.title}]]</a></td>
-					<td>[[${dto.writer}]]</td>
+					<td><a>[[${dto.writer}]]</a></td>
 				</tr>
 			</tbody>
         </table>

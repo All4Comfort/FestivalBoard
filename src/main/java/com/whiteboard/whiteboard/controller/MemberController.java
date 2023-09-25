@@ -172,6 +172,18 @@ public class MemberController {
         }
     }
 
+    @GetMapping("/member/delete")
+    public String delete(HttpSession session, @ModelAttribute MemberDTO memberDTO) {
+
+        // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+
+        memberRepository.delete(loggedInUser);
+
+        // 로그인 되지 않은 경우 로그인 페이지로 리다이렉트 처리
+        return "redirect:/main";
+    }
+
     /*
      * public String dashBoardPage(@AuthenticationPrincipal UserDetails user, Model
      * model) {
