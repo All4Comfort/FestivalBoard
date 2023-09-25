@@ -14,6 +14,9 @@ public interface FestivalService {
 
        public List<FestivalDTO> getAllFestivalsAsDTO();
 
+         //미건쓰: 게시물 메서드 정의
+      List<FestivalDTO> findAllByOrderByFestivalNumAsc();
+
        //Entity를 DTO로 변환하는 메서드 선언
 	default FestivalDTO entityToDTO(Festival festival) {
 		
@@ -33,5 +36,6 @@ public interface FestivalService {
 					.build(); 
 		return dto;
 	}
+   
    
 }

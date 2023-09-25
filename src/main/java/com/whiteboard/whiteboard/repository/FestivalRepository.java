@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.whiteboard.whiteboard.dto.FestivalDTO;
 import com.whiteboard.whiteboard.entity.Festival;
 
 @Repository
@@ -18,15 +19,15 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
     //@Query(value = "SELECT f FROM Festival f WHERE f.festivalNum <= 5")
     List<Festival> getFiveEntity();
 
-//1번째 시도
-   // @Query(value = "SELECT * FROM festival ORDER BY RAND() LIMIT 5", nativeQuery = true)
-   // List<FestivalDTO> findRandomFive();
-
-//2번째 시도
-   // @Query("SELECT new com.whiteboard.whiteboard.dto.FestivalDTO(f.festivalTitle, f.thumnail) FROM Festival f")
-   // List<FestivalDTO> findAllAsDTO();
 
     Optional<Festival> findByFestivalNum(@Param("festivalNum") Long festivalNum);
+
+
+    //민건 리스트로 가져오는 축제게시물~~~~~
+    @Query("SELECT f FROM Festival f ORDER BY f.festivalNum ASC")
+    List<FestivalDTO> findAllByOrderByFestivalNumAsc();
+
+    //
 
     // @Modifying
     // @Query("update Festival e set e.read_count = e.read_count + 1 where
