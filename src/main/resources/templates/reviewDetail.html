@@ -54,7 +54,7 @@
     </style>
 
     <!-- 리뷰 상세 페이지 HTML -->
-    <div class="review-detail-container">
+    <div class="review-detail-container" th:each="reviewDTO : ${result}" >
         <h2 class="review-detail-title" th:text="${reviewDTO.title}">리뷰 제목</h2>
         <p class="review-detail-author" th:text="'작성자: ' + ${reviewDTO.writer}">작성자: John Doe</p>
         <!-- <p class="review-detail-date" th:text="'작성일: ' + ${reviewData.date}">작성일: 2023-09-25</p> -->
@@ -64,18 +64,6 @@
         <p class="review-detail-views" th:text="'조회수: ' + ${reviewDTO.readCount}">조회수: 100</p>
         <p class="review-detail-hashtags" th:text="'해시태그: ' + ${reviewDTO.hashTag1}">해시태그: #프로젝트 #리뷰</p>
         <p class="review-detail-likes" th:text="'좋아요 수: ' + ${reviewDTO.goodCount}">좋아요 수: 50</p>
-    </div>
-
-    <ul>
-        <!-- 리뷰 목록을 반복 -->
-        <li th:each="reviewDTO : ${reviewList}">
-            <!-- 리뷰 상세 페이지로 이동하는 하이퍼링크 생성 -->
-            <a th:href="@{'/reviewDetail?reviewNum=' + ${reviewDTO.reviewNum}}"> <!-- reviewDTO.id는 리뷰의 고유 ID라고 가정 -->
-                <h3 th:text="${reviewDTO.title}">리뷰 제목</h3>
-                <p th:text="'작성자: ' + ${reviewDTO.writer}">작성자: John Doe</p>
-                <!-- 필요한 리뷰 정보를 표시 -->
-            </a>
-        </li>
-    </ul>
+    </div> 
 </body>
 </html>

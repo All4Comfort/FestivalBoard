@@ -40,14 +40,14 @@ public class ReviewController {
     }
     
     @GetMapping("/reviewDetail")
-    public String getReviewDetail(@ModelAttribute ReviewDTO reviewDTO) {
+    public String getReviewDetail(@ModelAttribute ReviewDTO reviewDTO, Model model) {
         //ReviewDTO reviewDTO = reviewService.getReviewById(reviewNumLong);
         //model.addAttribute("result", reviewRepository.getReviewList());
-        
+       // model.addAttribute("result", reviewRepository.getReviewNum(1L));
+        model.addAttribute("result", reviewRepository.getReferenceById(1L));
         
         return "/reviewDetail";
     }
-
     @GetMapping("/reviewWrite")
     public String postWriteReview(@ModelAttribute ReviewDTO reviewDTO) {
         // 리뷰 작성 페이지로 이동
