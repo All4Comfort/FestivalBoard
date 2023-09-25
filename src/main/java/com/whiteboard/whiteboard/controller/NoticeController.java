@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.whiteboard.whiteboard.dto.MemberDTO;
@@ -13,6 +14,7 @@ import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.entity.Notice;
 import com.whiteboard.whiteboard.repository.NoticeRepository;
 import com.whiteboard.whiteboard.service.NoticeService;
+import com.whiteboard.whiteboard.service.NoticeServiceImpl;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 
 public class NoticeController {
   private final NoticeService noticeService;
+  private final NoticeServiceImpl noticeServiceImpl;
   private final NoticeRepository noticeRepository;
 
   @GetMapping("/notice1")
@@ -35,10 +38,11 @@ public class NoticeController {
 
 
 @GetMapping("/notice1Detail")
-public void noticeDetail(@ModelAttribute("requestDTO") PageRequestDTO requestDTO, Long noticeNum, Model model){
+public String noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model, HttpSession session) {
     NoticeDTO noticeDTO = noticeService.get(noticeNum);
-    System.out.println(noticeDTO);
     model.addAttribute("result", noticeDTO);
+
+    return "/notice1Detail";
 }
 
 //신규글등록폼 요청처리하기

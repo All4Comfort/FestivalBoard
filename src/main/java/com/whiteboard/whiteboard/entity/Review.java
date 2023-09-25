@@ -20,7 +20,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
+@ToString(exclude = "writer")
 // 리뷰게시판
 public class Review extends BaseEntity {
 
@@ -29,7 +29,7 @@ public class Review extends BaseEntity {
    private Long reviewNum; // 리뷰번호
 
    @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(nullable = false, name = "writer_email", referencedColumnName = "email")
+   //@JoinColumn(nullable = false, name = "writer_email", referencedColumnName = "email")
    private Member writer; // 작성자 : Member 엔티티의 email 컬럼
 
    @Column(nullable = false)
