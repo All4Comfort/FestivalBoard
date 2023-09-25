@@ -1,109 +1,181 @@
 <!DOCTYPE html>
-<html lang="ko"  xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Page</title>
+    <title>마이페이지</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+    <style>
+        /* 중요: 화면이 짤리지 않도록 스타일을 조정합니다. */
+        .carousel-item {
+            text-align: left;
+            /* 이미지 위 여백 추가 */
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            width: 100%;
+            /* 카드가 100% 폭을 차지하도록 설정 */
+        }
+
+        .card-img-top {
+            max-width: 100%;
+            /* 이미지가 카드 내에 맞게 크기 조절 */
+            height: 300px;
+            margin: auto;
+        }
+
+        /* 중간 검색 폼 관련 스타일 수정 */
+        .search-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-form input[type="search"] {
+            max-width: 80%;
+        }
+
+        /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        /* 드롭다운 메뉴의 위치를 조절합니다. */
+        .dropdown-menu {
+            left: 0;
+            /* 드롭다운 메뉴가 화면 왼쪽에 정렬되도록 설정합니다. */
+            margin-left: -30px;
+            /* 원하는 만큼 왼쪽으로 이동시킵니다. */
+        }
+    </style>
 </head>
+
 <body>
     <header>
         <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
             <a class="navbar-brand" href="#"><b>Fullstival</b></a>
-            <form class="" novalidate id="tset-form" action="/test" method="get">
-                <ul class="nav nav-pills">
-                    <div id="welcome-message"></div>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                            aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                fill="black" class="bi bi-list" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                            </svg></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#scrollspyHeading1">축제게시판</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#scrollspyHeading2">리뷰게시판</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#scrollspyHeading3">자유게시판</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#scrollspyHeading4">공지사항&QnA</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="login-link" href="#scrollspyHeading5"><svg
-                                xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black"
-                                class="bi bi-person" viewBox="0 0 16 16">
-                                <path
-                                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
-                            </svg></a>
-                    </li>
-                </ul>
-            </form>
+            <!-- <form class="" novalidate id="test-form" action="/test" method="get"> -->
+            <ul class="nav nav-pills">
+                <div id="welcome-message"></div>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                        aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                            fill="black" class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                        </svg></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#scrollspyHeading1">축제게시판</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#scrollspyHeading2">리뷰게시판</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#scrollspyHeading3">자유게시판</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#scrollspyHeading4">공지사항&QnA</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="login-link" href="#scrollspyHeading5"><svg
+                            xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
+                            viewBox="0 0 16 16">
+                            <path
+                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                        </svg></a>
+                </li>
+            </ul>
+            <!-- </form> -->
         </nav>
     </header>
 
     <h1> 개인 정보 </h1>
 
-     <table class="table table=striped">
-        <!-- PageResultDTO.dtoList 의 이름으로 호출한다.. -->
-        <tbody>
-            <tr>
-                <th scope="row"> 아이디 </th>
-                <td>[[${member.email}]]</td>
-            </tr>
-            <tr> <!-- 비밀번호 처리하기!!!!!! -->
-                <th scope="row"> 비밀번호 </th>
-                <td>
-                    <span th:if="${member.pw != null}">
-                        <!-- 비밀번호 길이에 따라 X 문자를 반복하여 표시
+    <form action="/member/myPage" method="post" th:object="${memberDTO}">
+        <table class="table table=striped">
+            <!-- PageResultDTO.dtoList 의 이름으로 호출한다.. -->
+            <tbody>
+                <tr>
+                    <!-- 수정 불가-->
+                    <th scope="row"> 아이디 </th>
+                    <td th:text="${member.email}"></td>
+                </tr>
+                <tr> <!-- 비밀번호 처리하기!!!!!! -->
+                    <th scope="row"> 비밀번호 </th>
+                    <td>
+                        <span th:if="${member.pw != null}">
+                            <!-- 비밀번호 길이에 따라 X 문자를 반복하여 표시
 
-                            별표(*)로 표시하지 않는 이유.... 
-                        Thymeleaf에서는 * 문자를 기본적으로 변수 또는 속성을 평가하는 데 사용. 
+                            별표(*)로 표시하지 않는 이유....
+                        Thymeleaf에서는 * 문자를 기본적으로 변수 또는 속성을 평가하는 데 사용.
                         th:text="*"와 같은 코드는 Thymeleaf에서 잘못 해석된다. -->
-                        <span th:text="X" 
-                              th:each="i : ${#numbers.sequence(1, member.pw.length())}"></span>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-               <th scope="row"> 이름 </th>
-               <td>[[${member.name}]]</td>
-             </tr>
-           <tr>
-              <th scope="row"> 닉네임 </th>
-              <td>[[${member.nickname}]]</td>
-            </tr>
-           <tr>
-              <th scope="row"> 생년월일 </th>
-              <td>[[${member.birthDay}]]</td>
-            </tr>
-           <tr>
-              <th scope="row"> 성별 </th>
-              <td>[[${member.gender}]]</td>
-            </tr>
-           <tr>
-              <th scope="row"> 전화번호 </th>
-              <td>[[${member.phoneNum}]]</td>
-            </tr>
-              
+                            <span th:text="X" th:each="i : ${#numbers.sequence(1, member.pw.length())}"></span>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <!-- 수정 불가-->
+                    <th scope="row"> 이름 </th>
+                    <td th:text="${member.name}"></td>
+                </tr>
+                <tr>
+                    <th scope="row"> 닉네임 </th>
+                    <!-- th:value 를 사용해야 입력필드 수정 가능-->
+                    <td><input type="text" th:field="${member.nickname}"></td>
+                </tr>
+                <tr>
+                    <!-- 수정 불가-->
+                    <th scope="row"> 생년월일 </th>
+                    <td th:text="${member.birthDay}"></td>
+                </tr>
+                <tr>
+                    <!-- 수정 불가-->
+                    <th scope="row"> 성별 </th>
+                    <td th:text="${member.gender}"></td>
+                </tr>
+                <tr>
+                    <!-- 수정 불가-->
+                    <th scope="row"> 전화번호 </th>
+                    <td th:text="${member.phoneNum}"></td>
+                </tr>
 
-        </tbody>
-    </table>
-<div>
-    <span> 
-        <a th:href="@{/member/delete}">
-            <button type="button">회원 탈퇴</button>
-        </a>
-    </span>
-</div>
-<footer class="bg-dark text-light text-center py-3">
-    <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
-</footer>
+
+            </tbody>
+        </table>
+        <div>
+            <span>
+                <button type="submit" id="modify">정보 수정</button>
+            </span>
+        </div>
+    </form>
+    <a th:href="@{/member/delete}" id="delete">
+        <button type="button">회원 탈퇴</button>
+    </a>
+
+    
+    <footer class="bg-dark text-light text-center py-3">
+        <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
+    </footer>
+
+    <script>
+        document.getElementById('modify').addEventListener('click', function(event){
+            alert('정보를 수정합니다.');
+        });
+        document.getElementById('delete').addEventListener('click', function(event){
+            alert('탈퇴가 완료되었습니다.');
+            window.location.href = "/member/delete";
+        });
+
+    </script>
 </body>
+
 </html>

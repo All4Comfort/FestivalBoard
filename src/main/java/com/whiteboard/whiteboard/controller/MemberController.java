@@ -10,11 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.service.MemberService;
@@ -52,58 +54,61 @@ public class MemberController {
     }
 
     // // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
-    //     @PostMapping("/member/login")
-    //     public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
-    //             HttpSession session, Model model, @ModelAttribute("MemberDTO") MemberDTO memberDTO) {
-    //         Optional<Member> memberOptional = memberService.login(email, pw);
+    // @PostMapping("/member/login")
+    // public String loginProcess(@RequestParam("email") String email,
+    // @RequestParam("pw") String pw,
+    // HttpSession session, Model model, @ModelAttribute("MemberDTO") MemberDTO
+    // memberDTO) {
+    // Optional<Member> memberOptional = memberService.login(email, pw);
 
-    //         // 로그인 됐는지 확인
-    //         System.err.println("!!!!!! 로그인 확인~~~~~~~~~ =---> " + memberOptional.isPresent());
+    // // 로그인 됐는지 확인
+    // System.err.println("!!!!!! 로그인 확인~~~~~~~~~ =---> " +
+    // memberOptional.isPresent());
 
-    //         if (memberOptional.isPresent()) {
-    //             Member member = memberOptional.get();
-    //             session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
+    // if (memberOptional.isPresent()) {
+    // Member member = memberOptional.get();
+    // session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
 
-    //             // 로그인 유저 정보 확인
-    //             System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
+    // // 로그인 유저 정보 확인
+    // System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " +
+    // session.getAttribute("loggedInUser"));
 
-    //             return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
-    //         } else {
-    //             model.addAttribute("loginError", true);
-    //             return "/member/login"; // 로그인 실패 시 로그인 페이지로 이동
-    //         }
-    //     }
-
-
+    // return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
+    // } else {
+    // model.addAttribute("loginError", true);
+    // return "/member/login"; // 로그인 실패 시 로그인 페이지로 이동
+    // }
+    // }
 
     // 로그인 메서드
     // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
     @PostMapping("/member/login")
-    public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, HttpSession session, Model model){
+    public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, HttpSession session,
+            Model model, @ModelAttribute("MemberDTO") MemberDTO memberDTO) {
 
         Optional<Member> optionalMember = memberServiceImpl.login(email, pw);
 
-        if(optionalMember.isPresent()){ //회원의 이메일, 비밀번호가 일치할 때
-            
+        if (optionalMember.isPresent()) { // 회원의 이메일, 비밀번호가 일치할 때
+
             Member member = optionalMember.get();
 
-            session.setAttribute("loggedInUser", member); //세션에 사용자 정보 저장
+            session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
 
             return "redirect:/main";
-        }else{ //회원의 이메일, 비밀번호가 일치하지 않을 때
+        } else { // 회원의 이메일, 비밀번호가 일치하지 않을 때
             return "/member/login";
         }
 
     }
-        
-        // 로그아웃 메서드
-        @GetMapping("/logout")
-        public String logout(HttpSession session, Model model){
-        
+
+    // 로그아웃 메서드
+    @GetMapping("/logout")
+    public String logout(HttpSession session, Model model) {
+
         session.removeAttribute("loggedInUser");
-            
-            return "redirect:/main";
-        }
+
+        return "redirect:/main";
+    }
 
     // @GetMapping("/user")
     // public String dashBoardPage(@AuthenticationPrincipal UserDetails user, Model
@@ -115,7 +120,7 @@ public class MemberController {
 
     @GetMapping("/member/myPage")
     public String dashBoardPage(HttpSession session, Model model) {
-        //myPage에서 세션 정보 읽어오기
+        // myPage에서 세션 정보 읽어오기
         Member loggedInUser = (Member) session.getAttribute("loggedInUser");
 
         if (loggedInUser != null) {
@@ -126,6 +131,57 @@ public class MemberController {
             // 로그인되지 않았을 경우 로그인 페이지로 리다이렉트 또는 처리
             return "redirect:/member/login";
         }
+    }
+
+    // @GetMapping("/member/myPage")
+    // public String modify(HttpSession session, Model model){
+
+    // Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+
+    // if(loggedInUser != null){
+
+    // return "/member/myPage";
+    // }else{
+    // //로그인 되지 않았을 경우 로그인 페이지로 redirect 처리
+    // return "redirect:/member/login";
+    // }
+
+    // }
+
+    // 리포지토리 컨트롤러 서비스 html
+
+    @PostMapping("/member/myPage")
+    public String modify(HttpSession session, @ModelAttribute MemberDTO memberDTO) {
+
+        // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+
+        if (loggedInUser != null) {
+            // 사용자 정보 업데이트 로직을 수행합니다.
+            loggedInUser.updateNickname(memberDTO.getNickname()); // 닉네임 필드를 업데이트합니다.
+            // 다른 필드들도 필요에 따라 직접 업데이트할 수 있습니다.
+
+            // 여기에서 데이터베이스 업데이트 또는 다른 작업을 수행할 수 있습니다.
+            memberRepository.save(loggedInUser);
+
+            // 업데이트 후, 사용자를 다시 마이페이지로 리다이렉트합니다.
+            return "redirect:/member/myPage";
+        } else {
+            // 로그인 되지 않은 경우 로그인 페이지로 리다이렉트 처리
+            return "redirect:/member/login";
+        }
+    }
+
+    @GetMapping("/member/delete")
+    public String delete(HttpSession session, @ModelAttribute MemberDTO memberDTO) {
+
+        // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+
+        memberRepository.delete(loggedInUser);
+
+        // 로그인 되지 않은 경우 로그인 페이지로 리다이렉트 처리
+        return "redirect:/main";
     }
 
     /*
