@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
-import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Review;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 
@@ -77,19 +76,12 @@ public class ReviewServiceImpl implements ReviewService {
     return entityToDTO(review);
   }
 
-  @Override
-  public String getNickname(Review review, Member member) {
-    
-    String nickname = review.getWriter().getNickname();
-
-    return nickname;
-  }
 
 
 
   @Override
-  public Long saveReview(ReviewDTO dto, Member member) {
-    Review review = dtoToEntity(dto, member);
+  public Long saveReview(ReviewDTO dto) {
+    Review review = dtoToEntity(dto,null);
     reviewRepository.save(review);
     return review.getReviewNum();
     //Review saveReview = reviewRepository.save(review);

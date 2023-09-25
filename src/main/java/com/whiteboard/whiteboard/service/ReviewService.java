@@ -11,13 +11,13 @@ import com.whiteboard.whiteboard.entity.Review;
 public interface ReviewService {
 
   // 새로운 리뷰 생성
-  Long saveReview(ReviewDTO reviewDTO, Member member);
+  Long saveReview(ReviewDTO reviewDTO);
 
   List<ReviewDTO[]> getReviewDTOs();
 
   PageResultDTO<ReviewDTO, Object[]> getReviewDTOList(PageRequestDTO pageRequestDTO);
 
-  String getNickname(Review review, Member member);
+ // String getNickname(Review review, Member member);
 
   // 리뷰의 reviewNum으로 리뷰 가져오기
   ReviewDTO getReviewByReviewNum(Long reviewNum);
