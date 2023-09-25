@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.whiteboard.whiteboard.dto.FestivalDTO;
@@ -49,6 +51,13 @@ public class FestivalServiceImpl implements FestivalService {
 
         return  festivalAll.stream().map( festivals -> entityToDTO(festivals)).collect(Collectors.toList());
 
+    }
+
+    //축제 페이징
+    @Override
+    public Page<FestivalDTO> findAllByOrderByFestivalNum(Pageable pageable) {
+        Page<Festival> festivalPage = festivalRepository.findAllByOrderByFestivalNum(pageable);
+        return festivalPage.map(festival -> entityToDTO(festival));
     }
 
 }

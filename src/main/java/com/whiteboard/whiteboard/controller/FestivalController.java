@@ -2,12 +2,18 @@ package com.whiteboard.whiteboard.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.whiteboard.whiteboard.dto.FestivalDTO;
+import com.whiteboard.whiteboard.repository.FestivalRepository;
 import com.whiteboard.whiteboard.service.FestivalService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 public class FestivalController {
 
     private final FestivalService festivalService;
+
+    private final FestivalRepository festivalRepository;
 
     // @GetMapping("/festivalList")
     // public String showFestivalListPage() {
@@ -41,6 +49,20 @@ public class FestivalController {
         // logger.info("축제 목록: {}", festivals); //콘솔에 찍히나 확인했습니다.
         return festivals; // JSON 형식의 데이터를 반환합니다.
     }
+
+
+    //축제페이지 페이징 할려고하는데..잘 안된다..
+      @GetMapping("/festivalListPage")
+    public ResponseEntity<Page<FestivalDTO>> getFestivalsByPage(
+        @RequestParam(defaultValue = "1") int page,
+        @RequestParam(defaultValue = "9") int size
+    ) {
+        Pageable pageable = PageRequest.of(page -1, size);
+        Page<FestivalDTO> festivals = festivalService.findAllByOrderByFestivalNum(pageable);
+         System.out.println("페이지 넘버 : " + festivals);
+        return ResponseEntity.ok(festivals);
+    }
+
 
     // 밑 코드는 모듈에 메시지 넣기위해 필요해서 넣었음
     // private final Logger logger =
@@ -106,4 +128,5 @@ public class FestivalController {
     // new FestivalDTO("축제 4", "링크 4"),
     // new FestivalDTO("축제 5", "링크 5"));
     // }
-}
+
+    }

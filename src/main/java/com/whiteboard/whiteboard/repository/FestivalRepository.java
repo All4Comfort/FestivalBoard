@@ -3,6 +3,8 @@ package com.whiteboard.whiteboard.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,6 +27,10 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
     //민건 리스트로 가져오는 축제게시물~~~~~
     @Query("SELECT f FROM Festival f ORDER BY f.festivalNum ASC")
     List<Festival> findAllByOrderByFestivalNumAsc();
+
+    //축제 리스트 페이징
+    @Query("SELECT f FROM Festival f ORDER BY f.festivalNum ASC")
+    Page<Festival> findAllByOrderByFestivalNum(Pageable pageable);
 
     //
 
