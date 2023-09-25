@@ -44,7 +44,7 @@ public class ReviewController {
         //ReviewDTO reviewDTO = reviewService.getReviewById(reviewNumLong);
         //model.addAttribute("result", reviewRepository.getReviewList());
        // model.addAttribute("result", reviewRepository.getReviewNum(1L));
-        model.addAttribute("result", reviewRepository.getReferenceById(1L));
+        model.addAttribute("result", reviewRepository.getReviewNum(reviewDTO.getReviewNum()));
         
         return "/reviewDetail";
     }
