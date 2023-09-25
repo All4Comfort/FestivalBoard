@@ -154,12 +154,12 @@
         <div>
             <span>
                 <button type="submit" id="modify">정보 수정</button>
-                <a th:href="@{/member/delete}">
-                    <button type="button">회원 탈퇴</button>
-                </a>
             </span>
         </div>
     </form>
+    <a th:href="@{/member/delete}" id="delete">
+        <button type="button">회원 탈퇴</button>
+    </a>
 
     
     <footer class="bg-dark text-light text-center py-3">
@@ -169,6 +169,10 @@
     <script>
         document.getElementById('modify').addEventListener('click', function(event){
             alert('정보를 수정합니다.');
+        });
+        document.getElementById('delete').addEventListener('click', function(event){
+            alert('탈퇴가 완료되었습니다.');
+            window.location.href = "/member/delete";
         });
 
     </script>
