@@ -8,38 +8,33 @@ import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Review;
 
-
 public interface ReviewService {
-
 
   // 새로운 리뷰 생성
   Long saveReview(ReviewDTO reviewDTO, Member member);
-  
+
   List<ReviewDTO[]> getReviewDTOs();
-  
+
   PageResultDTO<ReviewDTO, Object[]> getReviewDTOList(PageRequestDTO pageRequestDTO);
 
   String getNickname(Review review, Member member);
 
-  
-  
-  
   // 리뷰의 reviewNum으로 리뷰 가져오기
   ReviewDTO getReviewByReviewNum(Long reviewNum);
-  
+
   // 기존 리뷰 업데이트
   void updateReview(Long reviewNum, ReviewDTO reviewDTO);
-  
+
   // 리뷰의 ID로 리뷰 삭제
   void deleteReview(Long reviewNum);
 
-  //게시물 수정 메서드 선언
-	void modify(ReviewDTO dto);
-  
+  // 게시물 수정 메서드 선언
+  void modify(ReviewDTO dto);
+
   default ReviewDTO entityToDTO(Review review) {
     ReviewDTO dto = ReviewDTO.builder()
-    .writer(review.getWriter().getEmail())
-    .title(review.getTitle())
+        //.writer(review.getWriter().getEmail())
+        .title(review.getTitle())
         .content(review.getContent())
         .readCount(0L)
         .goodCount(0L)
@@ -54,16 +49,17 @@ public interface ReviewService {
         .hashTag4(review.getHashTag4())
         .hashTag5(review.getHashTag5())
         .build();
-        return dto;
-      }
-      default Review dtoToEntity(ReviewDTO reviewDTO, Member member) {
-        
-        Member mem = Member.builder()
+    return dto;
+  }
+
+  default Review dtoToEntity(ReviewDTO reviewDTO, Member member) {
+
+    Member mem = Member.builder()
         .email(member.getEmail())
         .build();
-        
-        Review review = Review.builder()
-        //.writer(member)
+
+    Review review = Review.builder()
+        // .writer(member)
         .title(reviewDTO.getTitle())
         .content(reviewDTO.getContent())
         .readCount(0L)
@@ -72,6 +68,5 @@ public interface ReviewService {
     return review;
   }
 
-
-   //Long saveReview(ReviewDTO reviewDTO);
+  // Long saveReview(ReviewDTO reviewDTO);
 }
