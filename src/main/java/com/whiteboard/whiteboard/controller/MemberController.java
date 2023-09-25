@@ -10,13 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.service.MemberService;
@@ -53,27 +51,58 @@ public class MemberController {
         return "/member/login";
     }
 
+    // // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
+    //     @PostMapping("/member/login")
+    //     public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
+    //             HttpSession session, Model model, @ModelAttribute("MemberDTO") MemberDTO memberDTO) {
+    //         Optional<Member> memberOptional = memberService.login(email, pw);
+
+    //         // 로그인 됐는지 확인
+    //         System.err.println("!!!!!! 로그인 확인~~~~~~~~~ =---> " + memberOptional.isPresent());
+
+    //         if (memberOptional.isPresent()) {
+    //             Member member = memberOptional.get();
+    //             session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
+
+    //             // 로그인 유저 정보 확인
+    //             System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
+
+    //             return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
+    //         } else {
+    //             model.addAttribute("loginError", true);
+    //             return "/member/login"; // 로그인 실패 시 로그인 페이지로 이동
+    //         }
+    //     }
+
+
+
+    // 로그인 메서드
     // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
-        @PostMapping("/member/login")
-        public String loginProcess(@RequestParam("email") String email, @RequestParam("pw") String pw,
-                HttpSession session, Model model, @ModelAttribute("MemberDTO") MemberDTO memberDTO) {
-            Optional<Member> memberOptional = memberService.login(email, pw);
+    @PostMapping("/member/login")
+    public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, HttpSession session, Model model){
 
-            // 로그인 됐는지 확인
-            System.err.println("!!!!!! 로그인 확인~~~~~~~~~ =---> " + memberOptional.isPresent());
+        Optional<Member> optionalMember = memberServiceImpl.login(email, pw);
 
-            if (memberOptional.isPresent()) {
-                Member member = memberOptional.get();
-                session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
+        if(optionalMember.isPresent()){ //회원의 이메일, 비밀번호가 일치할 때
+            
+            Member member = optionalMember.get();
 
-                // 로그인 유저 정보 확인
-                System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
+            session.setAttribute("loggedInUser", member); //세션에 사용자 정보 저장
 
-                return "redirect:/main"; // 로그인 후 메인 페이지로 리다이렉트
-            } else {
-                model.addAttribute("loginError", true);
-                return "/member/login"; // 로그인 실패 시 로그인 페이지로 이동
-            }
+            return "redirect:/main";
+        }else{ //회원의 이메일, 비밀번호가 일치하지 않을 때
+            return "/member/login";
+        }
+
+    }
+        
+        // 로그아웃 메서드
+        @GetMapping("/logout")
+        public String logout(HttpSession session, Model model){
+        
+        session.removeAttribute("loggedInUser");
+            
+            return "redirect:/main";
         }
 
     // @GetMapping("/user")
@@ -102,7 +131,7 @@ public class MemberController {
     /*
      * public String dashBoardPage(@AuthenticationPrincipal UserDetails user, Model
      * model) {
-     * 
+     *
      * // 사용자 이름을 기반으로 데이터베이스에서 정보 가져오기
      * Optional<Member> memberOptional =
      * memberRepository.findByEmail(user.getUsername());

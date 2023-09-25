@@ -10,7 +10,6 @@
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
     <style>
-
         /* 중요: 화면이 짤리지 않도록 스타일을 조정합니다. */
         .carousel-item {
             text-align: left;
@@ -93,9 +92,9 @@
                         </a>
                     </ul>
                 </li>
-                <!-- 로그인하지 않은 사용자에게 보여질 메뉴-->
+                <!-- 로그인하지 않은 사용자에게 보여질 메뉴   href="#scrollspyHeading5" -->
                 <li class="nav-item" th:unless="${session.loggedInUser != null}">
-                    <a class="nav-link" id="login-link1" href="#scrollspyHeading5">
+                    <a class="nav-link" id="login-link">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
                             viewBox="0 0 16 16">
                             <path
@@ -105,14 +104,26 @@
                 </li>
 
                 <!-- 로그인한 사용자에게 보여질 메뉴 -->
-                <li class="nav-item" th:if="${session.loggedInUser != null}">
-                    <a class="nav-link" id="login-link2" href="#scrollspyHeading5">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
-                            viewBox="0 0 16 16">
+                <!-- 마이페이지, 로그아웃  -->
+                <li class="nav-item dropdown" th:if="${session.loggedInUser != null}">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                        aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                            fill="black" class="bi bi-person" viewBox="0 0 16 16">
                             <path
                                 d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                         </svg>
                     </a>
+
+                    <ul class="dropdown-menu">
+                        <a class="dropdown-item" id="myPage">
+                            <li>마이페이지</li>
+                        </a>
+                        <hr class="dropdown-divider">
+                        <a class="dropdown-item" id="logout">
+                            <li>로그아웃</li>
+                        </a>
+                    </ul>
                 </li>
 
             </ul>
@@ -186,27 +197,37 @@
         //로그인 시 myPage 로 이동
         document.addEventListener('DOMContentLoaded', function () {
 
-            if (document.getElementById('login-link1')) {
-                // 클릭 이벤트 처리
-                document.getElementById('login-link1').addEventListener('click', function (event) {
+            if (document.getElementById('login-link')) {
+                document.getElementById('login-link').addEventListener('click', function (event) {
                     // 사용자가 로그인하지 않은 경우
                     alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
                     event.preventDefault(); // 기본 동작 방지
                     window.location.href = "/member/login"; // 로그인 페이지로 이동
                 });
-            } else {
-                document.getElementById('login-link2').addEventListener('click', function (event) {
+            }
+            if (document.getElementById('myPage')) {
+                document.getElementById('myPage').addEventListener('click', function (event) {
                     // 사용자가 로그인한 경우
                     alert('마이페이지로 이동합니다.');
                     event.preventDefault(); // 기본 동작 방지
                     window.location.href = "/member/myPage"; // 마이페이지로 이동
                 });
             }
+            if (document.getElementById('logout')){
+                document.getElementById('logout').addEventListener('click', function (event) {
+                    // 사용자가 로그인한 경우
+                    console.log('logout 클릭 이벤트 확인용');
+                    alert('로그아웃 하겠습니다.');
+                    event.preventDefault(); // 기본 동작 방지
+                    window.location.href = "/logout"; // 로그아웃으로 이동
+                });
+            }
+
+
+
+
 
         });
-
-
-
     </script>
 
 
@@ -339,7 +360,7 @@
                 }
             });
         });
-    </script> 
+    </script>
 
 
 
