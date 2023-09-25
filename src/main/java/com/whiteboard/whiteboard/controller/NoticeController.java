@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.dto.NoticeDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
-import com.whiteboard.whiteboard.entity.Notice;
 import com.whiteboard.whiteboard.repository.NoticeRepository;
 import com.whiteboard.whiteboard.service.NoticeService;
 import com.whiteboard.whiteboard.service.NoticeServiceImpl;
@@ -62,18 +60,5 @@ public String noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model mode
     attributes.addFlashAttribute("newNoticeNum", newNoticeNum);
     return "redirect:/notice1";
   }
-
-  @GetMapping("/member/delete")
-    public String delete(HttpSession session, @ModelAttribute MemberDTO memberDTO) {
-
-        // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
-        Notice loggedInUser = (Notice) session.getAttribute("loggedInUser");
-
-        noticeRepository.delete(loggedInUser);
-
-        // 로그인 되지 않은 경우 로그인 페이지로 리다이렉트 처리
-        return "redirect:/main";
-    }
-
 
 }
