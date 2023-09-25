@@ -54,7 +54,8 @@
     </style>
 
     <!-- 리뷰 상세 페이지 HTML -->
-    <div class="review-detail-container" th:each="reviewDTO : ${result}" >
+    <div class="review-detail-container">
+        <!--  th:each="reviewDTO : ${result}"  -->
         <h2 class="review-detail-title" th:text="${reviewDTO.title}">리뷰 제목</h2>
         <p class="review-detail-author" th:text="'작성자: ' + ${reviewDTO.writer}">작성자: John Doe</p>
         <!-- <p class="review-detail-date" th:text="'작성일: ' + ${reviewData.date}">작성일: 2023-09-25</p> -->

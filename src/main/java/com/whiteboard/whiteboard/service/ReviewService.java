@@ -33,7 +33,7 @@ public interface ReviewService {
 
   default ReviewDTO entityToDTO(Review review) {
     ReviewDTO dto = ReviewDTO.builder()
-        //.writer(review.getWriter().getEmail())
+        .writer(review.getWriter().getEmail())
         .title(review.getTitle())
         .content(review.getContent())
         .readCount(0L)
@@ -59,7 +59,7 @@ public interface ReviewService {
         .build();
 
     Review review = Review.builder()
-        // .writer(member)
+        .writer(mem)
         .title(reviewDTO.getTitle())
         .content(reviewDTO.getContent())
         .readCount(0L)
