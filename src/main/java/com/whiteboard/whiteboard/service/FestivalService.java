@@ -10,7 +10,7 @@ public interface FestivalService {
       //한울쓰
       List<FestivalDTO> getFiveDTOs();
 
-      // public List<FestivalDTO> getRandomFestivals();
+  
 
        public List<FestivalDTO> getAllFestivalsAsDTO();
 

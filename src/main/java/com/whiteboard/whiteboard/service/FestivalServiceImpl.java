@@ -40,10 +40,14 @@ public class FestivalServiceImpl implements FestivalService {
         return fetival5List.stream().map(festivals -> entityToDTO(festivals)).collect(Collectors.toList());
     }
 
+
+    //전체 가져와서 순서대로
     @Override
     public List<FestivalDTO> findAllByOrderByFestivalNumAsc() {
 
-        return festivalRepository.findAllByOrderByFestivalNumAsc();
+        List<Festival> festivalAll= festivalRepository.findAllByOrderByFestivalNumAsc();
+
+        return  festivalAll.stream().map( festivals -> entityToDTO(festivals)).collect(Collectors.toList());
 
     }
 
