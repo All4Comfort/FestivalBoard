@@ -458,159 +458,159 @@
 
     <!-- festival-carousel와 pagination 요소는 여전히 유지 -->
 
-<script>
-    // 페이지 당 표시할 축제 개수
-    const festivalsPerPage = 9;
+    <script>
+        // 페이지 당 표시할 축제 개수
+        const festivalsPerPage = 9;
 
-    // 현재 페이지 번호
-    let currentPage = 1;
+        // 현재 페이지 번호
+        let currentPage = 1;
 
-    // 축제 데이터 배열 (예시 데이터)
-    let festivalListFromDB = [];
+        // 축제 데이터 배열 (예시 데이터)
+        let festivalListFromDB = [];
 
-    // 페이지 로드 시 초기 페이지 설정
-    window.onload = function () {
-        fetchFestivalData(currentPage); // 초기 페이지 데이터를 가져옵니다.
-    };
+        // 페이지 로드 시 초기 페이지 설정
+        window.onload = function () {
+            fetchFestivalData(currentPage); // 초기 페이지 데이터를 가져옵니다.
+        };
 
-    // changePage 함수를 먼저 정의합니다.
-    function changePage(page) {
-        fetchFestivalData(page);
-    }
+        // changePage 함수를 먼저 정의합니다.
+        function changePage(page) {
+            fetchFestivalData(page);
+        }
 
-    // 다음 페이지로 이동하는 함수
-    function nextPage() {
-        const totalPages = Math.ceil(festivalListFromDB.length / festivalsPerPage);
-        if (currentPage < totalPages) {
-            if (!isFetchingData) { // 중복 요청 방지
-                currentPage++;
-                fetchFestivalData(currentPage);
+        // 다음 페이지로 이동하는 함수
+        function nextPage() {
+            const totalPages = Math.ceil(festivalListFromDB.length / festivalsPerPage);
+            if (currentPage < totalPages) {
+                if (!isFetchingData) { // 중복 요청 방지
+                    currentPage++;
+                    fetchFestivalData(currentPage);
+                }
             }
         }
-    }
 
-    // 이전 페이지로 이동하는 함수
-    function prevPage() {
-        if (currentPage > 1) {
-            if (!isFetchingData) { // 중복 요청 방지
-                currentPage--;
-                fetchFestivalData(currentPage);
+        // 이전 페이지로 이동하는 함수
+        function prevPage() {
+            if (currentPage > 1) {
+                if (!isFetchingData) { // 중복 요청 방지
+                    currentPage--;
+                    fetchFestivalData(currentPage);
+                }
             }
         }
-    }
 
-    // 데이터를 가져오는 중인지 여부를 나타내는 변수
-    let isFetchingData = false;
+        // 데이터를 가져오는 중인지 여부를 나타내는 변수
+        let isFetchingData = false;
 
-    // 축제 데이터를 가져오는 함수
-    function fetchFestivalData(page) {
-        if (isFetchingData) {
-            return;
+        // 축제 데이터를 가져오는 함수
+        function fetchFestivalData(page) {
+            if (isFetchingData) {
+                return;
+            }
+
+            isFetchingData = true;
+
+            fetch(`/festivalListPage?page=${page}&size=${festivalsPerPage}`)
+                .then(response => response.json())
+                .then(data => {
+                    // 데이터를 받아와서 festivalListFromDB에 저장
+                    festivalListFromDB = data.content;
+                    const totalPages = data.totalPages;
+
+                    // 페이지 로드 시 초기 페이지 설정
+                    currentPage = page;
+
+                    // 화면에 데이터 표시 및 페이징 생성
+                    displayPage(currentPage);
+                    createPagination(totalPages);
+
+                    isFetchingData = false; // 데이터 가져오기 완료
+                })
+                .catch(error => {
+                    console.error('데이터 가져오기 오류:', error);
+                    isFetchingData = false; // 데이터 가져오기 실패
+                });
         }
 
-        isFetchingData = true;
+        // 페이지 번호를 생성하는 함수
+        function createPagination(totalPages) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
 
-        fetch(`/festivalListPage?page=${page}&size=${festivalsPerPage}`)
-            .then(response => response.json())
-            .then(data => {
-                // 데이터를 받아와서 festivalListFromDB에 저장
-                festivalListFromDB = data.content;
-                const totalPages = data.totalPages;
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLink = document.createElement('li');
+                pageLink.className = 'page-item';
+                pageLink.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
+                pagination.appendChild(pageLink);
+            }
+        }
 
-                // 페이지 로드 시 초기 페이지 설정
-                currentPage = page;
+        // 현재 페이지의 데이터를 화면에 표시하는 함수
+        function displayPage(page) {
+            const carousel = document.getElementById('festival-carousel');
+            carousel.innerHTML = ''; // 현재 카로셀 내용 삭제
 
-                // 화면에 데이터 표시 및 페이징 생성
-                displayPage(currentPage);
-                createPagination(totalPages);
+            // 데이터를 표시할 HTML 요소를 선택합니다.
+            const festivalContainer = document.createElement('div');
+            festivalContainer.className = 'carousel-inner';
 
-                isFetchingData = false; // 데이터 가져오기 완료
-            })
-            .catch(error => {
-                console.error('데이터 가져오기 오류:', error);
-                isFetchingData = false; // 데이터 가져오기 실패
+            // 현재 페이지에 해당하는 데이터를 가져옵니다.
+            const startIndex = (page - 1) * festivalsPerPage;
+            const endIndex = startIndex + festivalsPerPage;
+            const currentPageData = festivalListFromDB.slice(startIndex, endIndex);
+
+            // 현재 페이지 데이터를 카로셀에 추가합니다.
+            currentPageData.forEach((festival, index) => {
+                const item = document.createElement('div');
+                item.className = `carousel-item${index === 0 ? ' active' : ''}`;
+
+                const card = document.createElement('div');
+                card.className = 'card shadow-sm';
+
+                const cardBody = document.createElement('div');
+                cardBody.className = 'card-body';
+
+                const cardImage = document.createElement('img');
+                cardImage.className = 'card-img-top';
+                cardImage.src = festival.thumbnail;
+                cardImage.width = '100%';
+                cardImage.height = '225';
+                cardImage.alt = '축제 포스터';
+
+                const cardTitle = document.createElement('h5');
+                cardTitle.className = 'card-title';
+                cardTitle.textContent = festival.festivalTitle;
+
+                const cardText = document.createElement('p');
+                cardText.className = 'card-text';
+                cardText.textContent = festival.period;
+
+                const cardButtonGroup = document.createElement('div');
+                cardButtonGroup.className = 'd-flex justify-content-between align-items-center';
+
+                const cardButton = document.createElement('button');
+                cardButton.type = 'button';
+                cardButton.className = 'btn btn-sm btn-outline-secondary';
+                cardButton.textContent = '보기';
+
+                const cardDate = document.createElement('small');
+                cardDate.className = 'text-muted';
+                cardDate.textContent = festival.modifyDate;
+
+                cardButtonGroup.appendChild(cardButton);
+                cardBody.appendChild(cardImage);
+                cardBody.appendChild(cardTitle);
+                cardBody.appendChild(cardText);
+                cardBody.appendChild(cardButtonGroup);
+                cardBody.appendChild(cardDate);
+                card.appendChild(cardBody);
+                item.appendChild(card);
+                festivalContainer.appendChild(item);
             });
-    }
 
-    // 페이지 번호를 생성하는 함수
-    function createPagination(totalPages) {
-        const pagination = document.getElementById('pagination');
-        pagination.innerHTML = '';
-
-        for (let i = 1; i <= totalPages; i++) {
-            const pageLink = document.createElement('li');
-            pageLink.className = 'page-item';
-            pageLink.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
-            pagination.appendChild(pageLink);
+            carousel.appendChild(festivalContainer);
         }
-    }
-
-    // 현재 페이지의 데이터를 화면에 표시하는 함수
-    function displayPage(page) {
-        const carousel = document.getElementById('festival-carousel');
-        carousel.innerHTML = ''; // 현재 카로셀 내용 삭제
-
-        // 데이터를 표시할 HTML 요소를 선택합니다.
-        const festivalContainer = document.createElement('div');
-        festivalContainer.className = 'carousel-inner';
-
-        // 현재 페이지에 해당하는 데이터를 가져옵니다.
-        const startIndex = (page - 1) * festivalsPerPage;
-        const endIndex = startIndex + festivalsPerPage;
-        const currentPageData = festivalListFromDB.slice(startIndex, endIndex);
-
-        // 현재 페이지 데이터를 카로셀에 추가합니다.
-        currentPageData.forEach((festival, index) => {
-            const item = document.createElement('div');
-            item.className = `carousel-item${index === 0 ? ' active' : ''}`;
-
-            const card = document.createElement('div');
-            card.className = 'card shadow-sm';
-
-            const cardBody = document.createElement('div');
-            cardBody.className = 'card-body';
-
-            const cardImage = document.createElement('img');
-            cardImage.className = 'card-img-top';
-            cardImage.src = festival.thumbnail;
-            cardImage.width = '100%';
-            cardImage.height = '225';
-            cardImage.alt = '축제 포스터';
-
-            const cardTitle = document.createElement('h5');
-            cardTitle.className = 'card-title';
-            cardTitle.textContent = festival.festivalTitle;
-
-            const cardText = document.createElement('p');
-            cardText.className = 'card-text';
-            cardText.textContent = festival.period;
-
-            const cardButtonGroup = document.createElement('div');
-            cardButtonGroup.className = 'd-flex justify-content-between align-items-center';
-
-            const cardButton = document.createElement('button');
-            cardButton.type = 'button';
-            cardButton.className = 'btn btn-sm btn-outline-secondary';
-            cardButton.textContent = '보기';
-
-            const cardDate = document.createElement('small');
-            cardDate.className = 'text-muted';
-            cardDate.textContent = festival.modifyDate;
-
-            cardButtonGroup.appendChild(cardButton);
-            cardBody.appendChild(cardImage);
-            cardBody.appendChild(cardTitle);
-            cardBody.appendChild(cardText);
-            cardBody.appendChild(cardButtonGroup);
-            cardBody.appendChild(cardDate);
-            card.appendChild(cardBody);
-            item.appendChild(card);
-            festivalContainer.appendChild(item);
-        });
-
-        carousel.appendChild(festivalContainer);
-    }
-</script>
+    </script>
 
 
 

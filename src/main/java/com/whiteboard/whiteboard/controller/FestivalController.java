@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-//@RequestMapping("/member")//멤버 기본경로
+// @RequestMapping("/member")//멤버 기본경로
 
 public class FestivalController {
 
@@ -30,18 +30,10 @@ public class FestivalController {
 
     // @GetMapping("/festivalList")
     // public String showFestivalListPage() {
-    //     return "festivalList";
-    // }
+    // return "festivalList";
+    // }.
 
-    @GetMapping("/festivalList")
-    public String showFestivalList(Model model) {
-        List<FestivalDTO> festivals = festivalService.findAllByOrderByFestivalNumAsc();
-        System.out.println("축제 목록: " + festivals);
-        model.addAttribute("festivals", festivals);
-        return "festivalList";
-    }
-
-    //메인화면에서 롤페이지 5개 랜덤 이미지 포스터
+    // 메인화면에서 롤페이지 5개 랜덤 이미지 포스터
     @GetMapping("/member/main")
     @ResponseBody // 이 어노테이션을 추가하여 메서드가 JSON 데이터를 반환함
     public List<FestivalDTO> getFestivals() {
@@ -50,19 +42,25 @@ public class FestivalController {
         return festivals; // JSON 형식의 데이터를 반환합니다.
     }
 
-
-    //축제페이지 페이징 할려고하는데..잘 안된다..
-      @GetMapping("/festivalListPage")
-    public ResponseEntity<Page<FestivalDTO>> getFestivalsByPage(
-        @RequestParam(defaultValue = "1") int page,
-        @RequestParam(defaultValue = "9") int size
-    ) {
-        Pageable pageable = PageRequest.of(page -1, size);
-        Page<FestivalDTO> festivals = festivalService.findAllByOrderByFestivalNum(pageable);
-         System.out.println("페이지 넘버 : " + festivals);
-        return ResponseEntity.ok(festivals);
+    // 전체 죽제 목록을 가져오기
+    @GetMapping("/festivalList")
+    public String showFestivalList(Model model) {
+        List<FestivalDTO> festivals = festivalService.findAllByOrderByFestivalNumAsc();
+        System.out.println("축제 목록: " + festivals);
+        model.addAttribute("festivals", festivals);
+        return "festivalList";
     }
 
+    // 축제페이지 페이징 할려고하는데..잘 안된다..
+    @GetMapping("/festivalListPage")
+    public ResponseEntity<Page<FestivalDTO>> getFestivalsByPage(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "9") int size) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<FestivalDTO> festivals = festivalService.findAllByOrderByFestivalNum(pageable);
+        System.out.println("페이지 넘버 : " + festivals);
+        return ResponseEntity.ok(festivals);
+    }
 
     // 밑 코드는 모듈에 메시지 넣기위해 필요해서 넣었음
     // private final Logger logger =
@@ -129,4 +127,4 @@ public class FestivalController {
     // new FestivalDTO("축제 5", "링크 5"));
     // }
 
-    }
+}
