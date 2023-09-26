@@ -32,7 +32,10 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
     @Query("SELECT f FROM Festival f ORDER BY f.festivalNum ASC")
     Page<Festival> findAllByOrderByFestivalNum(Pageable pageable);
 
-    //
+    // //축제 정보 상세페이지
+    // @Query("SELECT f FROM Festival f ORDER BY f.festivalNum = :festivalNum")
+
+    
 
     // @Modifying
     // @Query("update Festival e set e.read_count = e.read_count + 1 where

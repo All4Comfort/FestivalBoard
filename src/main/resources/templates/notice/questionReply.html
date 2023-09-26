@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>댓글 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        #comment-form {
+            background-color: #fff;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        #comment-form h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #comment-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #comment-list li {
+            background-color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        #comment-list li strong {
+            font-weight: bold;
+            color: #333;
+        }
+        
+
+    </style>
+</head>
+<body>
+
+<!-- 댓글 입력 폼 -->
+<div id="comment-form">
+    <h2>댓글 달기</h2>
+    <form onsubmit="addComment(); return false;">
+        <input type="text" id="comment-author" placeholder="이름" required><br>
+        <textarea id="comment-content" placeholder="댓글을 입력하세요" required></textarea><br>
+        <input type="submit" value="댓글 달기">
+    </form>
+</div>
+
+<script>
+    function addComment() {
+        var author = document.getElementById("comment-author").value;
+        var content = document.getElementById("comment-content").value;
+        var commentList = document.getElementById("comment-list");
+
+        var newComment = document.createElement("li");
+        newComment.innerHTML = "<strong>" + author + ":</strong> " + content;
+        commentList.appendChild(newComment);
+
+        document.getElementById("comment-author").value = "";
+        document.getElementById("comment-content").value = "";
+    }
+</script>
+
+</body>
+</html>

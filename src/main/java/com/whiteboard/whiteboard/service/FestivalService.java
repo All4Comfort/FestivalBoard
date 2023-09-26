@@ -13,7 +13,10 @@ public interface FestivalService {
       // 한울쓰
       List<FestivalDTO> getFiveDTOs();
 
-      public List<FestivalDTO> getAllFestivalsAsDTO();
+      List<FestivalDTO> getAllFestivalsAsDTO();
+
+      //게시물상세 페이지 정보 넘기기
+      FestivalDTO getfestivalFNum(Long festivalNum);
 
       // 미건쓰: 게시물 메서드 정의
       List<FestivalDTO> findAllByOrderByFestivalNumAsc();
