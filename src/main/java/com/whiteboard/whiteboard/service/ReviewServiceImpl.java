@@ -6,13 +6,16 @@ import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
 
+import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
+import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Review;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -76,13 +79,15 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
 
-public Review dtoToEntity(ReviewDTO reviewDTO) {
+public Review dtoToEntity(ReviewDTO reviewDTO, HttpSession session) {
   
-    //Member member = memberService.
+    MemberDTO memberDTO = memberService.covertSessionToDTO(session);
+    
+    Member member = memberRepository.getReferenceById(memberDTO.getEmail());
 
     Review review = Review.builder()
       //리뷰 엔티티의 writer는 Member타입임!!!!!!!!!!!!!!!
-        //.writer()
+        .writer(member)
         .title(reviewDTO.getTitle())
         .content(reviewDTO.getContent())
         .readCount(0L)
@@ -94,8 +99,8 @@ public Review dtoToEntity(ReviewDTO reviewDTO) {
 
 
   @Override
-  public void saveReview(ReviewDTO dto) {
-    Review review = dtoToEntity(dto);
+  public void saveReview(ReviewDTO dto, HttpSession session) {
+    Review review = dtoToEntity(dto, session);
     reviewRepository.save(review);
     System.out.println("글 DB에 저장 성공");
     //Review saveReview = reviewRepository.save(review);

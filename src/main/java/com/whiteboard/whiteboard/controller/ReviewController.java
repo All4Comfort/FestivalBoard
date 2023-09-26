@@ -61,10 +61,10 @@ public class ReviewController {
     }
 
     @PostMapping("/reviewWrite")
-    public String saveReivew(@ModelAttribute ReviewDTO dto, RedirectAttributes attributes){
+    public String saveReivew(@ModelAttribute ReviewDTO dto, RedirectAttributes attributes, HttpSession session){
 
         System.out.println("작성 시 dto 전달 : " + dto);
-        reviewService.saveReview(dto);
+        reviewService.saveReview(dto, session);
         //attributes.addFlashAttribute("newReviewNum", newReviewNum);
         return "redirect:/review/reviewList";
     }
