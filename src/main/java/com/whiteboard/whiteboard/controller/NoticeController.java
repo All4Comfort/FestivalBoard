@@ -31,8 +31,9 @@ public class NoticeController {
   public void notice(PageRequestDTO pageRequestDTO, Model model){
     //model.addAttribute("result", noticeService.getList(pageRequestDTO));
     //model.addAttribute("result", noticeRepository.getNoticeBynoticeNum(1L));
-    model.addAttribute("result", noticeRepository.getNoticeList());
     
+    model.addAttribute("result", noticeService.findAll());
+    //model.addAttribute("result", noticeRepository.getNoticeList());
   }
 
 @GetMapping("/notice1Detail")

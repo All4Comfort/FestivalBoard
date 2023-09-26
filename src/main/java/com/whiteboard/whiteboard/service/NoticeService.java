@@ -1,5 +1,7 @@
 package com.whiteboard.whiteboard.service;
 
+import java.util.List;
+
 import com.whiteboard.whiteboard.dto.NoticeDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
@@ -12,6 +14,9 @@ public interface NoticeService {
     // 신규글 등록 메서드
     Long register(NoticeDTO dto);
 
+    //모든 공지글 가져오기
+    List<NoticeDTO> findAll();
+
     // 특정 게시물의 정보를 리턴라는 메서드 선언
     NoticeDTO get(Long noticeNum);
 
@@ -19,7 +24,7 @@ public interface NoticeService {
     PageResultDTO<NoticeDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
 
     // 설명: Entity 객체를 DTO로 변환하는 메서드
-    default NoticeDTO entityToDTO(Notice notice, Member member){
+    default NoticeDTO entityToDTO(Notice notice){
         NoticeDTO dto = NoticeDTO.builder()
                         .noticeNum(notice.getNoticeNum())
                         .title(notice.getTitle())
@@ -59,7 +64,7 @@ public interface NoticeService {
     }
 
     // dtoToEntity 변환 메서드 정의
-    default Question dtoToQuestionEntity(QuestionDTO dto, Member member){
+    default Question dtoToQuestionEntity(QuestionDTO dto){
         Member member1 = Member.builder().nickname(dto.getNickName()).build();
 
         Question question = Question.builder()
