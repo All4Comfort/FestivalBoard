@@ -14,6 +14,8 @@ import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 import com.whiteboard.whiteboard.service.ReviewService;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping({"/review","","/"})
 public class ReviewController {
@@ -45,7 +47,7 @@ public class ReviewController {
     }
     
     @GetMapping("/reviewDetail")
-    public void getReviewDetail(@ModelAttribute ReviewDTO reviewDTO, Model model) {
+    public void getReviewDetail(@ModelAttribute ReviewDTO reviewDTO, Model model, HttpSession session) {
         //ReviewDTO reviewDTO = reviewService.getReviewById(reviewNumLong);
         //model.addAttribute("result", reviewRepository.getReviewList());
        // model.addAttribute("result", reviewRepository.getReviewNum(1L));
@@ -57,8 +59,7 @@ public class ReviewController {
     @PostMapping("/reviewWrite")
     public String saveReivew(@ModelAttribute ReviewDTO dto, RedirectAttributes attributes){
 
-        //System.out.println("작성 시 dto 전달 : " + dto);
-        System.out.println("dto 작성자 찍기 : " + dto.getWriter());
+        System.out.println("작성 시 dto 전달 : " + dto);
         reviewService.saveReview(dto);
         //attributes.addFlashAttribute("newReviewNum", newReviewNum);
         return "redirect:/review/reviewList";

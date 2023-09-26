@@ -20,7 +20,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "writer")
+@ToString
 // 리뷰게시판
 public class Review extends BaseEntity {
 

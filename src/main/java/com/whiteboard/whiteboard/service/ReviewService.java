@@ -34,10 +34,14 @@ public interface ReviewService {
   // 게시물 수정 메서드 선언
   void modify(ReviewDTO dto);
 
-  default ReviewDTO entityToDTO(Review review) {
-    ReviewDTO dto = ReviewDTO.builder()
+  
+  default public ReviewDTO entityToDTO(Review review) {
+
+    
+    
+     ReviewDTO dto = ReviewDTO.builder()
         .reviewNum(review.getReviewNum())
-        .writer(review.getWriter().getEmail())
+        //.writer(review.getWriter().getEmail())
         .nickname(review.getWriter().getNickname())
         .title(review.getTitle())
         .content(review.getContent())
@@ -56,7 +60,6 @@ public interface ReviewService {
         .build();
     return dto;
   }
-
   
 
   // Long saveReview(ReviewDTO reviewDTO);
