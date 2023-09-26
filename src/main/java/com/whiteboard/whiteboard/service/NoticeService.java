@@ -23,7 +23,7 @@ public interface NoticeService {
                         .title(notice.getTitle())
                         .content(notice.getContent())
                         .registerDate(notice.getRegisterDate())
-                        //.writer(member.getNickname())
+                        .writer(member.getNickname())
                         .build();
 
         return dto;
