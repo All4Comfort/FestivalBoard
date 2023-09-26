@@ -78,7 +78,7 @@ public class FestivalServiceImpl implements FestivalService {
     @Override
     public FestivalDTO getfestivalFNum(Long festivalNum) {
         Festival festival = festivalRepository.findById(festivalNum)
-                .orElseThrow(() -> new NoSuchElementException(festivalNum + "게시물을 찾을 수 없습니다."));
+                .orElseThrow(() -> new NoSuchElementException(festivalNum + " : 게시물을 찾을 수 없습니다."));
         return entityToDTO(festival);
     }
 

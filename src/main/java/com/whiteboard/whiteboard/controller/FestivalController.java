@@ -9,11 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.whiteboard.whiteboard.dto.FestivalDTO;
+import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.repository.FestivalRepository;
 import com.whiteboard.whiteboard.service.FestivalService;
 
@@ -45,9 +45,9 @@ public class FestivalController {
 
     // 전체 죽제 목록을 가져오기
     @GetMapping("/festival/festivalList")
-    public String showFestivalList(Model model) {
+    public String showFestivalList(PageRequestDTO pageRequestDTO, Model model) {
         List<FestivalDTO> festivals = festivalService.findAllByOrderByFestivalNumAsc();
-        System.out.println("축제 목록: " + festivals);
+        //System.out.println("축제 목록: " + festivals);
         model.addAttribute("festivals", festivals);
         return "/festival/festivalList";
     }
@@ -63,18 +63,23 @@ public class FestivalController {
         return ResponseEntity.ok(festivals);
     }
 
-    // // 축제 상세페이지
-    // @GetMapping("/festival/festivalDetail")
-    // public void festivalDetail(Model model) {
-    //     model.addAttribute("resukt", model);
-    // }
-
     // 축제 상세페이지 넘기기
     @GetMapping("/festival/festivalDetail")
-    public void getFestivalDetail(@ModelAttribute FestivalDTO festivalDTO, Model model) {
-     
-        model.addAttribute("festivalDTO", festivalService.getfestivalFNum(festivalDTO.getFestivalNum()));
+    public String getFestivalDetail(@RequestParam("festivalNum") Long festivalNum, Model model) {
+        FestivalDTO festivalDTO = festivalService.getfestivalFNum(festivalNum);
+        model.addAttribute("festivalDTO", festivalDTO);
+        //System.out.println("festivalNum 숫자: " + festivalDTO);
+        return "festival/festivalDetail"; // 렌더링할 뷰의 이름을 반환
     }
+
+    // // 축제 상세페이지 넘기기
+    // @GetMapping("/festival/festivalDetail")
+    // public void getFestivalDetail(@ModelAttribute FestivalDTO festivalDTO, Model
+    // model) {
+
+    // model.addAttribute("festivalDTO",
+    // festivalService.getfestivalFNum(festivalDTO.getFestivalNum()));
+    // }
 
     // 밑 코드는 모듈에 메시지 넣기위해 필요해서 넣었음
     // private final Logger logger =
