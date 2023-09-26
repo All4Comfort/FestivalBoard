@@ -59,7 +59,7 @@
         <h2 class="review-detail-title" th:text="'제목 : ' + ${reviewDTO.title}">리뷰 제목</h2>
         <p class="review-detail-author" th:text="'작성자: ' + ${reviewDTO.nickname}">작성자: John Doe</p>
         <!-- <p class="review-detail-date" th:text="'작성일: ' + ${reviewData.date}">작성일: 2023-09-25</p> -->
-        <p class="review-detail-content" th:text="'내용 : ' + ${reviewDTO.content}">
+        <p class="review-detail-content" th:utext="'내용 : ' + ${reviewDTO.content}">
             리뷰 내용
         </p>
         <p class="review-detail-views" th:text="'조회수: ' + ${reviewDTO.readCount}">조회수: 100</p>

@@ -7,12 +7,14 @@ import com.whiteboard.whiteboard.dto.PageResultDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.entity.Review;
 
+import jakarta.servlet.http.HttpSession;
+
 public interface ReviewService {
 
   //Long likePost(ReviewDTO dto);
 
   // 새로운 리뷰 생성
-  void saveReview(ReviewDTO reviewDTO);
+  void saveReview(ReviewDTO reviewDTO, HttpSession session);
 
   List<ReviewDTO> getAllReviews() ;
 
