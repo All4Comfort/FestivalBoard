@@ -63,14 +63,31 @@ public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model,
     return "redirect:/notice/notice1";
   }
 
+  @PostMapping("/remove")
+  public String remove(long noticeNum, RedirectAttributes redirect){
+    System.out.println("GGGGGGGGG");
+    noticeService.remove(noticeNum);
+    redirect.addAttribute("newNoticeNum", noticeNum);
+    return "redirect:/notice/notice1";
+  }
+
+  @PostMapping("/modify")
+  public String modify(NoticeDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
+    noticeService.modify(dto);
+    
+    redirect.addAttribute("page", requestDTO);
+    redirect.addAttribute("noticeNum", dto.getNoticeNum());
+    return "redirect:/notice/notice1";
+  }
+
 
   @GetMapping("/question")
   public void question(PageRequestDTO pageRequestDTO, Model model){
     //model.addAttribute("result", noticeService.getList(pageRequestDTO));
     //model.addAttribute("result", noticeRepository.getNoticeBynoticeNum(1L));
     
-    model.addAttribute("result", noticeService.findAllQuestion());
-    //model.addAttribute("result", questionRepository.getQuestionList());
+    //model.addAttribute("result", noticeService.findAllQuestion());
+    model.addAttribute("result", questionRepository.getQuestionList());
   }
 
 //   @GetMapping("/questionDetail")

@@ -12,6 +12,7 @@ import com.whiteboard.whiteboard.dto.QuestionDTO;
 import com.whiteboard.whiteboard.entity.Notice;
 import com.whiteboard.whiteboard.repository.NoticeRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -84,7 +85,22 @@ public NoticeDTO getQuestion(Long questionNum) {
   throw new UnsupportedOperationException("Unimplemented method 'getQuestion'");
 }
 
+@Transactional
+@Override
+public void remove(Long questionNum) {
+  noticeRepository.deleteById(questionNum);
+}
 
+@Transactional
+@Override
+public void modify(NoticeDTO dto) {
+  Notice notice = noticeRepository.getReferenceById(dto.getNoticeNum());
 
+  notice.updateNContent(dto.getContent());
+  notice.updateTitle(dto.getTitle());
+
+  noticeRepository.save(notice);
+
+}
     
 }

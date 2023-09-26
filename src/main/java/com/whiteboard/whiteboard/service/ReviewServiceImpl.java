@@ -100,4 +100,12 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
 
+
+  @Override
+  public Long likePost(ReviewDTO dto) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'likePost'");
+  }
+
+
 }

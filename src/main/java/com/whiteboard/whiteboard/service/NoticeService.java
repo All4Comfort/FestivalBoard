@@ -85,4 +85,9 @@ public interface NoticeService {
 
         return question;
     }
+
+    // 게시물 삭제 메서드 선언.
+    void remove(Long questionNum);
+
+    void modify(NoticeDTO dto);
 }
