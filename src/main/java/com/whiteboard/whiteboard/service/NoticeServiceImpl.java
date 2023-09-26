@@ -3,6 +3,8 @@ package com.whiteboard.whiteboard.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.whiteboard.whiteboard.dto.NoticeDTO;
@@ -100,6 +102,13 @@ public void modify(NoticeDTO dto) {
   notice.updateTitle(dto.getTitle());
 
   noticeRepository.save(notice);
+
+} 
+
+@Override
+public Page<NoticeDTO> findAllByOrderByNoticeNum(Pageable pageable) {
+  Page<Notice> noticePage = noticeRepository.findAllByOrderByNoticeNum(pageable);
+        return noticePage.map(notice -> entityToDTO(notice));
 
 }
     
