@@ -19,7 +19,7 @@ import lombok.ToString;
 //@Setter //조작 방지를 위해 주석. 필드값 수정을 위해서는 별도로 메서드를 정의하기로 함. ex) updateName, updatePhoneNum
 @ToString
 //회원정보
-public class Member extends BaseEntity{ //security설정을 위해 UserDetail 상속
+public class Member{ //security설정을 위해 UserDetail 상속
 
 	@Id
 	@Column(updatable = false)
