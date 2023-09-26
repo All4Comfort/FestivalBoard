@@ -74,11 +74,25 @@ public class ReviewController {
         
     }
 
+    // @PostMapping("/remove")
+    // public String remove(Long reviewNum, RedirectAttributes redirect){
+    //     System.out.println("GGGGGGGG");
+    //     reviewService.remove(reviewNum);
+    //     redirect.addAttribute("")
+    // }
+    @PostMapping("/reviewModify")
+    public String modify(ReviewDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
+        reviewService.modify(dto);
+
+        redirect.addAttribute("reviewDTO", dto);
+        return "redirect:/review/reviewDetail";
+    }
+
     @GetMapping("/reviewModify")
-    public void modifyReview(@ModelAttribute ReviewDTO dto, Model model, HttpSession session){
-
-        model.addAttribute("reviewDTO", reviewService.getReviewByReviewNum(dto.getReviewNum()));
-
+    public void reviewModify(@ModelAttribute ReviewDTO dto, Model model){
+    System.out.println("============================================================");
+        System.out.println("수정페이지에서 DTO!!!!!!!!!!!!!!!!!!!!! : " + dto); //reviewNum, title, content옴
+        model.addAttribute("dto", dto);
     }
     
  
