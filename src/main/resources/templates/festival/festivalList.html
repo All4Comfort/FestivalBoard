@@ -185,8 +185,8 @@
     <h1 style="text-align: center;">축제 게시판</h1>
 
     <div class="search-box">
-        <form id="search-form" method="get" action="/search_festival">
-            <input type="text" id="search-input" placeholder="축제를 검색하기" name="searchQuery">
+        <form id="search-form" method="get" action="/festival/festivalList">
+            <input type="text" id="search-input" placeholder="축제를 검색하기" name="searchQuery" th:value="${searchQuery}">
             <button type="submit" class="search-button">검색</button>
         </form>
     </div>

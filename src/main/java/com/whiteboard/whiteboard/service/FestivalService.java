@@ -24,6 +24,9 @@ public interface FestivalService {
       // 축제 페이징
       Page<FestivalDTO> findAllByOrderByFestivalNum(Pageable pageable);
 
+       //서치를 위해 메서드 정의
+      List<FestivalDTO> searchFestivals(String searchQuery);
+
       // Entity를 DTO로 변환하는 메서드 선언
       default FestivalDTO entityToDTO(Festival festival) {
 
@@ -43,5 +46,7 @@ public interface FestivalService {
                         .build();
             return dto;
       }
+
+     
 
 }
