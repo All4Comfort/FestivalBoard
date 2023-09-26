@@ -3,6 +3,7 @@ package com.whiteboard.whiteboard.entity;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.Column;
@@ -21,7 +22,8 @@ public abstract class BaseEntity {
 	//DB에 registerDate 컬럼 생성하도록 선언 및 값이 처음 insert 이후엔 자동 update 불가하도록 설정
 	private LocalDateTime registerDate; //작성일
 	
-	@CreatedDate 
+	//@CreatedDate 
+	@LastModifiedDate
 	@Column
 	private LocalDateTime modifyDate; //수정일
 }

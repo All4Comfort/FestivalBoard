@@ -1,5 +1,6 @@
 package com.whiteboard.whiteboard;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
@@ -17,6 +18,26 @@ class NoticeApplicationTest {
   //private NoticeService noticeService;
   private NoticeRepository noticeRepository;
 
+
+
+  @Test
+  void BaseEntity_테스트(){
+        // given
+        LocalDateTime nowTime = LocalDateTime.now();
+
+        Notice notice = Notice.builder()
+                              .title("제목")
+                              .content("내용")
+                              .build();
+                
+
+        //when
+        noticeRepository.save(notice);
+
+        //then
+        //assertThat(notice.getCreatedTime()).isAfter(nowTime);
+
+    }
 
 
   // 공지사항 db에 밀어넣기
