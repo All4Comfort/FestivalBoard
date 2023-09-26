@@ -31,19 +31,6 @@
                     margin-left:0 ; /* 내 정보(내비게이션 탭)를 오른쪽으로 이동 */
                 }
             }
-        /* 푸터를 브라우저 맨 아래로 고정합니다. */
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #f8f9fa;
-            /* 푸터의 배경색 설정 */
-            text-align: center;
-            /* 푸터 내용 가운데 정렬 */
-            padding: 10px;
-            /* 원하는 여백 설정 */
-        }
 
         /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
         .dropdown-toggle::after {
@@ -83,19 +70,33 @@
             margin-left: 10px; /* 원하는 만큼 조절하세요 */
         }
 
-        /* Pagination 색상 수정 */
-        .pagination .page-link {
-            color: black;
+        /* Pagination 스타일 */
+        .pagination {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
         }
 
-        .pagination .page-item.active .page-link {
-            background-color: black;
-            border-color: black;
+        .pagination li {
+            margin: 0 5px;
         }
 
-        .pagination .page-link:focus {
-            box-shadow: none;
+        .pagination a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            color: #333;
+            background-color: #fff;
+            border-radius: 5px;
         }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+        
         /* 중요: 화면이 짤리지 않도록 스타일을 조정합니다. */
         .carousel-item {
             text-align: left;
@@ -153,7 +154,7 @@
 
 <body>
     <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
-        <a class="navbar-brand" href="#"><b>Fullstival</b></a>
+        <a class="navbar-brand" href="/main"><b>Fullstival</b></a>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -163,19 +164,16 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ">
                         <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link" href="/festival/festivalList">Festival</a>
                         </li>
                         <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="#">Festival</a>
+                            <a class="nav-link" href="/review/reviewList">Review</a>
                         </li>
                         <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="#">Review</a>
+                            <a class="nav-link" href="/notice/notice1">Notice</a>
                         </li>
                         <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="#">Notice</a>
-                        </li>
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="#">My page</a>
+                            <a class="nav-link" href="/member/myPage">My page</a>
                         </li>
                     </ul>
                 </div>
@@ -219,23 +217,22 @@
 			</tbody>
         </table>
 
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <!-- 페이지 번호 목록 표시 -->
+    <div class="pagination">
+        <!-- 이전 페이지 버튼 -->
+        <a th:if="${hasPrevPage}" th:href="@{'/notice/notice1?page=' + ${prevPageNumber}}"
+            class="page-link prev">이전</a>
+        <!-- 페이지 번호 표시 -->
+        <ul class="pagination justify-content-center" id="pagination">
+            <li th:each="pageNumber : ${pageNumbers}">
+                <a th:href="@{'/notice/notice1?page=' + ${pageNumber}}" th:text="${pageNumber}"
+                    th:class="${pageNumber == currentPage ? 'active' : ''}"></a>
+            </li>
+        </ul>
+        <!-- 다음 페이지 버튼 -->
+        <a th:if="${hasNextPage}" th:href="@{'/notice/notice1?page=' + ${nextPageNumber}}"
+            class="page-link next">다음</a>
+    </div>
     </section>
     
     
@@ -243,12 +240,12 @@
     
 
     
-    <form action="/search" method="get" style="margin-top: -30px;">
+    <form action="/notice/notice1" method="get" style="margin-top: -30px;">
         <div class="container">
             <div class="d-flex justify-content-end mb-3">
                 <div class="ms-auto">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="query" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+                        <input type="text" class="form-control"  placeholder="Search" name="searchQuery" th:value="${searchQuery}">
                         <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
                     </div>
                 </div>
@@ -257,11 +254,11 @@
     </form>
 
     
-    <section class="container my-5">
+    <!-- <section class="container my-5">
     </section>
     <footer class="bg-dark text-light text-center py-3">
         <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
-    </footer>
+    </footer> -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gg6vUz1rTL5UHVbNXLKwgpAYNr2NvTAPC5JiKc+2aX8Cxl+U7v2+nSvzvIMnJvWR" crossorigin="anonymous"></script>

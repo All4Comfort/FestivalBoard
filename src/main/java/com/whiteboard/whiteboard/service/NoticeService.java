@@ -2,6 +2,9 @@ package com.whiteboard.whiteboard.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.whiteboard.whiteboard.dto.NoticeDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
@@ -28,6 +31,9 @@ public interface NoticeService {
 
     // 특정 게시물의 정보를 리턴라는 메서드 선언
     NoticeDTO getQuestion(Long questionNum);
+
+    // 축제 페이징
+    Page<NoticeDTO> findAllByOrderByNoticeNum(Pageable pageable);
 
     // list 페이지에서 페이지에 해당하는 글목록 조회 리스트 get 메서드 정의
     PageResultDTO<NoticeDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
@@ -91,4 +97,7 @@ public interface NoticeService {
 
     //게시물 수정 메서드 선언
     void modify(NoticeDTO dto);
+
+    //검색
+    List<NoticeDTO> searchNotices(String searchQuery);
 }
