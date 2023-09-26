@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.whiteboard.whiteboard.entity.QuestionReply;
 
-public interface QuestionReplyRepository extends JpaRepository<QuestionReply, String> {
+public interface QuestionReplyRepository extends JpaRepository<QuestionReply, Long> {
 
 }
