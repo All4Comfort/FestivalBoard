@@ -23,7 +23,9 @@ public class ReviewDTO {
 	private int replyStep;//댓글순서 
 	private LocalDateTime regDate,modDate;
 
-	private String writer;// 작성자 : Member 엔티티의 id 컬럼
+	private String writer;// 작성자 : Member 엔티티의 id(PK 즉 프라이머리키를 의미함) 컬럼
+	private String writerNickname;// 작성자의 닉네임
+
 	private String title;// 제목
 	private String content;// 내용
 	private Long readCount;// 조회수
