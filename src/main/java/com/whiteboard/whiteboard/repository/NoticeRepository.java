@@ -25,5 +25,8 @@ Object getNoticeBynoticeNum(@Param("noticeNum") Long noticeNum);
 
 @Query("Select n, m From Notice n LEFT JOIN n.writer m")
 List<Notice> getNoticeList();
+
+@Query(value = "Select n, w From Notice n LEFT JOIN n.writer w")
+Page<Object[]> getNoticePage(Pageable pageable);
 }
 

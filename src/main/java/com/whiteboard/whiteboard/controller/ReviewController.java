@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
@@ -12,6 +15,7 @@ import com.whiteboard.whiteboard.repository.ReviewRepository;
 import com.whiteboard.whiteboard.service.ReviewService;
 
 @Controller
+@RequestMapping("/review")
 public class ReviewController {
 
     @Autowired
@@ -47,12 +51,18 @@ public class ReviewController {
        // model.addAttribute("result", reviewRepository.getReviewNum(reviewDTO.getReviewNum()));
 
         model.addAttribute("reviewDTO", reviewService.getReviewByReviewNum(reviewDTO.getReviewNum()));
-        
         return "/reviewDetail";
     }
+
+    @PostMapping("/reviewWrite")
+    public String saveReivew(@ModelAttribute ReviewDTO dto, RedirectAttributes attributes){
+        Long newReviewNum = reviewService.saveReview(dto);
+        attributes.addFlashAttribute("newReviewNum", newReviewNum);
+        return "redirect:/reviewList";
+    }
+
     @GetMapping("/reviewWrite")
-    public String postWriteReview(@ModelAttribute ReviewDTO reviewDTO) {
-        // 리뷰 작성 페이지로 이동
-        return "/reviewWrite"; // 작성할 리뷰 페이지의 경로로 리다이렉트
+    public void postWriteReview() {
+        
     }
 }
