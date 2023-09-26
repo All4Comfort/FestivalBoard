@@ -74,6 +74,32 @@ public class ReviewController {
         
     }
 
+    @GetMapping("/reviewModify")
+    public void modifyReview(@ModelAttribute ReviewDTO dto, Model model, HttpSession session){
+
+        model.addAttribute("reviewDTO", reviewService.getReviewByReviewNum(dto.getReviewNum()));
+
+    }
+    
+ 
+
+
+
+
+
+
+
+
+    // @PostMapping("/reviewDetail")
+    // public String getReviewDetail(@ModelAttribute ReviewDTO reviewDTO, Model model, HttpSession session) {
+    //     //ReviewDTO reviewDTO = reviewService.getReviewById(reviewNumLong);
+    //     //model.addAttribute("result", reviewRepository.getReviewList());
+    //    // model.addAttribute("result", reviewRepository.getReviewNum(1L));
+    //    // model.addAttribute("result", reviewRepository.getReviewNum(reviewDTO.getReviewNum()));
+    //      model.addAttribute("reviewDTO", reviewService.getReviewByReviewNum(reviewDTO.getReviewNum()));
+    //      return "redirect:/review/reviewDetail";
+    // }
+
   
 
 }
