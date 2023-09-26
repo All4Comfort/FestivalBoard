@@ -34,7 +34,7 @@ public interface ReviewService {
   void deleteReview(Long reviewNum);
 
   // 게시물 수정 메서드 선언
-  void modify(ReviewDTO dto);
+  void modify(ReviewDTO dto,HttpSession session);
 
   
   default public ReviewDTO entityToDTO(Review review) {
