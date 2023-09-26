@@ -21,6 +21,12 @@
       #title::placeholder {
         text-align: center;
       }
+      
+      .button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: -13px;
+  }
     </style>
   </head>
   <body>
@@ -30,10 +36,12 @@
         <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" placeholder="글 제목을 입력하세요">
         <textarea class="form-control" id="summernote" name="content" th:style="'width: 800px;'" placeholder="글 내용을 입력하세요"></textarea>
       </div>
-      <button type="submit" class="btn btn-light" id="submit">작성</button>
-      <a th:href="@{/notice/notice1}" class="btn btn-secondary">
-        <button type="button" class="btn btn-light" id="boardList">목록</button>
-      </a>
+      <div class="button-container">
+        <button type="submit" class="btn btn-link btn-lg" id="submit">작성</button>
+        <a th:href="@{/notice/notice1}" class="btn btn-secondary">
+          <button type="button" class="btn btn-link btn-lg">목록</button>
+        </a>
+      </div>
     </form>
     <script th:inline="javascript">
       $(document).ready(function() {
