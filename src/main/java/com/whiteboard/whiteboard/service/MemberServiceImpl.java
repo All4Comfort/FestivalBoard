@@ -103,7 +103,7 @@ public class MemberServiceImpl implements MemberService {
             if(member.getPw().equals(memberDTO.getPw())) {
                 //비밀번호 일치
                 //entity -> dto 변환 후 리턴
-                MemberDTO dto = MemberDTO.toMemberDTO(member);
+                MemberDTO dto = toMemberDTO(member);
                 return dto;
             } else {
                 //비밀번호 불일치

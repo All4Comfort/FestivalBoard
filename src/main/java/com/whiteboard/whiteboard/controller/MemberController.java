@@ -82,9 +82,10 @@ public class MemberController {
 
     // 로그인 메서드
     // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
+    //, @ModelAttribute("MemberDTO") MemberDTO memberDTO
     @PostMapping("/member/login")
     public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, HttpSession session,
-            Model model, @ModelAttribute("MemberDTO") MemberDTO memberDTO) {
+            Model model) {
 
         Optional<Member> optionalMember = memberServiceImpl.login(email, pw);
 
@@ -93,6 +94,22 @@ public class MemberController {
             Member member = optionalMember.get();
 
             session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
+            
+
+            //getAttribute는 Object타입으로 가져온다
+            System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
+            
+            
+            MemberDTO memberDTO = MemberDTO.builder()
+                                            .email(((Member)(session.getAttribute("loggedInUser"))).getEmail())
+                                            .pw(((Member)(session.getAttribute("loggedInUser"))).getPw())
+                                            .name(((Member)(session.getAttribute("loggedInUser"))).getName())
+                                            .phoneNum(((Member)(session.getAttribute("loggedInUser"))).getPhoneNum())
+                                            .nickname(((Member)(session.getAttribute("loggedInUser"))).getNickname())
+                                            .gender(((Member)(session.getAttribute("loggedInUser"))).getGender())
+                                            .birthDay(((Member)(session.getAttribute("loggedInUser"))).getBirthDay())
+                                            .isSns(((Member)(session.getAttribute("loggedInUser"))).isSns())
+                                            .build();
 
             return "redirect:/main";
         } else { // 회원의 이메일, 비밀번호가 일치하지 않을 때

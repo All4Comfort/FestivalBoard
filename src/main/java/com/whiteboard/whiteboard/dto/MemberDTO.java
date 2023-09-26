@@ -27,17 +27,7 @@ public class MemberDTO {
 	private LocalDate birthDay; // 생년월일
 	private boolean isSns; // 소셜계정 인증을 통한 가입 여부
 
-	public static MemberDTO toMemberDTO(Member member) {
-		MemberDTO memberDTO = new MemberDTO();
-		memberDTO.setEmail(member.getEmail());
-		memberDTO.setPw(member.getPw());
-		memberDTO.setBirthDay(member.getBirthDay());
-		memberDTO.setGender(member.getGender());
-		memberDTO.setSns(member.isSns());
-		memberDTO.setName(member.getName());
-		memberDTO.setNickname(member.getNickname());
-		memberDTO.setPhoneNum(member.getPhoneNum());
-		return memberDTO;
-	}
+	
+
 
 }
