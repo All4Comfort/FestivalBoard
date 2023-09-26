@@ -48,7 +48,7 @@ public class FestivalController {
         List<FestivalDTO> festivals = festivalService.findAllByOrderByFestivalNumAsc();
         System.out.println("축제 목록: " + festivals);
         model.addAttribute("festivals", festivals);
-        return "festivalList";
+        return "/festival/festivalList";
     }
 
     // 축제페이지 페이징 할려고하는데..잘 안된다..
@@ -62,12 +62,18 @@ public class FestivalController {
         return ResponseEntity.ok(festivals);
     }
 
-    //축제 상세페이지
-    @GetMapping("/festival/festivalDetail")
-    public String showFestivalDetail(){
-        return "festivalDetail";
-    }
+    // 축제 상세페이지
+    // @GetMapping("/festival/festivalDetail")
+    // public String showFestivalDetail(Model model){
 
+    // model.addAttribute("festivalDetail"), model);
+    // return "festivalDetail";
+    // }
+
+    @GetMapping(value = "/festival/festivalDetail")
+    public void showFestivalDetail() {
+
+    }
 
     // 밑 코드는 모듈에 메시지 넣기위해 필요해서 넣었음
     // private final Logger logger =

@@ -510,7 +510,7 @@
 
             isFetchingData = true;
 
-            fetch(`/festivalListPage?page=${page}&size=${festivalsPerPage}`)
+            fetch(`/festival/festivalListPage?page=${page}&size=${festivalsPerPage}`)
                 .then(response => response.json())
                 .then(data => {
                     // 데이터를 받아와서 festivalListFromDB에 저장
