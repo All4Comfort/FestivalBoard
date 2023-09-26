@@ -41,7 +41,7 @@ public interface ReviewService {
     
      ReviewDTO dto = ReviewDTO.builder()
         .reviewNum(review.getReviewNum())
-        //.writer(review.getWriter().getEmail())
+        .writer(review.getWriter().getEmail())
         .nickname(review.getWriter().getNickname())
         .title(review.getTitle())
         .content(review.getContent())

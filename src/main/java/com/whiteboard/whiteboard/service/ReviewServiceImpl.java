@@ -78,10 +78,11 @@ public class ReviewServiceImpl implements ReviewService {
 
 public Review dtoToEntity(ReviewDTO reviewDTO) {
   
-    //Member member = memberService.convertToDTO
+    //Member member = memberService.
 
     Review review = Review.builder()
-        //.writer(member)
+      //리뷰 엔티티의 writer는 Member타입임!!!!!!!!!!!!!!!
+        //.writer()
         .title(reviewDTO.getTitle())
         .content(reviewDTO.getContent())
         .readCount(0L)

@@ -77,7 +77,8 @@ public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model,
     
     redirect.addAttribute("page", requestDTO);
     redirect.addAttribute("noticeNum", dto.getNoticeNum());
-    return "redirect:/notice/notice1";
+    System.out.println(redirect.addAttribute("page", requestDTO));
+    return "redirect:/notice/noticemodify";
   }
 
 
