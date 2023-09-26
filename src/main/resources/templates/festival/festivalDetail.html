@@ -139,8 +139,9 @@
 
     <div class="my-3 text-center">
         <ul class="list-inline">
-            <li class="list-inline-item"><a href="#" class="btn btn-light" id="prevNotice">이전글</a></li>
-            <li class="list-inline-item"><a href="#" class="btn btn-light" id="nextNotice">다음글</a></li>
+            <li class="list-inline-item"><a href="#" class="btn btn-light" id="go_Back">목록</a></li>
+            <li class="list-inline-item"><a href="#" class="btn btn-light" id="prevNotice">이전</a></li>
+            <li class="list-inline-item"><a href="#" class="btn btn-light" id="nextNotice">다음</a></li>
         </ul>
     </div>
 
@@ -187,6 +188,7 @@
         });
     </script>
 
+    <!--이전/다음키 스크립트-->
     <script>
         // 이전으로 돌아가는 키
         document.getElementById('prevNotice').addEventListener('click', function () {
@@ -222,6 +224,15 @@
 
             // 다음 페이지로 이동합니다.
             window.location.href = nextPageUrl;
+        });
+
+        //목록으로 돌아가기
+        document.getElementById('go_Back').addEventListener('click', function (){
+            //목록으로 가고싶은 주소
+            var backUrl ='/festival/festivalList'
+
+            //클릭시 목록으로 돌아가게 된다
+            window.location.href= backUrl;
         });
 
         // URL에서 festivalNum 값을 추출하는 함수 현재창 넘버 알아내는거
