@@ -100,17 +100,8 @@ public class MemberController {
             System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
             
             
-            memberDTO = MemberDTO.builder()
-                                            .email(((Member)(session.getAttribute("loggedInUser"))).getEmail())
-                                            .pw(((Member)(session.getAttribute("loggedInUser"))).getPw())
-                                            .name(((Member)(session.getAttribute("loggedInUser"))).getName())
-                                            .phoneNum(((Member)(session.getAttribute("loggedInUser"))).getPhoneNum())
-                                            .nickname(((Member)(session.getAttribute("loggedInUser"))).getNickname())
-                                            .gender(((Member)(session.getAttribute("loggedInUser"))).getGender())
-                                            .birthDay(((Member)(session.getAttribute("loggedInUser"))).getBirthDay())
-                                            .isSns(((Member)(session.getAttribute("loggedInUser"))).isSns())
-                                            .build();
-
+            memberDTO = memberService.covertSessionToDTO(session);
+            
             return "redirect:/main";
         } else { // 회원의 이메일, 비밀번호가 일치하지 않을 때
             return "/member/login";
