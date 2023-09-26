@@ -10,33 +10,17 @@
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
     <style>
-        /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
-        .dropdown-toggle::after {
+          /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
+          .dropdown-toggle::after {
             display: none;
         }
 
-        /* 메뉴 항목 사이에 오른쪽 마진(간격)을 추가합니다. */
-        .nav-item:not(:last-child) {
-            margin-right: 50px;
-            /* 원하는 간격 크기(픽셀)를 지정합니다. */
-        }
-
-        /* 내 정보(내비게이션 탭)를 오른쪽으로 이동합니다. */
-        @media (max-width: 991px) {
-            .navbar-nav {
-                flex-direction: row;
-                /* 메뉴 항목을 가로로 나열합니다. */
-            }
-
-            .nav-item {
-                margin-right: 20px;
-                /* 메뉴 항목 사이 간격 설정 */
-            }
-
-            .nav-pills {
-                margin-left: 0;
-                /* 내 정보(내비게이션 탭)를 오른쪽으로 이동 */
-            }
+        /* 드롭다운 메뉴의 위치를 조절합니다. */
+        .dropdown-menu {
+            left: 0;
+            /* 드롭다운 메뉴가 화면 왼쪽에 정렬되도록 설정합니다. */
+            margin-left: -30px;
+            /* 원하는 만큼 왼쪽으로 이동시킵니다. */
         }
     </style>
 </head>
@@ -227,12 +211,12 @@
         });
 
         //목록으로 돌아가기
-        document.getElementById('go_Back').addEventListener('click', function (){
+        document.getElementById('go_Back').addEventListener('click', function () {
             //목록으로 가고싶은 주소
-            var backUrl ='/festival/festivalList'
+            var backUrl = '/festival/festivalList'
 
             //클릭시 목록으로 돌아가게 된다
-            window.location.href= backUrl;
+            window.location.href = backUrl;
         });
 
         // URL에서 festivalNum 값을 추출하는 함수 현재창 넘버 알아내는거
