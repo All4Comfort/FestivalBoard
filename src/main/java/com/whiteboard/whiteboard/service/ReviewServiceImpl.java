@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
+import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Review;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
@@ -78,10 +79,10 @@ public class ReviewServiceImpl implements ReviewService {
 
 public Review dtoToEntity(ReviewDTO reviewDTO) {
   
-    //Member member = memberService.convertToDTO
+    //Member member = memberService.convertToDTO();
 
     Review review = Review.builder()
-        //.writer(member)
+        //.writer()
         .title(reviewDTO.getTitle())
         .content(reviewDTO.getContent())
         .readCount(0L)

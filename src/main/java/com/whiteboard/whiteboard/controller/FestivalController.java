@@ -47,7 +47,7 @@ public class FestivalController {
     @GetMapping("/festival/festivalList")
     public String showFestivalList(PageRequestDTO pageRequestDTO, Model model) {
         List<FestivalDTO> festivals = festivalService.findAllByOrderByFestivalNumAsc();
-        //System.out.println("축제 목록: " + festivals);
+        System.out.println("축제 목록: " + festivals);
         model.addAttribute("festivals", festivals);
         return "/festival/festivalList";
     }
