@@ -31,10 +31,10 @@ public interface ReviewService {
   void updateReview(Long reviewNum, ReviewDTO reviewDTO);
 
   // 리뷰의 ID로 리뷰 삭제
-  void deleteReview(Long reviewNum);
+  void remove(Long reviewNum);
 
   // 게시물 수정 메서드 선언
-  void modify(ReviewDTO dto,HttpSession session);
+  void modify(ReviewDTO dto);
 
   
   default public ReviewDTO entityToDTO(Review review) {

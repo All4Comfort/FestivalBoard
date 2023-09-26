@@ -16,6 +16,7 @@ import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -46,7 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
   @Override
-  public void deleteReview(Long reviewNum) {
+  public void remove(Long reviewNum) {
     // 리뷰 ID로 리뷰 삭제
     reviewRepository.deleteById(reviewNum);
   }
@@ -75,14 +76,15 @@ public class ReviewServiceImpl implements ReviewService {
   
   }
   
+  @Transactional
   @Override
-  public void modify(ReviewDTO dto,HttpSession session) {
-   Review review = dtoToEntity(dto,session);
+  public void modify(ReviewDTO dto) {
+   Review review = reviewRepository.getReferenceById(dto.getReviewNum());
+
+   review.updateContent(dto.getContent());
+   review.updateTitle(dto.getTitle());
+
    reviewRepository.save(review);
-      
-   
-    
-    
     
   }
   
