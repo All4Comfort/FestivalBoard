@@ -221,24 +221,25 @@
         </div>
     </div>
 
+
+
     <!-- 페이지 번호 목록 표시 -->
     <div class="pagination">
         <!-- 이전 페이지 버튼 -->
-        <ul th:if="${hasPrevPage}">
-            <a href="?page=1" aria-label="처음 페이지">
-                <span aria-hidden="true">이전</span>
-            </a>
+        <a th:if="${hasPrevPage}" th:href="@{'/festival/festivalList?page=' + ${prevPageNumber}}"
+            class="page-link prev">이전</a>
+        <!-- 페이지 번호 표시 -->
+        <ul class="pagination justify-content-center" id="pagination">
+            <li th:each="pageNumber : ${pageNumbers}">
+                <a th:href="@{'/festival/festivalList?page=' + ${pageNumber}}" th:text="${pageNumber}"
+                    th:class="${pageNumber == currentPage ? 'active' : ''}"></a>
+            </li>
         </ul>
-        <ul th:each="pageNumber : ${pageNumbers}">
-            <a th:href="@{'/festival/festivalList?page=' + ${pageNumber}}" th:text="${pageNumber}"
-                th:class="${pageNumber == currentPage ? 'active' : ''}"></a>
-        </ul>
-        <ul th:if="${hasNextPage}">
-            <a href="?page=${totalPages}" aria-label="마지막 페이지">
-                <span aria-hidden="true">다음</span>
-            </a>
-        </ul>
+        <!-- 다음 페이지 버튼 -->
+        <a th:if="${hasNextPage}" th:href="@{'/festival/festivalList?page=' + ${nextPageNumber}}"
+            class="page-link next">다음</a>
     </div>
+
 
 
     <!--부트스트랩 스크립트-->
