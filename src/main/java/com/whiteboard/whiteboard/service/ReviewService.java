@@ -5,15 +5,14 @@ import java.util.List;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
-import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Review;
 
 public interface ReviewService {
 
-  Long likePost(ReviewDTO dto);
-  
+  //Long likePost(ReviewDTO dto);
+
   // 새로운 리뷰 생성
-  Long saveReview(ReviewDTO reviewDTO);
+  void saveReview(ReviewDTO reviewDTO);
 
   List<ReviewDTO> getAllReviews() ;
 
@@ -35,10 +34,14 @@ public interface ReviewService {
   // 게시물 수정 메서드 선언
   void modify(ReviewDTO dto);
 
-  default ReviewDTO entityToDTO(Review review) {
-    ReviewDTO dto = ReviewDTO.builder()
+  
+  default public ReviewDTO entityToDTO(Review review) {
+
+    
+    
+     ReviewDTO dto = ReviewDTO.builder()
         .reviewNum(review.getReviewNum())
-        .writer(review.getWriter().getEmail())
+        //.writer(review.getWriter().getEmail())
         .nickname(review.getWriter().getNickname())
         .title(review.getTitle())
         .content(review.getContent())
@@ -57,22 +60,7 @@ public interface ReviewService {
         .build();
     return dto;
   }
-
-  default Review dtoToEntity(ReviewDTO reviewDTO, Member member) {
-   
-     Member mem = Member.builder()
-        .email(member.getEmail())
-         .build();
-
-    Review review = Review.builder()
-        .writer(mem)
-        .title(reviewDTO.getTitle())
-        .content(reviewDTO.getContent())
-        .readCount(0L)
-        .goodCount(0L)
-        .build();
-    return review;
-  }
+  
 
   // Long saveReview(ReviewDTO reviewDTO);
 }

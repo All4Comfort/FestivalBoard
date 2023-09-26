@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.entity.Member;
 
 // 회원 관리와 관련된 비즈니스 로직을 수행하는 서비스
@@ -39,4 +40,33 @@ public interface MemberService {
     public Optional<Member> login(String email, String pw);
 
     
+    default MemberDTO convertToDTO(Member member) {
+		MemberDTO memberDTO = MemberDTO.builder()
+                                        .email(member.getEmail())
+                                        .pw(member.getPw())
+                                        .birthDay(member.getBirthDay())
+                                        .gender(member.getGender())
+                                        .isSns(member.isSns())
+                                        .name(member.getName())
+                                        .nickname(member.getNickname())
+                                        .phoneNum(member.getPhoneNum())
+                                        .build();
+		return memberDTO;
+	}
+
+    default Member convertToEntity(MemberDTO memberDTO) {
+		Member member = Member.builder()
+                                .email(memberDTO.getEmail())
+                                .pw(memberDTO.getPw())
+                                .birthDay(memberDTO.getBirthDay())
+                                .gender(memberDTO.getGender())
+                                .isSns(memberDTO.isSns())
+                                .name(memberDTO.getName())
+                                .nickname(memberDTO.getNickname())
+                                .phoneNum(memberDTO.getPhoneNum())
+                                .build();
+		return member;
+	}
+
+
 }

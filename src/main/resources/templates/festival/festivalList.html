@@ -27,35 +27,6 @@
             /* 원하는 만큼 왼쪽으로 이동시킵니다. */
         }
 
-        /* 이미지 썸네일 스타일 */
-        .thumbnail {
-            max-width: 100px;
-            /* 이미지 썸네일의 최대 너비 */
-            max-height: 100px;
-            /* 이미지 썸네일의 최대 높이 */
-        }
-
-        /* 리뷰 목록 스타일 */
-        .review-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        /* 리뷰 아이템 스타일 */
-        .review-item {
-            flex-basis: calc(33.33% - 20px);
-            /* 3개씩 가로로 정렬하므로 33.33%의 폭을 가짐 */
-            margin-bottom: 20px;
-            box-sizing: border-box;
-            border: 1px solid #e1e1e1;
-            border-radius: 4px;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            /* 글씨를 가운데 정렬 */
-        }
 
         /* 검색 입력 상자 스타일 */
         .search-box {
@@ -182,6 +153,22 @@
             align-items: center;
             /* 세로 가운데 정렬 */
         }
+
+        /* 링크 기본 스타일 제거 */
+        a {
+            text-decoration: none;
+            /* 밑줄 제거 */
+            color: inherit;
+            /* 기본 텍스트 색상 상속 */
+        }
+
+        /* 모든 열 내의 .card 클래스에 스타일 적용 */
+        .col .card {
+            margin:auto;
+            width: 100%;
+            height: 350px;
+            /* 가로 너비 100%로 설정 */
+        }
     </style>
 </head>
 
@@ -276,61 +263,65 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <div class="col" id="festival-carousel">
                     <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
-                    <div th:each="festival, iterStat : ${festivals}"
+                    <div th:each="festival, iterStat : ${festivals} "
                         th:classappend="${iterStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
                         <!-- 각 축제 정보 표시 -->
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
-                                    alt="축제 포스터" />
-                                <h5 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h5>
-                                <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}" class="btn btn-sm btn-outline-secondary">보기</button>
+                                <a th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}">
+                                    <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
+                                        alt="축제 포스터" />
+                                    <h4 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h4>
+                                    <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted"
+                                            th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
                                     </div>
-                                    <small class="text-muted" th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col" id="festival-carousel">
                     <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
-                    <div th:each="festival, iterStat : ${festivals}"
+                    <div th:each="festival, iterStat : ${festivals} "
                         th:classappend="${iterStat.index == 1} ? 'carousel-item active' : 'carousel-item'">
+                        <!-- 각 축제 정보 표시 -->
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
-                                    alt="축제 포스터" />
-                                <h5 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h5>
-                                <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">보기</button>
+                                <a th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}">
+                                    <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
+                                        alt="축제 포스터" />
+                                    <h4 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h4>
+                                    <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted"
+                                            th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
                                     </div>
-                                    <small class="text-muted" th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col" id="festival-carousel">
                     <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
-                    <div th:each="festival, iterStat : ${festivals}"
+                    <div th:each="festival, iterStat : ${festivals} "
                         th:classappend="${iterStat.index == 2} ? 'carousel-item active' : 'carousel-item'">
+                        <!-- 각 축제 정보 표시 -->
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
-                                    alt="축제 포스터" />
-                                <h5 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h5>
-                                <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">보기</button>
+                                <a th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}">
+                                    <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
+                                        alt="축제 포스터" />
+                                    <h4 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h4>
+                                    <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted"
+                                            th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
                                     </div>
-                                    <small class="text-muted" th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -338,40 +329,43 @@
 
                 <div class="col" id="festival-carousel">
                     <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
-                    <div th:each="festival, iterStat : ${festivals}"
+                    <div th:each="festival, iterStat : ${festivals} "
                         th:classappend="${iterStat.index == 3} ? 'carousel-item active' : 'carousel-item'">
+                        <!-- 각 축제 정보 표시 -->
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
-                                    alt="축제 포스터" />
-                                <h5 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h5>
-                                <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">보기</button>
+                                <a th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}">
+                                    <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
+                                        alt="축제 포스터" />
+                                    <h4 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h4>
+                                    <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted"
+                                            th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
                                     </div>
-                                    <small class="text-muted" th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col" id="festival-carousel">
                     <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
-                    <div th:each="festival, iterStat : ${festivals}"
+                    <div th:each="festival, iterStat : ${festivals} "
                         th:classappend="${iterStat.index == 4} ? 'carousel-item active' : 'carousel-item'">
+                        <!-- 각 축제 정보 표시 -->
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
-                                    alt="축제 포스터" />
-                                <h5 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h5>
-                                <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">보기</button>
+                                <a th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}">
+                                    <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
+                                        alt="축제 포스터" />
+                                    <h4 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h4>
+                                    <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted"
+                                            th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
                                     </div>
-                                    <small class="text-muted" th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -379,20 +373,21 @@
 
                 <div class="col" id="festival-carousel">
                     <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
-                    <div th:each="festival, iterStat : ${festivals}"
+                    <div th:each="festival, iterStat : ${festivals} "
                         th:classappend="${iterStat.index == 5} ? 'carousel-item active' : 'carousel-item'">
+                        <!-- 각 축제 정보 표시 -->
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
-                                    alt="축제 포스터" />
-                                <h5 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h5>
-                                <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">보기</button>
+                                <a th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}">
+                                    <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
+                                        alt="축제 포스터" />
+                                    <h4 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h>
+                                    <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted"
+                                            th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
                                     </div>
-                                    <small class="text-muted" th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -400,20 +395,21 @@
 
                 <div class="col" id="festival-carousel">
                     <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
-                    <div th:each="festival, iterStat : ${festivals}"
+                    <div th:each="festival, iterStat : ${festivals} "
                         th:classappend="${iterStat.index == 6} ? 'carousel-item active' : 'carousel-item'">
+                        <!-- 각 축제 정보 표시 -->
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
-                                    alt="축제 포스터" />
-                                <h5 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h5>
-                                <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">보기</button>
+                                <a th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}">
+                                    <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
+                                        alt="축제 포스터" />
+                                    <h4 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h4>
+                                    <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted"
+                                            th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
                                     </div>
-                                    <small class="text-muted" th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -421,20 +417,21 @@
 
                 <div class="col" id="festival-carousel">
                     <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
-                    <div th:each="festival, iterStat : ${festivals}"
+                    <div th:each="festival, iterStat : ${festivals} "
                         th:classappend="${iterStat.index == 7} ? 'carousel-item active' : 'carousel-item'">
+                        <!-- 각 축제 정보 표시 -->
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
-                                    alt="축제 포스터" />
-                                <h5 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h5>
-                                <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">보기</button>
+                                <a th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}">
+                                    <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
+                                        alt="축제 포스터" />
+                                    <h4 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h4>
+                                    <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted"
+                                            th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
                                     </div>
-                                    <small class="text-muted" th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -442,25 +439,25 @@
 
                 <div class="col" id="festival-carousel">
                     <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
-                    <div th:each="festival, iterStat : ${festivals}"
+                    <div th:each="festival, iterStat : ${festivals} "
                         th:classappend="${iterStat.index == 8} ? 'carousel-item active' : 'carousel-item'">
+                        <!-- 각 축제 정보 표시 -->
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
-                                    alt="축제 포스터" />
-                                <h5 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h5>
-                                <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">보기</button>
+                                <a th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}">
+                                    <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225"
+                                        alt="축제 포스터" />
+                                    <h4 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h4>
+                                    <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted"
+                                            th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
                                     </div>
-                                    <small class="text-muted" th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -490,7 +487,7 @@
 
     <!-- festival-carousel와 pagination 요소는 여전히 유지 -->
 
-    <script>
+    <!-- <script>
         // 페이지 당 표시할 축제 개수
         const festivalsPerPage = 9;
 
@@ -642,7 +639,7 @@
 
             carousel.appendChild(festivalContainer);
         }
-    </script>
+    </script> -->
 
 
     <script>
