@@ -20,6 +20,13 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
   @Query("Select n From Review n")
   List<Review[]> getReviewList();
+
+  // @Query(("SELECT n, m FROM Review n JOIN n.writer m"))
+  // Page<Object[]> getReviewWriter(Pageable pageable);
+
+  
+
+
   
   
   // @Query(value = "Select r, w From Review r Left join b.writer w ")
