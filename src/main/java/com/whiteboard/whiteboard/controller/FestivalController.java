@@ -52,31 +52,42 @@ public class FestivalController {
     // 페이징을 위해
     @GetMapping("/festival/festivalList")
     public String showFestivalList(PageRequestDTO pageRequestDTO, Model model) {
+        // 페이지 요청 정보(pageRequestDTO)를 이용하여 페이지 관련 정보를 가져오고
         Pageable pageable = pageRequestDTO.getPageable(Sort.by("festivalNum").ascending());
+
+        // 서비스 계층을 통해 페스티벌 데이터를 페이지네이션하여 가져옵니다.
         Page<FestivalDTO> festivals = festivalService.findAllByOrderByFestivalNum(pageable);
 
+        // 총 페이지 수 계산
         int totalPages = festivals.getTotalPages();
+
+        // 현재 페이지 번호 가져오기
         int currentPage = pageRequestDTO.getPage();
 
         // 페이지 번호 목록 생성 (고정된 3개 페이지만 표시)
+        // 현재 페이지를 중심으로 앞뒤 1페이지만 보여주도록 제한
         List<Integer> pageNumbers = IntStream
                 .rangeClosed(Math.max(1, currentPage - 1), Math.min(currentPage + 1, totalPages))
                 .boxed()
                 .collect(Collectors.toList());
 
-        boolean hasPrevPage = currentPage > 1;
-        boolean hasNextPage = currentPage < totalPages;
+        // 이전 페이지와 다음 페이지 버튼을 제어하기 위한 조건 설정
+        boolean hasPrevPage = currentPage > 1; // 현재 페이지가 1보다 크면 이전 페이지가 있다는 의미
+        boolean hasNextPage = currentPage < totalPages; // 현재 페이지가 총 페이지 수보다 작으면 다음 페이지가 있다는 의미
 
+        // 이전 페이지 번호와 다음 페이지 번호 계산
         int prevPageNumber = currentPage - 1;
         int nextPageNumber = currentPage + 1;
 
-        model.addAttribute("festivals", festivals);
-        model.addAttribute("pageNumbers", pageNumbers);
-        model.addAttribute("hasPrevPage", hasPrevPage);
-        model.addAttribute("hasNextPage", hasNextPage);
-        model.addAttribute("prevPageNumber", prevPageNumber);
-        model.addAttribute("nextPageNumber", nextPageNumber);
+        // 모델에 데이터를 추가하여 뷰로 전달
+        model.addAttribute("festivals", festivals); // 페스티벌 데이터
+        model.addAttribute("pageNumbers", pageNumbers); // 페이지 번호 목록
+        model.addAttribute("hasPrevPage", hasPrevPage); // 이전 페이지 버튼 제어를 위한 조건
+        model.addAttribute("hasNextPage", hasNextPage); // 다음 페이지 버튼 제어를 위한 조건
+        model.addAttribute("prevPageNumber", prevPageNumber); // 이전 페이지 번호
+        model.addAttribute("nextPageNumber", nextPageNumber); // 다음 페이지 번호
 
+        // 해당 뷰 페이지로 이동
         return "/festival/festivalList";
     }
 
