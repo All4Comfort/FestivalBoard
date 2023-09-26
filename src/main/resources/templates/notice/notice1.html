@@ -174,7 +174,7 @@
                         <hr class="dropdown-divider">
                     </li>
                     <!-- "#scrollspyHeading4 -->
-                    <a class="dropdown-item" href="/notice1">
+                    <a class="dropdown-item" href="/notice/notice1">
                         <li>공지사항&QnA</li>
                     </a>
                 </ul>
@@ -219,7 +219,7 @@
     <section class="container my-5 text-center">
         <div class="d-flex justify-content-end mb-3" style="margin-top: -55px;">
             <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal">
-                <a th:href="@{/noticeWrite}">글쓰기</a>
+                <a th:href="@{/notice/noticeWrite}">글쓰기</a>
             </button>
         </div>
         <div class="d-flex justify-content-end mb-3">
@@ -240,9 +240,9 @@
 				<tr th:each="dto : ${result}">
 					<th scope="row">
 						<!-- 아래는 글번호에 페이지 넘버와 글번호를 추가로 설정하는것...List 를 모두 확인 후 추가 작업할것. -->
-						<a th:href="@{/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.noticeNum}]]</a>
+						<a th:href="@{/notice/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.noticeNum}]]</a>
 					</th>
-					<td><a th:href="@{/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.title}]]</a></td>
+					<td><a th:href="@{/notice/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.title}]]</a></td>
 					<td><a>[[${dto.writer}]]</a></td>
 				</tr>
 			</tbody>

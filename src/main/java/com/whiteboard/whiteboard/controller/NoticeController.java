@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/notice")
 
 public class NoticeController {
   private final NoticeService noticeService;
@@ -26,21 +28,19 @@ public class NoticeController {
   private final NoticeRepository noticeRepository;
 
   @GetMapping("/notice1")
-  public String notice(PageRequestDTO pageRequestDTO, Model model){
+  public void notice(PageRequestDTO pageRequestDTO, Model model){
     //model.addAttribute("result", noticeService.getList(pageRequestDTO));
     //model.addAttribute("result", noticeRepository.getNoticeBynoticeNum(1L));
     model.addAttribute("result", noticeRepository.getNoticeList());
     
-    return "/notice1";
   }
 
 
 @GetMapping("/notice1Detail")
-public String noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model, HttpSession session) {
+public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model, HttpSession session) {
     NoticeDTO noticeDTO = noticeService.get(noticeNum);
     model.addAttribute("result", noticeDTO);
 
-    return "/notice1Detail";
 }
 
 //신규글등록폼 요청처리하기
