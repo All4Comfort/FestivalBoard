@@ -43,7 +43,7 @@ public class FestivalController {
     }
 
     // 전체 죽제 목록을 가져오기
-    @GetMapping("/festivalList")
+    @GetMapping("/festival/festivalList")
     public String showFestivalList(Model model) {
         List<FestivalDTO> festivals = festivalService.findAllByOrderByFestivalNumAsc();
         System.out.println("축제 목록: " + festivals);
@@ -52,7 +52,7 @@ public class FestivalController {
     }
 
     // 축제페이지 페이징 할려고하는데..잘 안된다..
-    @GetMapping("/festivalListPage")
+    @GetMapping("/festival/festivalListPage")
     public ResponseEntity<Page<FestivalDTO>> getFestivalsByPage(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "9") int size) {
@@ -61,6 +61,13 @@ public class FestivalController {
         System.out.println("페이지 넘버 : " + festivals);
         return ResponseEntity.ok(festivals);
     }
+
+    //축제 상세페이지
+    @GetMapping("/festival/festivalDetail")
+    public String showFestivalDetail(){
+        return "festivalDetail";
+    }
+
 
     // 밑 코드는 모듈에 메시지 넣기위해 필요해서 넣었음
     // private final Logger logger =
