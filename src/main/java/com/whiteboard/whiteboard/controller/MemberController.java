@@ -179,6 +179,7 @@ public class MemberController {
         Member loggedInUser = (Member) session.getAttribute("loggedInUser");
 
         memberRepository.delete(loggedInUser);
+        session.removeAttribute("loggedInUser");
 
         // 로그인 되지 않은 경우 로그인 페이지로 리다이렉트 처리
         return "redirect:/main";
