@@ -85,7 +85,7 @@ public class MemberController {
     //, @ModelAttribute("MemberDTO") MemberDTO memberDTO
     @PostMapping("/member/login")
     public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, HttpSession session,
-            Model model) {
+            Model model, MemberDTO memberDTO) {
 
         Optional<Member> optionalMember = memberServiceImpl.login(email, pw);
 
@@ -100,7 +100,7 @@ public class MemberController {
             System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
             
             
-            MemberDTO memberDTO = MemberDTO.builder()
+            memberDTO = MemberDTO.builder()
                                             .email(((Member)(session.getAttribute("loggedInUser"))).getEmail())
                                             .pw(((Member)(session.getAttribute("loggedInUser"))).getPw())
                                             .name(((Member)(session.getAttribute("loggedInUser"))).getName())
