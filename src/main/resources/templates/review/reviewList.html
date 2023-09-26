@@ -281,9 +281,12 @@
             <!-- 리뷰 작성하기 버튼 -->
             <div class="write-review-button" id="write-review-button">
                 <!-- href="/src/main/resources/templates/review/reviewWrite.html" -->
-                <a >리뷰 작성하기</a>
+                <!-- <a >리뷰 작성하기</a> -->
+                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal">
+                    <a th:href="@{/review/reviewWrite}">리뷰작성하기</a>
+                </button>
             </div>
-        </div>
+            
 
     <script>
         // 가상의 리뷰 데이터 배열 (예시)
@@ -351,7 +354,27 @@
             createPagination();
             displayReviews();
         };
-</script> 
+
+
+//         // 페이지 로드 시 리뷰 데이터를 서버에서 가져오고 목록을 표시
+//         window.onload = function () {
+//             fetchReviewsData(); // 서버에서 리뷰 데이터를 가져오는 함수 호출
+//         };
+
+//         // 리뷰 상세 페이지로 이동하는 함수
+// function showReviewDetail(reviewId) {
+//     // reviewId를 사용하여 게시물 상세 페이지 URL을 생성
+//     const reviewDetailUrl = `/review/reviewDetail?=${reviewId}`; // 리뷰 상세 페이지의 URL을 생성
+
+//     // 페이지를 해당 URL로 이동
+//     window.location.href = reviewDetailUrl;
+// }
+
+
+//       
+  </script> 
+
+
 
 </body>
 

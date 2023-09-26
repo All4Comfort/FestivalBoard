@@ -10,6 +10,8 @@ import com.whiteboard.whiteboard.entity.Review;
 
 public interface ReviewService {
 
+  Long likePost(ReviewDTO dto);
+  
   // 새로운 리뷰 생성
   Long saveReview(ReviewDTO reviewDTO);
 
@@ -57,10 +59,10 @@ public interface ReviewService {
   }
 
   default Review dtoToEntity(ReviewDTO reviewDTO, Member member) {
-
-    Member mem = Member.builder()
+   
+     Member mem = Member.builder()
         .email(member.getEmail())
-        .build();
+         .build();
 
     Review review = Review.builder()
         .writer(mem)
