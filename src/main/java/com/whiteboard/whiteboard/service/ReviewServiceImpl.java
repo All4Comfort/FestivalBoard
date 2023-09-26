@@ -1,5 +1,6 @@
 package com.whiteboard.whiteboard.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -19,8 +20,17 @@ public class ReviewServiceImpl implements ReviewService {
 
   private final ReviewRepository reviewRepository;
 
-  public List<Review> getAlReviews() {
-    return reviewRepository.findAll();
+  @Override
+  public List<ReviewDTO> getAllReviews() {
+
+    List<ReviewDTO> reviewDTOs = new ArrayList<>();
+
+    List<Review> reviewList = reviewRepository.findAll();
+    for (Review review : reviewList) {
+      reviewDTOs.add(entityToDTO(review));
+    }
+    
+    return reviewDTOs;
   }
 
 
