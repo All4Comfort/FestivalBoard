@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="UTF-8" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="ko">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>리뷰 게시판 목록</title>
 
@@ -257,7 +257,7 @@
     <div class="review-item" th:each="review : ${reviewArray}" onclick="showReviewDetail(${review.reviewNum})">
         
         <!-- <th:block th:with="review=${reviewArray[0]}"> -->
-        <a th:href="@{/reviewDetail(reviewNum=${review.reviewNum})}">[[${review.reviewNum}]]</a>
+        <a th:href="@{/review/reviewDetail(reviewNum=${review.reviewNum})}">[[${review.reviewNum}]]</a>
 
         <!-- <h2><a href="#" th:onclick="'showReviewDetail(' + ${review.id} + ')'">[[${review.title}]]</a></h2> -->
         <p>작성자: [[${review.writer}]]</p>
@@ -382,7 +382,7 @@
         // 리뷰 상세 페이지로 이동하는 함수
 function showReviewDetail(reviewId) {
     // reviewId를 사용하여 게시물 상세 페이지 URL을 생성
-    const reviewDetailUrl = `/reviewDetail?id=${reviewId}`; // 리뷰 상세 페이지의 URL을 생성
+    const reviewDetailUrl = `/review/reviewDetail?id=${reviewId}`; // 리뷰 상세 페이지의 URL을 생성
 
     // 페이지를 해당 URL로 이동
     window.location.href = reviewDetailUrl;
@@ -394,7 +394,7 @@ function showReviewDetail(reviewId) {
 
 <script>
     document.getElementById('write-review-button').addEventListener('click', function(event) {
-    window.location.href = "/reviewWrite";
+    window.location.href = "/review/reviewWrite";
 });
 
 </script>

@@ -15,7 +15,7 @@ import com.whiteboard.whiteboard.repository.ReviewRepository;
 import com.whiteboard.whiteboard.service.ReviewService;
 
 @Controller
-@RequestMapping("/review")
+@RequestMapping({"/review",""})
 public class ReviewController {
 
     @Autowired
@@ -44,21 +44,20 @@ public class ReviewController {
     }
     
     @GetMapping("/reviewDetail")
-    public String getReviewDetail(@ModelAttribute ReviewDTO reviewDTO, Model model) {
+    public void getReviewDetail(@ModelAttribute ReviewDTO reviewDTO, Model model) {
         //ReviewDTO reviewDTO = reviewService.getReviewById(reviewNumLong);
         //model.addAttribute("result", reviewRepository.getReviewList());
        // model.addAttribute("result", reviewRepository.getReviewNum(1L));
        // model.addAttribute("result", reviewRepository.getReviewNum(reviewDTO.getReviewNum()));
 
         model.addAttribute("reviewDTO", reviewService.getReviewByReviewNum(reviewDTO.getReviewNum()));
-        return "/reviewDetail";
     }
 
     @PostMapping("/reviewWrite")
     public String saveReivew(@ModelAttribute ReviewDTO dto, RedirectAttributes attributes){
         Long newReviewNum = reviewService.saveReview(dto);
         attributes.addFlashAttribute("newReviewNum", newReviewNum);
-        return "redirect:/reviewList";
+        return "redirect:/review/reviewList";
     }
 
     @GetMapping("/reviewWrite")
