@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -62,17 +63,17 @@ public class FestivalController {
         return ResponseEntity.ok(festivals);
     }
 
-    // 축제 상세페이지
+    // // 축제 상세페이지
     // @GetMapping("/festival/festivalDetail")
-    // public String showFestivalDetail(Model model){
-
-    // model.addAttribute("festivalDetail"), model);
-    // return "festivalDetail";
+    // public void festivalDetail(Model model) {
+    //     model.addAttribute("resukt", model);
     // }
 
-    @GetMapping(value = "/festival/festivalDetail")
-    public void showFestivalDetail() {
-
+    // 축제 상세페이지 넘기기
+    @GetMapping("/festival/festivalDetail")
+    public void getFestivalDetail(@ModelAttribute FestivalDTO festivalDTO, Model model) {
+     
+        model.addAttribute("festivalDTO", festivalService.getfestivalFNum(festivalDTO.getFestivalNum()));
     }
 
     // 밑 코드는 모듈에 메시지 넣기위해 필요해서 넣었음
