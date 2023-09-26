@@ -24,14 +24,14 @@
     </style>
   </head>
   <body>
-    <form action="/noticeWrite" method="post" th:object="${notieDTO}">
+    <form action="/notice/noticeWrite" method="post" th:object="${notieDTO}">
       <div class="form-group text-center" th:width="500">
         <h1><label for="title">NOTICE</label></h1>
         <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" placeholder="글 제목을 입력하세요">
         <textarea class="form-control" id="summernote" name="content" th:style="'width: 800px;'" placeholder="글 내용을 입력하세요"></textarea>
       </div>
       <button type="submit" class="btn btn-light" id="submit">작성</button>
-      <a th:href="@{/notice1}" class="btn btn-secondary">
+      <a th:href="@{/notice/notice1}" class="btn btn-secondary">
         <button type="button" class="btn btn-light" id="boardList">목록</button>
       </a>
     </form>

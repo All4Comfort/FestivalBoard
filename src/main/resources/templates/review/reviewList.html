@@ -260,7 +260,7 @@
         <a th:href="@{/review/reviewDetail(reviewNum=${review.reviewNum})}">[[${review.reviewNum}]]</a>
 
         <!-- <h2><a href="#" th:onclick="'showReviewDetail(' + ${review.id} + ')'">[[${review.title}]]</a></h2> -->
-        <p>작성자: [[${review.writer}]]</p>
+        <p>작성자: [[${review.nickname}]]</p>
         <p>제목 : [[${review.title}]]</p>
         <p>내용: [[${review.content}]]</p>
         <!-- <p th:text="${'조회수: ' + ${review.readCount}}"></p>
