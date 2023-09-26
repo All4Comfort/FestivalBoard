@@ -99,7 +99,7 @@
     <div class="card" th:each="dto : ${result}">
         <div class="card-header">
             <h5 class="card-title" id="noticeTitle">[[${dto.title}]]</h5>
-            <!-- <h6 class="card-subtitle mb-2 text-muted" id="noticeAuthor">[[${dto.writer}]]</h6> -->
+            <h6 class="card-subtitle mb-2 text-muted" id="noticeAuthor">[[${dto.writer}]]</h6>
         </div>
         <div class="card-body">
             <p class="card-text" id="noticeContent">[[${dto.content}]]</p>
