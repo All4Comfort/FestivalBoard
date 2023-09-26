@@ -87,7 +87,7 @@ public class MemberController {
     public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, HttpSession session,
             Model model, MemberDTO memberDTO) {
 
-        Optional<Member> optionalMember = memberServiceImpl.login(email, pw);
+        Optional<Member> optionalMember = memberService.login(email, pw);
 
         if (optionalMember.isPresent()) { // 회원의 이메일, 비밀번호가 일치할 때
 
@@ -101,7 +101,7 @@ public class MemberController {
             
             
             memberDTO = memberService.covertSessionToDTO(session);
-            
+
             return "redirect:/main";
         } else { // 회원의 이메일, 비밀번호가 일치하지 않을 때
             return "/member/login";
