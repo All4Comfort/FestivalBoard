@@ -2,13 +2,11 @@ package com.whiteboard.whiteboard;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.whiteboard.whiteboard.entity.Notice;
 import com.whiteboard.whiteboard.repository.NoticeRepository;
 
 @SpringBootTest
@@ -20,6 +18,7 @@ class NoticeApplicationTest {
 
 
 
+<<<<<<< HEAD
   @Test
   void BaseEntity_테스트(){
         // given
@@ -51,8 +50,25 @@ class NoticeApplicationTest {
                         .build();
       noticeRepository.save(notice);
     });
-  }
+=======
+  // 공지사항 db에 밀어넣기
+  //@Test
+  //void contextLoads() {
+  //IntStream.rangeClosed(1, 10).forEach(i -> {
 
+  //Notice notice = Notice.builder()
+                      //.title("제목" + i + "입니다.")
+                      //.content("이건" + i + " 번째 글입니다.")
+                        //.build();
+      //noticeRepository.save(notice);
+    //});
+  //}
+
+  @Test
+  void contextLoads(){
+    //IntStream.rangeClosed(1, 10).forEa
+>>>>>>> b0cde8af5c33647e8c59d0b81ea30efb70707e56
+  }
 
 //   @Test // 리스트 페이지의 글목록 get 테스트
 // 	public void getPageList() {

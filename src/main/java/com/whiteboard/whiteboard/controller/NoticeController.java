@@ -61,4 +61,6 @@ public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model,
     return "redirect:/notice/notice1";
   }
 
+
+  
 }
