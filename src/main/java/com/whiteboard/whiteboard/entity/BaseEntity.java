@@ -1,6 +1,7 @@
 package com.whiteboard.whiteboard.entity;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -26,4 +27,15 @@ public abstract class BaseEntity {
 	@LastModifiedDate
 	@Column
 	private LocalDateTime modifyDate; //수정일
+
+
+	public String getFormattedRegisterDate() {
+        // 원하는 날짜 형식을 정의합니다.
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // registerDate를 원하는 형식으로 포맷합니다.
+        String formattedDate = registerDate.format(formatter);
+
+        return formattedDate;
+    }
 }
