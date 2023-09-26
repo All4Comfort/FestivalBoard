@@ -5,15 +5,14 @@ import java.util.List;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
-import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Review;
 
 public interface ReviewService {
 
-  Long likePost(ReviewDTO dto);
-  
+  //Long likePost(ReviewDTO dto);
+
   // 새로운 리뷰 생성
-  Long saveReview(ReviewDTO reviewDTO);
+  void saveReview(ReviewDTO reviewDTO);
 
   List<ReviewDTO> getAllReviews() ;
 
@@ -58,21 +57,7 @@ public interface ReviewService {
     return dto;
   }
 
-  default Review dtoToEntity(ReviewDTO reviewDTO, Member member) {
-   
-     Member mem = Member.builder()
-        .email(member.getEmail())
-         .build();
-
-    Review review = Review.builder()
-        .writer(mem)
-        .title(reviewDTO.getTitle())
-        .content(reviewDTO.getContent())
-        .readCount(0L)
-        .goodCount(0L)
-        .build();
-    return review;
-  }
+  
 
   // Long saveReview(ReviewDTO reviewDTO);
 }

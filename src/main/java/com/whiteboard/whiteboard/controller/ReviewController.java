@@ -56,8 +56,11 @@ public class ReviewController {
 
     @PostMapping("/reviewWrite")
     public String saveReivew(@ModelAttribute ReviewDTO dto, RedirectAttributes attributes){
-        Long newReviewNum = reviewService.saveReview(dto);
-        attributes.addFlashAttribute("newReviewNum", newReviewNum);
+
+        //System.out.println("작성 시 dto 전달 : " + dto);
+        System.out.println("dto 작성자 찍기 : " + dto.getWriter());
+        reviewService.saveReview(dto);
+        //attributes.addFlashAttribute("newReviewNum", newReviewNum);
         return "redirect:/review/reviewList";
     }
 
