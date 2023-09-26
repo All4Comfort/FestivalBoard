@@ -21,6 +21,8 @@ public class FestivalServiceImpl implements FestivalService {
 
     private final FestivalRepository festivalRepository;
 
+    private List<FestivalDTO> searchResults = new ArrayList<>();
+
     @Override
     public List<FestivalDTO> getAllFestivalsAsDTO() {
         List<Festival> festivals = festivalRepository.findAll();
@@ -60,20 +62,6 @@ public class FestivalServiceImpl implements FestivalService {
         return festivalPage.map(festival -> entityToDTO(festival));
     }
 
-    // 축제페이지에서 클릭시 상세페이지로..
-    // @Override
-    // public List<FestivalDTO> getList(Long festivalNum) {
-
-    // Optional<Festival> festival =
-    // festivalRepository.findByFestivalNum(festivalNum);
-    // if (festival != null) {
-    // return entityToDTO(festival);
-    // } else {
-    // // 해당 festivalNum에 해당하는 축제가 없을 경우 처리
-    // return null;
-    // }
-    // }
-
     // 축제페이지에서 클릭시 상세페이지로
     @Override
     public FestivalDTO getfestivalFNum(Long festivalNum) {
@@ -81,5 +69,27 @@ public class FestivalServiceImpl implements FestivalService {
                 .orElseThrow(() -> new NoSuchElementException(festivalNum + " : 게시물을 찾을 수 없습니다."));
         return entityToDTO(festival);
     }
+
+    //축제검색 
+    @Override
+    public List<FestivalDTO> searchFestivals(String searchQuery) {
+        // 축제 제목에 검색어가 포함된 모든 축제를 검색
+        List<Festival> festivals = festivalRepository.findByFestivalTitleContaining(searchQuery);
+        
+        // Festival 엔티티를 FestivalDTO로 변환
+        List<FestivalDTO> festivalDTOs = festivals.stream()
+                .map(this::entityToDTO) // entityToDTO 메서드 활용
+                .collect(Collectors.toList());
+        
+        // 검색 결과를 searchResults 변수에 저장
+        searchResults = festivalDTOs;
+        
+        return festivalDTOs;
+    }
+
+     // 검색 결과를 반환하는 메서드
+    // public List<FestivalDTO> getSearchResults() {
+    //     return searchResults;
+    // }
 
 }
