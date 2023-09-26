@@ -29,7 +29,9 @@ List<Notice> getNoticeList();
 @Query(value = "Select n, w From Notice n LEFT JOIN n.writer w")
 Page<Object[]> getNoticePage(Pageable pageable);
 
-@Query("SELECT n FROM Notice n ORDER BY n.noticeNum ASC")
+@Query("SELECT n FROM Notice n ORDER BY n.noticeNum DESC")
 Page<Notice> findAllByOrderByNoticeNum(Pageable pageable);
+
+List<Notice> findByTitleContaining(String searchQuery);
 }
 

@@ -97,4 +97,7 @@ public interface NoticeService {
 
     //게시물 수정 메서드 선언
     void modify(NoticeDTO dto);
+
+    //검색
+    List<NoticeDTO> searchNotices(String searchQuery);
 }
