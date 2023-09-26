@@ -58,7 +58,7 @@ public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model,
   //  noticeRepository.save(notice);
     Long newNoticeNum = noticeService.register(dto);
     attributes.addFlashAttribute("newNoticeNum", newNoticeNum);
-    return "redirect:/notice1";
+    return "redirect:/notice/notice1";
   }
 
 }
