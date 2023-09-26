@@ -24,14 +24,14 @@
     </style>
   </head>
   <body>
-    <form action="/notice/noticeWrite" method="post" th:object="${notieDTO}">
+    <form action="/notice/noticeWrite" method="post" th:object="${dto}">
       <div class="form-group text-center" th:width="500">
         <h1><label for="title">NOTICE</label></h1>
         <form>
         <input type="hidden" name="noticeNum" th:value="${dto.noticeNum}"/>
         </form>
-        <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" th:value="${dto.questionNum}">
-        <textarea class="form-control" id="summernote" name="content" th:style="'width: 800px;'" th:value="${dto.content}"></textarea>
+        <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" th:value="${dto.title}">
+        <textarea class="form-control" id="content" name="content" th:style="'width: 800px;'">[[${dto.content}]]</textarea>
       </div>
       <button type="submit" class="btn btn-light" id="submit">작성</button>
       <a th:href="@{/notice/notice1}" class="btn btn-secondary">
@@ -63,13 +63,13 @@
       //   });
       // });
 
-
-      $(".modifyBtn").click(function(){
+      var actionForm = $("form");
+      $("#submit").click(function(){
         if(!confirm("수정하시겠습니까?")){
             return ;
         }
 
-        actionForm.attr("action", "/notice/modify").attr("method", "post").submit();
+        actionForm.attr("action", "/notice/noticemodify").attr("method", "post").submit();
         console.log("gggg");
     });
     </script>

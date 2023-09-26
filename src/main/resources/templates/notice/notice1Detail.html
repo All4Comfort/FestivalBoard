@@ -102,17 +102,20 @@
     
     <div class="card" th:each="dto : ${result}">
         <div class="card-header">
-            <form>
+        <form>
                 <input type="hidden" name="noticeNum" th:value="${dto.noticeNum}"/>
-            </form>
-            <h5 class="card-title" id="noticeTitle" th:utext="${dto.title}"></h5>
+                <input type="hidden" name="content"/>
+                <input type="hidden" name="title"/>
+        </form>    
+            <h5 class="card-title" id="noticeTitle" th:utext="${dto.title}">[[${dto.title}]]</h5>
             <!-- <h6 class="card-subtitle mb-2 text-muted" id="noticeAuthor">[[${dto.writer}]]</h6> -->
 
-        </div>
+            </div>
+            
+            <div class="card-body">
+                <p class="card-text" id="noticeContent" th:utext="${dto.content}" value="${dto.content}">[[${dto.content}]]</p>
+            </div>
         
-        <div class="card-body">
-            <p class="card-text" id="noticeContent" th:utext="${dto.content}"></p>
-        </div>
     </div>
     <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
         <button type="button" class="btn btn-custom modifyBtn">수정</button>
@@ -129,11 +132,7 @@
             </ul>
         </div>
 
-        <div class="my-3 d-flex justify-content-end">
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="/notice/notice1" class="btn btn-light" id="prevNotice">목록</a></li>
-            </ul>
-        </div>
+        
         
 </div>
 </section>
@@ -153,16 +152,17 @@ document.getElementById('delete').addEventListener('click',function(event){
 <script th:inline="javascript">
     
     var actionForm = $("form");
+    var num = $("input[name='noticeNum']").val();
 
     $(".removeBtn").click(()=>{
         if(!confirm("삭제하시겠습니까?")){
             return ;
         }
         //console.log(actionForm);
-        var nick = $("input[name='noticeNum']").val();  //nick만 보낼것임
+          //nick만 보낼것임
     
-        console.log(nick);
-        actionForm.append(nick);
+        //console.log(nick);
+        actionForm.append(num);
         
         actionForm.attr("action", "/notice/remove").attr("method","post");
 
@@ -173,8 +173,20 @@ document.getElementById('delete').addEventListener('click',function(event){
         if(!confirm("수정하시겠습니까?")){
             return ;
         }
+        $("input[name='title']").val($("#noticeTitle").text());
+        $("input[name='content']").val($("#noticeContent").text());
+        
+        var a = $("input[name='title']").val();
+        var b = $("input[name='content']").val();
+        console.log("!!-->" + a);
+        console.log("!!-->" + b);
 
-        actionForm.attr("action", "/notice/modify").attr("method", "post").submit();
+        actionForm.append(num);
+        actionForm.append(a);
+        actionForm.append(b);
+
+        console.log(num + " ### " + a + b);
+        actionForm.attr("action", "/notice/noticemodify").attr("method", "get").submit();
     });
 
 
