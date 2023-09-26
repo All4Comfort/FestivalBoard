@@ -35,7 +35,6 @@ public class NoticeController {
     
   }
 
-
 @GetMapping("/notice1Detail")
 public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model, HttpSession session) {
     NoticeDTO noticeDTO = noticeService.get(noticeNum);

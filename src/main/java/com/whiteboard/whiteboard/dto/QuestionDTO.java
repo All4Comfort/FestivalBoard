@@ -20,7 +20,9 @@ import lombok.ToString;
 public class QuestionDTO {
   
   private Long questionNum; //질문번호
-  private Member writer; //작성자
+  private String writer; //작성자
+
+  
   private String title; //글제목
   private String content; //글내용
   private Boolean isSecret; //비밀글 여부

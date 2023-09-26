@@ -1,5 +1,7 @@
 package com.whiteboard.whiteboard.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Function;
 
 import org.springframework.data.domain.Page;
@@ -43,17 +45,20 @@ public PageResultDTO<NoticeDTO, Object[]> getList(PageRequestDTO pageRequestDTO)
 
   return new PageResultDTO<>(result, fn);
 }
-/*
- @Transactional
+
+
     public List<NoticeDTO> findAll() {
-        List<Notice> noticeEntityList = noticeRepository.findAll();
-        List<NoticeDTO> noticeDTOList = new ArrayList<>();
-        for (Notice notice: noticeEntityList) {
-            noticeDTOList.add(entityToDTO(notice));
+        
+      List<NoticeDTO> noticeDTOs = new ArrayList<>();
+        
+        List<Notice> notices = noticeRepository.findAll();
+        for (Notice notice : notices) {
+          //noticeDTOs.add(entityToDTO(notice, null));
         }
-        return noticeDTOList;
+
+        return noticeDTOs;
     }
-*/
+
 @Override
 public NoticeDTO get(Long noticeNum) {
     Object result = noticeRepository.getNoticeBynoticeNum(noticeNum);

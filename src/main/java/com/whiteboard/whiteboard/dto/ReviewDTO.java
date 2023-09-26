@@ -24,7 +24,7 @@ public class ReviewDTO {
 	private LocalDateTime regDate,modDate;
 
 	private String writer;// 작성자 : Member 엔티티의 id(PK 즉 프라이머리키를 의미함) 컬럼
-	private String nickname;// 작성자의 닉네임 얻는 법.. 리뷰엔티티 타입 변수.getWriter().getNickname()
+	private String nickname;// 작성자의 닉네임 얻는 법.. 엔티티 타입 변수.getWriter().getNickname()
 
 	private String title;// 제목
 	private String content;// 내용
