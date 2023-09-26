@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
+import com.whiteboard.whiteboard.service.FestivalService;
 import com.whiteboard.whiteboard.service.ReviewService;
 
 import jakarta.servlet.http.HttpSession;
@@ -25,6 +26,9 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private FestivalService festivalService;
 
     @GetMapping("/reviewList")
     public void getReviews(PageRequestDTO pageRequestDTO, Model model) {
@@ -69,4 +73,7 @@ public class ReviewController {
     public void postWriteReview() {
         
     }
+
+  
+
 }
