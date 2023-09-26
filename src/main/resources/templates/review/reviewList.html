@@ -252,12 +252,12 @@
     </div>
 
 <!-- 리뷰 목록 -->
-<div id="review-list" class="review-container" th:each="reviewArray : ${result}">
+<div id="review-list" class="review-container" th:each="review : ${result}">
     <!-- 리뷰 목록 아이템들 -->
-    <div class="review-item" th:each="review : ${reviewArray}" th:onclick="'showReviewDetail(' + ${review.reviewNum} + ')'" >
+    <div class="review-item"><!--th:onclick="'showReviewDetail(' + ${review.reviewNum} + ')'"-->
         
         <!-- <th:block th:with="review=${reviewArray[0]}"> -->
-        <a th:href="@{/review/reviewDetail(reviewNum=${review.reviewNum})}">[[${review.reviewNum}]]</a>
+        <p><a th:href="@{/review/reviewDetail(reviewNum=${review.reviewNum})}">[[${review.reviewNum}]]</a></p>
 
         <!-- <h2><a href="#" th:onclick="'showReviewDetail(' + ${review.id} + ')'">[[${review.title}]]</a></h2> -->
         <p>작성자: [[${review.nickname}]]</p>
@@ -351,53 +351,8 @@
             createPagination();
             displayReviews();
         };
+</script> 
 
-        // 서버에서 리뷰 데이터를 가져오는 함수 (예시)
-        function fetchReviewsData() {
-            // 서버 API 엔드포인트 URL (서버에서 해당 URL을 제공해야 함)
-            const apiUrl = '/api/reviews';
-
-            return fetch(apiUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // 리뷰 데이터를 받아와서 리뷰 목록 업데이트
-                    reviewsData = data.reviews; // 서버에서 받은 리뷰 데이터를 전역 변수에 저장
-                    loadReviews();
-                })
-                .catch(error => {
-                    console.error('Error fetching reviews data:', error);
-                });
-        }
-
-        // 페이지 로드 시 리뷰 데이터를 서버에서 가져오고 목록을 표시
-        window.onload = function () {
-            fetchReviewsData(); // 서버에서 리뷰 데이터를 가져오는 함수 호출
-        };
-
-        // 리뷰 상세 페이지로 이동하는 함수
-function showReviewDetail(reviewId) {
-    // reviewId를 사용하여 게시물 상세 페이지 URL을 생성
-    const reviewDetailUrl = `/review/reviewDetail?id=${reviewId}`; // 리뷰 상세 페이지의 URL을 생성
-
-    // 페이지를 해당 URL로 이동
-    window.location.href = reviewDetailUrl;
-}
-
-
-        </script>
-
-
-<script>
-    document.getElementById('write-review-button').addEventListener('click', function(event) {
-    window.location.href = "/review/reviewWrite";
-});
-
-</script>
 </body>
 
 </html>

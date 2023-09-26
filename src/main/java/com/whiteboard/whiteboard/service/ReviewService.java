@@ -35,7 +35,8 @@ public interface ReviewService {
 
   default ReviewDTO entityToDTO(Review review) {
     ReviewDTO dto = ReviewDTO.builder()
-        //.writer(review.getWriter().getEmail())
+        .reviewNum(review.getReviewNum())
+        .writer(review.getWriter().getEmail())
         .nickname(review.getWriter().getNickname())
         .title(review.getTitle())
         .content(review.getContent())
