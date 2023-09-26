@@ -15,7 +15,7 @@ import com.whiteboard.whiteboard.repository.ReviewRepository;
 import com.whiteboard.whiteboard.service.ReviewService;
 
 @Controller
-@RequestMapping({"/review",""})
+@RequestMapping({"/review","","/"})
 public class ReviewController {
 
     @Autowired
@@ -28,8 +28,9 @@ public class ReviewController {
     public void getReviews(PageRequestDTO pageRequestDTO, Model model) {
         //model.addAttribute("result", reviewRepository.getReviewNum(1L));
         //model.addAttribute("result", reviewRepository.getReviewJoinMember(1L));
-        model.addAttribute("result", reviewRepository.getReviewList());
+        //model.addAttribute("result", reviewRepository.getReviewList());
 
+        model.addAttribute("result", reviewService.getAllReviews());
         
         //List<Review[]> reviewList = reviewRepository.getReviewList();
 

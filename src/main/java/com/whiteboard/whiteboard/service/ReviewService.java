@@ -13,6 +13,8 @@ public interface ReviewService {
   // 새로운 리뷰 생성
   Long saveReview(ReviewDTO reviewDTO);
 
+  List<ReviewDTO> getAllReviews() ;
+
   List<ReviewDTO[]> getReviewDTOs();
 
   PageResultDTO<ReviewDTO, Object[]> getReviewDTOList(PageRequestDTO pageRequestDTO);
