@@ -93,13 +93,13 @@
   <section class="container my-5 text-center">
     <div class="d-flex justify-content-end mb-3">
     </div>
-    <h2>NOTICE</h2>
+    <h2>Q&A</h2>
     <br>
     <br>
     <div class="card" th:each="dto : ${result}">
         <div class="card-header">
             <h5 class="card-title" id="noticeTitle">[[${dto.title}]]</h5>
-            <!-- <h6 class="card-subtitle mb-2 text-muted" id="noticeAuthor">[[${dto.writer}]]</h6> -->
+            <h6 class="card-subtitle mb-2 text-muted" id="noticeAuthor">[[${dto.writer}]]</h6>
         </div>
         <div class="card-body">
             <p class="card-text" id="noticeContent">[[${dto.content}]]</p>
@@ -116,7 +116,7 @@
 
         <div class="my-3 d-flex justify-content-end">
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="/notice/notice1" class="btn btn-light" id="prevNotice">목록</a></li>
+                <li class="list-inline-item"><a href="/notice/question" class="btn btn-light" id="prevNotice">목록</a></li>
             </ul>
         </div>
         

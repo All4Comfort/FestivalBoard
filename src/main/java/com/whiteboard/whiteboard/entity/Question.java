@@ -37,10 +37,10 @@ public class Question extends BaseEntity{ //작성일,수정일은 BaseEntity로
     @Column(nullable = false)
     private String content;//글내용
     
-    @Column(name = "is_secret")
-    private Boolean isSecret;//비밀글 여부
+   // @Column(name = "is_secret")
+   // private Boolean isSecret;//비밀글 여부
 
-    private String state;//진행상태 : 답변미완료, 답변완료
+   // private String state;//진행상태 : 답변미완료, 답변완료
 
     // 제목 업데이트 메서드
     public void updateTitle(String newTitle){
@@ -53,7 +53,7 @@ public class Question extends BaseEntity{ //작성일,수정일은 BaseEntity로
     }
 
     // 비밀글 여부 업데이트 메서드
-    public void updateIsSecret (boolean newIsSecret){
-        this.isSecret = newIsSecret;
-    }
+    // public void updateIsSecret (boolean newIsSecret){
+    //     this.isSecret = newIsSecret;
+    // }
 }
