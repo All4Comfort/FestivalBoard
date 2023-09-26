@@ -73,7 +73,7 @@ public class ReviewServiceImpl implements ReviewService {
   public ReviewDTO getReviewByReviewNum(Long reviewNum) {
     Review review = reviewRepository.findById(reviewNum)
                 .orElseThrow(() -> new NoSuchElementException(reviewNum + "인 id 리뷰를 찾을 수 없습니다."));
-    return entityToDTO(review);
+    return entityToDTO(review); 
   }
 
 
