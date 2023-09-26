@@ -62,5 +62,11 @@ public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model,
   }
 
 
-  
+    @GetMapping("/question")
+  public void question(PageRequestDTO pageRequestDTO, Model model){
+    //model.addAttribute("result", noticeService.getList(pageRequestDTO));
+    //model.addAttribute("result", noticeRepository.getNoticeBynoticeNum(1L));
+    //model.addAttribute("result", noticeRepository.getNoticeList());
+    
+  }
 }

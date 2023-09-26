@@ -24,7 +24,7 @@ public interface NoticeService {
                         .noticeNum(notice.getNoticeNum())
                         .title(notice.getTitle())
                         .content(notice.getContent())
-                        .registerDate(notice.getRegisterDate())
+                        //.registerDate(notice.getRegisterDate())
                         //.writer(member.getNickname())
                         .build();
 
