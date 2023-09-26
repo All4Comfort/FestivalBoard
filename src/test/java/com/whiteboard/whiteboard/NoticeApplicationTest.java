@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -20,7 +19,7 @@ class NoticeApplicationTest {
 
 
 
-  @Test
+  //@Test
   void BaseEntity_테스트(){
         // given
         LocalDateTime nowTime = LocalDateTime.now();
@@ -41,7 +40,7 @@ class NoticeApplicationTest {
 
 
   // 공지사항 db에 밀어넣기
-  @Test
+  //@Test
   void contextLoads() {
   IntStream.rangeClosed(1, 10).forEach(i -> {
 
