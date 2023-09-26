@@ -66,5 +66,14 @@
         <p class="review-detail-hashtags" th:text="'해시태그: ' + ${reviewDTO.hashTag1}">해시태그: #프로젝트 #리뷰</p>
         <p class="review-detail-likes" th:text="'좋아요 수: ' + ${reviewDTO.goodCount}">좋아요 수: 50</p>
     </div> 
+
+    
+    <div class="write-review-button" id="write-review-button">
+        <!-- href="/src/main/resources/templates/review/reviewWrite.html" -->
+        <!-- <a >리뷰 작성하기</a> -->
+        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal">
+            <a th:href="@{/review/reviewModify}">수정하기</a>
+        </button>
+    </div>
 </body>
 </html>

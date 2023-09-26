@@ -102,17 +102,20 @@
     
     <div class="card" th:each="dto : ${result}">
         <div class="card-header">
-            <form>
+        <form>
                 <input type="hidden" name="noticeNum" th:value="${dto.noticeNum}"/>
-            </form>
-            <h5 class="card-title" id="noticeTitle" th:utext="${dto.title}"></h5>
+                <input type="hidden" name="content"/>
+                <input type="hidden" name="title"/>
+        </form>    
+            <h5 class="card-title" id="noticeTitle" th:utext="${dto.title}">[[${dto.title}]]</h5>
             <!-- <h6 class="card-subtitle mb-2 text-muted" id="noticeAuthor">[[${dto.writer}]]</h6> -->
 
-        </div>
+            </div>
+            
+            <div class="card-body">
+                <p class="card-text" id="noticeContent" th:utext="${dto.content}" value="${dto.content}">[[${dto.content}]]</p>
+            </div>
         
-        <div class="card-body">
-            <p class="card-text" id="noticeContent" th:utext="${dto.content}"></p>
-        </div>
     </div>
     <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
         <button type="button" class="btn btn-custom modifyBtn">수정</button>
@@ -129,11 +132,7 @@
             </ul>
         </div>
 
-        <div class="my-3 d-flex justify-content-end">
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="/notice/notice1" class="btn btn-light" id="prevNotice">목록</a></li>
-            </ul>
-        </div>
+        
         
 </div>
 </section>
@@ -153,16 +152,17 @@ document.getElementById('delete').addEventListener('click',function(event){
 <script th:inline="javascript">
     
     var actionForm = $("form");
+    var num = $("input[name='noticeNum']").val();
 
     $(".removeBtn").click(()=>{
         if(!confirm("삭제하시겠습니까?")){
             return ;
         }
         //console.log(actionForm);
-        var nick = $("input[name='noticeNum']").val();  //nick만 보낼것임
+          //nick만 보낼것임
     
-        console.log(nick);
-        actionForm.append(nick);
+        //console.log(nick);
+        actionForm.append(num);
         
         actionForm.attr("action", "/notice/remove").attr("method","post");
 
@@ -173,8 +173,20 @@ document.getElementById('delete').addEventListener('click',function(event){
         if(!confirm("수정하시겠습니까?")){
             return ;
         }
+        $("input[name='title']").val($("#noticeTitle").text());
+        $("input[name='content']").val($("#noticeContent").text());
+        
+        var a = $("input[name='title']").val();
+        var b = $("input[name='content']").val();
+        console.log("!!-->" + a);
+        console.log("!!-->" + b);
 
-        actionForm.attr("action", "/notice/modify").attr("method", "post").submit();
+        actionForm.append(num);
+        actionForm.append(a);
+        actionForm.append(b);
+
+        console.log(num + " ### " + a + b);
+        actionForm.attr("action", "/notice/noticemodify").attr("method", "get").submit();
     });
 
 
@@ -193,6 +205,12 @@ document.getElementById('delete').addEventListener('click',function(event){
         // 현재 festivalNum 값에서 1을 빼서 이전 페이지의 festivalNum 값을 생성합니다.
         var prevNoticeNum = currentNoticeNum - 1;
 
+        // 0보다 작거나 같은 경우 "첫번째 게시물 입니다" 메시지를 표시하고 이동하지 않습니다.
+        if (prevNoticeNum <= 0) {
+                alert("첫번째 게시물 입니다");
+                return; // 페이지 이동을 하지 않도록 종료합니다.
+            }
+
         // 이전 페이지의 URL을 생성합니다.
         var prevPageUrl = '/notice/notice1Detail?noticeNum=' + prevNoticeNum;
 
@@ -210,6 +228,16 @@ document.getElementById('delete').addEventListener('click',function(event){
 
         // 현재 festivalNum 값에 1을 더하여 다음 페이지의 festivalNum 값을 생성합니다.
         var nextNoticeNum = currentNoticeNum + 1;
+
+        // 여기에 마지막 게시물의 번호를 지정하세요.
+        var lastNoticeNum = 10; // 마지막 게시물
+
+        // 현재 festivalNum 값이 마지막 게시물 번호와 같거나 큰 경우 "마지막 게시물 입니다" 메시지를 표시하고 이동하지 않습니다.
+        //???????????????????????????? 질문이 필요한 부분 !!!!!!!!!!!!!!!!!!!!!!!!
+        if (currentNoticeNum >= lastNoticeNum) {
+                alert("마지막 게시물 입니다");
+                return; // 페이지 이동을 하지 않도록 종료합니다.
+            }
 
         // 다음 페이지의 URL을 생성합니다.
         var nextPageUrl = '/notice/notice1Detail?noticeNum=' + nextNoticeNum;

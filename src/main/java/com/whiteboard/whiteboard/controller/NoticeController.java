@@ -71,16 +71,24 @@ public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model,
     return "redirect:/notice/notice1";
   }
 
-  @PostMapping("/modify")
+  @PostMapping("/noticemodify")
   public String modify(NoticeDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
+    System.out.println("수정창띄우기!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    //System.err.println("dto!!!!!!!!!!!!!!!!!!!!! : " + dto);
     noticeService.modify(dto);
     
-    redirect.addAttribute("page", requestDTO);
+    //redirect.addAttribute("page", requestDTO);
     redirect.addAttribute("noticeNum", dto.getNoticeNum());
-    System.out.println(redirect.addAttribute("page", requestDTO));
-    return "redirect:/notice/noticemodify";
+    //System.out.println(redirect.addAttribute("page", requestDTO));
+    return "redirect:/notice/notice1Detail";
   }
 
+  //신규글등록폼 요청처리하기
+  @GetMapping("/noticemodify")
+  public void noticemodify(@ModelAttribute NoticeDTO dto, Model model){
+    
+    model.addAttribute("dto", dto);
+  }
 
   @GetMapping("/question")
   public void question(PageRequestDTO pageRequestDTO, Model model){
