@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
-import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Review;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
@@ -22,6 +21,7 @@ public class ReviewServiceImpl implements ReviewService {
 
   private final ReviewRepository reviewRepository;
   private final MemberRepository memberRepository;
+  private final MemberService memberService;
 
   @Override
   public List<ReviewDTO> getAllReviews() {
@@ -78,10 +78,10 @@ public class ReviewServiceImpl implements ReviewService {
 
 public Review dtoToEntity(ReviewDTO reviewDTO) {
   
-    Member member = memberRepository.getReferenceById(reviewDTO.getWriter());
+    //Member member = memberService.convertToDTO
 
     Review review = Review.builder()
-        .writer(member)
+        //.writer(member)
         .title(reviewDTO.getTitle())
         .content(reviewDTO.getContent())
         .readCount(0L)
@@ -89,6 +89,8 @@ public Review dtoToEntity(ReviewDTO reviewDTO) {
         .build();
     return review;
   }
+
+
 
   @Override
   public void saveReview(ReviewDTO dto) {
@@ -102,7 +104,6 @@ public Review dtoToEntity(ReviewDTO reviewDTO) {
 
 
 
- 
 
 
 }

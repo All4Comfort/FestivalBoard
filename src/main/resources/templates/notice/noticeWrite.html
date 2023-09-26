@@ -51,7 +51,7 @@
 
         $('#submit').click(function() {
           var title = $('#title').val();
-          var content = $('#summernote').summernote('code');
+          var content = $('#summernote').summernote('getText');
 
           // AJAX 요청 등을 이용하여 서버로 데이터 전송 및 추가적인 처리 수행
 
