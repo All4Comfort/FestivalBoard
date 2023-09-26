@@ -105,13 +105,13 @@
             <form>
                 <input type="hidden" name="noticeNum" th:value="${dto.noticeNum}"/>
             </form>
-            <h5 class="card-title" id="noticeTitle">[[${dto.title}]]</h5>
+            <h5 class="card-title" id="noticeTitle" th:utext="${dto.title}"></h5>
             <!-- <h6 class="card-subtitle mb-2 text-muted" id="noticeAuthor">[[${dto.writer}]]</h6> -->
 
         </div>
         
         <div class="card-body">
-            <p class="card-text" id="noticeContent">[[${dto.content}]]</p>
+            <p class="card-text" id="noticeContent" th:utext="${dto.content}"></p>
         </div>
     </div>
     <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
