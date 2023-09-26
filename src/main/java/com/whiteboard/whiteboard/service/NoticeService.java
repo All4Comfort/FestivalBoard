@@ -3,8 +3,10 @@ package com.whiteboard.whiteboard.service;
 import com.whiteboard.whiteboard.dto.NoticeDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
+import com.whiteboard.whiteboard.dto.QuestionDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Notice;
+import com.whiteboard.whiteboard.entity.Question;
 
 public interface NoticeService {
     // 신규글 등록 메서드
@@ -23,7 +25,7 @@ public interface NoticeService {
                         .title(notice.getTitle())
                         .content(notice.getContent())
                         .registerDate(notice.getRegisterDate())
-                        .writer(member.getNickname())
+                        //.writer(member.getNickname())
                         .build();
 
         return dto;
@@ -40,5 +42,33 @@ public interface NoticeService {
                         .build();
 
         return notice;
+    }
+
+
+    // 설명: Entity 객체를 DTO로 변환하는 메서드
+    default QuestionDTO entityToQuestionDTO(Question question){
+        QuestionDTO dto = QuestionDTO.builder()
+                        .questionNum(question.getQuestionNum())
+                        .title(question.getTitle())
+                        .content(question.getContent())
+                        .registerDate(question.getRegisterDate())
+                        .nickName(question.getWriter().getNickname())
+                        .build();
+
+        return dto;
+    }
+
+    // dtoToEntity 변환 메서드 정의
+    default Question dtoToQuestionEntity(QuestionDTO dto, Member member){
+        Member member1 = Member.builder().nickname(dto.getNickName()).build();
+
+        Question question = Question.builder()
+                        .questionNum(dto.getQuestionNum())
+                        .title(dto.getTitle())
+                        .content(dto.getContent())
+                        .writer(member1)
+                        .build();
+
+        return question;
     }
 }
