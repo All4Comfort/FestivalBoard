@@ -1,13 +1,11 @@
 package com.whiteboard.whiteboard.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.whiteboard.whiteboard.entity.Festival;
@@ -20,8 +18,8 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
     //@Query(value = "SELECT f FROM Festival f WHERE f.festivalNum <= 5")
     List<Festival> getFiveEntity();
 
-
-    Optional<Festival> findByFestivalNum(@Param("festivalNum") Long festivalNum);
+    //@Query("SELECT f FROM Festival f ORDER BY f.festivalNum = :festivalNum")
+    //Optional<Festival> findByFestivalNum(@Param("festivalNum") Long festivalNum);
 
 
     //민건 리스트로 가져오는 축제게시물~~~~~
@@ -32,7 +30,10 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
     @Query("SELECT f FROM Festival f ORDER BY f.festivalNum ASC")
     Page<Festival> findAllByOrderByFestivalNum(Pageable pageable);
 
-    //
+    // //축제 정보 상세페이지
+    // @Query("SELECT f FROM Festival f ORDER BY f.festivalNum = :festivalNum")
+
+    
 
     // @Modifying
     // @Query("update Festival e set e.read_count = e.read_count + 1 where

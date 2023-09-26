@@ -10,6 +10,7 @@ import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.entity.Review;
+import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class ReviewServiceImpl implements ReviewService {
 
   private final ReviewRepository reviewRepository;
+  private final MemberRepository memberRepository;
+  private final MemberService memberService;
 
   @Override
   public List<ReviewDTO> getAllReviews() {
@@ -32,20 +35,6 @@ public class ReviewServiceImpl implements ReviewService {
     
     return reviewDTOs;
   }
-
-
-
-  // @Override
-  // public ReviewDTO getReviewByReviewNum(Long reviewNum) {
-
-  //   Review[] reviews = reviewRepository.getReviewNum(reviewNum);
-
-    
-  //   // Review review = reviewRepository.findById(reviewNum)
-  //   //     .orElseThrow(() -> new NoSuchElementException(reviewNum + "인 id 리뷰를 찾을 수 없습니다."));
-  //   //     System.out.println("서비스임플에서 review엔티티 출력 : " + review);
-  // }
-
 
 
   @Override
@@ -87,17 +76,35 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
 
+public Review dtoToEntity(ReviewDTO reviewDTO) {
+  
+    //Member member = memberService.convertToDTO
+
+    Review review = Review.builder()
+        //.writer(member)
+        .title(reviewDTO.getTitle())
+        .content(reviewDTO.getContent())
+        .readCount(0L)
+        .goodCount(0L)
+        .build();
+    return review;
+  }
+
 
 
   @Override
-  public Long saveReview(ReviewDTO dto) {
-    Review review = dtoToEntity(dto,null);
+  public void saveReview(ReviewDTO dto) {
+    Review review = dtoToEntity(dto);
     reviewRepository.save(review);
-    return review.getReviewNum();
+    System.out.println("글 DB에 저장 성공");
     //Review saveReview = reviewRepository.save(review);
     //return saveReview.getReviewNum();
   
   }
+
+
+
+ 
 
 
 }
