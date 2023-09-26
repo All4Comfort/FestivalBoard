@@ -14,11 +14,20 @@ public interface NoticeService {
     // 신규글 등록 메서드
     Long register(NoticeDTO dto);
 
+    // 신규글 등록 메서드
+    Long registerQuestion(QuestionDTO dto);
+
     //모든 공지글 가져오기
     List<NoticeDTO> findAll();
 
+    //모든 공지글 가져오기
+    List<QuestionDTO> findAllQuestion();
+
     // 특정 게시물의 정보를 리턴라는 메서드 선언
     NoticeDTO get(Long noticeNum);
+
+    // 특정 게시물의 정보를 리턴라는 메서드 선언
+    NoticeDTO getQuestion(Long questionNum);
 
     // list 페이지에서 페이지에 해당하는 글목록 조회 리스트 get 메서드 정의
     PageResultDTO<NoticeDTO, Object[]> getList(PageRequestDTO pageRequestDTO);

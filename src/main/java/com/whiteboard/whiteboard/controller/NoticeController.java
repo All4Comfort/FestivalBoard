@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.whiteboard.whiteboard.dto.NoticeDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.repository.NoticeRepository;
+import com.whiteboard.whiteboard.repository.QuestionRepository;
 import com.whiteboard.whiteboard.service.NoticeService;
 import com.whiteboard.whiteboard.service.NoticeServiceImpl;
 
@@ -26,6 +27,7 @@ public class NoticeController {
   private final NoticeService noticeService;
   private final NoticeServiceImpl noticeServiceImpl;
   private final NoticeRepository noticeRepository;
+  private final QuestionRepository questionRepository;
 
   @GetMapping("/notice1")
   public void notice(PageRequestDTO pageRequestDTO, Model model){
@@ -62,11 +64,20 @@ public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model,
   }
 
 
-    @GetMapping("/question")
+  @GetMapping("/question")
   public void question(PageRequestDTO pageRequestDTO, Model model){
     //model.addAttribute("result", noticeService.getList(pageRequestDTO));
     //model.addAttribute("result", noticeRepository.getNoticeBynoticeNum(1L));
-    //model.addAttribute("result", noticeRepository.getNoticeList());
     
+    model.addAttribute("result", noticeService.findAllQuestion());
+    //model.addAttribute("result", questionRepository.getQuestionList());
   }
+
+//   @GetMapping("/questionDetail")
+// public void questionDetail(@RequestParam("questionNum") Long questionNum, Model model, HttpSession session) {
+//     QuestionDTO questionDTO = noticeService.getquestion(questionNum);
+//     model.addAttribute("result", questionDTO);
+
+// }
+
 }
