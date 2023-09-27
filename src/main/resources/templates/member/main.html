@@ -66,7 +66,16 @@
             margin-left: -30px;
             /* 원하는 만큼 왼쪽으로 이동시킵니다. */
         }
+
+        /* 링크 기본 스타일 제거 */
+        a {
+            text-decoration: none;
+            /* 밑줄 제거 */
+            color: inherit;
+            /* 기본 텍스트 색상 상속 */
+        }
     </style>
+
 </head>
 
 <body>
@@ -165,6 +174,7 @@
                 <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
                 <div th:each="festival, iterStat : ${festivals}"
                     th:classappend="${iterStat.index == 0} ? 'carousel-item active' : 'carousel-item'">
+                    <!--게시물 클릭시 잘넘어가는데 에러가 뜨는거 나중에 해결-->
                     <a th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}">
                         <div class="card">
                             <div class="card-body">
@@ -286,11 +296,16 @@
                         image.src = festival.thumbnail;
                         image.alt = "Festival Poster";
 
+                        // 게시물로 이동하는 링크 추가
+                        const link = document.createElement("a");
+                        link.href = `/festival/festivalDetail?festivalNum=${festival.festivalNum}`;
+                        link.appendChild(card);
+
                         cardBody.appendChild(title);
                         cardBody.appendChild(period);
                         card.appendChild(cardBody);
                         card.appendChild(image);
-                        carouselItem.appendChild(card);
+                        carouselItem.appendChild(link);
                         carouselInner.appendChild(carouselItem);
                     });
                 },

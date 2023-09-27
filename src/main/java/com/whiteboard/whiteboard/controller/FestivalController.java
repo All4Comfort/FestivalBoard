@@ -33,6 +33,7 @@ public class FestivalController {
     public List<FestivalDTO> getFestivals() {
         List<FestivalDTO> festivals = festivalService.getFiveDTOs();
         // logger.info("축제 목록: {}", festivals); //콘솔에 찍히나 확인했습니다.
+        System.err.println("축제번호가 있나? :" + festivals);
         return festivals; // JSON 형식의 데이터를 반환합니다.
     }
 
