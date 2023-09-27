@@ -37,10 +37,6 @@ public class FestivalReplyService {
     
   }
 
-  void addComment(ReplyDTO replyDTO){
-    
-  }
-  
 
   //DTO를 Entity로 변환하는 메서드 선언
 	public FestivalReply convertToFestvialEntity(ReplyDTO replyDTO, HttpSession session) {

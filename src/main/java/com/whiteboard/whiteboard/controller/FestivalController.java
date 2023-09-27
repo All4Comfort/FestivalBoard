@@ -7,18 +7,14 @@ import java.util.stream.IntStream;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.whiteboard.whiteboard.dto.FestivalDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
-import com.whiteboard.whiteboard.dto.ReplyDTO;
 import com.whiteboard.whiteboard.service.FestivalService;
 
 import lombok.RequiredArgsConstructor;
@@ -37,7 +33,7 @@ public class FestivalController {
     public List<FestivalDTO> getFestivals() {
         List<FestivalDTO> festivals = festivalService.getFiveDTOs();
         // logger.info("축제 목록: {}", festivals); //콘솔에 찍히나 확인했습니다.
-        // System.err.println("축제번호가 있나? :" + festivals);
+        //System.err.println("축제번호가 있나? :" + festivals);
         return festivals; // JSON 형식의 데이터를 반환합니다.
     }
 
@@ -109,29 +105,11 @@ public class FestivalController {
         return "festival/festivalDetail"; // 렌더링할 뷰의 이름을 반환
     }
 
-    // 댓글 작성 요청 처리
-@PostMapping("/festival/addComment")
-@ResponseBody
-public ResponseEntity<String> addComment(@RequestParam("festivalNum") Long festivalNum,
-        @RequestParam("content") String content) {
-    try {
-        // 댓글을 데이터베이스에 저장
-        ReplyDTO replyDTO = new ReplyDTO();
-        replyDTO.setFestivalNum(festivalNum); // 축제 번호 설정
-        replyDTO.setContent(content); // 댓글 내용 설정
-        replyDTO.setWriter(SecurityContextHolder.getContext().getAuthentication().getName()); // 현재 로그인한 사용자의 이메일 설정
-        festivalService.addComment(replyDTO);
-        return ResponseEntity.ok("댓글이 등록되었습니다.");
-    } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.badRequest().body("댓글 등록에 실패했습니다.");
-    }
-}
+    
 
-
-    // 페이징전 축제리스트
+    //페이징전 축제리스트
     // 전체 죽제 목록을 가져오기
-    // @GetMapping("/festival/festivalList")
+        // @GetMapping("/festival/festivalList")
     // public String showFestivalList(PageRequestDTO pageRequestDTO, Model model) {
     // List<FestivalDTO> festivals =
     // festivalService.findAllByOrderByFestivalNumAsc();
