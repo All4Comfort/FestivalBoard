@@ -1,6 +1,8 @@
 package com.whiteboard.whiteboard.controller;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -173,11 +175,22 @@ public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model,
   public void noticeWrite(){
     
   }
-
+//글쓰기 에디터 사용 시 자동 삽입되는 html 태그 제거하는 메서드
+public static String removeHtmlTags(String input) {
+    if (input == null) {
+        return "";
+    }
+    // 정규 표현식을 사용하여 HTML 태그를 제거하고 기호를 대체합니다.
+    String regex = "<[^>]*>";
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(input);
+    return matcher.replaceAll("").replace("&lt;", "<").replace("&gt;", ">"); 
+}
   //신규글 등록처리하기..
   @PostMapping("/noticeWrite")
   public String register(@ModelAttribute NoticeDTO dto, RedirectAttributes attributes){
-   //Notice notice = 
+   
+   dto.setContent(removeHtmlTags(dto.getContent())); //Notice notice = 
    // notice.updateTitle(dto.getTitle());
    // notice.updateNContent(dto.getContent());
   //  noticeRepository.save(notice);
@@ -194,6 +207,8 @@ public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model,
     return "redirect:/notice/notice1";
   }
 
+
+   
   @PostMapping("/noticemodify")
   public String modify(NoticeDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
     System.out.println("수정창띄우기!!!!!!!!!!!!!!!!!!!!!!!!!!!");

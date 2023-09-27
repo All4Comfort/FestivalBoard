@@ -52,4 +52,6 @@ public interface QuestionService {
 
         return question;
     }
+    //게시물 수정 메서드 선언
+    void modify(QuestionDTO dto);
 }

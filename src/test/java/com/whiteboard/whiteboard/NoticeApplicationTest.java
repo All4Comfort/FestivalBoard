@@ -4,11 +4,13 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.whiteboard.whiteboard.entity.Notice;
 import com.whiteboard.whiteboard.entity.Question;
+import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.repository.NoticeRepository;
 import com.whiteboard.whiteboard.repository.QuestionRepository;
 
@@ -19,7 +21,7 @@ class NoticeApplicationTest {
   //private NoticeService noticeService;
   private NoticeRepository noticeRepository;
   private QuestionRepository questionRepository;
-
+  private MemberRepository memberRepository;
   //@Test
   void BaseEntity_테스트(){
         // given
@@ -54,10 +56,10 @@ class NoticeApplicationTest {
   // }
 
   // 공지사항 db에 밀어넣기
-  //@Test
+  @Test
   void contextLoads() {
   IntStream.rangeClosed(1, 10).forEach(i -> {
-
+  //Member member = memberRepository.getReferenceById(i);
   Question question = Question.builder()
                       .title("제목" + i + "입니다.")
                       .content("이건" + i + " 번째 글입니다.")

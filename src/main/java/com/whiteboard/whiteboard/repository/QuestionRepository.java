@@ -28,6 +28,7 @@ List<Question> getQuestionList();
 @Query(value = "Select q, w From Question q LEFT JOIN q.writer w")
 Page<Object[]> getQuestionpage(Pageable pageable);
 
+@Query("SELECT q FROM Question q ORDER BY q.questionNum DESC")
 Page<Question> findAllByOrderByQuestionNum(Pageable pageable);
 
 List<Question> findByTitleContaining(String searchQuery);

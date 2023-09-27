@@ -1,6 +1,8 @@
 package com.whiteboard.whiteboard.controller;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -91,9 +93,10 @@ public class QuestionController {
     }
 
     @GetMapping("/questionDetail")
-    public void questionDetail(@RequestParam("questionNum") Long questionNum, Model model, HttpSession session){
+    public void questionDetail(@ModelAttribute QuestionDTO dto, @RequestParam("questionNum") Long questionNum, Model model, HttpSession session){
       QuestionDTO questionDTO = questionService.get(questionNum);
-      model.addAttribute("result", questionDTO);
+      System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + questionDTO);
+      model.addAttribute("dto", questionDTO);
     }
 
     //신규글등록폼 요청처리
@@ -102,13 +105,51 @@ public class QuestionController {
 
     }
 
+    //글쓰기 에디터 사용 시 자동 삽입되는 html 태그 제거하는 메서드
+    public static String removeHtmlTags(String input) {
+      if (input == null) {
+          return "";
+      }
+    // 정규 표현식을 사용하여 HTML 태그를 제거하고 기호를 대체합니다.
+    String regex = "<[^>]*>";
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(input);
+    return matcher.replaceAll("").replace("&lt;", "<").replace("&gt;", ">"); 
+}
+
     //신규글 등록처리
     @PostMapping("/questionWrite")
     public String register(@ModelAttribute QuestionDTO dto , RedirectAttributes attributes){
+      dto.setContent(removeHtmlTags(dto.getContent()));
       Long newQuestionNum = questionService.register(dto);
       attributes.addFlashAttribute("newQuestionNum", newQuestionNum);
       return "redirect:/notice/question";
     }
+
+    @PostMapping("/questionRemove")
+  public String questionremove(long questionNum, RedirectAttributes redirect){
+    System.out.println("GGGGGGGGG");
+    questionService.remove(questionNum);
+    redirect.addAttribute("newQuestionNum", questionNum);
+    return "redirect:/notice/question";
+  }
+
+  @PostMapping("/questionmodify")
+  public String modify(QuestionDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
+    
+    //System.out.println("포스수정 ==============================" + dto);
+    questionService.modify(dto);
+
+    redirect.addAttribute("questionNum", dto.getQuestionNum());
+    return "redirect:/notice/questionDetail";
+  }
+
+  @GetMapping("/questionmodify")
+  public void questionmodify(@ModelAttribute QuestionDTO dto, Model model){
+    model.addAttribute("dto", dto);
+  }
+
+
 
     // @PostMapping("/remove")
     // public String remove(long questionNum, RedirectAttributes redirect){
