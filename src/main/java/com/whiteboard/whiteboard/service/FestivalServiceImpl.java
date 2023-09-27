@@ -10,11 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.whiteboard.whiteboard.dto.FestivalDTO;
-import com.whiteboard.whiteboard.dto.ReplyDTO;
 import com.whiteboard.whiteboard.entity.Festival;
-import com.whiteboard.whiteboard.entity.FestivalReply;
 import com.whiteboard.whiteboard.repository.FestivalReplyRepository;
 import com.whiteboard.whiteboard.repository.FestivalRepository;
+import com.whiteboard.whiteboard.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +24,8 @@ public class FestivalServiceImpl implements FestivalService {
     private final FestivalRepository festivalRepository;
 
     private final FestivalReplyRepository festivalReplyRepository;
+
+    private final MemberRepository memberRepository;
 
     private List<FestivalDTO> searchResults = new ArrayList<>();
 
@@ -92,14 +93,7 @@ public class FestivalServiceImpl implements FestivalService {
         return festivalDTOs;
     }
 
-    // 축제 상세페이지 댓글
-    @Override
-    public void addComment(ReplyDTO replyDTO) {
-        FestivalReply festivalReply = new FestivalReply();
-        festivalReply.setFestivalNum(replyDTO.getFestivalNum());
-        festivalReply.setContent(replyDTO.getContent());
-        festivalReplyRepository.save(festivalReply);
-    }
+    
 
     // 검색 결과를 반환하는 메서드
     // public List<FestivalDTO> getSearchResults() {
