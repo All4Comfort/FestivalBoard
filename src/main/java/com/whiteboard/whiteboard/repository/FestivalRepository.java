@@ -14,8 +14,9 @@ import com.whiteboard.whiteboard.entity.Festival;
 public interface FestivalRepository extends JpaRepository<Festival, Long> {
 
     //한울쓰
-    @Query(value = "SELECT f FROM Festival f ORDER BY RAND() LIMIT 5")
+    //@Query(value = "SELECT f FROM Festival f ORDER BY RAND() LIMIT 5")
     //@Query(value = "SELECT f FROM Festival f WHERE f.festivalNum <= 5")
+    @Query("SELECT f FROM Festival f WHERE f.festivalNum <= (SELECT MAX(festivalNum) FROM Festival) ORDER BY RAND() LIMIT 5")
     List<Festival> getFiveEntity();
 
     //@Query("SELECT f FROM Festival f ORDER BY f.festivalNum = :festivalNum")

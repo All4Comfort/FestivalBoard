@@ -82,7 +82,7 @@ public class MemberController {
 
     // 로그인 메서드
     // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
-    //, @ModelAttribute("MemberDTO") MemberDTO memberDTO
+    // , @ModelAttribute("MemberDTO") MemberDTO memberDTO
     @PostMapping("/member/login")
     public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, HttpSession session,
             Model model, MemberDTO memberDTO) {
@@ -94,12 +94,10 @@ public class MemberController {
             Member member = optionalMember.get();
 
             session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
-            
 
-            //getAttribute는 Object타입으로 가져온다
-            System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
-            
-            
+            // getAttribute는 Object타입으로 가져온다
+            System.err.println("Post // login // !!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
+
             memberDTO = memberService.covertSessionToDTO(session);
 
             return "redirect:/main";
@@ -158,6 +156,142 @@ public class MemberController {
 
     // 리포지토리 컨트롤러 서비스 html
 
+    @GetMapping("/member/checkedPassword")
+    public String moveTocheckedPassword(HttpSession session, Model model,
+            @ModelAttribute("memberDTO") MemberDTO memberDTO) {
+        // GET 요청에 대한 페이지를 반환하거나 다른 작업 수행
+
+        // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+
+        memberDTO = memberService.covertSessionToDTO(session);
+
+        model.addAttribute(loggedInUser);
+
+        System.out.println("Get // moveTocheckedPassword // dto에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + memberDTO);
+        System.out
+                .println("Get // moveTocheckedPassword // loggedInUser에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + loggedInUser);
+
+        return "/member/checkedPassword"; // 적절한 뷰 이름 사용
+    }
+
+    // 마이페이지 이동시 비밀번호 확인 메서드
+    @PostMapping("/member/checkedPassword")
+    public String checkedPassword(HttpSession session, Model model, @ModelAttribute("MemberDTO") MemberDTO memberDTO) {
+
+        // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+
+        model.addAttribute(loggedInUser);
+
+        memberDTO = memberService.covertSessionToDTO(session);
+        Optional<Member> optionalMember = memberService.login(loggedInUser.getEmail(), memberDTO.getPw());
+
+        System.out.println("Post // checkedPassword // optional 알아보기 >>>>>>>>>>>>>>>> " + optionalMember);
+        System.out.println("Post // checkedPassword // dto에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + memberDTO);
+        System.out.println("Post // checkedPassword // loggedInUser에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + loggedInUser);
+        if (optionalMember.isPresent()) {
+            return "/member/myPage";
+        } else {
+            return "redirect:/member/checkedPassword";
+        }
+
+    }
+
+    // 비밀번호 변경창으로 이동
+    @GetMapping("/member/modifyPassword")
+    public String moveTomodifyPassword(HttpSession session, Model model,
+            @ModelAttribute("MemberDTO") MemberDTO memberDTO) {
+
+        // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+
+        model.addAttribute(loggedInUser);
+
+        memberDTO = memberService.covertSessionToDTO(session);
+        Optional<Member> optionalMember = memberService.login(loggedInUser.getEmail(), memberDTO.getPw());
+
+        System.out.println("Get // moveTomodifyPassword // optional 알아보기 >>>>>>>>>>>>>>>> " + optionalMember);
+        System.out.println("Get // moveTomodifyPassword // dto에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + memberDTO);
+        System.out
+                .println("Get // moveTomodifyPassword // loggedInUser에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + loggedInUser);
+
+        return "/member/modifyPassword";
+
+    }
+
+    // 비밀번호 수정 메서드
+    // @PostMapping("/member/modifyPassword")
+    // public String modifyPassword(HttpSession session, Model model,
+    // @ModelAttribute("MemberDTO") MemberDTO memberDTO){
+
+    // // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
+    // Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+
+    // model.addAttribute(loggedInUser);
+
+    // memberDTO = memberService.covertSessionToDTO(session);
+    // Optional<Member> optionalMember =
+    // memberService.login(loggedInUser.getEmail(), memberDTO.getPw());
+
+    // System.out.println("Post // modifyPassword // optional 알아보기 >>>>>>>>>>>>>>>>
+    // " + optionalMember);
+    // System.out.println("Post // modifyPassword // dto에 들어있는 비밀번호 보는
+    // 콘솔~~~>>>>>>>>>>>>" + memberDTO);
+    // System.out.println("Post // modifyPassword // loggedInUser에 들어있는 비밀번호 보는
+    // 콘솔~~~>>>>>>>>>>>>" +loggedInUser);
+
+    // //현재 비밀번호가 일치하고 // 변경할 비밀번호와 변경할 비밀번호확인이 둘다 같을 경우
+    // if(memberDTO.getNewPassword().equals(memberDTO.getConfirmNewPassword())){
+
+    // memberRepository.save(loggedInUser);
+    // return "redirect:/logout";
+    // }else{
+    // return "redirect:/member/modifyPassword";
+    // }
+
+    // }
+
+    @PostMapping("/member/modifyPassword")
+    public String modifyPassword(
+            HttpSession session,
+            @RequestParam("currentPassword") String currentPassword,
+            @RequestParam("newPassword") String newPassword,
+            @RequestParam("confirmPassword") String confirmPassword) {
+        // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+
+        // 현재 비밀번호 확인 로직
+        if (currentPassword.equals(loggedInUser.getPw())) {
+            // 현재 비밀번호가 일치하는 경우
+            if (newPassword.equals(confirmPassword)) {
+                // 새 비밀번호와 비밀번호 확인이 일치하는 경우
+                // 여기에서 비밀번호 변경 로직을 수행하고 사용자를 다른 페이지로 리다이렉트합니다.
+                // ...
+
+                // 비밀번호 변경 로직 추가하기
+
+                // 변경 후 세션 업데이트
+                loggedInUser.updatePw(newPassword);
+                session.setAttribute("loggedInUser", loggedInUser);
+                memberRepository.save(loggedInUser);
+
+                return "redirect:/logout"; // 비밀번호 변경 후 이동할 페이지 URL로 변경하세요.
+            } else {
+                // 새 비밀번호와 비밀번호 확인이 일치하지 않는 경우
+                // 에러 처리 또는 다른 처리 로직을 추가하세요.
+                // ...
+                return "redirect:/member/modifyPassword"; // 다시 비밀번호 변경 페이지로 리다이렉트
+            }
+        } else {
+            // 현재 비밀번호가 일치하지 않는 경우
+            // 에러 처리 또는 다른 처리 로직을 추가하세요.
+            // ...
+            return "redirect:/member/modifyPassword"; // 다시 비밀번호 변경 페이지로 리다이렉트
+        }
+    }
+
+    // 회원정보 수정 메서드
     @PostMapping("/member/myPage")
     public String modify(HttpSession session, @ModelAttribute MemberDTO memberDTO) {
 

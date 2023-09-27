@@ -17,71 +17,208 @@
 <style>
   /* 메뉴 항목 사이에 오른쪽 마진(간격)을 추가합니다. */
   .nav-item:not(:last-child) {
-                margin-right: 50px; /* 원하는 간격 크기(픽셀)를 지정합니다. */
+            margin-right: 50px;
+            /* 원하는 간격 크기(픽셀)를 지정합니다. */
+        }
+
+        /* 내 정보(내비게이션 탭)를 오른쪽으로 이동합니다. */
+        @media (max-width: 991px) {
+            .navbar-nav {
+                flex-direction: row;
+                /* 메뉴 항목을 가로로 나열합니다. */
             }
-            
-            /* 내 정보(내비게이션 탭)를 오른쪽으로 이동합니다. */
-            @media (max-width: 991px) {
-                .navbar-nav {
-                    flex-direction: row; /* 메뉴 항목을 가로로 나열합니다. */
-                }
-                .nav-item {
-                    margin-right: 20px; /* 메뉴 항목 사이 간격 설정 */
-                }
-                .nav-pills {
-                    margin-left:0 ; /* 내 정보(내비게이션 탭)를 오른쪽으로 이동 */
-                }
+
+            .nav-item {
+                margin-right: 20px;
+                /* 메뉴 항목 사이 간격 설정 */
             }
-  /*메뉴 항목 사이에 오른쪽 마진(간격)을 추가합니다.*/
-  .nav-item:not(:last-child) {
-                margin-right: 50px; /* 원하는 간격 크기(픽셀)를 지정합니다. */
+
+            .nav-pills {
+                margin-left: 0;
+                /* 내 정보(내비게이션 탭)를 오른쪽으로 이동 */
             }
-            
-            /* 내 정보(내비게이션 탭)를 오른쪽으로 이동합니다. */
-            @media (max-width: 991px) {
-                .navbar-nav {
-                    flex-direction: row; /* 메뉴 항목을 가로로 나열합니다. */
-                }
-                .nav-item {
-                    margin-right: 20px; /* 메뉴 항목 사이 간격 설정 */
-                }
-                .nav-pills {
-                    margin-left:0 ; /* 내 정보(내비게이션 탭)를 오른쪽으로 이동 */
-                }
-            }
+        }
+
+        /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        /* 드롭다운 메뉴의 위치를 조절합니다. */
+        .dropdown-menu {
+            left: 0;
+            /* 드롭다운 메뉴가 화면 왼쪽에 정렬되도록 설정합니다. */
+            margin-left: -30px;
+            /* 원하는 만큼 왼쪽으로 이동시킵니다. */
+        }
+
+        /* 링크 스타일 수정 */
+        a {
+            color: inherit;
+            /* 부모 요소의 텍스트 색상을 상속받음 */
+            text-decoration: none;
+            /* 링크의 밑줄을 제거함 */
+        }
+
+        .input-group .form-control {
+            max-width: 150px;
+            /* 최대 너비 설정 */
+            height: 40px;
+            /* 높이 설정 */
+        }
+
+        /* 작성자와 작성일 열의 스타일 수정 */
+        .table th:nth-child(3),
+        .table td:nth-child(3),
+        .table th:nth-child(4),
+        .table td:nth-child(4) {
+            text-align: right;
+        }
+
+        /* 작성일 열의 왼쪽 마진 조절 */
+        .table th:nth-child(4),
+        .table td:nth-child(4) {
+            margin-left: 10px;
+            /* 원하는 만큼 조절하세요 */
+        }
+
+        /* Pagination 스타일 */
+        .pagination {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            color: #333;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* 중요: 화면이 짤리지 않도록 스타일을 조정합니다. */
+        .carousel-item {
+            text-align: left;
+            /* 이미지 위 여백 추가 */
+            background-color: #f8f9fa;
+        }
+
+        .card {
+            width: 100%;
+            /* 카드가 100% 폭을 차지하도록 설정 */
+        }
+
+        .card-img-top {
+            max-width: 100%;
+            /* 이미지가 카드 내에 맞게 크기 조절 */
+            height: 300px;
+            margin: auto;
+        }
+
+        /* 중간 검색 폼 관련 스타일 수정 */
+        .search-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-form input[type="search"] {
+            max-width: 80%;
+        }
+
+        /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        /* 드롭다운 메뉴의 위치를 조절합니다. */
+        .dropdown-menu {
+            left: 0;
+            /* 드롭다운 메뉴가 화면 왼쪽에 정렬되도록 설정합니다. */
+            margin-left: -30px;
+            /* 원하는 만큼 왼쪽으로 이동시킵니다. */
+        }
+
+        footer {
+            position: relative;
+            /* 이전에는 fixed 였습니다 */
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 10px;
+            /* 원하는 여백 설정 */
+        }
 </style>
 </head>
 
 <body>
-  <header>
-    <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
-        <a class="navbar-brand" href="/main"><b>Fullstival</b></a>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ">
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="/festival/festivalList">Festival</a>
-                        </li>
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="/review/reviewList">Review</a>
-                        </li>
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="/notice/notice1">Notice</a>
-                        </li>
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="/member/myPage">My page</a>
-                        </li>
-                    </ul>
+    <header>
+        <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
+            <a class="navbar-brand" style="margin-left: 20px;" href="/main"><b>Fullstival</b></a>
+            <ul class="nav nav-pills">
+                <div id="welcome-message" th:if="${session.loggedInUser != null}"
+                    th:text="${session.loggedInUser.name} + '님 환영합니다'"
+                    style="display: flex; align-items: center; margin-right: 20px;">
                 </div>
-            </div>
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav ">
+                                <li class="nav-item" style="margin-right: 30px;">
+                                    <a class="nav-link" href="/festival/festivalList">Festival</a>
+                                </li>
+                                <li class="nav-item" style="margin-right: 30px;">
+                                    <a class="nav-link" href="/review/reviewList">Review</a>
+                                </li>
+                                <li class="nav-item" style="margin-right: 30px;">
+                                    <a class="nav-link" href="/notice/notice1">Notice</a>
+                                </li>
+                                <li class="nav-item" style="margin-right: 30px;"
+                                    th:unless="${session.loggedInUser != null}">
+                                    <a class="nav-link" id="login-link">
+                                        My Page
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown" style="margin-right: 30px;"
+                                    th:if="${session.loggedInUser != null}">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">
+                                        My Page
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <a class="dropdown-item" id="myPage">
+                                            <li>마이페이지</li>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item" id="logout">
+                                            <li>로그아웃</li>
+                                        </a>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </ul>
         </nav>
-    </nav>
-  </header>
+    </header>
 
   <section class="container my-5 text-center">
     <div class="d-flex justify-content-end mb-3">
@@ -171,9 +308,9 @@ document.getElementById('delete').addEventListener('click',function(event){
         console.log("!!-->" + a);
         console.log("!!-->" + b);
 
-        actionForm.append(num);
-        actionForm.append(a);
-        actionForm.append(b);
+        //actionForm.append(num);
+        //actionForm.append(a);
+        //actionForm.append(b);
 
         console.log(num + " ### " + a + b);
         actionForm.attr("action", "/notice/noticemodify").attr("method", "get").submit();
@@ -279,5 +416,35 @@ document.getElementById('delete').addEventListener('click',function(event){
             document.getElementById('noticeContent').textContent = content;
         });
     </script> -->
+    <script>
+        //로그인 체크 후 비로그인 시 login 으로 이동
+        //로그인 시 myPage 로 이동
+        document.addEventListener('DOMContentLoaded', function () {
+            if (document.getElementById('login-link')) {
+                document.getElementById('login-link').addEventListener('click', function (event) {
+                    // 사용자가 로그인하지 않은 경우
+                    alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+                    event.preventDefault(); // 기본 동작 방지
+                    window.location.href = "/member/login"; // 로그인 페이지로 이동
+                });
+            }
+            if (document.getElementById('myPage')) {
+                document.getElementById('myPage').addEventListener('click', function (event) {
+                    // 사용자가 로그인한 경우
+                    event.preventDefault(); // 기본 동작 방지
+                    window.location.href = "/member/myPage"; // 마이페이지로 이동
+                });
+            }
+            if (document.getElementById('logout')) {
+                document.getElementById('logout').addEventListener('click', function (event) {
+                    // 사용자가 로그인한 경우
+                    console.log('logout 클릭 이벤트 확인용');
+                    alert('로그아웃 하겠습니다.');
+                    event.preventDefault(); // 기본 동작 방지
+                    window.location.href = "/logout"; // 로그아웃으로 이동
+                });
+            }
+        });
+    </script>
 </body>
 </html>

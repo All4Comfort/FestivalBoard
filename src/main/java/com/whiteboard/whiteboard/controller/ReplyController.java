@@ -12,7 +12,7 @@ public class ReplyController {
 
     private final FestivalReplyService festivalReplyService;
 /*
-    //댓글 등록 페이지
+    //댓글 등록하는 Post 메서드 정의
     @PostMapping("/festival/save")
     public ResponseEntity saveFestivalReply(@ModelAttribute ReplyDTO replyDTO) {
         System.out.println("replyDTO = " + replyDTO);

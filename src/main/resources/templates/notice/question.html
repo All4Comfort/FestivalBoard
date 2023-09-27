@@ -144,36 +144,61 @@
 </head>
 
 <body>
-    <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
-        <a class="navbar-brand" href="#"><b>Fullstival</b></a>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ">
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="#">Festival</a>
-                        </li>
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="#">Review</a>
-                        </li>
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="#">Notice</a>
-                        </li>
-                        <li class="nav-item" style="margin-right: 50px;">
-                            <a class="nav-link" href="#">My page</a>
-                        </li>
-                    </ul>
+    <header>
+        <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
+            <a class="navbar-brand" style="margin-left: 20px;" href="/main"><b>Fullstival</b></a>
+            <ul class="nav nav-pills">
+                <div id="welcome-message" th:if="${session.loggedInUser != null}"
+                    th:text="${session.loggedInUser.name} + '님 환영합니다'"
+                    style="display: flex; align-items: center; margin-right: 20px;">
                 </div>
-            </div>
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav ">
+                                <li class="nav-item" style="margin-right: 30px;">
+                                    <a class="nav-link" href="/festival/festivalList">Festival</a>
+                                </li>
+                                <li class="nav-item" style="margin-right: 30px;">
+                                    <a class="nav-link" href="/review/reviewList">Review</a>
+                                </li>
+                                <li class="nav-item" style="margin-right: 30px;">
+                                    <a class="nav-link" href="/notice/notice1">Notice</a>
+                                </li>
+                                <li class="nav-item" style="margin-right: 30px;"
+                                    th:unless="${session.loggedInUser != null}">
+                                    <a class="nav-link" id="login-link">
+                                        My Page
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown" style="margin-right: 30px;"
+                                    th:if="${session.loggedInUser != null}">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">
+                                        My Page
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <a class="dropdown-item" id="myPage">
+                                            <li>마이페이지</li>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item" id="logout">
+                                            <li>로그아웃</li>
+                                        </a>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </ul>
         </nav>
-    </nav>
+    </header>
 
     <section class="container my-5 text-center">
         <div class="d-flex justify-content-end mb-3" style="margin-top: -25px;">
@@ -184,6 +209,9 @@
         <div class="d-flex justify-content-end mb-3">
         </div>
         <h2>Q&A</h2>
+        <div style="display: flex; justify-content: flex-end;">
+            <a href="/notice/notice1" class="btn btn-secondary">NOTICE</a>
+        </div>
         <br>
         <br>
         <table class="table">
@@ -199,39 +227,40 @@
 				<tr th:each="dto : ${result}">
 					<th scope="row">
 						<!-- 아래는 글번호에 페이지 넘버와 글번호를 추가로 설정하는것...List 를 모두 확인 후 추가 작업할것. -->
-						<a th:href="@{/notice/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.questionNum}]]</a>
+						<a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.questionNum}]]</a>
 					</th>
-					<td><a th:href="@{/notice/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.title}]]</a></td>
+					<td><a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.title}]]</a></td>
 					<td><a>[[${dto.writer}]]</a></td>
+                    <td><a th:text="${#temporals.format(dto.registerDate, 'yyyy-MM-dd')}"></a></td>
 				</tr>
 			</tbody>
         </table>
 
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
+        <!-- 페이지 번호 목록 표시 -->
+        <div class="pagination">
+            <!-- 이전 페이지 버튼 -->
+            <a th:if="${hasPrevPage}" th:href="@{'/notice/question?page=' + ${prevPageNumber}}"
+                class="page-link prev">이전</a>
+            <!-- 페이지 번호 표시 -->
+            <ul class="pagination justify-content-center" id="pagination">
+                <li th:each="pageNumber : ${pageNumbers}">
+                    <a th:href="@{'/notice/question?page=' + ${pageNumber}}" th:text="${pageNumber}"
+                        th:class="${pageNumber == currentPage ? 'active' : ''}"></a>
                 </li>
             </ul>
-        </nav>
+            <!-- 다음 페이지 버튼 -->
+            <a th:if="${hasNextPage}" th:href="@{'/notice/question?page=' + ${nextPageNumber}}"
+                class="page-link next">다음</a>
+        </div>
     </section>
 
-    <form action="/search" method="get" style="margin-top: -50px;">
+    <form action="/notice/question" method="get" style="margin-top: -30px;">
         <div class="container">
             <div class="d-flex justify-content-end mb-3">
                 <div class="ms-auto">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="query" placeholder="Search" aria-label="Search" aria-describedby="button-addon2">
+                        <input type="text" class="form-control" placeholder="Search" name="searchQuery"
+                            th:value="${searchQuery}">
                         <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
                     </div>
                 </div>
@@ -245,6 +274,37 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gg6vUz1rTL5UHVbNXLKwgpAYNr2NvTAPC5JiKc+2aX8Cxl+U7v2+nSvzvIMnJvWR" crossorigin="anonymous"></script>
+
+        <script>
+            //로그인 체크 후 비로그인 시 login 으로 이동
+            //로그인 시 myPage 로 이동
+            document.addEventListener('DOMContentLoaded', function () {
+                if (document.getElementById('login-link')) {
+                    document.getElementById('login-link').addEventListener('click', function (event) {
+                        // 사용자가 로그인하지 않은 경우
+                        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
+                        event.preventDefault(); // 기본 동작 방지
+                        window.location.href = "/member/login"; // 로그인 페이지로 이동
+                    });
+                }
+                if (document.getElementById('myPage')) {
+                    document.getElementById('myPage').addEventListener('click', function (event) {
+                        // 사용자가 로그인한 경우
+                        event.preventDefault(); // 기본 동작 방지
+                        window.location.href = "/member/myPage"; // 마이페이지로 이동
+                    });
+                }
+                if (document.getElementById('logout')) {
+                    document.getElementById('logout').addEventListener('click', function (event) {
+                        // 사용자가 로그인한 경우
+                        console.log('logout 클릭 이벤트 확인용');
+                        alert('로그아웃 하겠습니다.');
+                        event.preventDefault(); // 기본 동작 방지
+                        window.location.href = "/logout"; // 로그아웃으로 이동
+                    });
+                }
+            });
+        </script>
 </body>
 
 </html>

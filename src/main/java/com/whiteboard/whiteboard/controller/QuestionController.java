@@ -10,58 +10,52 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.whiteboard.whiteboard.dto.FestivalDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
-import com.whiteboard.whiteboard.service.FestivalService;
+import com.whiteboard.whiteboard.dto.QuestionDTO;
+import com.whiteboard.whiteboard.service.QuestionService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-// @RequestMapping("/member")//멤버 기본경로
+@RequestMapping("/notice")
+public class QuestionController {
+  private final QuestionService questionService;
 
-public class FestivalController {
 
-    private final FestivalService festivalService;
 
-    // 메인화면에서 롤페이지 5개 랜덤 이미지 포스터
-    @GetMapping("/member/main")
-    @ResponseBody // 이 어노테이션을 추가하여 메서드가 JSON 데이터를 반환함
-    public List<FestivalDTO> getFestivals() {
-        List<FestivalDTO> festivals = festivalService.getFiveDTOs();
-        // logger.info("축제 목록: {}", festivals); //콘솔에 찍히나 확인했습니다.
-        //System.err.println("축제번호가 있나? :" + festivals);
-        return festivals; // JSON 형식의 데이터를 반환합니다.
-    }
-
-    // 검색 기능 및 페이징을 위한 메서드
-    @GetMapping("/festival/festivalList")
-    public String showFestivalList(
+// 검색 기능 및 페이징을 위한 메서드
+    @GetMapping("/question")
+    public String question(
             @RequestParam(name = "searchQuery", required = false) String searchQuery,
             PageRequestDTO pageRequestDTO, Model model) {
 
-        List<FestivalDTO> festivals; // 축제 목록을 담을 변수
+        List<QuestionDTO> questions; // 축제 목록을 담을 변수
         boolean isSearch = false; // 검색 여부를 나타내는 변수
 
         if (searchQuery != null && !searchQuery.isEmpty()) {
             // 검색어가 제공된 경우, 해당 검색어를 사용하여 축제를 검색합니다.
-            festivals = festivalService.searchFestivals(searchQuery); // 검색된 축제 목록을 가져옴
+            questions = questionService.searchQuestions(searchQuery); // 검색된 축제 목록을 가져옴
             isSearch = true; // 검색 여부 플래그를 true로 설정
         } else {
             // 검색어가 없는 경우, 페이징을 위한 로직을 수행합니다.
 
             // 페이지 요청 정보(pageRequestDTO)를 이용하여 페이지 관련 정보를 가져오고
-            Pageable pageable = pageRequestDTO.getPageable(Sort.by("festivalNum").ascending());
+            Pageable pageable = pageRequestDTO.getPageable(Sort.by("questionNum").descending());
 
             // 서비스 계층을 통해 페스티벌 데이터를 페이지네이션하여 가져옵니다.
-            Page<FestivalDTO> festivalPage = festivalService.findAllByOrderByFestivalNum(pageable);
-            festivals = festivalPage.getContent(); // 현재 페이지의 축제 목록을 가져옴
+            Page<QuestionDTO> questionPage = questionService.findAllByOrderByQuestionNum(pageable);
+            questions = questionPage.getContent(); // 현재 페이지의 축제 목록을 가져옴
 
             // 총 페이지 수 계산
-            int totalPages = festivalPage.getTotalPages();
+            int totalPages = questionPage.getTotalPages();
 
             // 현재 페이지 번호 가져오기
             int currentPage = pageRequestDTO.getPage();
@@ -89,30 +83,38 @@ public class FestivalController {
             model.addAttribute("nextPageNumber", nextPageNumber); // 다음 페이지 번호
         }
 
-        model.addAttribute("festivals", festivals); // 축제 목록을 모델에 추가
+        model.addAttribute("result", questions); // 축제 목록을 모델에 추가
         model.addAttribute("searchQuery", searchQuery); // 검색어를 모델에 추가
         model.addAttribute("isSearch", isSearch); // 검색 여부를 모델에 추가
 
-        return "festival/festivalList"; // "festivalList.html" 페이지로 이동
+        return "notice/question"; // "festivalList.html" 페이지로 이동
     }
 
-    // 축제 상세페이지 넘기기
-    @GetMapping("/festival/festivalDetail")
-    public String getFestivalDetail(@RequestParam("festivalNum") Long festivalNum, Model model) {
-        FestivalDTO festivalDTO = festivalService.getfestivalFNum(festivalNum);
-        model.addAttribute("festivalDTO", festivalDTO);
-        // System.out.println("festivalNum 숫자: " + festivalDTO);
-        return "festival/festivalDetail"; // 렌더링할 뷰의 이름을 반환
+    @GetMapping("/questionDetail")
+    public void questionDetail(@RequestParam("questionNum") Long questionNum, Model model, HttpSession session){
+      QuestionDTO questionDTO = questionService.get(questionNum);
+      model.addAttribute("result", questionDTO);
     }
 
-    //페이징전 축제리스트
-    // 전체 죽제 목록을 가져오기
-        // @GetMapping("/festival/festivalList")
-    // public String showFestivalList(PageRequestDTO pageRequestDTO, Model model) {
-    // List<FestivalDTO> festivals =
-    // festivalService.findAllByOrderByFestivalNumAsc();
-    // // System.out.println("축제 목록: " + festivals);
-    // model.addAttribute("festivals", festivals);
-    // return "/festival/festivalList";
+    //신규글등록폼 요청처리
+    @GetMapping("/questionWrite")
+    public void questionWrite(){
+
+    }
+
+    //신규글 등록처리
+    @PostMapping("/questionWrite")
+    public String register(@ModelAttribute QuestionDTO dto , RedirectAttributes attributes){
+      Long newQuestionNum = questionService.register(dto);
+      attributes.addFlashAttribute("newQuestionNum", newQuestionNum);
+      return "redirect:/notice/question";
+    }
+
+    // @PostMapping("/remove")
+    // public String remove(long questionNum, RedirectAttributes redirect){
+    //   questionService.remove(questionNum);
+    //   redirect.addAttribute("newQuestionNum", questionNum);
+    //   return "redirect:/notice/question";
     // }
+
 }
