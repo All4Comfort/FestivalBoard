@@ -213,20 +213,20 @@ public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model,
     model.addAttribute("dto", dto);
   }
 
-  @GetMapping("/question")
-  public void question(PageRequestDTO pageRequestDTO, Model model){
-    //model.addAttribute("result", noticeService.getList(pageRequestDTO));
-    //model.addAttribute("result", noticeRepository.getNoticeBynoticeNum(1L));
+//   @GetMapping("/question")
+//   public void question(PageRequestDTO pageRequestDTO, Model model){
+//     //model.addAttribute("result", noticeService.getList(pageRequestDTO));
+//     //model.addAttribute("result", noticeRepository.getNoticeBynoticeNum(1L));
     
-    //model.addAttribute("result", noticeService.findAllQuestion());
-    model.addAttribute("result", questionRepository.getQuestionList());
-  }
+//     //model.addAttribute("result", noticeService.findAllQuestion());
+//     model.addAttribute("result", questionRepository.getQuestionList());
+//   }
 
-//   @GetMapping("/questionDetail")
-// public void questionDetail(@RequestParam("questionNum") Long questionNum, Model model, HttpSession session) {
-//     QuestionDTO questionDTO = noticeService.getquestion(questionNum);
-//     model.addAttribute("result", questionDTO);
+// //   @GetMapping("/questionDetail")
+// // public void questionDetail(@RequestParam("questionNum") Long questionNum, Model model, HttpSession session) {
+// //     QuestionDTO questionDTO = noticeService.getquestion(questionNum);
+// //     model.addAttribute("result", questionDTO);
 
-// }
+// // }
 
 }
