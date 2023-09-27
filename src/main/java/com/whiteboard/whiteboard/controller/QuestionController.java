@@ -93,11 +93,18 @@ public class QuestionController {
     }
 
     @GetMapping("/questionDetail")
-    public void questionDetail(@ModelAttribute QuestionDTO dto, @RequestParam("questionNum") Long questionNum, Model model, HttpSession session){
-      QuestionDTO questionDTO = questionService.get(questionNum);
-      System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + questionDTO);
-      model.addAttribute("dto", questionDTO);
+    public void questionDetail(@ModelAttribute QuestionDTO questionDTO, Model model, HttpSession session){
+
+      model.addAttribute("dto", questionService.get(questionDTO.getQuestionNum()));
+
     }
+
+    // @GetMapping("/questionDetail")
+    // public void questionDetail(@ModelAttribute QuestionDTO dto, @RequestParam("questionNum") Long questionNum, Model model, HttpSession session){
+    //   QuestionDTO questionDTO = questionService.get(questionNum);
+    //   System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + questionDTO);
+    //   model.addAttribute("dto", questionDTO);
+    // }
 
     //신규글등록폼 요청처리
     @GetMapping("/questionWrite")
@@ -119,10 +126,13 @@ public class QuestionController {
 
     //신규글 등록처리
     @PostMapping("/questionWrite")
-    public String register(@ModelAttribute QuestionDTO dto , RedirectAttributes attributes){
+    public String register(@ModelAttribute QuestionDTO dto , RedirectAttributes attributes, HttpSession session){
       dto.setContent(removeHtmlTags(dto.getContent()));
-      Long newQuestionNum = questionService.register(dto);
-      attributes.addFlashAttribute("newQuestionNum", newQuestionNum);
+      
+      questionService.register(dto, session);
+      
+      //Long newQuestionNum = questionService.register(dto, null);
+      //attributes.addFlashAttribute("newQuestionNum", newQuestionNum);
       return "redirect:/notice/question";
     }
 

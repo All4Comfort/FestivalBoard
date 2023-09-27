@@ -9,10 +9,12 @@ import com.whiteboard.whiteboard.dto.QuestionDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Question;
 
+import jakarta.servlet.http.HttpSession;
+
 public interface QuestionService {
     
   // 신규글 등록 메서드
-  Long register(QuestionDTO dto);
+  void register(QuestionDTO dto, HttpSession session);
 
   // 검색
   List<QuestionDTO> searchQuestions(String searchQuery);
@@ -40,7 +42,8 @@ public interface QuestionService {
     }
 
     // dtoToEntity 변환 메서드 정의
-    default Question dtoToEntity(QuestionDTO dto){
+    default Question dtoToEntity(QuestionDTO dto, HttpSession session){
+        
         Member member1 = Member.builder().nickname(dto.getNickName()).build();
 
         Question question = Question.builder()
