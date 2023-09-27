@@ -27,76 +27,58 @@
 
 <body>
     <!--네비게이션 바-->
-    <header>
+     <header>
         <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
-            <a class="navbar-brand" href="/main"><b>Fullstival</b></a>
+            <a class="navbar-brand" style="margin-left: 20px;" href="/main"><b>Fullstival</b></a>
             <ul class="nav nav-pills">
                 <div id="welcome-message" th:if="${session.loggedInUser != null}"
-                    th:text="${session.loggedInUser.name} + '님 환영합니다'" style="display: flex; align-items: center;">
+                    th:text="${session.loggedInUser.name} + '님 환영합니다'"
+                    style="display: flex; align-items: center; margin-right: 20px;">
                 </div>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                            fill="black" class="bi bi-list" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                        </svg></a>
-                    <!-- 게시판 햄버거  -->
-                    <ul class="dropdown-menu">
-                        <a class="dropdown-item" href="/festival/festivalList">
-                            <li>축제게시판</li>
-                        </a>
-                        <li>
-                            <!-- "#scrollspyHeading1" -->
-                            <hr class="dropdown-divider">
-                        </li>
-                        <!-- "#scrollspyHeading2" -->
-                        <a class="dropdown-item" href="/review/reviewList">
-                            <li>리뷰게시판</li>
-                        </a>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <!-- "#scrollspyHeading4 -->
-                        <a class="dropdown-item" href="/notice/notice1">
-                            <li>공지사항&QnA</li>
-                        </a>
-                    </ul>
-                </li>
-                <!-- 로그인하지 않은 사용자에게 보여질 메뉴   href="#scrollspyHeading5" -->
-                <li class="nav-item" th:unless="${session.loggedInUser != null}">
-                    <a class="nav-link" id="login-link">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
-                            viewBox="0 0 16 16">
-                            <path
-                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
-                        </svg>
-                    </a>
-                </li>
-
-                <!-- 로그인한 사용자에게 보여질 메뉴 -->
-                <!-- 마이페이지, 로그아웃  -->
-                <li class="nav-item dropdown" th:if="${session.loggedInUser != null}">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi bi-person"
-                            viewBox="0 0 16 16">
-                            <path
-                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
-                        </svg>
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        <a class="dropdown-item" id="myPage">
-                            <li>마이페이지</li>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a class="dropdown-item" id="logout">
-                            <li>로그아웃</li>
-                        </a>
-                    </ul>
-                </li>
-
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav ">
+                                <li class="nav-item" style="margin-right: 30px;">
+                                    <a class="nav-link" href="/festival/festivalList">Festival</a>
+                                </li>
+                                <li class="nav-item" style="margin-right: 30px;">
+                                    <a class="nav-link" href="/review/reviewList">Review</a>
+                                </li>
+                                <li class="nav-item" style="margin-right: 30px;">
+                                    <a class="nav-link" href="/notice/notice1">Notice</a>
+                                </li>
+                                <li class="nav-item" style="margin-right: 30px;"
+                                    th:unless="${session.loggedInUser != null}">
+                                    <a class="nav-link" id="login-link">
+                                        My Page
+                                    </a>
+                                </li>
+                                <li class="nav-item dropdown" style="margin-right: 30px;"
+                                    th:if="${session.loggedInUser != null}">
+                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                        aria-expanded="false">
+                                        My Page
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <a class="dropdown-item" id="myPage">
+                                            <li>마이페이지</li>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item" id="logout">
+                                            <li>로그아웃</li>
+                                        </a>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
             </ul>
         </nav>
     </header>
@@ -142,7 +124,7 @@
                     <td th:text="${reply.regDate}"></td>
                 </tr>
             </table>
-        </div>    
+        </div>
     </section>
 
     <div class="my-3 text-center">
@@ -249,7 +231,7 @@
 
             // 다음 페이지로 이동합니다.
             window.location.href = nextPageUrl;
-            
+
         });
 
         //목록으로 돌아가기
@@ -271,65 +253,65 @@
         }
     </script>
 
-<!-- 댓글 처리 스크립트 -->
-<script th:inline="javascript">
-    const nickname = () => {
-        const nickname = document.getElementById("nickname").value;
-        const content = document.getElementById("content").value;
-        console.log("작성자: ", nickname);
-        console.log("내용: ", content);
-        //const id = [[${festivalDTO.festivalNum}]];
-        $.ajax({
-           // 요청방식: post, 요청주소: /festival/save, 요청데이터: 작성자, 작성내용, 게시글번호
-           type: "post",
-           url: "/festival/save",
-           data: {
-               "nickname": nickname,
-               "content": content,
-               "festivalDTOfestivalNum": festivalNum
-           },
-           success: function (res) {
-               console.log("요청성공", res);
-               let output = "<table>";
-               output += "<th>작성자</th>";
-               output += "<th>내용</th>";
-               output += "<th>작성시간</th></tr>";
-               for (let i in res) {
-                   output += "<tr>";
-                   output += "<td>" + res[i].nickname + "</td>";
-                   output += "<td>" + res[i].content + "</td>";
-                   output += "<td>" + res[i].regDate + "</td>";
-                   output += "</tr>";
-               }
-               output += "</table>";
-               document.getElementById('reply-list').innerHTML = output;
-               document.getElementById('nickname').value = '';
-               document.getElementById('content').value = '';
-           },
-           error: function (err) {
-               console.log("요청실패", err);
-           }
-        });
+    <!-- 댓글 처리 스크립트 -->
+    <script th:inline="javascript">
+        const nickname = () => {
+            const nickname = document.getElementById("nickname").value;
+            const content = document.getElementById("content").value;
+            console.log("작성자: ", nickname);
+            console.log("내용: ", content);
+            //const id = [[${festivalDTO.festivalNum}]];
+            $.ajax({
+                // 요청방식: post, 요청주소: /festival/save, 요청데이터: 작성자, 작성내용, 게시글번호
+                type: "post",
+                url: "/festival/save",
+                data: {
+                    "nickname": nickname,
+                    "content": content,
+                    "festivalDTOfestivalNum": festivalNum
+                },
+                success: function (res) {
+                    console.log("요청성공", res);
+                    let output = "<table>";
+                    output += "<th>작성자</th>";
+                    output += "<th>내용</th>";
+                    output += "<th>작성시간</th></tr>";
+                    for (let i in res) {
+                        output += "<tr>";
+                        output += "<td>" + res[i].nickname + "</td>";
+                        output += "<td>" + res[i].content + "</td>";
+                        output += "<td>" + res[i].regDate + "</td>";
+                        output += "</tr>";
+                    }
+                    output += "</table>";
+                    document.getElementById('reply-list').innerHTML = output;
+                    document.getElementById('nickname').value = '';
+                    document.getElementById('content').value = '';
+                },
+                error: function (err) {
+                    console.log("요청실패", err);
+                }
+            });
 
-    }
-    /*
-    const listReq = () => {
-        console.log("목록 요청");
-        const page = [[${page}]];
-        location.href = "/board/paging?page="+page;
-    }
-    const updateReq = () => {
-        console.log("수정 요청");
-        const id = [[${board.id}]];
-        location.href = "/board/update/" + id;
-    }
-    const deleteReq = () => {
-        console.log("삭제 요청");
-        const id = [[${board.id}]];
-        location.href = "/board/delete/" + id;
-    }
-    */
-</script>
+        }
+        /*
+        const listReq = () => {
+            console.log("목록 요청");
+            const page = [[${page}]];
+            location.href = "/board/paging?page="+page;
+        }
+        const updateReq = () => {
+            console.log("수정 요청");
+            const id = [[${board.id}]];
+            location.href = "/board/update/" + id;
+        }
+        const deleteReq = () => {
+            console.log("삭제 요청");
+            const id = [[${board.id}]];
+            location.href = "/board/delete/" + id;
+        }
+        */
+    </script>
 </body>
 
 
