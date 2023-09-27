@@ -135,7 +135,7 @@ public class ReviewController {
         
         reviewService.modify(dto);
         
-        redirect.addAttribute("dto", dto);
+        redirect.addAttribute("reviewNum", dto.getReviewNum());
         return "redirect:/review/reviewDetail";
     }
 
