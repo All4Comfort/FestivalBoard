@@ -82,7 +82,7 @@ public class MemberController {
 
     // 로그인 메서드
     // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
-    //, @ModelAttribute("MemberDTO") MemberDTO memberDTO
+    // , @ModelAttribute("MemberDTO") MemberDTO memberDTO
     @PostMapping("/member/login")
     public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, HttpSession session,
             Model model, MemberDTO memberDTO) {
@@ -94,12 +94,10 @@ public class MemberController {
             Member member = optionalMember.get();
 
             session.setAttribute("loggedInUser", member); // 세션에 사용자 정보 저장
-            
 
-            //getAttribute는 Object타입으로 가져온다
+            // getAttribute는 Object타입으로 가져온다
             System.err.println("!!!!!! 유저정보 확인~~~~~~ ----> " + session.getAttribute("loggedInUser"));
-            
-            
+
             memberDTO = memberService.covertSessionToDTO(session);
 
             return "redirect:/main";
@@ -158,6 +156,53 @@ public class MemberController {
 
     // 리포지토리 컨트롤러 서비스 html
 
+    @GetMapping("/member/checkedPassword")
+    public String CheckedPassword(HttpSession session, Model model, @ModelAttribute("memberDTO") MemberDTO memberDTO) {
+        // GET 요청에 대한 페이지를 반환하거나 다른 작업 수행
+
+        // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+
+        memberDTO = memberService.covertSessionToDTO(session);
+
+        model.addAttribute(loggedInUser);
+        
+        
+        System.out.println("dto에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + memberDTO.getPw());
+        System.out.println("dto에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + memberDTO);
+        System.out.println("loggedInUser에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" +loggedInUser.getPw());
+        System.out.println("loggedInUser에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" +loggedInUser);
+
+        return "/member/checkedPassword"; // 적절한 뷰 이름 사용
+    }
+
+    // 비밀번호 확인 메서드
+    @PostMapping("/member/checkedPassword")
+    public String checkedPassword(HttpSession session, Model model, @ModelAttribute("MemberDTO") MemberDTO memberDTO) {
+
+        // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+
+        model.addAttribute(loggedInUser);
+        
+        memberDTO = memberService.covertSessionToDTO(session);
+        Optional<Member> optionalMember = memberService.login(loggedInUser.getEmail(), memberDTO.getPw());
+
+        System.out.println("optional 알아보기 >>>>>>>>>>>>>>>> " +  optionalMember);
+        System.out.println("dto에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + memberDTO.getPw());
+        System.out.println("dto에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + memberDTO);
+        System.out.println("loggedInUser에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" +loggedInUser.getPw());
+        System.out.println("loggedInUser에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" +loggedInUser);
+        if (optionalMember.isPresent()) {
+            // 업데이트 후, 사용자를 다시 마이페이지로 리다이렉트합니다.
+            return "/member/myPage";
+        } else {
+            return "redirect:/member/checkedPassword";
+        }
+
+    }
+
+    // 회원정보 수정 메서드
     @PostMapping("/member/myPage")
     public String modify(HttpSession session, @ModelAttribute MemberDTO memberDTO) {
 
