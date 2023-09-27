@@ -1,12 +1,8 @@
 package com.whiteboard.whiteboard.controller;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
-
 import com.whiteboard.whiteboard.service.ReviewService;
 
 import jakarta.servlet.http.HttpSession;
@@ -34,20 +28,6 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
    //     @GetMapping("/reviewList")
 //     public String showReviewList(@RequestParam(name = "searchQuery", required = false) String searchQuery,
@@ -95,23 +75,6 @@ public class ReviewController {
 //  }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @GetMapping("/reviewList")
     public void getReviews(PageRequestDTO pageRequestDTO, Model model) {
         //model.addAttribute("result", reviewRepository.getReviewNum(1L));
@@ -119,35 +82,35 @@ public class ReviewController {
         //model.addAttribute("result", reviewRepository.getReviewList());
 
         model.addAttribute("result", reviewService.getAllReviews());
-        
-        //List<Review[]> reviewList = reviewRepository.getReviewList();
-
-        //model.addAttribute("result", reviewList);
-
-        // 여기에 리뷰 목록을 가져오는 로직을 추가하세요.
-        // 가상의 데이터를 사용하는 경우, 리스트를 생성하고 반환하면 됩니다.
-
-        // List<Review> reviews = new ArrayList<>();
-        // 리뷰 데이터를 가져와서 reviews 리스트에 추가
-
-    
 
     }
     
     @GetMapping("/reviewDetail")
     public void getReviewDetail(@ModelAttribute ReviewDTO reviewDTO, Model model, HttpSession session) {
-        //ReviewDTO reviewDTO = reviewService.getReviewById(reviewNumLong);
-        //model.addAttribute("result", reviewRepository.getReviewList());
-       // model.addAttribute("result", reviewRepository.getReviewNum(1L));
-       // model.addAttribute("result", reviewRepository.getReviewNum(reviewDTO.getReviewNum()));
-
+    
         model.addAttribute("reviewDTO", reviewService.getReviewByReviewNum(reviewDTO.getReviewNum()));
+    }
+
+    //글쓰기 에디터 사용 시 자동 삽입되는 html 태그 제거하는 메서드
+    public static String removeHtmlTags(String input) {
+        if (input == null) {
+            return "";
+        }
+        // 정규 표현식을 사용하여 HTML 태그를 제거하고 기호를 대체합니다.
+        String regex = "<[^>]*>";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.replaceAll("").replace("&lt;", "<").replace("&gt;", ">"); 
     }
 
     @PostMapping("/reviewWrite")
     public String saveReivew(@ModelAttribute ReviewDTO dto, RedirectAttributes attributes, HttpSession session){
 
-        System.out.println("작성 시 dto 전달 : " + dto);
+        System.out.println("작성한 값 담은 dto 전달되는지 확인!! : " + dto);
+        
+        //내용에서 html태그 제거하고 DB에 저장하도록!
+        dto.setContent(removeHtmlTags(dto.getContent()));
+
         reviewService.saveReview(dto, session);
         //attributes.addFlashAttribute("newReviewNum", newReviewNum);
         return "redirect:/review/reviewList";
@@ -159,7 +122,7 @@ public class ReviewController {
     }
 
     @PostMapping("/remove")
-    public String remove(Long reviewNum, RedirectAttributes redirect){
+    public String remove(@RequestParam("reviewNum") Long reviewNum, RedirectAttributes redirect){
         System.out.println("GGGGGGGG");
         reviewService.remove(reviewNum);
         redirect.addAttribute("reviewDTO",reviewNum);
@@ -167,10 +130,12 @@ public class ReviewController {
     }
     
        @PostMapping("/reviewModify")
-    public String modify(ReviewDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
+    public String modify(@ModelAttribute ReviewDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
+        
+        
         reviewService.modify(dto);
-
-        redirect.addAttribute("reviewNum", dto.getReviewNum());
+        
+        redirect.addAttribute("dto", dto);
         return "redirect:/review/reviewDetail";
     }
 
