@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.whiteboard.whiteboard.dto.FestivalDTO;
+import com.whiteboard.whiteboard.dto.ReplyDTO;
 import com.whiteboard.whiteboard.entity.Festival;
 
 public interface FestivalService {
@@ -27,6 +28,9 @@ public interface FestivalService {
        //서치를 위해 메서드 정의
       List<FestivalDTO> searchFestivals(String searchQuery);
 
+      //축제상세 댓글 메서드
+      void addComment(ReplyDTO replyDTO);
+
       // Entity를 DTO로 변환하는 메서드 선언
       default FestivalDTO entityToDTO(Festival festival) {
 
@@ -46,6 +50,8 @@ public interface FestivalService {
                         .build();
             return dto;
       }
+
+  
 
      
 
