@@ -435,4 +435,9 @@ public class MemberController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("member/unloginedAlert")
+    public void goUnloginedAlert(@ModelAttribute("alertMessage") String alertMessage){
+
+    }
+
 }
