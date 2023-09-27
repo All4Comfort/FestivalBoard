@@ -185,27 +185,8 @@
                             <li class="nav-item" style="margin-right: 30px;">
                                 <a class="nav-link" href="/notice/notice1">Notice</a>
                             </li>
-                            <li class="nav-item" style="margin-right: 30px;"
-                                th:unless="${session.loggedInUser != null}">
-                                <a class="nav-link" id="login-link">
-                                    My Page
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown" style="margin-right: 30px;"
-                                th:if="${session.loggedInUser != null}">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                                    aria-expanded="false">
-                                    My Page
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <a class="dropdown-item" id="myPage">
-                                        <li>마이페이지</li>
-                                    </a>
-                                    <hr class="dropdown-divider">
-                                    <a class="dropdown-item" id="logout">
-                                        <li>로그아웃</li>
-                                    </a>
-                                </ul>
+                            <li class="nav-item" style="margin-right: 30px;">
+                                <a class="nav-link" id="logout">Logout</a>
                             </li>
                         </ul>
                     </div>
@@ -214,9 +195,9 @@
         </ul>
     </nav>
 </header>
-    <h1> 개인 정보 </h1>
 
-    <div class="container text-center mt-5">
+<div class="container text-center mt-5">
+    <h1> 개인 정보 </h1>
     <form action="/member/myPage" method="post" th:object="${memberDTO}">
         <table class="table table-bordered" style="width: 50%; margin: 0 auto; table-layout: fixed;">
             <!-- PageResultDTO.dtoList 의 이름으로 호출한다.. -->
