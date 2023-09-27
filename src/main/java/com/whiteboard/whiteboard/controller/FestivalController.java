@@ -104,8 +104,9 @@ public class FestivalController {
         return "festival/festivalDetail"; // 렌더링할 뷰의 이름을 반환
     }
 
+    //페이징전 축제리스트
     // 전체 죽제 목록을 가져오기
-    // @GetMapping("/festival/festivalList")
+        // @GetMapping("/festival/festivalList")
     // public String showFestivalList(PageRequestDTO pageRequestDTO, Model model) {
     // List<FestivalDTO> festivals =
     // festivalService.findAllByOrderByFestivalNumAsc();

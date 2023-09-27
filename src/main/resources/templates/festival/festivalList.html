@@ -14,6 +14,20 @@
 
 
     <style>
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #343a40;
+            /* 배경색을 원하는 색상으로 지정하세요. */
+            color: #ffffff;
+            /* 텍스트 색상을 원하는 색상으로 지정하세요. */
+            text-align: center;
+            padding: 10px 0;
+            /* 위아래 여백 조정 가능 */
+        }
+
         /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
         .dropdown-toggle::after {
             display: none;
@@ -186,7 +200,7 @@
 
     <div class="search-box">
         <form id="search-form" method="get" action="/festival/festivalList">
-            <input type="text" id="search-input" placeholder="축제를 검색하기" name="searchQuery" th:value="${searchQuery}">
+            <input type="text" id="search-input" placeholder="축제검색" name="searchQuery" th:value="${searchQuery}">
             <button type="submit" class="search-button">검색</button>
         </form>
     </div>
@@ -240,6 +254,7 @@
             class="page-link next">다음</a>
     </div>
 
+    
 
 
     <!--부트스트랩 스크립트-->
