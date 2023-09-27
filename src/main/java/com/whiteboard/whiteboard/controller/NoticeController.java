@@ -188,14 +188,15 @@ public static String removeHtmlTags(String input) {
 }
   //신규글 등록처리하기..
   @PostMapping("/noticeWrite")
-  public String register(@ModelAttribute NoticeDTO dto, RedirectAttributes attributes){
+  public String register(@ModelAttribute NoticeDTO dto, RedirectAttributes attributes, HttpSession session){
    
-   dto.setContent(removeHtmlTags(dto.getContent())); //Notice notice = 
+   dto.setContent(removeHtmlTags(dto.getContent())); //Notice notice =
+   noticeService.register(dto, session); 
    // notice.updateTitle(dto.getTitle());
    // notice.updateNContent(dto.getContent());
   //  noticeRepository.save(notice);
-    Long newNoticeNum = noticeService.register(dto);
-    attributes.addFlashAttribute("newNoticeNum", newNoticeNum);
+    //Long newNoticeNum = noticeService.register(dto,session);
+    //attributes.addFlashAttribute("newNoticeNum", newNoticeNum);
     return "redirect:/notice/notice1";
   }
 

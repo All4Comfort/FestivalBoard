@@ -8,12 +8,13 @@ import org.springframework.data.domain.Pageable;
 import com.whiteboard.whiteboard.dto.NoticeDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
-import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Notice;
+
+import jakarta.servlet.http.HttpSession;
 
 public interface NoticeService {
     // 신규글 등록 메서드
-    Long register(NoticeDTO dto);
+    Long register(NoticeDTO dto, HttpSession session);
 
     //모든 공지글 가져오기
     List<NoticeDTO> findAll();
@@ -34,24 +35,24 @@ public interface NoticeService {
                         .title(notice.getTitle())
                         .content(notice.getContent())
                         .registerDate(notice.getRegisterDate())
-                        //.writer(member.getNickname())
+                        .nickName(notice.getWriter().getNickname())
                         .build();
 
         return dto;
     }
 
-    // dtoToEntity 변환 메서드 정의
-    default Notice dtoToEntity(NoticeDTO dto){
-        Member member = Member.builder().name(dto.getWriter()).build();
+    // // dtoToEntity 변환 메서드 정의
+    // default Notice dtoToEntity(NoticeDTO dto){
+    //     Member member = Member.builder().name(dto.getWriter()).build();
         
-        Notice notice = Notice.builder()
-                        .noticeNum(dto.getNoticeNum())
-                        .title(dto.getTitle())
-                        .content(dto.getContent())
-                        .build();
+    //     Notice notice = Notice.builder()
+    //                     .noticeNum(dto.getNoticeNum())
+    //                     .title(dto.getTitle())
+    //                     .content(dto.getContent())
+    //                     .build();
 
-        return notice;
-    }
+    //     return notice;
+    // }
 
     // 게시물 삭제 메서드 선언.
     void remove(Long questionNum);
