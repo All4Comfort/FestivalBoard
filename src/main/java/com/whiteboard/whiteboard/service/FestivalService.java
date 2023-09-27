@@ -6,9 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.whiteboard.whiteboard.dto.FestivalDTO;
-import com.whiteboard.whiteboard.dto.ReplyDTO;
 import com.whiteboard.whiteboard.entity.Festival;
-import com.whiteboard.whiteboard.entity.FestivalReply;
 
 public interface FestivalService {
 

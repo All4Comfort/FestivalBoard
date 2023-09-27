@@ -45,4 +45,13 @@ public class FestivalReply extends BaseEntity {
 	public void updateFContent(String content){
 		this.content = content;
 	}
+
+	public void setFestivalNum(Long festivalNum) {
+	}
+
+    public void setContent(String content2) {
+    }
+
+    public void setWriter(Member writer2) {
+    }
 }
