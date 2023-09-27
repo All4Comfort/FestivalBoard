@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- 헤더 부분 생략 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리뷰글 상세 내용</title>
+    <!-- 부트스트랩 링크 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
     <!-- 리뷰 상세 페이지 스타일 -->
@@ -54,17 +62,74 @@
     </style>
 
     <!-- 리뷰 상세 페이지 HTML -->
-    <div class="review-detail-container" th:each="reviewDTO : ${reviewDTO}">
+    <div class="review-detail-container" th:object="${reviewDTO}">
         <!--  th:each="reviewDTO : ${result}"  -->
-        <h2 class="review-detail-title" th:text="'제목 : ' + ${reviewDTO.title}">리뷰 제목</h2>
-        <p class="review-detail-author" th:text="'작성자: ' + ${reviewDTO.nickname}">작성자: John Doe</p>
-        <!-- <p class="review-detail-date" th:text="'작성일: ' + ${reviewData.date}">작성일: 2023-09-25</p> -->
-        <p class="review-detail-content" th:utext="'내용 : ' + ${reviewDTO.content}">
-            리뷰 내용
-        </p>
-        <p class="review-detail-views" th:text="'조회수: ' + ${reviewDTO.readCount}">조회수: 100</p>
-        <p class="review-detail-hashtags" th:text="'해시태그: ' + ${reviewDTO.hashTag1}">해시태그: #프로젝트 #리뷰</p>
-        <p class="review-detail-likes" th:text="'좋아요 수: ' + ${reviewDTO.goodCount}">좋아요 수: 50</p>
+        <form>
+            <input type="hidden" name="reviewNum" th:value="${reviewDTO.reviewNum}"/>
+            <input type="hidden" name="title"/>
+            <input type="hidden" name="content"/>
+        </form>    
+            
+            
+            <h2 class="review-detail-title"  id="reviewTitle" th:text="${reviewDTO.title}">리뷰 제목</h2>
+            <p class="review-detail-author" name="nickname" th:text="'작성자: ' + ${reviewDTO.nickname}">작성자: John Doe</p>
+            <!-- <p class="review-detail-date" th:text="'작성일: ' + ${reviewData.date}">작성일: 2023-09-25</p> -->
+            <p class="review-detail-content" id="reviewContent" th:utext="${reviewDTO.content}">
+                리뷰 내용
+            </p>
+            <p class="review-detail-views" th:text="'조회수: ' + ${reviewDTO.readCount}">조회수: 100</p>
+            <p class="review-detail-hashtags" th:text="'해시태그: ' + ${reviewDTO.hashTag1}">해시태그: #프로젝트 #리뷰</p>
+            <p class="review-detail-likes" th:text="'좋아요 수: ' + ${reviewDTO.goodCount}">좋아요 수: 50</p>
+            
     </div> 
+
+    <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
+        <button type="button" class="btn btn-custom modifyBtn">수정</button>
+        <button type="button" class="btn btn-danger removeBtn">삭제</button>
+    </div>
+
+    <script th:inline="javascript">
+    
+        var actionForm = $("form");
+        var num = $("input[name='reviewNum']").val();
+    
+        $(".removeBtn").click(()=>{
+            if(!confirm("삭제하시겠습니까?")){
+                return ;
+            }
+            //console.log(actionForm);
+              //nick만 보낼것임
+        
+            //console.log(nick);
+            actionForm.append(num);
+            
+            actionForm.attr("action", "/review/remove").attr("method","post");
+    
+            actionForm.submit();
+        });
+   
+        $(".modifyBtn").click(function(){
+            
+           $("input[name='title']").val($("#reviewTitle").text());
+         $("input[name='content']").val($("#reviewContent").text());
+        
+        // var a = $("input[name='title']").val();
+        // var b = $("input[name='content']").val();
+        var a = $("#reviewTitle").text();
+    var b = $("#reviewContent").text();
+        console.log("!!-->" + a);
+        console.log("!!-->" + b);
+
+    
+            actionForm.append(num);
+            actionForm.append(a);
+            actionForm.append(b);
+    
+            console.log(num + " ### " + a + b);
+            actionForm.attr("action", "/review/reviewModify").attr("method", "get").submit();
+        });
+
+    
+    </script>
 </body>
 </html>

@@ -2,7 +2,10 @@ package com.whiteboard.whiteboard.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.whiteboard.whiteboard.dto.NoticeDTO;
@@ -21,6 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class NoticeServiceImpl implements NoticeService{
 
   private final NoticeRepository noticeRepository;
+
+  private List<NoticeDTO> searchResults = new ArrayList<>();
 
   // 게시글 등록 메서드
   @Override
@@ -101,6 +106,29 @@ public void modify(NoticeDTO dto) {
 
   noticeRepository.save(notice);
 
+} 
+
+@Override
+public Page<NoticeDTO> findAllByOrderByNoticeNum(Pageable pageable) {
+  Page<Notice> noticePage = noticeRepository.findAllByOrderByNoticeNum(pageable);
+        return noticePage.map(notice -> entityToDTO(notice));
+
 }
-    
+
+@Override
+public List<NoticeDTO> searchNotices(String searchQuery) {
+  // 축제 제목에 검색어가 포함된 모든 축제를 검색
+        List<Notice> notices = noticeRepository.findByTitleContaining(searchQuery);
+        
+        // Festival 엔티티를 FestivalDTO로 변환
+        List<NoticeDTO> noticeDTOs = notices.stream()
+                .map(this::entityToDTO) // entityToDTO 메서드 활용
+                .collect(Collectors.toList());
+        
+        // 검색 결과를 searchResults 변수에 저장
+        searchResults = noticeDTOs;
+        
+        return noticeDTOs;
+}
+ 
 }

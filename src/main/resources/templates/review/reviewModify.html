@@ -24,18 +24,18 @@
     </style>
   </head>
   <body>
-    <form action="/notice/noticeWrite" method="post" th:object="${dto}">
+    <form action="/review/reviewModify" method="post" th:object="${dto}">
       <div class="form-group text-center" th:width="500">
-        <h1><label for="title">NOTICE</label></h1>
+        <h1><label for="title">REVIEW</label></h1>
         <form>
-        <input type="hidden" name="noticeNum" th:value="${dto.noticeNum}"/>
+        <input type="hidden" name="reviewNum" th:value="${dto.reviewNum}" readonly/>
         </form>
         <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" th:value="${dto.title}">
         <textarea class="form-control" id="content" name="content" th:style="'width: 800px;'">[[${dto.content}]]</textarea>
       </div>
-      <button type="submit" class="btn btn-link btn-lg" id="submit">수정</button>
-      <a th:href="@{/notice/notice1}" class="btn btn-secondary">
-        <button type="button" class="btn btn-link btn-lg" id="boardList">목록</button>
+      <button type="submit" class="btn btn-light" id="submit">작성</button>
+      <a th:href="@{/review/reviewList}" class="btn btn-secondary">
+        <button type="button" class="btn btn-light" id="boardList">목록</button>
       </a>
     </form>
     <script th:inline="javascript">
@@ -69,7 +69,7 @@
             return ;
         }
 
-        actionForm.attr("action", "/notice/noticemodify").attr("method", "post").submit();
+        actionForm.attr("action", "/review/reviewModify").attr("method", "post").submit();
         console.log("gggg");
     });
     </script>

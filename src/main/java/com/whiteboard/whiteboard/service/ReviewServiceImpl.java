@@ -16,6 +16,7 @@ import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -46,7 +47,7 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
   @Override
-  public void deleteReview(Long reviewNum) {
+  public void remove(Long reviewNum) {
     // 리뷰 ID로 리뷰 삭제
     reviewRepository.deleteById(reviewNum);
   }
@@ -66,39 +67,6 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
   @Override
-  public void modify(ReviewDTO dto) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'modify'");
-  }
-
-  @Override
-  public ReviewDTO getReviewByReviewNum(Long reviewNum) {
-    Review review = reviewRepository.findById(reviewNum)
-                .orElseThrow(() -> new NoSuchElementException(reviewNum + "인 id 리뷰를 찾을 수 없습니다."));
-    return entityToDTO(review); 
-  }
-
-
-public Review dtoToEntity(ReviewDTO reviewDTO, HttpSession session) {
-  
-    MemberDTO memberDTO = memberService.covertSessionToDTO(session);
-    
-    Member member = memberRepository.getReferenceById(memberDTO.getEmail());
-
-    Review review = Review.builder()
-      //리뷰 엔티티의 writer는 Member타입임!!!!!!!!!!!!!!!
-        .writer(member)
-        .title(reviewDTO.getTitle())
-        .content(reviewDTO.getContent())
-        .readCount(0L)
-        .goodCount(0L)
-        .build();
-    return review;
-  }
-
-
-
-  @Override
   public void saveReview(ReviewDTO dto, HttpSession session) {
     Review review = dtoToEntity(dto, session);
     reviewRepository.save(review);
@@ -107,9 +75,65 @@ public Review dtoToEntity(ReviewDTO reviewDTO, HttpSession session) {
     //return saveReview.getReviewNum();
   
   }
+  
+  @Transactional
+  @Override
+  public void modify(ReviewDTO dto) {
+   Review review = reviewRepository.getReferenceById(dto.getReviewNum());
 
+   review.updateContent(dto.getContent());
+   review.updateTitle(dto.getTitle());
 
+   reviewRepository.save(review);
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  // Review review = reviewRepository.getReferenceById(dto.getReviewNum());
+  
+  // review.setContent(dto.getContent());
+  // review.setTitle(dto.getTitle());
+  
+      // reviewRepository.save(review);
+  
+      
+      @Override
+      public ReviewDTO getReviewByReviewNum(Long reviewNum) {
+        Review review = reviewRepository.findById(reviewNum)
+                .orElseThrow(() -> new NoSuchElementException(reviewNum + "인 id 리뷰를 찾을 수 없습니다."));
+                return entityToDTO(review); 
+              }
+              
+              
+public Review dtoToEntity(ReviewDTO reviewDTO, HttpSession session) {
+  
+  MemberDTO memberDTO = memberService.covertSessionToDTO(session);
+  
+  Member member = memberRepository.getReferenceById(memberDTO.getEmail());
+  
+  Review review = Review.builder()
+  //리뷰 엔티티의 writer는 Member타입임!!!!!!!!!!!!!!!
+  .writer(member)
+  .title(reviewDTO.getTitle())
+        .content(reviewDTO.getContent())
+        .readCount(0L)
+        .goodCount(0L)
+        .build();
+    return review;
+  }
+  
+  
+  
+  
 
-
-
+  
+  
+  
+  
+  
 }

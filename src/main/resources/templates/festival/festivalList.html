@@ -27,8 +27,8 @@
             /* 원하는 만큼 왼쪽으로 이동시킵니다. */
         }
 
-           /* 메뉴 항목 사이에 오른쪽 마진(간격)을 추가합니다. */
-           .nav-item:not(:last-child) {
+        /* 메뉴 항목 사이에 오른쪽 마진(간격)을 추가합니다. */
+        .nav-item:not(:last-child) {
             margin-right: 50px;
             /* 원하는 간격 크기(픽셀)를 지정합니다. */
         }
@@ -61,102 +61,31 @@
 
         }
 
-        /* 버튼 디자인 스타일 */
-        .write-review-button a {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: black;
-            /* 버튼 배경색 */
-            color: #fff;
-            /* 버튼 텍스트 색상 */
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        .write-review-button a:hover {
-            background-color: black;
-            /* 마우스 오버 시 배경색 변경 */
-        }
-
-        /* 리뷰 작성하기 버튼 스타일 */
-        .write-review-button {
-            right: 10px;
-        }
-
-        .write-review-button a {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: transparent;
-            /* 배경색을 투명으로 설정 */
-            color: #000;
-            /* 텍스트 색상을 검정색으로 설정 */
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
-        }
-
-        .write-review-button a:hover {
-            background-color: #333;
-            /* 마우스 오버 시 배경색 변경 */
-            color: #fff;
-            /* 텍스트 색상 변경 */
-        }
-
-
-        /* 이전/다음 페이지 링크 스타일 */
-        .page-link.prev,
-        .page-link.next {
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 5px 10px;
-            margin-right: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            color: #333;
-            transition: background-color 0.3s ease;
-        }
-
-        /* 활성화된 페이지 링크 스타일 */
-        .page-link.active {
-            background-color: black;
-            color: #fff;
-            border-color: black;
-        }
-
-        /* 페이지 링크 스타일 */
-        .page-link:not(.prev):not(.next) {
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 5px 10px;
-            margin-right: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            color: #333;
-            transition: background-color 0.3s ease;
-        }
-
-        /* 페이지 링크 스타일 - 호버 시 */
-        .page-link:not(.prev):not(.next):hover {
-            background-color: #333;
-            color: #fff;
-            border-color: black;
-        }
-
-        /* 페이징 스타일 */
+        /* Pagination 스타일 */
         .pagination {
-            text-align: center;
-            margin-top: 30px;
-            margin-bottom: 40px;
+            list-style: none;
             display: flex;
             justify-content: center;
-            /* 가로 가운데 정렬 */
             align-items: center;
-            /* 세로 가운데 정렬 */
+            margin: 20px 0;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            color: #333;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: #fff;
         }
 
         /* 링크 기본 스타일 제거 */
@@ -169,7 +98,7 @@
 
         /* 모든 열 내의 .card 클래스에 스타일 적용 */
         .col .card {
-            margin:auto;
+            margin: auto;
             width: 100%;
             height: 350px;
             /* 가로 너비 100%로 설정 */
@@ -256,29 +185,34 @@
     <h1 style="text-align: center;">축제 게시판</h1>
 
     <div class="search-box">
-        <form id="search-form" method="get" action="/search_festival">
-            <input type="text" id="search-input" placeholder="축제를 검색하기" name="searchQuery">
+        <form id="search-form" method="get" action="/festival/festivalList">
+            <input type="text" id="search-input" placeholder="축제를 검색하기" name="searchQuery" th:value="${searchQuery}">
             <button type="submit" class="search-button">검색</button>
         </form>
     </div>
 
-    <div class="album py-5 bg-body-tertiary">
-        <div class="carousel-inner">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
-                <div th:each="festival, iterStat : ${festivals}">
-                    <!-- 각 축제 정보 표시 -->
-                    <div class="col">
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-                                <a th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}">
-                                    <img class="card-img-top" th:src="${festival.thumbnail}" width="100%" height="225" alt="축제 포스터" />
-                                    <h4 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목</h4>
-                                    <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <small class="text-muted" th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
-                                    </div>
-                                </a>
+    <div class="container" style="max-width: 1700px;">
+        <div class="album py-5 bg-body-tertiary">
+            <div class="carousel-inner">
+                <div class="row row-cols-4 g-4">
+                    <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
+                    <div th:each="festival, iterStat : ${festivals}">
+                        <!-- 각 축제 정보 표시 -->
+                        <div class="col">
+                            <div class="card shadow-sm">
+                                <div class="card-body">
+                                    <a th:href="@{/festival/festivalDetail(festivalNum=${festival.festivalNum})}">
+                                        <img class="card-img-top" th:src="${festival.thumbnail}" width="100%"
+                                            height="225" alt="축제 포스터" />
+                                        <h4 class="card-title" th:text="${festival.festivalTitle}" alt="축제 제목">축제 제목
+                                        </h4>
+                                        <p class="card-text" th:text="${festival.period}" alt="축제 기간">축제 기간</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <small class="text-muted"
+                                                th:text="${festival.modifyDate}"></small><!-- 업데이트 시간 -->
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -287,14 +221,26 @@
         </div>
     </div>
 
+
+
+    <!-- 페이지 번호 목록 표시 -->
     <div class="pagination">
         <!-- 이전 페이지 버튼 -->
-        <a href="#" class="page-link prev" onclick="prevPage()">이전</a>
-        <!-- DB에 있는 데이터 기반으로 페이지 번호가 생성-->
-        <ul class="pagination justify-content-center" id="pagination"></ul>
+        <a th:if="${hasPrevPage}" th:href="@{'/festival/festivalList?page=' + ${prevPageNumber}}"
+            class="page-link prev">이전</a>
+        <!-- 페이지 번호 표시 -->
+        <ul class="pagination justify-content-center" id="pagination">
+            <li th:each="pageNumber : ${pageNumbers}">
+                <a th:href="@{'/festival/festivalList?page=' + ${pageNumber}}" th:text="${pageNumber}"
+                    th:class="${pageNumber == currentPage ? 'active' : ''}"></a>
+            </li>
+        </ul>
         <!-- 다음 페이지 버튼 -->
-        <a href="#" class="page-link next" onclick="nextPage()">다음</a>
+        <a th:if="${hasNextPage}" th:href="@{'/festival/festivalList?page=' + ${nextPageNumber}}"
+            class="page-link next">다음</a>
     </div>
+
+
 
     <!--부트스트랩 스크립트-->
     <!-- jQuery 라이브러리를 먼저 로드합니다. -->
@@ -303,7 +249,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
         </script>
+
+
     <!-- 페이징 스크립트 -->
+
+
 
     <!-- festival-carousel와 pagination 요소는 여전히 유지 -->
 
