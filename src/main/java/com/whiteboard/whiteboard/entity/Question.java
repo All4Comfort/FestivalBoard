@@ -56,4 +56,5 @@ public class Question extends BaseEntity{ //작성일,수정일은 BaseEntity로
     // public void updateIsSecret (boolean newIsSecret){
     //     this.isSecret = newIsSecret;
     // }
+
 }
