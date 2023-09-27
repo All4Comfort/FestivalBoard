@@ -31,10 +31,11 @@ public class QuestionServiceImpl implements QuestionService {
   private final MemberRepository memberRepository;
 
   @Override
-  public Long register(QuestionDTO dto) {
-    Question question = dtoToEntity(dto);
+  public void register(QuestionDTO dto, HttpSession session) {
+    Question question = dtoToEntity(dto, session);
     questionRepository.save(question);
-    return question.getQuestionNum();
+
+    //return question.getQuestionNum();
   }
 
   @Override
@@ -80,7 +81,10 @@ public class QuestionServiceImpl implements QuestionService {
   Question question = Question.builder()
   //리뷰 엔티티의 writer는 Member타입임!!!!!!!!!!!!!!!
   .writer(member)
-        .build();
+  .title(questionDTO.getTitle())
+  .content(questionDTO.getContent())
+  .build();
     return question;
   }
+  
 }

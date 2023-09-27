@@ -50,7 +50,7 @@ public class MemberController {
 
     // main.html에서 login.html 로 넘어가는 메서드
     @GetMapping("/member/login")
-    public String loginPage() {
+    public String moveTologin() {
         return "/member/login";
     }
 
@@ -214,7 +214,8 @@ public class MemberController {
 
         System.out.println("Get // moveTomodifyPassword // optional 알아보기 >>>>>>>>>>>>>>>> " + optionalMember);
         System.out.println("Get // moveTomodifyPassword // dto에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + memberDTO);
-        System.out.println("Get // moveTomodifyPassword // loggedInUser에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + loggedInUser);
+        System.out
+                .println("Get // moveTomodifyPassword // loggedInUser에 들어있는 비밀번호 보는 콘솔~~~>>>>>>>>>>>>" + loggedInUser);
 
         return "/member/modifyPassword";
 
@@ -294,43 +295,44 @@ public class MemberController {
     // 회원정보 수정 메서드
     // 닉네임만
     @PostMapping("/member/myPage")
-public String modify(HttpSession session, @ModelAttribute MemberDTO memberDTO, RedirectAttributes redirectAttributes) {
+    public String modify(HttpSession session, @ModelAttribute MemberDTO memberDTO,
+            RedirectAttributes redirectAttributes) {
 
-    // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
-    Member loggedInUser = (Member) session.getAttribute("loggedInUser");
+        // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
+        Member loggedInUser = (Member) session.getAttribute("loggedInUser");
 
-    if (loggedInUser != null) {
-        // 데이터베이스에서 입력한 닉네임과 동일한 닉네임을 가진 회원을 조회합니다.
-        Optional<Member> existingMember = memberRepository.findBynickname(memberDTO.getNickname());
+        if (loggedInUser != null) {
+            // 데이터베이스에서 입력한 닉네임과 동일한 닉네임을 가진 회원을 조회합니다.
+            Optional<Member> existingMember = memberRepository.findBynickname(memberDTO.getNickname());
 
-        // 동일한 닉네임을 가진 회원이 없거나, 닉네임이 현재 사용자의 닉네임과 같다면 업데이트를 수행합니다.
-        if (existingMember.isEmpty()) {
-            loggedInUser.updateNickname(memberDTO.getNickname()); // 닉네임 필드를 업데이트합니다.
-            // 다른 필드들도 필요에 따라 직접 업데이트할 수 있습니다.
+            // 동일한 닉네임을 가진 회원이 없거나, 닉네임이 현재 사용자의 닉네임과 같다면 업데이트를 수행합니다.
+            if (existingMember.isEmpty()) {
+                loggedInUser.updateNickname(memberDTO.getNickname()); // 닉네임 필드를 업데이트합니다.
+                // 다른 필드들도 필요에 따라 직접 업데이트할 수 있습니다.
 
-            System.out.println("PostMapping // modify // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + loggedInUser);
-            // 여기에서 데이터베이스 업데이트 또는 다른 작업을 수행할 수 있습니다.
-            memberRepository.save(loggedInUser);
+                System.out.println("PostMapping // modify // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + loggedInUser);
+                // 여기에서 데이터베이스 업데이트 또는 다른 작업을 수행할 수 있습니다.
+                memberRepository.save(loggedInUser);
 
-            // 업데이트 후, 사용자를 다시 마이페이지로 리다이렉트합니다.
-            return "redirect:/logout";
-        } else if(existingMember.isPresent() || existingMember.get().getNickname().equals(loggedInUser.getNickname())){
-            redirectAttributes.addFlashAttribute("duplicateNicknameMessage", "현재 닉네임과 같습니다.");
-            return "redirect:/member/myPage";
-        }else {
-            // 동일한 닉네임을 가진 회원이 이미 존재하는 경우에 대한 처리
-            // 이 경우 사용자에게 중복 닉네임 메시지를 보여줄 수 있습니다.
-            // 동일한 닉네임을 가진 회원이 이미 존재하는 경우에 대한 처리
-            // RedirectAttributes를 사용하여 중복 닉네임 메시지를 전달하고, 마이페이지로 리다이렉트합니다.
-            redirectAttributes.addFlashAttribute("duplicateNicknameMessage", "이미 사용 중인 닉네임입니다.");
-            return "redirect:/member/myPage";
+                // 업데이트 후, 사용자를 다시 마이페이지로 리다이렉트합니다.
+                return "redirect:/logout";
+            } else if (existingMember.isPresent()
+                    || existingMember.get().getNickname().equals(loggedInUser.getNickname())) {
+                redirectAttributes.addFlashAttribute("duplicateNicknameMessage", "현재 닉네임과 같습니다.");
+                return "redirect:/member/myPage";
+            } else {
+                // 동일한 닉네임을 가진 회원이 이미 존재하는 경우에 대한 처리
+                // 이 경우 사용자에게 중복 닉네임 메시지를 보여줄 수 있습니다.
+                // 동일한 닉네임을 가진 회원이 이미 존재하는 경우에 대한 처리
+                // RedirectAttributes를 사용하여 중복 닉네임 메시지를 전달하고, 마이페이지로 리다이렉트합니다.
+                redirectAttributes.addFlashAttribute("duplicateNicknameMessage", "이미 사용 중인 닉네임입니다.");
+                return "redirect:/member/myPage";
+            }
+        } else {
+            // 로그인 되지 않은 경우 로그인 페이지로 리다이렉트 처리
+            return "redirect:/member/login";
         }
-    } else {
-        // 로그인 되지 않은 경우 로그인 페이지로 리다이렉트 처리
-        return "redirect:/member/login";
     }
-}
-
 
     @GetMapping("/member/delete")
     public String delete(HttpSession session, @ModelAttribute MemberDTO memberDTO) {
@@ -393,7 +395,7 @@ public String modify(HttpSession session, @ModelAttribute MemberDTO memberDTO, R
 
     // 회원가입창 가져오기
     @GetMapping("/member/registerMember")
-    public ModelAndView showRegistrationForm() {
+    public ModelAndView moveToRegistrationForm() {
         return new ModelAndView("/member/registerMember");
     }
 
