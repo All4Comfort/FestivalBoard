@@ -45,6 +45,8 @@ public interface ReviewService {
   //서치를 위해 메서드 정의
   List<ReviewDTO> searchReviews(String searchQuery);
 
+  PageResultDTO<ReviewDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
+
 
 
 
@@ -78,6 +80,7 @@ public interface ReviewService {
         .build();
     return dto;
   }
+
   
 
   // Long saveReview(ReviewDTO reviewDTO);

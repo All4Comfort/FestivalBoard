@@ -55,74 +55,170 @@
     </style>
 </head>
 
-<body>
-    <header>
-        <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
-            <a class="navbar-brand" href="/main"><b>Fullstival</b></a>
-            <ul class="nav nav-pills">
-                <div id="welcome-message" th:if="${session.loggedInUser != null}"
-                    th:text="${session.loggedInUser.name} + '님 환영합니다'" style="display: flex; align-items: center;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>축제 게시판</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+
+
+
+
+    <style>
+        /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
+        .dropdown-toggle::after {
+            display: none;
+        }
+
+        /* 드롭다운 메뉴의 위치를 조절합니다. */
+        .dropdown-menu {
+            left: 0;
+            /* 드롭다운 메뉴가 화면 왼쪽에 정렬되도록 설정합니다. */
+            margin-left: -30px;
+            /* 원하는 만큼 왼쪽으로 이동시킵니다. */
+        }
+
+        /* 메뉴 항목 사이에 오른쪽 마진(간격)을 추가합니다. */
+        .nav-item:not(:last-child) {
+            margin-right: 50px;
+            /* 원하는 간격 크기(픽셀)를 지정합니다. */
+        }
+
+        /* 검색 입력 상자 스타일 */
+        .search-box {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .search-button {
+            background-color: black;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        /* 검색 입력 상자 크기 조절 */
+        #search-input {
+            width: 600px;
+            /* 원하는 폭으로 조절 (예: 300px) */
+            padding: 10px;
+            /* 내부 여백 추가 */
+            font-size: 16px;
+            /* 글꼴 크기 조절 */
+            margin-bottom: 40px;
+
+        }
+
+        /* Pagination 스타일 */
+        .pagination {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            color: #333;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* 링크 기본 스타일 제거 */
+        a {
+            text-decoration: none;
+            /* 밑줄 제거 */
+            color: inherit;
+            /* 기본 텍스트 색상 상속 */
+        }
+
+        /* 모든 열 내의 .card 클래스에 스타일 적용 */
+        .col .card {
+            margin: auto;
+            width: 100%;
+            height: 350px;
+            /* 가로 너비 100%로 설정 */
+        }
+    </style>
+</head>
+
+<header>
+    <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
+        <a class="navbar-brand" style="margin-left: 20px;" href="/main"><b>Fullstival</b></a>
+        <ul class="nav nav-pills">
+            <div id="welcome-message" th:if="${session.loggedInUser != null}"
+                th:text="${session.loggedInUser.name} + '님 환영합니다'"
+                style="display: flex; align-items: center; margin-right: 20px;">
+            </div>
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ">
+                            <li class="nav-item" style="margin-right: 30px;">
+                                <a class="nav-link" href="/festival/festivalList">Festival</a>
+                            </li>
+                            <li class="nav-item" style="margin-right: 30px;">
+                                <a class="nav-link" href="/review/reviewList">Review</a>
+                            </li>
+                            <li class="nav-item" style="margin-right: 30px;">
+                                <a class="nav-link" href="/notice/notice1">Notice</a>
+                            </li>
+                            <li class="nav-item" style="margin-right: 30px;"
+                                th:unless="${session.loggedInUser != null}">
+                                <a class="nav-link" id="login-link">
+                                    My Page
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown" style="margin-right: 30px;"
+                                th:if="${session.loggedInUser != null}">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                    aria-expanded="false">
+                                    My Page
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <a class="dropdown-item" id="myPage">
+                                        <li>마이페이지</li>
+                                    </a>
+                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item" id="logout">
+                                        <li>로그아웃</li>
+                                    </a>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                            fill="black" class="bi bi-list" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                        </svg></a>
-                    <!-- 게시판 햄버거  -->
-                    <ul class="dropdown-menu">
-                        <a class="dropdown-item" href="/festival/festivalList">
-                            <li>축제게시판</li>
-                        </a>
-                        <li>
-                            <!-- "#scrollspyHeading1" -->
-                            <hr class="dropdown-divider">
-                        </li>
-                        <!-- "#scrollspyHeading2" -->
-                        <a class="dropdown-item" href="/review/reviewList">
-                            <li>리뷰게시판</li>
-                        </a>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <!-- "#scrollspyHeading4 -->
-                        <a class="dropdown-item" href="/notice/notice1">
-                            <li>공지사항&QnA</li>
-                        </a>
-                    </ul>
-                </li>
-                <!-- 로그인한 사용자에게 보여질 메뉴 -->
-                <!-- 마이페이지, 로그아웃  -->
-                <li class="nav-item dropdown" th:if="${session.loggedInUser != null}">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                            fill="black" class="bi bi-person" viewBox="0 0 16 16">
-                            <path
-                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
-                        </svg>
-                    </a>
-
-                    <ul class="dropdown-menu">
-                        <a class="dropdown-item" id="myPage">
-                            <li>마이페이지</li>
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a class="dropdown-item" id="logout">
-                            <li>로그아웃</li>
-                        </a>
-                    </ul>
-                </li>
-            </ul>
-            <!-- </form> -->
-        </nav>
-    </header>
-
+            </nav>
+        </ul>
+    </nav>
+</header>
     <h1> 개인 정보 </h1>
 
+    <div class="container text-center mt-5">
     <form action="/member/myPage" method="post" th:object="${memberDTO}">
-        <table class="table table=striped">
+        <table class="table table-bordered" style="width: 50%; margin: 0 auto; table-layout: fixed;">
             <!-- PageResultDTO.dtoList 의 이름으로 호출한다.. -->
             <tbody>
                 <tr>
@@ -140,7 +236,7 @@
                         Thymeleaf에서는 * 문자를 기본적으로 변수 또는 속성을 평가하는 데 사용.
                         th:text="*"와 같은 코드는 Thymeleaf에서 잘못 해석된다. -->
                             <!-- <span th:text="X" th:each="i : ${#numbers.sequence(1, member.pw.length())}"></span> -->
-                            <button type="button" id="modifyPassword">비밀번호 변경</button>
+                            <button type="button" id="modifyPassword" class="btn btn-primary">비밀번호 변경</button>
                         </span>
                     </td>
                 </tr>
@@ -166,26 +262,32 @@
                 <tr>
                     <!-- 수정 불가-->
                     <th scope="row"> 전화번호 </th>
-                    <td><input type="text" th:field="${member.phoneNum}"></td>
+                    <td th:text="${member.phoneNum}"></td>
                 </tr>
 
 
             </tbody>
         </table>
-        <div>
-            <span>
-                <button type="submit" id="modify">정보 수정</button>
-            </span>
+        <!-- 마이페이지 템플릿에서 중복 닉네임 메시지를 표시하는 부분 -->
+<div th:if="${duplicateNicknameMessage}" class="alert alert-danger">
+    <p th:text="${duplicateNicknameMessage}"></p>
+</div>
+
+        <div class="mt-3">
+                <button type="submit" id="modify" class="btn btn-primary">정보 수정</button>
+        </div>
+        <div class="mt-3">
+            <a th:href="@{/member/delete}" id="delete">
+                <button type="button" class="btn btn-primary">회원 탈퇴</button>
+            </a>
         </div>
     </form>
-    <a th:href="@{/member/delete}" id="delete">
-        <button type="button">회원 탈퇴</button>
-    </a>
+</div>
 
     
-    <footer class="bg-dark text-light text-center py-3">
+    <!-- <footer class="bg-dark text-light text-center py-3">
         <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
-    </footer>
+    </footer> -->
 
     <!-- jQuery 라이브러리를 먼저 로드합니다. -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
