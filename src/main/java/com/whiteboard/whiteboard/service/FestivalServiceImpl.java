@@ -10,7 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.whiteboard.whiteboard.dto.FestivalDTO;
+import com.whiteboard.whiteboard.dto.ReplyDTO;
 import com.whiteboard.whiteboard.entity.Festival;
+import com.whiteboard.whiteboard.entity.FestivalReply;
+import com.whiteboard.whiteboard.repository.FestivalReplyRepository;
 import com.whiteboard.whiteboard.repository.FestivalRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,8 @@ import lombok.RequiredArgsConstructor;
 public class FestivalServiceImpl implements FestivalService {
 
     private final FestivalRepository festivalRepository;
+
+    private final FestivalReplyRepository festivalReplyRepository;
 
     private List<FestivalDTO> searchResults = new ArrayList<>();
 
@@ -70,26 +75,35 @@ public class FestivalServiceImpl implements FestivalService {
         return entityToDTO(festival);
     }
 
-    //축제검색 
+    // 축제검색
     @Override
     public List<FestivalDTO> searchFestivals(String searchQuery) {
         // 축제 제목에 검색어가 포함된 모든 축제를 검색
         List<Festival> festivals = festivalRepository.findByFestivalTitleContaining(searchQuery);
-        
+
         // Festival 엔티티를 FestivalDTO로 변환
         List<FestivalDTO> festivalDTOs = festivals.stream()
                 .map(this::entityToDTO) // entityToDTO 메서드 활용
                 .collect(Collectors.toList());
-        
+
         // 검색 결과를 searchResults 변수에 저장
         searchResults = festivalDTOs;
-        
+
         return festivalDTOs;
     }
 
-     // 검색 결과를 반환하는 메서드
+    // 축제 상세페이지 댓글
+    @Override
+    public void addComment(ReplyDTO replyDTO) {
+        FestivalReply festivalReply = new FestivalReply();
+        festivalReply.setFestivalNum(replyDTO.getFestivalNum());
+        festivalReply.setContent(replyDTO.getContent());
+        festivalReplyRepository.save(festivalReply);
+    }
+
+    // 검색 결과를 반환하는 메서드
     // public List<FestivalDTO> getSearchResults() {
-    //     return searchResults;
+    // return searchResults;
     // }
 
 }
