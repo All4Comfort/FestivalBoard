@@ -22,6 +22,7 @@ import com.whiteboard.whiteboard.dto.NoticeDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.repository.NoticeRepository;
 import com.whiteboard.whiteboard.repository.QuestionRepository;
+import com.whiteboard.whiteboard.service.MemberService;
 import com.whiteboard.whiteboard.service.NoticeService;
 import com.whiteboard.whiteboard.service.NoticeServiceImpl;
 
@@ -37,6 +38,7 @@ public class NoticeController {
   private final NoticeServiceImpl noticeServiceImpl;
   private final NoticeRepository noticeRepository;
   private final QuestionRepository questionRepository;
+  private final MemberService memberService;
 
   // @GetMapping("/notice1")
   // public void notice(PageRequestDTO pageRequestDTO, Model model){
@@ -51,8 +53,17 @@ public class NoticeController {
   // 검색 기능 및 페이징을 위한 메서드
     @GetMapping("/notice1")
     public String notice(
-            @RequestParam(name = "searchQuery", required = false) String searchQuery,
-            PageRequestDTO pageRequestDTO, Model model) {
+            @RequestParam(name = "searchQuery", required = false) String searchQuery, 
+            PageRequestDTO pageRequestDTO, Model model,HttpSession session,@ModelAttribute("mEmail") String mEmail) {
+              
+              if (session.getAttribute("loggedInUser") != null) {
+                mEmail = memberService.covertSessionToDTO(session).getEmail();
+                if (mEmail.equals("123@123.com")) {
+                  mEmail = "123@123.com";
+                }
+              }else{
+                mEmail = "";
+              }
 
         List<NoticeDTO> notices; // 축제 목록을 담을 변수
         boolean isSearch = false; // 검색 여부를 나타내는 변수
@@ -103,6 +114,7 @@ public class NoticeController {
         model.addAttribute("result", notices); // 축제 목록을 모델에 추가
         model.addAttribute("searchQuery", searchQuery); // 검색어를 모델에 추가
         model.addAttribute("isSearch", isSearch); // 검색 여부를 모델에 추가
+        model.addAttribute("mEmail", mEmail);
 
         return "notice/notice1"; // "festivalList.html" 페이지로 이동
     }
