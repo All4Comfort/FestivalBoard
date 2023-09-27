@@ -24,9 +24,10 @@
     </style>
   </head>
   <body>
+    <h1><strong>REVIEW</strong></h1>
     <form action="/review/reviewWrite" method="post" th:object="${reviewDTO}">
-      <div class="form-group text-center" th:width="500">
-        <h1><label for="title">REVIEW</label></h1>
+      <div class="form-group" th:width="500">
+        <!-- <h1><label for="title">REVIEW</label></h1> -->
         <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" placeholder="글 제목을 입력하세요">
         <textarea class="form-control" id="summernote" name="content" th:style="'width: 800px;'" placeholder="글 내용을 입력하세요"></textarea>
       </div>
@@ -52,7 +53,9 @@
 
         $('#submit').click(function() {
           var title = $('#title').val();
-          var content = $('#summernote').summernote('getText');
+          
+          //var content = $('#summernote').summernote('getText');
+          actionForm.attr("action", "/review/reviewList").attr("method", "post").submit();
 
           // AJAX 요청 등을 이용하여 서버로 데이터 전송 및 추가적인 처리 수행
 

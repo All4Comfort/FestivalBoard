@@ -2,6 +2,9 @@ package com.whiteboard.whiteboard.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
@@ -35,6 +38,19 @@ public interface ReviewService {
 
   // 게시물 수정 메서드 선언
   void modify(ReviewDTO dto);
+
+  //리뷰페이징
+  Page<ReviewDTO> findAllByOrderByReviewNum(Pageable pageable);
+
+  //서치를 위해 메서드 정의
+  List<ReviewDTO> searchReviews(String searchQuery);
+
+
+
+
+
+
+
 
   
   default public ReviewDTO entityToDTO(Review review) {

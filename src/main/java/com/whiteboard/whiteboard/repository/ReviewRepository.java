@@ -2,6 +2,8 @@ package com.whiteboard.whiteboard.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,11 +23,15 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
   @Query("Select n From Review n")
   List<Review[]> getReviewList();
 
-  // @Query(("SELECT n, m FROM Review n JOIN n.writer m"))
-  // Page<Object[]> getReviewWriter(Pageable pageable);
+  @Query("SELECT n FROM Review n ORDER BY n.reviewNum ASC")
+    List<Review> findAllByOrderByReviewNumAsc();
 
-  
+  //리뷰 리스트 페이징
+  @Query("SELECT n FROM Review n ORDER BY n.reviewNum ASC")
+   Page<Review> findAllByOrderByReviewNum(Pageable pageable);
 
+  //리뷰 검색
+  List<Review> findByTitleContaining(String searchQuery);
 
   
   

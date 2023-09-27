@@ -139,7 +139,8 @@
                             별표(*)로 표시하지 않는 이유....
                         Thymeleaf에서는 * 문자를 기본적으로 변수 또는 속성을 평가하는 데 사용.
                         th:text="*"와 같은 코드는 Thymeleaf에서 잘못 해석된다. -->
-                            <span th:text="X" th:each="i : ${#numbers.sequence(1, member.pw.length())}"></span>
+                            <!-- <span th:text="X" th:each="i : ${#numbers.sequence(1, member.pw.length())}"></span> -->
+                            <button type="button" id="modifyPassword">비밀번호 변경</button>
                         </span>
                     </td>
                 </tr>
@@ -150,7 +151,6 @@
                 </tr>
                 <tr>
                     <th scope="row"> 닉네임 </th>
-                    <!-- th:value 를 사용해야 입력필드 수정 가능-->
                     <td><input type="text" th:field="${member.nickname}"></td>
                 </tr>
                 <tr>
@@ -166,7 +166,7 @@
                 <tr>
                     <!-- 수정 불가-->
                     <th scope="row"> 전화번호 </th>
-                    <td th:text="${member.phoneNum}"></td>
+                    <td><input type="text" th:field="${member.phoneNum}"></td>
                 </tr>
 
 
@@ -201,6 +201,10 @@
         document.getElementById('delete').addEventListener('click', function(event){
             alert('탈퇴가 완료되었습니다.');
             window.location.href = "/member/delete";
+        });
+        document.getElementById('modifyPassword').addEventListener('click', function(event){
+            alert('비밀번호 변경 페이지로 이동합니다.');
+            window.location.href = "/member/modifyPassword";
         });
 
     </script>

@@ -3,7 +3,10 @@ package com.whiteboard.whiteboard.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.whiteboard.whiteboard.dto.MemberDTO;
@@ -27,8 +30,11 @@ public class ReviewServiceImpl implements ReviewService {
   private final MemberRepository memberRepository;
   private final MemberService memberService;
 
+  private List<ReviewDTO> searchResults = new ArrayList<>();
+
   @Override
   public List<ReviewDTO> getAllReviews() {
+    
 
     List<ReviewDTO> reviewDTOs = new ArrayList<>();
 
@@ -126,14 +132,27 @@ public Review dtoToEntity(ReviewDTO reviewDTO, HttpSession session) {
         .build();
     return review;
   }
-  
-  
-  
-  
 
+//리뷰페이징
+@Override
+public Page<ReviewDTO> findAllByOrderByReviewNum(Pageable pageable) {
+  Page<Review> reviewPage = reviewRepository.findAllByOrderByReviewNum(pageable);
+  return reviewPage.map(review -> entityToDTO(review));
+}
+
+
+//축제 검색
+@Override
+public List<ReviewDTO> searchReviews(String searchQuery) {
+ List<Review> reviews = reviewRepository.findByTitleContaining(searchQuery);
+
+ List<ReviewDTO> reviewDTOs = reviews.stream()
+        .map(this::entityToDTO)
+        .collect(Collectors.toList());
   
-  
-  
-  
-  
+  searchResults = reviewDTOs;
+
+  return reviewDTOs;
+}
+
 }
