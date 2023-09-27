@@ -245,7 +245,14 @@
                     window.location.href = "/logout"; // 로그아웃으로 이동
                 });
             }
-
+            if (document.getElementById('modifyPassword')) {
+                document.getElementById('modifyPassword').addEventListener('click', function (event){
+                    
+                    alert('비밀번호 변경 페이지로 이동합니다.');
+                    event.preventDefault(); // 기본 동작 방지
+                    window.location.href = "/logout"; // 비밀번호 변경 페이지로 이동
+                });
+            }
 
 
 

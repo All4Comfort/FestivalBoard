@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.whiteboard.whiteboard.dto.NoticeDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
-import com.whiteboard.whiteboard.dto.QuestionDTO;
 import com.whiteboard.whiteboard.entity.Notice;
 import com.whiteboard.whiteboard.repository.NoticeRepository;
 
@@ -72,23 +71,7 @@ public NoticeDTO get(Long noticeNum) {
   
 }
 
-@Override
-public Long registerQuestion(QuestionDTO dto) {
-  // TODO Auto-generated method stub
-  throw new UnsupportedOperationException("Unimplemented method 'registerQuestion'");
-}
 
-@Override
-public List<QuestionDTO> findAllQuestion() {
-  // TODO Auto-generated method stub
-  throw new UnsupportedOperationException("Unimplemented method 'findAllQuestion'");
-}
-
-@Override
-public NoticeDTO getQuestion(Long questionNum) {
-  // TODO Auto-generated method stub
-  throw new UnsupportedOperationException("Unimplemented method 'getQuestion'");
-}
 
 @Transactional
 @Override
