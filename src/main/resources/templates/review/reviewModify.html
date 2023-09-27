@@ -24,14 +24,15 @@
     </style>
   </head>
   <body>
+    <h1><strong>REVIEW</strong></h1>
     <form action="/review/reviewModify" method="post" th:object="${dto}">
-      <div class="form-group text-center" th:width="500">
-        <h1><label for="title">REVIEW</label></h1>
+      <div class="form-group" th:width="500">
+        <!-- <h1><label for="title">REVIEW</label></h1> -->
         <form>
         <input type="hidden" name="reviewNum" th:value="${dto.reviewNum}" readonly/>
         </form>
         <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" th:value="${dto.title}">
-        <textarea class="form-control" id="content" name="content" th:style="'width: 800px;'">[[${dto.content}]]</textarea>
+         <textarea class="form-control" id="content" name="content" th:style="'width: 800px;'">[[${dto.content}]]</textarea> 
       </div>
       <button type="submit" class="btn btn-light" id="submit">작성</button>
       <a th:href="@{/review/reviewList}" class="btn btn-secondary">
@@ -61,7 +62,19 @@
       //     // 글 작성 후 목록 페이지로 리다이렉트 또는 다른 동작 수행
       //     // window.location.href = "/게시글목록페이지URL";
       //   });
-      // });
+       //});
+
+     $('#content').summernote({
+    placeholder: '게시글을 작성해주세요. '+
+      '불쾌감을 주거나 타인을 비방 또는 명예훼손하는 글은 무통보 삭제될 수 있습니다. '+
+      '작성글에 대한 민형사상의 책임은 본인에게 있습니다.',
+    tabsize : 2,
+    height : 500,
+    maxHeight : 500,
+    minHeight : 500,
+    width : 800,
+    lang: 'ko-KR'
+});
 
       var actionForm = $("form");
       $("#submit").click(function(){

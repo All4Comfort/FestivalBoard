@@ -74,8 +74,8 @@ public class Review extends BaseEntity {
    private String hashTag4; // 해시태그4
    private String hashTag5; // 해시태그5
 
-   public void updateContent(String newContent) {
-      this.content = newContent;
+   public void updateContent(String Content) {
+      this.content = Content;
    }
 
    public void updateTitle(String newTitle) {

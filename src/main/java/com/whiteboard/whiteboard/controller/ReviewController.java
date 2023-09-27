@@ -1,18 +1,26 @@
 package com.whiteboard.whiteboard.controller;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
-import com.whiteboard.whiteboard.service.FestivalService;
+
 import com.whiteboard.whiteboard.service.ReviewService;
 
 import jakarta.servlet.http.HttpSession;
@@ -27,8 +35,82 @@ public class ReviewController {
     @Autowired
     private ReviewService reviewService;
 
-    @Autowired
-    private FestivalService festivalService;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   //     @GetMapping("/reviewList")
+//     public String showReviewList(@RequestParam(name = "searchQuery", required = false) String searchQuery,
+//                                  PageRequestDTO pageRequestDTO, Model model){
+//     List<ReviewDTO> reviews;
+//     boolean isSearch = false;
+
+//     if(searchQuery != null && !searchQuery.isEmpty()){
+//         reviews = reviewService.searchReviews(searchQuery);
+//         isSearch = true;
+//     }else {
+//         Pageable pageable = pageRequestDTO.getPageable(Sort.by("reviewlNum").ascending());
+
+//         Page<ReviewDTO> reviewPage = reviewService.findAllByOrderByReviewNum(pageable);
+//         reviews = reviewPage.getContent();
+
+//         int totalPages = reviewPage.getTotalPages();
+        
+//         int currentPage = pageRequestDTO.getPage();
+
+//         List<Integer> pageNumbers = IntStream
+//             .rangeClosed(Math.max(1, currentPage -1), Math.min(currentPage + 1, totalPages))
+//             .boxed()
+//             .collect(Collectors.toList());
+
+//         boolean hasPrevPage = currentPage > 1;
+//         boolean hasNextPage = currentPage < totalPages;
+
+//         int prevPageNumber = currentPage - 1;
+//         int nextPageNumber = currentPage + 1;
+
+//         model.addAttribute("pageNumbers", pageNumbers);
+//         model.addAttribute("hasPrevPage", hasPrevPage);
+//         model.addAttribute("hasNextPage", hasNextPage);
+//         model.addAttribute("prevPageNumber", prevPageNumber);
+//         model.addAttribute("nextPageNumber", nextPageNumber);
+
+//     }
+    
+//     model.addAttribute("reviews", reviews);
+//     model.addAttribute("searchQuery", searchQuery);
+//     model.addAttribute("isSearch", isSearch);
+
+//     return "review/reviewlList";
+//  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @GetMapping("/reviewList")
     public void getReviews(PageRequestDTO pageRequestDTO, Model model) {
@@ -47,6 +129,8 @@ public class ReviewController {
 
         // List<Review> reviews = new ArrayList<>();
         // 리뷰 데이터를 가져와서 reviews 리스트에 추가
+
+    
 
     }
     
@@ -74,19 +158,29 @@ public class ReviewController {
         
     }
 
-    // @PostMapping("/remove")
-    // public String remove(Long reviewNum, RedirectAttributes redirect){
-    //     System.out.println("GGGGGGGG");
-    //     reviewService.remove(reviewNum);
-    //     redirect.addAttribute("")
-    // }
-    @PostMapping("/reviewModify")
+    @PostMapping("/remove")
+    public String remove(Long reviewNum, RedirectAttributes redirect){
+        System.out.println("GGGGGGGG");
+        reviewService.remove(reviewNum);
+        redirect.addAttribute("reviewDTO",reviewNum);
+        return "redirect:/review/reviewList";
+    }
+    
+       @PostMapping("/reviewModify")
     public String modify(ReviewDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
         reviewService.modify(dto);
 
-        redirect.addAttribute("reviewDTO", dto);
+        redirect.addAttribute("reviewNum", dto.getReviewNum());
         return "redirect:/review/reviewDetail";
     }
+
+    // @PostMapping("/reviewModify")
+    // public String modify(ReviewDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
+    //     reviewService.modify(dto);
+
+    //     redirect.addAttribute("reviewDTO", dto);
+    //     return "redirect:/review/reviewDetail";
+    // }
 
     @GetMapping("/reviewModify")
     public void reviewModify(@ModelAttribute ReviewDTO dto, Model model){
@@ -94,6 +188,7 @@ public class ReviewController {
         System.out.println("수정페이지에서 DTO!!!!!!!!!!!!!!!!!!!!! : " + dto); //reviewNum, title, content옴
         model.addAttribute("dto", dto);
     }
+
     
  
 
