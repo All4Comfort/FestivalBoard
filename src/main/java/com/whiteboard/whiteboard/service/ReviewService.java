@@ -30,6 +30,7 @@ public interface ReviewService {
   // 리뷰의 reviewNum으로 리뷰 가져오기
   ReviewDTO getReviewByReviewNum(Long reviewNum);
 
+
   // 기존 리뷰 업데이트
   void updateReview(Long reviewNum, ReviewDTO reviewDTO);
 

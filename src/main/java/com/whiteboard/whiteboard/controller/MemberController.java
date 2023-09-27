@@ -258,7 +258,7 @@ public class MemberController {
             HttpSession session,
             @RequestParam("currentPassword") String currentPassword,
             @RequestParam("newPassword") String newPassword,
-            @RequestParam("confirmPassword") String confirmPassword) {
+            @RequestParam("confirmPassword") String confirmPassword, RedirectAttributes redirectAttributes) {
         // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
         Member loggedInUser = (Member) session.getAttribute("loggedInUser");
 
@@ -288,6 +288,7 @@ public class MemberController {
             // 현재 비밀번호가 일치하지 않는 경우
             // 에러 처리 또는 다른 처리 로직을 추가하세요.
             // ...
+            redirectAttributes.addFlashAttribute("duplicatePw", "현재 비밀번호가 잘못되었습니다.");
             return "redirect:/member/modifyPassword"; // 다시 비밀번호 변경 페이지로 리다이렉트
         }
     }
@@ -432,6 +433,11 @@ public class MemberController {
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("member/unloginedAlert")
+    public void goUnloginedAlert(@ModelAttribute("alertMessage") String alertMessage){
+
     }
 
 }
