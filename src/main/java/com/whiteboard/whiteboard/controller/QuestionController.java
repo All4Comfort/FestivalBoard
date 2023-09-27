@@ -91,9 +91,10 @@ public class QuestionController {
     }
 
     @GetMapping("/questionDetail")
-    public void questionDetail(@RequestParam("questionNum") Long questionNum, Model model, HttpSession session){
+    public void questionDetail(@ModelAttribute QuestionDTO dto, @RequestParam("questionNum") Long questionNum, Model model, HttpSession session){
       QuestionDTO questionDTO = questionService.get(questionNum);
-      model.addAttribute("result", questionDTO);
+      System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + questionDTO);
+      model.addAttribute("dto", questionDTO);
     }
 
     //신규글등록폼 요청처리
@@ -109,6 +110,31 @@ public class QuestionController {
       attributes.addFlashAttribute("newQuestionNum", newQuestionNum);
       return "redirect:/notice/question";
     }
+
+    @PostMapping("/questionRemove")
+  public String questionremove(long questionNum, RedirectAttributes redirect){
+    System.out.println("GGGGGGGGG");
+    questionService.remove(questionNum);
+    redirect.addAttribute("newQuestionNum", questionNum);
+    return "redirect:/notice/question";
+  }
+
+  @PostMapping("/questionmodify")
+  public String modify(QuestionDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
+    
+    //System.out.println("포스수정 ==============================" + dto);
+    questionService.modify(dto);
+
+    redirect.addAttribute("dto", dto);
+    return "redirect:/notice/questionDetail";
+  }
+
+  @GetMapping("/questionmodify")
+  public void questionmodify(@ModelAttribute QuestionDTO dto, Model model){
+    model.addAttribute("dto", dto);
+  }
+
+
 
     // @PostMapping("/remove")
     // public String remove(long questionNum, RedirectAttributes redirect){

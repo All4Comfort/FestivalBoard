@@ -61,7 +61,6 @@ class NoticeApplicationTest {
   Question question = Question.builder()
                       .title("제목" + i + "입니다.")
                       .content("이건" + i + " 번째 글입니다.")
-                      .writer(null)
                       .build();
       questionRepository.save(question);
     });

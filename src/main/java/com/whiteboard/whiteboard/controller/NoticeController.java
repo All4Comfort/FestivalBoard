@@ -194,6 +194,8 @@ public void noticeDetail(@RequestParam("noticeNum") Long noticeNum, Model model,
     return "redirect:/notice/notice1";
   }
 
+
+   
   @PostMapping("/noticemodify")
   public String modify(NoticeDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
     System.out.println("수정창띄우기!!!!!!!!!!!!!!!!!!!!!!!!!!!");

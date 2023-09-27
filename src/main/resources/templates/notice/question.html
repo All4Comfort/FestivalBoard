@@ -138,7 +138,70 @@
             margin-left: -30px;
             /* 원하는 만큼 왼쪽으로 이동시킵니다. */
         }
+        .search-button {
+            background-color: black;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            margin-left: 5px;
+            cursor: pointer;
+        }
 
+        /* 검색 입력 상자 크기 조절 */
+        #search-input {
+            width: 600px;
+            /* 원하는 폭으로 조절 (예: 300px) */
+            padding: 10px;
+            /* 내부 여백 추가 */
+            font-size: 16px;
+            /* 글꼴 크기 조절 */
+            margin-bottom: 40px;
+
+        }
+
+        /* Pagination 스타일 */
+        .pagination {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            color: #333;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* 링크 기본 스타일 제거 */
+        a {
+            text-decoration: none;
+            /* 밑줄 제거 */
+            color: inherit;
+            /* 기본 텍스트 색상 상속 */
+        }
+
+        /* 모든 열 내의 .card 클래스에 스타일 적용 */
+        .col .card {
+            margin: auto;
+            width: 100%;
+            height: 350px;
+            /* 가로 너비 100%로 설정 */
+        }
         
     </style>
 </head>
@@ -267,10 +330,7 @@
             </div>
         </div>
     </form>
-    
-    <footer class="bg-dark text-light text-center py-3">
-        <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
-    </footer>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gg6vUz1rTL5UHVbNXLKwgpAYNr2NvTAPC5JiKc+2aX8Cxl+U7v2+nSvzvIMnJvWR" crossorigin="anonymous"></script>

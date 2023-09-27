@@ -53,5 +53,14 @@ public class QuestionServiceImpl implements QuestionService {
   public void remove(long questionNum) {
     questionRepository.deleteById(questionNum);
   }
+
+  @Override
+  public void modify(QuestionDTO dto) {
+    System.out.println("모디파이 메서드 ~~!!!!!!!!!!!!!!!!!!!!!!!!!!!" + dto);
+    Question question = questionRepository.getReferenceById(dto.getQuestionNum());
+    question.updateContent(dto.getContent());
+    question.updateTitle(dto.getTitle());
+    questionRepository.save(question);
+  }
   
 }
