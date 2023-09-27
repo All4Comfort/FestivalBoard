@@ -155,4 +155,11 @@ public List<ReviewDTO> searchReviews(String searchQuery) {
   return reviewDTOs;
 }
 
+
+@Override
+public PageResultDTO<ReviewDTO, Object[]> getList(PageRequestDTO pageRequestDTO) {
+  return null;
+
+
+}
 }

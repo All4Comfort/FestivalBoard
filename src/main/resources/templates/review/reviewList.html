@@ -190,19 +190,33 @@
 
         /* 페이징 스타일 */
         .pagination {
-            text-align: center;
-            margin-top: 30px;
-            margin-bottom: 40px;
+            list-style: none;
             display: flex;
             justify-content: center;
-            /* 가로 가운데 정렬 */
             align-items: center;
-            /* 세로 가운데 정렬 */
+            margin: 20px 0;
+        }
+        .pagination li {
+            margin: 0 5px;
         }
 
-         /* 링크 기본 스타일 제거 */
-         a {
+        .pagination a {
             text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            color: #333;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* 링크 기본 스타일 제거 */
+         a {
+             text-decoration: none;
             /* 밑줄 제거 */
             color: inherit;
             /* 기본 텍스트 색상 상속 */
@@ -217,19 +231,19 @@
             <ul class="nav nav-pills">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                        aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                            fill="black" class="bi bi-list" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                        </svg></a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#scrollspyHeading3">축제게시판</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#scrollspyHeading4">리뷰게시판</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
+                    aria-expanded="false"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                    fill="black" class="bi bi-list" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                    d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                </svg></a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#scrollspyHeading3">축제게시판</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" href="#scrollspyHeading4">리뷰게시판</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
                         </li>
                         <li><a class="dropdown-item" href="#scrollspyHeading4">자유게시판</a></li>
                         <li>
@@ -240,32 +254,35 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#scrollspyHeading1"><svg xmlns="http://www.w3.org/2000/svg" width="30"
-                            height="30" fill="black" class="bi bi-person" viewBox="0 0 16 16">
-                            <path
-                                d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
-                        </svg></a>
+                        height="30" fill="black" class="bi bi-person" viewBox="0 0 16 16">
+                        <path
+                        d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
+                    </svg></a>
                 </li>
             </ul>
         </nav>
     </header>
+  
+    
+
     <div class="container">
     </div>
     <h1 style="text-align: center;">리뷰 게시판 목록</h1>
-
+    
     <div class="search-box">
         <form id="search-form" method="get" action="/search_reviews">
             <input type="text" id="search-input" placeholder="상품을 검색하세요" name="searchQuery">
             <button type="submit" class="search-button">검색</button>
         </form>
     </div>
-
-<!-- 리뷰 목록 -->
-<div class="album py-5 bg-body-tertiary">
-    <div class="carousel-inner">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-            <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
-            <div th:each="review, iterStat : ${result}">
-                <!-- 각 축제 정보 표시 -->
+    
+    <!-- 리뷰 목록 -->
+    <div class="album py-5 bg-body-tertiary">
+        <div class="carousel-inner">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
+                <div th:each="review, iterStat : ${result}">
+                    <!-- 각 축제 정보 표시 -->
                 <div class="col">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -284,24 +301,40 @@
     </div>
 </div>
 
- <!-- 페이징 --> 
+
+<!-- 리뷰 작성하기 버튼 -->
+
+
+<!-- 페이지 번호 목록 표시 -->
 <div class="pagination">
+    <!-- 이전 페이지 버튼 -->
+    <a th:if="${hasPrevPage}" th:href="@{'/review/reviewList?page=' + ${prevPageNumber}}"
+        class="page-link prev">이전</a>
+    <!-- 페이지 번호 표시 -->
+    <ul class="pagination justify-content-center" id="pagination">
+        <li th:each="pageNumber : ${pageNumbers}">
+            <a th:href="@{'/review/review?page=' + ${pageNumber}}" th:text="${pageNumber}"
+                th:class="${pageNumber == currentPage ? 'active' : ''}"></a>
+        </li>
+    </ul>
+    <!-- 다음 페이지 버튼 -->
+    <a th:if="${hasNextPage}" th:href="@{'/review/reviewList?page=' + ${nextPageNumber}}"
+        class="page-link next">다음</a>
+</div>
+
+
+
+
+<!-- 페이징 --> 
+<!-- <div class="pagination">
     <a href="#" class="page-link prev">이전</a>
     <a href="#" class="page-link active">1</a>
     <a href="#" class="page-link">2</a>
     <a href="#" class="page-link">3</a>
-    <!-- 필요한 만큼 페이지 링크 추가 -->
+    
     <a href="#" class="page-link next">다음</a>
-</div>
+</div> -->
 
-<!-- 리뷰 작성하기 버튼 -->
-<div class="write-review-button" id="write-review-button">
-    <!-- href="/src/main/resources/templates/review/reviewWrite.html" -->
-    <!-- <a >리뷰 작성하기</a> -->
-    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal">
-        <a th:href="@{/review/reviewWrite}">리뷰작성하기</a>
-    </button>
-</div>
 <!-- 
 <div id="review-list" class="review-container" th:each="review : ${result}">
     < 리뷰 목록 아이템들 -->

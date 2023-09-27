@@ -291,7 +291,7 @@ document.getElementById('prevNotice').addEventListener('click', function () {
             }
 
             // 이전 페이지의 URL을 생성합니다.
-            var prevPageUrl = '/festival/festivalDetail?festivalNum=' + prevFestivalNum;
+            var prevPageUrl = '/review/reviewDetail?reviewNum=' + prevFestivalNum;
 
             // 이전 페이지로 이동합니다.
             window.location.href = prevPageUrl;
@@ -320,7 +320,7 @@ document.getElementById('prevNotice').addEventListener('click', function () {
             var nextFestivalNum = currentFestivalNum + 1;
 
             // 다음 페이지의 URL을 생성합니다.
-            var nextPageUrl = '/festival/festivalDetail?festivalNum=' + nextFestivalNum;
+            var nextPageUrl = '/review/reviewDetail?reviewNum=' + nextFestivalNum;
 
             // 다음 페이지로 이동합니다.
             window.location.href = nextPageUrl;
@@ -329,7 +329,7 @@ document.getElementById('prevNotice').addEventListener('click', function () {
         //목록으로 돌아가기
         document.getElementById('go_Back').addEventListener('click', function () {
             //목록으로 가고싶은 주소
-            var backUrl = '/festival/festivalList'
+            var backUrl = '/review/reviewList'
 
             //클릭시 목록으로 돌아가게 된다
             window.location.href = backUrl;
@@ -337,7 +337,7 @@ document.getElementById('prevNotice').addEventListener('click', function () {
 
         // URL에서 festivalNum 값을 추출하는 함수 현재창 넘버 알아내는거
         function getFestivalNumFromUrl(url) {
-            var match = url.match(/festivalNum=(\d+)/);
+            var match = url.match(/reviewNum=(\d+)/);
             if (match) {
                 return parseInt(match[1], 10);
             }
