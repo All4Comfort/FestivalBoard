@@ -1,42 +1,57 @@
-// package com.whiteboard.whiteboard.service;
+package com.whiteboard.whiteboard.service;
 
-// import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-// import org.springframework.data.domain.Page;
-// import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
-// import com.whiteboard.whiteboard.dto.QuestionDTO;
+import com.whiteboard.whiteboard.dto.QuestionDTO;
+import com.whiteboard.whiteboard.entity.Question;
+import com.whiteboard.whiteboard.repository.QuestionRepository;
 
-// public class QuestionServiceImpl implements QuestionService {
+import lombok.RequiredArgsConstructor;
 
-//   @Override
-//   public Long register(QuestionDTO dto) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'register'");
-//   }
+@Service
+@RequiredArgsConstructor
+public class QuestionServiceImpl implements QuestionService {
 
-//   @Override
-//   public List<QuestionDTO> searchQuestions(String searchQuery) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'searchQuestions'");
-//   }
+  private final QuestionRepository questionRepository;
 
-//   @Override
-//   public Page<QuestionDTO> findAllByOrderByQuestionNum(Pageable pageable) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'findAllByOrderByQuestionNum'");
-//   }
+  private List<QuestionDTO> searchResults = new ArrayList<>();
 
-//   @Override
-//   public QuestionDTO get(Long questionNum) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'get'");
-//   }
+  @Override
+  public Long register(QuestionDTO dto) {
+    Question question = dtoToEntity(dto);
+    questionRepository.save(question);
+    return question.getQuestionNum();
+  }
 
-//   @Override
-//   public void remove(long questionNum) {
-//     // TODO Auto-generated method stub
-//     throw new UnsupportedOperationException("Unimplemented method 'remove'");
-//   }
+  @Override
+  public List<QuestionDTO> searchQuestions(String searchQuery) {
+    List<Question> questions = questionRepository.findByTitleContaining(searchQuery);
+    List<QuestionDTO> questionDTOs = questions.stream().map(this::entityToDTO).collect(Collectors.toList());
+    searchResults = questionDTOs;
+    return questionDTOs;
+  }
+
+  @Override
+  public Page<QuestionDTO> findAllByOrderByQuestionNum(Pageable pageable) {
+    Page<Question> questionPage = questionRepository.findAllByOrderByQuestionNum(pageable);
+    return questionPage.map(question -> entityToDTO(question));
+  }
+
+  @Override
+  public QuestionDTO get(Long questionNum) {
+    Question question = questionRepository.getQuestionByquestionNum(questionNum);
+    return entityToDTO(question);
+  }
+
+  @Override
+  public void remove(long questionNum) {
+    questionRepository.deleteById(questionNum);
+  }
   
-// }
+}
