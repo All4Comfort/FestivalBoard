@@ -82,7 +82,7 @@ public class ReviewController {
 
 
  @GetMapping("/reviewList")
-    public String review(
+    public String review(String alertMessage,
             @RequestParam(name = "searchQuery", required = false) String searchQuery,
             PageRequestDTO pageRequestDTO, Model model) {
 
@@ -135,7 +135,7 @@ public class ReviewController {
         model.addAttribute("result", reviews); // 축제 목록을 모델에 추가
         model.addAttribute("searchQuery", searchQuery); // 검색어를 모델에 추가
         model.addAttribute("isSearch", isSearch); // 검색 여부를 모델에 추가
-
+        model.addAttribute("alertMessage", alertMessage);
         return "review/reviewList"; // "festivalList.html" 페이지로 이동
     }
 
@@ -170,14 +170,25 @@ public class ReviewController {
     @PostMapping("/reviewWrite")
     public String saveReivew(@ModelAttribute ReviewDTO dto, RedirectAttributes attributes, HttpSession session){
 
-        System.out.println("작성한 값 담은 dto 전달되는지 확인!! : " + dto);
+        //System.out.println("작성한 값 담은 dto 전달되는지 확인!! : " + dto);
+        System.out.println("Session 아이디 확인!! : " + session.getAttribute("loggedInUser"));
         
-        //내용에서 html태그 제거하고 DB에 저장하도록!
-        dto.setContent(removeHtmlTags(dto.getContent()));
+        
+        String alertMessage = "";
+        
+        if (session.getAttribute("loggedInUser") != null) {
+            //내용에서 html태그 제거하고 DB에 저장하도록!
+            dto.setContent(removeHtmlTags(dto.getContent()));
+            reviewService.saveReview(dto, session);
+            return "redirect:/review/reviewList";
+            
+        }else{
+            alertMessage = "로그인한 회원만 글 작성 가능합니다.";
+            attributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+            return "redirect:/member/unloginedAlert";
+        }
 
-        reviewService.saveReview(dto, session);
         //attributes.addFlashAttribute("newReviewNum", newReviewNum);
-        return "redirect:/review/reviewList";
     }
 
     @GetMapping("/reviewWrite")

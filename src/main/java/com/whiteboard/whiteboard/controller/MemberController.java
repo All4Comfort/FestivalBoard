@@ -432,4 +432,9 @@ public String modify(HttpSession session, @ModelAttribute MemberDTO memberDTO, R
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping("member/unloginedAlert")
+    public void goUnloginedAlert(@ModelAttribute("alertMessage") String alertMessage){
+
+    }
+
 }
