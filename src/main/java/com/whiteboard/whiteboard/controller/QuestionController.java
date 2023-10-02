@@ -114,7 +114,7 @@ public class QuestionController {
         
         if (session.getAttribute("loggedInUser") != null) { //로그인한 경우
             
-            return "/notice/noticeWrite"; //작성페이지 띄우기
+            return "/notice/questionWrite"; //작성페이지 띄우기
             
         }else{//로그인하지 않은 경우
             alertMessage = "로그인한 회원만 글 작성 가능합니다.";
