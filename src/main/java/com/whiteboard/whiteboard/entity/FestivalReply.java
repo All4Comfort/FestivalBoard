@@ -47,10 +47,11 @@ public class FestivalReply extends BaseEntity {
 	}
 
 	public void setFestivalNum(Long festivalNum) {
-		this.from =from;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public void setContent(String content2) {
+    }
+
+    public void setWriter(Member writer2) {
+    }
 }

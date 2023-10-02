@@ -34,10 +34,12 @@
         <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" th:value="${dto.title}">
         <textarea class="form-control" id="content" name="content" th:style="'width: 800px;'">[[${dto.content}]]</textarea>
       </div>
-      <button type="submit" class="btn btn-link btn-lg" id="submit">수정</button>
+      <div style="display: flex; justify-content: right;">
+      <button type="submit" class="btn btn-link btn-lg" id="submit"><b>수정</b></button>
       <a th:href="@{/notice/notice1}" class="btn btn-secondary">
-        <button type="button" class="btn btn-link btn-lg" id="boardList">목록</button>
+        <button type="button" class="btn btn-link btn-lg" id="boardList"><b>목록</b></button>
       </a>
+    </div>
     </form>
     <script th:inline="javascript">
       // $(document).ready(function() {
