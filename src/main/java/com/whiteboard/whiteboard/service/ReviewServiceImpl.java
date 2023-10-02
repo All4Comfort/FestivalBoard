@@ -70,6 +70,8 @@ public class ReviewServiceImpl implements ReviewService {
 
   @Override
   public void saveReview(ReviewDTO dto, HttpSession session) {
+    dto.setGoodCount(0L);
+    dto.setReadCount(0L);
     Review review = dtoToEntity(dto, session);
     reviewRepository.save(review);
     System.out.println("글 DB에 저장 성공");
@@ -115,8 +117,8 @@ public class ReviewServiceImpl implements ReviewService {
         .writer(member)
         .title(reviewDTO.getTitle())
         .content(reviewDTO.getContent())
-        .readCount(0L)
-        .goodCount(0L)
+        .readCount(reviewDTO.getReadCount())
+        .goodCount(reviewDTO.getGoodCount())
         .build();
     return review;
   }
