@@ -1,16 +1,16 @@
 package com.whiteboard.whiteboard.controller;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.whiteboard.whiteboard.dto.ReplyDTO;
+import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.service.FestivalReplyService;
 import com.whiteboard.whiteboard.service.ReviewReplyService;
+import com.whiteboard.whiteboard.service.ReviewService;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class ReplyController {
 
     private final FestivalReplyService festivalReplyService;
+    private final ReviewService reviewService;
     private final ReviewReplyService reviewReplyService;
     
     // ResponseEntity는 Spring Framework에서 사용되는 클래스로, HTTP 응답을 생성하고 반환하는 데 사용
@@ -29,15 +30,18 @@ public class ReplyController {
 
     //댓글 등록하는 Post 메서드 정의
     @PostMapping("/review/save")
-    public ResponseEntity saveReviewReply(@ModelAttribute ReplyDTO replyDTO, HttpSession session) {
-        System.out.println("replyDTO = " + replyDTO);
-        Long saveResult = reviewReplyService.save(replyDTO, session);
-        if (saveResult != null) {
-             List<ReplyDTO> replyDTOList = reviewReplyService.findAll(saveResult);
-             return new ResponseEntity<>(replyDTOList, HttpStatus.OK);
-         } else {
-             return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
-         }
+    public String saveReviewReply(@RequestParam("reviewNum") Long reviewNum, @ModelAttribute ReplyDTO replyDTO,
+    @ModelAttribute ReviewDTO reviewDTO, RedirectAttributes attributes ,HttpSession session) {
+        //System.out.println("replyDTO = " + replyDTO);
+
+        //댓글 등록
+        System.out.println("11111111111111111111111111111111111111111111 : "+reviewDTO);
+        reviewReplyService.save(replyDTO, session);
+        reviewDTO = reviewService.getReviewByReviewNum(reviewNum);
+        System.out.println("22222222222222222222222222222222222222222222 : "+reviewDTO);
+        attributes.addAttribute(reviewDTO);
+        
+        return "redirect:/review/reviewDetail";
     }
 
     

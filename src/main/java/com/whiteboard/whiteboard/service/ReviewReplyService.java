@@ -69,7 +69,7 @@ public List<ReplyDTO> findAll(Long reviewNum) {
         Member member = memberRepository.getReferenceById(memberService.covertSessionToDTO(session).getEmail());
 
         ReviewReply entity = ReviewReply.builder()
-                            .replyNum(reply.getReplyNum())
+                            //.replyNum(reply.getReplyNum())
                             .reviewNum(review)
                             .replyLevel(reply.getReplyLevel())
                             .replyStep(reply.getReplyStep())
