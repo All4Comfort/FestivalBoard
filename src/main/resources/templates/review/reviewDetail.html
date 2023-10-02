@@ -270,7 +270,7 @@
     </div>
     <!-- 댓글 상세보기 -->
     <div class="review-detail-container">
-        <div class="reply-section">
+        <div class="reply-section" th:each="reply : ${reviewReplies}">
             <!-- 댓글 목록 표시 -->
             <ul class="reply-list">
                 <!-- 예제 댓글 아이템 -->
@@ -290,7 +290,7 @@
         
         <!-- 댓글 창 끝 -->
     </div>
-
+<!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&& 내가 작성한 댓글에만 버튼이 보이도록...&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
     <!-- 수정 및 삭제 버튼 -->
     <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
         <button type="button" class="btn btn-custom replyModifyBtn">댓글 수정</button>

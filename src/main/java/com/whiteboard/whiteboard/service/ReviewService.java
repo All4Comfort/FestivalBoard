@@ -48,18 +48,9 @@ public interface ReviewService {
 
   PageResultDTO<ReviewDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
 
-
-
-
-
-
-
-
+  void updateReadCount(Long reviewNum);
   
   default public ReviewDTO entityToDTO(Review review) {
-
-    
-    
      ReviewDTO dto = ReviewDTO.builder()
         .reviewNum(review.getReviewNum())
         .writer(review.getWriter().getEmail())
@@ -81,8 +72,4 @@ public interface ReviewService {
         .build();
     return dto;
   }
-
-  
-
-  // Long saveReview(ReviewDTO reviewDTO);
 }

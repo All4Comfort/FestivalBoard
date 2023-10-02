@@ -1,5 +1,8 @@
 package com.whiteboard.whiteboard.controller;
 
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,6 +12,7 @@ import com.whiteboard.whiteboard.dto.ReplyDTO;
 import com.whiteboard.whiteboard.service.FestivalReplyService;
 import com.whiteboard.whiteboard.service.ReviewReplyService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -24,29 +28,19 @@ public class ReplyController {
     // HTTP 상태 코드, 응답 본문, 헤더 등을 설정할 수 있는 방법을 제공
 
     //댓글 등록하는 Post 메서드 정의
-    @PostMapping("/festival/save")
-    public ResponseEntity saveFestivalReply(@ModelAttribute ReplyDTO replyDTO) {
+    @PostMapping("/review/save")
+    public ResponseEntity saveFestivalReply(@ModelAttribute ReplyDTO replyDTO, HttpSession session) {
         System.out.println("replyDTO = " + replyDTO);
         Long saveResult = reviewReplyService.save(replyDTO);
         if (saveResult != null) {
-    //         List<ReplyDTO> replyDTOList = festivalReplyService.findAll(replyDTO.getReviewNum());
-    //         return new ResponseEntity<>(replyDTOList, HttpStatus.OK);
-    //     } else {
-    //         return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
+             List<ReplyDTO> replyDTOList = festivalReplyService.findAll(replyDTO.getReviewNum(), session);
+             return new ResponseEntity<>(replyDTOList, HttpStatus.OK);
+         } else {
+             return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
          }
-         return new ResponseEntity(null);
     }
 
-    // @PostMapping("/save")
-    // public ResponseEntity save(@ModelAttribute CommentDTO commentDTO) {
-    //     System.out.println("commentDTO = " + commentDTO);
-    //     Long saveResult = commentService.save(commentDTO);
-    //     if (saveResult != null) {
-    //         List<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getBoardId());
-    //         return new ResponseEntity<>(commentDTOList, HttpStatus.OK);
-    //     } else {
-    //         return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
-    //     }
-    // }
+    
+  
  
 }
