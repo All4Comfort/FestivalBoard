@@ -20,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
-import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 import com.whiteboard.whiteboard.service.ReviewService;
 
@@ -249,14 +248,12 @@ public class ReviewController {
         System.out.println("Session 아이디 확인!! : " + session.getAttribute("loggedInUser"));
         String alertMessage = "";
 
-        Member loginedMember = (Member)session.getAttribute("loggedInUser");
-        
-        //if (session.getAttribute("loggedInUser") != null) { //로그인한 경우
-        if (loginedMember.getEmail().equals("1234@1234.com")) {    
+        if (session.getAttribute("loggedInUser") != null) { //로그인한 경우
+            
             return "/review/reviewWrite"; //작성페이지 띄우기
             
         }else{
-            alertMessage = "관리자만 글 작성 가능합니다.";
+            alertMessage = "로그인한 회원만 글 작성 가능합니다.";
             attributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
             return "redirect:/member/unloginedAlert";
         }
