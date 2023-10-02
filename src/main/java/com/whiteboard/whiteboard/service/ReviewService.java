@@ -48,7 +48,17 @@ public interface ReviewService {
 
   PageResultDTO<ReviewDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
 
+  //조회수 1회 누적
   void updateReadCount(Long reviewNum);
+
+  //좋아요 수
+ // Long likeReview(ReviewDTO dto);
+
+
+
+
+
+
   
   default public ReviewDTO entityToDTO(Review review) {
      ReviewDTO dto = ReviewDTO.builder()
