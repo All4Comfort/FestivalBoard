@@ -58,6 +58,8 @@ public class MemberController {
     @GetMapping("/member/login")
     public String moveTologin(Model model) {
         model.addAttribute("kakaoUrl", kakaoService.getKakaoLogin()); //카카오 로그인용
+        System.out.println("이건 모델>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + model);
+
         return "/member/login";
     }
 
@@ -65,6 +67,7 @@ public class MemberController {
     public ResponseEntity<MsgEntity> callback(HttpServletRequest request) throws Exception {
         KakaoDTO kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"));
 
+        System.out.println("이건 카카오인포>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + kakaoInfo);
         return ResponseEntity.ok()
                 .body(new MsgEntity("Success", kakaoInfo));
     }
