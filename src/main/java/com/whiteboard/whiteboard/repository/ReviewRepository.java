@@ -33,7 +33,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
   //리뷰 검색
   List<Review> findByTitleContaining(String searchQuery);
 
-  
+  //조회수
+  // @Modifying
+  // @Query("update Review p set p.count = p.count + 1 where p.id = :id")
+  // Long updateCount(Long id);
   
   // @Query(value = "Select r, w From Review r Left join b.writer w ")
   // //list 페이지에서 사용될 전체 목록 쿼리 이므로, Paging 처리를 위해 Page 객체로 리턴받도록 정의함

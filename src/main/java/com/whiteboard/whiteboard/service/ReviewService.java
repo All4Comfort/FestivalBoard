@@ -47,7 +47,8 @@ public interface ReviewService {
 
   PageResultDTO<ReviewDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
 
-
+  //좋아요 수
+ // Long likeReview(ReviewDTO dto);
 
 
 
