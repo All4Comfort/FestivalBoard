@@ -21,6 +21,7 @@ import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.ReplyDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
+import com.whiteboard.whiteboard.service.MemberService;
 import com.whiteboard.whiteboard.service.ReviewReplyService;
 import com.whiteboard.whiteboard.service.ReviewService;
 
@@ -32,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping({"/review","","/"})
 public class ReviewController {
 
+    private final MemberService memberService;
     private final ReviewRepository reviewRepository;
     private final ReviewService reviewService;
     private final ReviewReplyService reviewReplyService;
@@ -111,11 +113,14 @@ public class ReviewController {
         //댓글 목록 가져오기
         List<ReplyDTO> replyList  = reviewReplyService.findAll(reviewDTO.getReviewNum());
 
+        
+
         //System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%리뷰 댓글목록 : " + replyList);
 
         model.addAttribute("reviewDTO", reviewDTO);
         model.addAttribute("replyList", replyList);
         model.addAttribute("session", session);
+        
 
     }
 
