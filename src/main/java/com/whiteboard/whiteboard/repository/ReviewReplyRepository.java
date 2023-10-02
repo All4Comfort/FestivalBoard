@@ -9,6 +9,8 @@ import org.springframework.data.repository.query.Param;
 import com.whiteboard.whiteboard.entity.ReviewReply;
 
 public interface ReviewReplyRepository extends JpaRepository<ReviewReply, Long>{
-  @Query("SELECT r FROM ReviewReply r WHERE r.from = : reviewNum ORDER BY r.from DESC")
+  @Query("SELECT r FROM ReviewReply r WHERE r.reviewNum = :reviewNum ORDER BY r.reviewNum DESC")
    List<ReviewReply> findAllOrderByReviewNumDesc(@Param("reviewNum") Long reviewNum);
+
+   List<ReviewReply> findAllByReviewNumOrderByReplyNumDesc(Long reviewNum);
 }

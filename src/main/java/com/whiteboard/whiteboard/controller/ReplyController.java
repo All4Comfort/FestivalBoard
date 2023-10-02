@@ -29,11 +29,11 @@ public class ReplyController {
 
     //댓글 등록하는 Post 메서드 정의
     @PostMapping("/review/save")
-    public ResponseEntity saveFestivalReply(@ModelAttribute ReplyDTO replyDTO, HttpSession session) {
+    public ResponseEntity saveReviewReply(@ModelAttribute ReplyDTO replyDTO, HttpSession session) {
         System.out.println("replyDTO = " + replyDTO);
-        Long saveResult = reviewReplyService.save(replyDTO);
+        Long saveResult = reviewReplyService.save(replyDTO, session);
         if (saveResult != null) {
-             List<ReplyDTO> replyDTOList = festivalReplyService.findAll(replyDTO.getReviewNum(), session);
+             List<ReplyDTO> replyDTOList = reviewReplyService.findAll(saveResult);
              return new ResponseEntity<>(replyDTOList, HttpStatus.OK);
          } else {
              return new ResponseEntity<>("해당 게시글이 존재하지 않습니다.", HttpStatus.NOT_FOUND);

@@ -36,7 +36,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
   // 조회수 누적
   @Modifying
-  @Query(value = "UPDATE Review r SET r.readCount=r.readCount+1 where r.reviewNum=:reviewNum")
+  @Query("UPDATE Review r SET r.readCount=r.readCount+1 WHERE r.reviewNum = :reviewNum")
   void updateReadCount(@Param("reviewNum") Long reviewNum);
 
   // @Query(value = "Select r, w From Review r Left join b.writer w ")

@@ -148,6 +148,8 @@ public class ReviewServiceImpl implements ReviewService {
 
   }
 
+  // 조회수 누적
+  @Transactional
   @Override
   public void updateReadCount(Long reviewNum) {
       reviewRepository.updateReadCount(reviewNum);

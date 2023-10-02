@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
+import com.whiteboard.whiteboard.dto.ReplyDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 import com.whiteboard.whiteboard.service.ReviewReplyService;
@@ -98,18 +98,24 @@ public class ReviewController {
     
     
     @GetMapping("/reviewDetail")
-    public void getReviewDetail(@ModelAttribute ReviewDTO reviewDTO, Model model, HttpSession session) {
+    public void getReviewDetail(@ModelAttribute ReviewDTO reviewDTO, Model model) {
     
+        //System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%리뷰상세에서 reviewNum : " + reviewDTO.getReviewNum());
         //해당 리뷰글의 조회수 1회 올리기 (DB의 데이터 변경)
         reviewService.updateReadCount(reviewDTO.getReviewNum());
 
         //해당 리뷰글의 데이터 DB에서 모두 가져오기
         reviewDTO = reviewService.getReviewByReviewNum(reviewDTO.getReviewNum());
+        //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 리뷰DTO : " + reviewDTO);
 
         //댓글 목록 가져오기
-        reviewReplyService.findAll(reviewDTO.getReviewNum(), session);
+        List<ReplyDTO> replyList  = reviewReplyService.findAll(reviewDTO.getReviewNum());
+
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%리뷰 댓글목록 : " + replyList);
 
         model.addAttribute("reviewDTO", reviewDTO);
+        model.addAttribute("replyList", replyList);
+
     }
 
     //글쓰기 에디터 사용 시 자동 삽입되는 html 태그 제거하는 메서드

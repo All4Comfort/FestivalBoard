@@ -26,29 +26,29 @@ public class ReviewReplyService {
   private final ReviewRepository reviewRepository;
   private final ReviewReplyRepository reviewReplyRepository;
 
-  public Long save(ReplyDTO replyDTO) {
-
+  public Long save(ReplyDTO replyDTO, HttpSession session) {
       //부모엔티티(Review) 조회
       Optional<Review> optionalReviewEntity = reviewRepository.findById(replyDTO.getReviewNum());
       if(optionalReviewEntity.isPresent()) {
         Review review = optionalReviewEntity.get();
-        ReviewReply replyEntity = convertToReviewReplyDTO(re, review.getReviewNum(), null)
+        ReviewReply replyEntity = convertToReplyEntity(replyDTO, review, session);
+        return reviewReplyRepository.save(replyEntity).getReplyNum();
       }
       return null;
   }
     
-public List<ReplyDTO> findAll(Long reviewNum, HttpSession session) {
-          List<ReviewReply> replyEntityList = reviewReplyRepository.findAllOrderByReviewNumDesc(reviewNum);
+public List<ReplyDTO> findAll(Long reviewNum) {
+          List<ReviewReply> replyEntityList = reviewReplyRepository.findAllByReviewNumOrderByReplyNumDesc(reviewNum);
           /* EntityList -> DTOList */
           List<ReplyDTO> replyDTOList = new ArrayList<>();
           for (ReviewReply replyEntity: replyEntityList) {
-              ReplyDTO replyDTO = convertToDTO(replyEntity, reviewNum, session);
+              ReplyDTO replyDTO = convertToReplyDTO(replyEntity, reviewNum);
               replyDTOList.add(replyDTO);
           }
           return replyDTOList;
     }
 
-    public ReplyDTO convertToDTO(ReviewReply entity, Long reviewNum){
+    public ReplyDTO convertToReplyDTO(ReviewReply entity, Long reviewNum){
 
         ReplyDTO dto = new ReplyDTO();
         dto.setReviewNum(reviewNum);
@@ -65,12 +65,11 @@ public List<ReplyDTO> findAll(Long reviewNum, HttpSession session) {
 
     public ReviewReply convertToReplyEntity(ReplyDTO reply, Review review, HttpSession session){
 
-        Member member = memberRepository.getReferenceById(session.getId());
+        Member member = memberRepository.getReferenceById(memberService.covertSessionToDTO(session).getEmail());
 
-        ReviewReply entity = new ReviewReply();
-                            entity.builder()
+        ReviewReply entity = ReviewReply.builder()
                             .replyNum(reply.getReplyNum())
-                            .from(review)
+                            .reviewNum(review)
                             .replyLevel(reply.getReplyLevel())
                             .replyStep(reply.getReplyStep())
                             .writer(member)
