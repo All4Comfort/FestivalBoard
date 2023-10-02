@@ -247,12 +247,12 @@ public class ReviewController {
         
         System.out.println("Session 아이디 확인!! : " + session.getAttribute("loggedInUser"));
         String alertMessage = "";
-
+        
         if (session.getAttribute("loggedInUser") != null) { //로그인한 경우
             
             return "/review/reviewWrite"; //작성페이지 띄우기
             
-        }else{
+        }else{//로그인하지 않은 경우
             alertMessage = "로그인한 회원만 글 작성 가능합니다.";
             attributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
             return "redirect:/member/unloginedAlert";
