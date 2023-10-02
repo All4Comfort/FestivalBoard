@@ -108,8 +108,19 @@ public class QuestionController {
 
     //신규글등록폼 요청처리
     @GetMapping("/questionWrite")
-    public void questionWrite(){
-
+    public String questionWrite(@ModelAttribute QuestionDTO dto, RedirectAttributes attributes, HttpSession session){
+      System.out.println("Session 아이디 확인!! : " + session.getAttribute("loggedInUser"));
+        String alertMessage = "";
+        
+        if (session.getAttribute("loggedInUser") != null) { //로그인한 경우
+            
+            return "/notice/noticeWrite"; //작성페이지 띄우기
+            
+        }else{//로그인하지 않은 경우
+            alertMessage = "로그인한 회원만 글 작성 가능합니다.";
+            attributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+            return "redirect:/member/unloginedAlert";
+        }
     }
 
     //글쓰기 에디터 사용 시 자동 삽입되는 html 태그 제거하는 메서드

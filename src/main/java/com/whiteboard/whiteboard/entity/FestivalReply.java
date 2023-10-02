@@ -6,14 +6,17 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
+@Setter
 @Getter
 @Builder
 @AllArgsConstructor
@@ -27,11 +30,11 @@ public class FestivalReply extends BaseEntity {
 	private Long replyNum; //댓글번호
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	//@JoinColumn(nullable = false)
+	@JoinColumn(name = "festivalNum")
 	private Festival from; //축제글번호
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	//@JoinColumn(nullable = false)
+	@JoinColumn(name = "writer_email") // 작성자 이메일에 매핑
 	private Member writer; //작성자 : Member 엔티티의 email 컬럼
 
 	@Column(nullable = false)
@@ -54,4 +57,13 @@ public class FestivalReply extends BaseEntity {
 
     public void setWriter(Member writer2) {
     }
+
+	public void setReplyLevel(int i) {
+	}
+
+	public void setReplyStep(int i) {
+	}
+
+	public void setFestivalNum(Festival build) {
+	}
 }
