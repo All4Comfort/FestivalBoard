@@ -28,8 +28,8 @@ public class ReviewReply extends BaseEntity{
 	private Long replyNum;//리뷰댓글번호
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "from_review_num")
-	private Review from;//리뷰번호
+	@JoinColumn(name = "reviewNum")
+	private Review reviewNum;//리뷰번호
 	
 	@Column(name = "reply_level")
 	private int replyLevel;//댓글수준

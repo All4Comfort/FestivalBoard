@@ -48,6 +48,9 @@ public interface ReviewService {
 
   PageResultDTO<ReviewDTO, Object[]> getList(PageRequestDTO pageRequestDTO);
 
+  //조회수 1회 누적
+  void updateReadCount(Long reviewNum);
+
   //좋아요 수
  // Long likeReview(ReviewDTO dto);
 
@@ -58,9 +61,6 @@ public interface ReviewService {
 
   
   default public ReviewDTO entityToDTO(Review review) {
-
-    
-    
      ReviewDTO dto = ReviewDTO.builder()
         .reviewNum(review.getReviewNum())
         .writer(review.getWriter().getEmail())
@@ -82,8 +82,4 @@ public interface ReviewService {
         .build();
     return dto;
   }
-
-  
-
-  // Long saveReview(ReviewDTO reviewDTO);
 }

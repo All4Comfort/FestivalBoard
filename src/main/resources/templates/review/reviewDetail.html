@@ -275,14 +275,18 @@
     </div>
     <!-- 댓글 상세보기 -->
     <div class="review-detail-container">
-        <div class="reply-section">
+        <div class="reply-section" th:each="reply : ${replyList}">
             <!-- 댓글 목록 표시 -->
             <ul class="reply-list">
                 <!-- 예제 댓글 아이템 -->
                 <li class="reply-item">
-                    <p class="reply-writer">댓글 작성자: Alice</p>
-                    <p class="reply-content">이 리뷰가 정말 유용하네요. 감사합니다!</p>
-                    <p class="reply-date">작성일: 2023-09-26</p>
+                    <p class="reply-writer">
+                        댓글 작성자: <span th:text="${reply.nickname}">닉네임</span>
+                    </p>
+                    <p class="reply-content" th:text="${reply.content}">이 리뷰가 정말 유용하네요. 감사합니다!</p>
+                    <p class="reply-date" th:text="${reply.regDate}">
+                        작성일: <span th:text="${reply.nickname}">YYYY-MM-DD</span>
+                    </p>
                 </li>
                 <!-- 댓글 아이템 추가 예제 (동적으로 로드해야 함) -->
                 <!-- <li class="reply-item">
@@ -295,7 +299,7 @@
         
         <!-- 댓글 창 끝 -->
     </div>
-
+<!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&& 내가 작성한 댓글에만 버튼이 보이도록...&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
     <!-- 수정 및 삭제 버튼 -->
     <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
         <button type="button" class="btn btn-custom replyModifyBtn">댓글 수정</button>

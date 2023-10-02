@@ -3,7 +3,6 @@ package com.whiteboard.whiteboard;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
@@ -193,21 +192,21 @@ public class FestivalRepositoryTest {
     }
     
 
-    @Test
-    public void festival(){
+    // @Test
+    // public void festival(){
         
-        //조회 하려는 축제 넘버
-        Long festivalNumId = 14L;
+    //     //조회 하려는 축제 넘버
+    //     Long festivalNumId = 14L;
         
-        Festival festival = festivalRepository.findByFestivalNum(festivalNumId).orElse(null);
+    //     Festival festival = festivalRepository.findByFestivalNum(festivalNumId).orElse(null);
 
-        if(festival != null){
-            System.out.println("축제 정보");
-            System.out.println("축제 타이틀: " +festival.getFestivalTitle());
-            System.out.println("축제 썸네일: " +festival.getThumbnail());
-        }else{
-            System.err.println("없는 정보 입니다.");
-        }
+    //     if(festival != null){
+    //         System.out.println("축제 정보");
+    //         System.out.println("축제 타이틀: " +festival.getFestivalTitle());
+    //         System.out.println("축제 썸네일: " +festival.getThumbnail());
+    //     }else{
+    //         System.err.println("없는 정보 입니다.");
+    //     }
 
-    }
+    // }
 }

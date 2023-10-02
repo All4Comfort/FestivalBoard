@@ -33,6 +33,8 @@ dependencies {
 	
 	//DevTools
 	implementation group: 'org.json', name: 'json', version: '20230618'
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    
 	annotationProcessor 'org.projectlombok:lombok' //개발을 편리하게 해주는 lombok 패키지
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools' //개발시 실시간 reload 등 편리한 기능을 지원해주는 패키지
