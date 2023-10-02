@@ -162,13 +162,17 @@ public class ReviewController {
         }
     }
 
+   
     @PostMapping("/remove")
-    public String remove(@RequestParam("reviewNum") Long reviewNum, RedirectAttributes redirect){
+    public String remove(Long reviewNum, RedirectAttributes redirect){
         System.out.println("GGGGGGGG");
         reviewService.remove(reviewNum);
         redirect.addAttribute("reviewDTO",reviewNum);
         return "redirect:/review/reviewList";
     }
+
+    
+ 
     
        @PostMapping("/reviewModify")
     public String modify(@ModelAttribute ReviewDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
