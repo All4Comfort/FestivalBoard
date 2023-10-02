@@ -1,6 +1,7 @@
 package com.whiteboard.whiteboard.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +34,8 @@ public interface FestivalRepository extends JpaRepository<Festival, Long> {
 
     //축제 검색
     List<Festival> findByFestivalTitleContaining(String searchQuery);
+
+    Optional<Festival> findByFestivalNum(Long festivalNum);
 
     // //축제 정보 상세페이지
     // @Query("SELECT f FROM Festival f ORDER BY f.festivalNum = :festivalNum")

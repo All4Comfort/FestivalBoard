@@ -47,6 +47,13 @@ public interface FestivalService {
             return dto;
       }
 
-      
+      // 댓글생성
+      void addComment(Long festivalNum, String currentUserEmail, String content);
+
+      // 댓글 수정
+      void editComment(Long commentNum, String content);
+
+      // 댓글 수정
+      void deleteComment(Long commentNum);
 
 }
