@@ -38,7 +38,8 @@ public class ReviewReplyService {
   }
     
 public List<ReplyDTO> findAll(Long reviewNum) {
-          List<ReviewReply> replyEntityList = reviewReplyRepository.findAllByReviewNumOrderByReplyNumDesc(reviewNum);
+          List<ReviewReply> replyEntityList = reviewReplyRepository
+                        .findAllByReviewNumOrderByReplyNumDesc(reviewRepository.getReferenceById(reviewNum));
           /* EntityList -> DTOList */
           List<ReplyDTO> replyDTOList = new ArrayList<>();
           for (ReviewReply replyEntity: replyEntityList) {

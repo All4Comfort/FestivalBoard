@@ -98,7 +98,7 @@ public class ReviewController {
     
     
     @GetMapping("/reviewDetail")
-    public void getReviewDetail(@ModelAttribute ReviewDTO reviewDTO, Model model) {
+    public void getReviewDetail(@ModelAttribute ReviewDTO reviewDTO, Model model, HttpSession session) {
     
         //System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%리뷰상세에서 reviewNum : " + reviewDTO.getReviewNum());
         //해당 리뷰글의 조회수 1회 올리기 (DB의 데이터 변경)
@@ -111,10 +111,11 @@ public class ReviewController {
         //댓글 목록 가져오기
         List<ReplyDTO> replyList  = reviewReplyService.findAll(reviewDTO.getReviewNum());
 
-        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%리뷰 댓글목록 : " + replyList);
+        //System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%리뷰 댓글목록 : " + replyList);
 
         model.addAttribute("reviewDTO", reviewDTO);
         model.addAttribute("replyList", replyList);
+        model.addAttribute("session", session);
 
     }
 
