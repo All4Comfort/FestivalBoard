@@ -54,8 +54,8 @@ public class ReviewServiceImpl implements ReviewService {
 
   @Override
   public void remove(Long reviewNum) {
-    // 리뷰 ID로 리뷰 삭제
-    reviewReplyRepository.deleteByReviewNum(reviewRepository.getReferenceById(reviewNum));
+  // 리뷰 ID로 리뷰 삭제
+  // reviewReplyRepository.deleteByReviewNum(reviewRepository.getReferenceById(reviewNum));
     reviewRepository.deleteById(reviewNum);
     
   }
