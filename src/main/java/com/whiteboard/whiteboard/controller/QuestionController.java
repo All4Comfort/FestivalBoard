@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.QuestionDTO;
+import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.service.QuestionService;
 
 import jakarta.servlet.http.HttpSession;
@@ -31,134 +32,166 @@ import lombok.RequiredArgsConstructor;
 public class QuestionController {
   private final QuestionService questionService;
 
+  // 검색 기능 및 페이징을 위한 메서드
+  @GetMapping("/question")
+  public String question(
+      @RequestParam(name = "searchQuery", required = false) String searchQuery,
+      PageRequestDTO pageRequestDTO, Model model) {
 
+    List<QuestionDTO> questions = null; // 축제 목록을 담을 변수
+    boolean isSearch = false; // 검색 여부를 나타내는 변수
 
-// 검색 기능 및 페이징을 위한 메서드
-    @GetMapping("/question")
-    public String question(
-            @RequestParam(name = "searchQuery", required = false) String searchQuery,
-            PageRequestDTO pageRequestDTO, Model model) {
+    if (searchQuery != null && !searchQuery.isEmpty()) {
+      // 검색어가 제공된 경우, 해당 검색어를 사용하여 축제를 검색합니다.
+      questions = questionService.searchQuestions(searchQuery); // 검색된 축제 목록을 가져옴
+      isSearch = true; // 검색 여부 플래그를 true로 설정
+    } else {
+      // 검색어가 없는 경우, 페이징을 위한 로직을 수행합니다.
 
-        List<QuestionDTO> questions; // 축제 목록을 담을 변수
-        boolean isSearch = false; // 검색 여부를 나타내는 변수
+      // 페이지 요청 정보(pageRequestDTO)를 이용하여 페이지 관련 정보를 가져오고
+      Pageable pageable = pageRequestDTO.getPageable(Sort.by("questionNum").descending());
 
-        if (searchQuery != null && !searchQuery.isEmpty()) {
-            // 검색어가 제공된 경우, 해당 검색어를 사용하여 축제를 검색합니다.
-            questions = questionService.searchQuestions(searchQuery); // 검색된 축제 목록을 가져옴
-            isSearch = true; // 검색 여부 플래그를 true로 설정
-        } else {
-            // 검색어가 없는 경우, 페이징을 위한 로직을 수행합니다.
+      // 서비스 계층을 통해 페스티벌 데이터를 페이지네이션하여 가져옵니다.
+      Page<QuestionDTO> questionPage = questionService.findAllByOrderByQuestionNum(pageable);
+      questions = questionPage.getContent(); // 현재 페이지의 축제 목록을 가져옴
 
-            // 페이지 요청 정보(pageRequestDTO)를 이용하여 페이지 관련 정보를 가져오고
-            Pageable pageable = pageRequestDTO.getPageable(Sort.by("questionNum").descending());
+      // 총 페이지 수 계산
+      int totalPages = questionPage.getTotalPages();
 
-            // 서비스 계층을 통해 페스티벌 데이터를 페이지네이션하여 가져옵니다.
-            Page<QuestionDTO> questionPage = questionService.findAllByOrderByQuestionNum(pageable);
-            questions = questionPage.getContent(); // 현재 페이지의 축제 목록을 가져옴
+      // 현재 페이지 번호 가져오기
+      int currentPage = pageRequestDTO.getPage();
 
-            // 총 페이지 수 계산
-            int totalPages = questionPage.getTotalPages();
+      // 페이지 번호 목록 생성 (고정된 3개 페이지만 표시)
+      // 현재 페이지를 중심으로 앞뒤 1페이지만 보여주도록 제한
+      List<Integer> pageNumbers = IntStream
+          .rangeClosed(Math.max(1, currentPage - 1), Math.min(currentPage + 1, totalPages))
+          .boxed()
+          .collect(Collectors.toList());
 
-            // 현재 페이지 번호 가져오기
-            int currentPage = pageRequestDTO.getPage();
+      // 이전 페이지와 다음 페이지 버튼을 제어하기 위한 조건 설정
+      boolean hasPrevPage = currentPage > 1; // 현재 페이지가 1보다 크면 이전 페이지가 있다는 의미
+      boolean hasNextPage = currentPage < totalPages; // 현재 페이지가 총 페이지 수보다 작으면 다음 페이지가 있다는 의미
 
-            // 페이지 번호 목록 생성 (고정된 3개 페이지만 표시)
-            // 현재 페이지를 중심으로 앞뒤 1페이지만 보여주도록 제한
-            List<Integer> pageNumbers = IntStream
-                    .rangeClosed(Math.max(1, currentPage - 1), Math.min(currentPage + 1, totalPages))
-                    .boxed()
-                    .collect(Collectors.toList());
+      // 이전 페이지 번호와 다음 페이지 번호 계산
+      int prevPageNumber = currentPage - 1;
+      int nextPageNumber = currentPage + 1;
 
-            // 이전 페이지와 다음 페이지 버튼을 제어하기 위한 조건 설정
-            boolean hasPrevPage = currentPage > 1; // 현재 페이지가 1보다 크면 이전 페이지가 있다는 의미
-            boolean hasNextPage = currentPage < totalPages; // 현재 페이지가 총 페이지 수보다 작으면 다음 페이지가 있다는 의미
-
-            // 이전 페이지 번호와 다음 페이지 번호 계산
-            int prevPageNumber = currentPage - 1;
-            int nextPageNumber = currentPage + 1;
-
-            // 모델에 페이지 관련 데이터를 추가하여 뷰로 전달
-            model.addAttribute("pageNumbers", pageNumbers); // 페이지 번호 목록
-            model.addAttribute("hasPrevPage", hasPrevPage); // 이전 페이지 버튼 제어를 위한 조건
-            model.addAttribute("hasNextPage", hasNextPage); // 다음 페이지 버튼 제어를 위한 조건
-            model.addAttribute("prevPageNumber", prevPageNumber); // 이전 페이지 번호
-            model.addAttribute("nextPageNumber", nextPageNumber); // 다음 페이지 번호
-        }
-
-        model.addAttribute("result", questions); // 축제 목록을 모델에 추가
-        model.addAttribute("searchQuery", searchQuery); // 검색어를 모델에 추가
-        model.addAttribute("isSearch", isSearch); // 검색 여부를 모델에 추가
-
-        return "notice/question"; // "festivalList.html" 페이지로 이동
+      // 모델에 페이지 관련 데이터를 추가하여 뷰로 전달
+      model.addAttribute("pageNumbers", pageNumbers); // 페이지 번호 목록
+      model.addAttribute("hasPrevPage", hasPrevPage); // 이전 페이지 버튼 제어를 위한 조건
+      model.addAttribute("hasNextPage", hasNextPage); // 다음 페이지 버튼 제어를 위한 조건
+      model.addAttribute("prevPageNumber", prevPageNumber); // 이전 페이지 번호
+      model.addAttribute("nextPageNumber", nextPageNumber); // 다음 페이지 번호
     }
 
-    @GetMapping("/questionDetail")
-    public void questionDetail(@ModelAttribute QuestionDTO questionDTO, Model model, HttpSession session){
+    model.addAttribute("result", questions); // 축제 목록을 모델에 추가
+    model.addAttribute("searchQuery", searchQuery); // 검색어를 모델에 추가
+    model.addAttribute("isSearch", isSearch); // 검색 여부를 모델에 추가
 
-      model.addAttribute("dto", questionService.get(questionDTO.getQuestionNum()));
+    return "notice/question"; // "festivalList.html" 페이지로 이동
+  }
 
+  @GetMapping("/questionDetail")
+  public void questionDetail(@ModelAttribute QuestionDTO questionDTO, Model model, HttpSession session) {
+    questionDTO = questionService.get(questionDTO.getQuestionNum());
+    // System.out.println("질문DTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + questionDTO);
+    // 질문번호, 닉네임, 제목, 내용, 등록날짜 매핑됨.
+
+    model.addAttribute("dto", questionDTO);
+
+  }
+
+  // @GetMapping("/questionDetail")
+  // public void questionDetail(@ModelAttribute QuestionDTO dto,
+  // @RequestParam("questionNum") Long questionNum, Model model, HttpSession
+  // session){
+  // QuestionDTO questionDTO = questionService.get(questionNum);
+  // System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" +
+  // questionDTO);
+  // model.addAttribute("dto", questionDTO);
+  // }
+
+  // 신규글등록폼 요청처리
+  @GetMapping("/questionWrite")
+  public String questionWrite(@ModelAttribute QuestionDTO dto, RedirectAttributes attributes, HttpSession session) {
+    // System.out.println("Session 아이디 확인!! : " +
+    // session.getAttribute("loggedInUser"));
+    String alertMessage = "";
+
+    if (session.getAttribute("loggedInUser") != null) { // 로그인한 경우
+
+      return "/notice/questionWrite"; // 작성페이지 띄우기
+
+    } else {// 로그인하지 않은 경우
+      alertMessage = "로그인한 회원만 글 작성 가능합니다.";
+      attributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+      return "redirect:/member/unloginedAlert";
     }
+  }
 
-    // @GetMapping("/questionDetail")
-    // public void questionDetail(@ModelAttribute QuestionDTO dto, @RequestParam("questionNum") Long questionNum, Model model, HttpSession session){
-    //   QuestionDTO questionDTO = questionService.get(questionNum);
-    //   System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + questionDTO);
-    //   model.addAttribute("dto", questionDTO);
-    // }
-
-    //신규글등록폼 요청처리
-    @GetMapping("/questionWrite")
-    public String questionWrite(@ModelAttribute QuestionDTO dto, RedirectAttributes attributes, HttpSession session){
-      System.out.println("Session 아이디 확인!! : " + session.getAttribute("loggedInUser"));
-        String alertMessage = "";
-        
-        if (session.getAttribute("loggedInUser") != null) { //로그인한 경우
-            
-            return "/notice/questionWrite"; //작성페이지 띄우기
-            
-        }else{//로그인하지 않은 경우
-            alertMessage = "로그인한 회원만 글 작성 가능합니다.";
-            attributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
-            return "redirect:/member/unloginedAlert";
-        }
+  // 글쓰기 에디터 사용 시 자동 삽입되는 html 태그 제거하는 메서드
+  public static String removeHtmlTags(String input) {
+    if (input == null) {
+      return "";
     }
-
-    //글쓰기 에디터 사용 시 자동 삽입되는 html 태그 제거하는 메서드
-    public static String removeHtmlTags(String input) {
-      if (input == null) {
-          return "";
-      }
     // 정규 표현식을 사용하여 HTML 태그를 제거하고 기호를 대체합니다.
     String regex = "<[^>]*>";
     Pattern pattern = Pattern.compile(regex);
     Matcher matcher = pattern.matcher(input);
-    return matcher.replaceAll("").replace("&lt;", "<").replace("&gt;", ">"); 
-}
+    return matcher.replaceAll("").replace("&lt;", "<").replace("&gt;", ">");
+  }
 
-    //신규글 등록처리
-    @PostMapping("/questionWrite")
-    public String register(@ModelAttribute QuestionDTO dto , RedirectAttributes attributes, HttpSession session){
-      dto.setContent(removeHtmlTags(dto.getContent()));
-      
-      questionService.register(dto, session);
-      
-      //Long newQuestionNum = questionService.register(dto, null);
-      //attributes.addFlashAttribute("newQuestionNum", newQuestionNum);
-      return "redirect:/notice/question";
-    }
+  // 신규글 등록처리
+  @PostMapping("/questionWrite")
+  public String register(@ModelAttribute QuestionDTO dto, RedirectAttributes attributes, HttpSession session) {
+    dto.setContent(removeHtmlTags(dto.getContent()));
 
-    @PostMapping("/questionRemove")
-  public String questionremove(long questionNum, RedirectAttributes redirect){
-    System.out.println("GGGGGGGGG");
-    questionService.remove(questionNum);
-    redirect.addAttribute("newQuestionNum", questionNum);
+    questionService.register(dto, session);
+
+    // Long newQuestionNum = questionService.register(dto, null);
+    // attributes.addFlashAttribute("newQuestionNum", newQuestionNum);
     return "redirect:/notice/question";
   }
 
+  @PostMapping("/questionRemove")
+  public String questionRemove(@ModelAttribute QuestionDTO dto, long questionNum, RedirectAttributes attributes,
+      HttpSession session) {
+    System.out.println("삭제 시 질문DTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    System.out.println(dto);
+
+    String alertMessage = "";
+    Member loginedMember = (Member) session.getAttribute("loggedInUser");
+
+    if (loginedMember != null) { // 로그인했을 시,
+
+      if (loginedMember.getNickname().equals(dto.getNickName())) {
+        // 작성자가 로그인했을 경우
+
+        questionService.remove(questionNum);
+        return "redirect:/notice/question";
+
+      } else { // 로그인한 회원이 작성자가 아닐 경우
+
+        alertMessage = "해당 글 작성자만 삭제 가능합니다.";
+        attributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+        return "redirect:/member/unloginedAlert";
+
+      }
+    } else {// 로그인 안 했을 경우!
+
+      alertMessage = "해당 글 작성자만 삭제 가능합니다.";
+      attributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+      return "redirect:/member/unloginedAlert";
+
+    }
+
+  }
+
   @PostMapping("/questionmodify")
-  public String modify(QuestionDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
-    
-    //System.out.println("포스수정 ==============================" + dto);
+  public String modify(QuestionDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
+      RedirectAttributes redirect) {
+
+    // System.out.println("질문수정 ==============================" + dto);
     questionService.modify(dto);
 
     redirect.addAttribute("questionNum", dto.getQuestionNum());
@@ -166,17 +199,40 @@ public class QuestionController {
   }
 
   @GetMapping("/questionmodify")
-  public void questionmodify(@ModelAttribute QuestionDTO dto, Model model){
-    model.addAttribute("dto", dto);
+  public String questionmodify(@ModelAttribute QuestionDTO dto, Model model, RedirectAttributes attributes,
+      HttpSession session) {
+
+    // System.out.println("!!!!!!!!!!!!!!!!!!!!!!질문수정 시 질문
+    // DTO!!!!!!!!!!!!!!!!!!!!!!!!");
+    // System.out.println(dto);
+    // 질문번호, 닉네임, 제목, 내용까지 넘어옴
+
+    String alertMessage = "";
+    Member loginedMember = (Member) session.getAttribute("loggedInUser");
+
+    if (loginedMember != null) { // 로그인했을 시,
+      if (loginedMember.getNickname().equals(dto.getNickName())) { // 작성자가 로그인했을 경우
+        model.addAttribute("dto", dto);
+        return "/notice/questionmodify";
+      } else { // 로그인한 회원이 작성자가 아닐 경우
+        alertMessage = "해당 글 작성자만 수정 가능합니다.";
+        attributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+        return "redirect:/member/unloginedAlert";
+
+      }
+    } else {// 로그인 안 했을 경우!
+      alertMessage = "해당 글 작성자만 수정 가능합니다.";
+      attributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+      return "redirect:/member/unloginedAlert";
+
+    }
   }
 
-
-
-    // @PostMapping("/remove")
-    // public String remove(long questionNum, RedirectAttributes redirect){
-    //   questionService.remove(questionNum);
-    //   redirect.addAttribute("newQuestionNum", questionNum);
-    //   return "redirect:/notice/question";
-    // }
+  // @PostMapping("/remove")
+  // public String remove(long questionNum, RedirectAttributes redirect){
+  // questionService.remove(questionNum);
+  // redirect.addAttribute("newQuestionNum", questionNum);
+  // return "redirect:/notice/question";
+  // }
 
 }

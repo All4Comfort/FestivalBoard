@@ -189,7 +189,7 @@ public class NoticeController {
   // 신규글등록폼 요청처리하기
   @GetMapping("/noticeWrite")
   public String noticeWrite(@ModelAttribute NoticeDTO dto, RedirectAttributes attributes, HttpSession session) {
-    System.out.println("Session 아이디 확인!! : " + session.getAttribute("loggedInUser"));
+    //System.out.println("Session 아이디 확인!! : " + session.getAttribute("loggedInUser"));
     String alertMessage = "";
 
     Member loginedMember = (Member) session.getAttribute("loggedInUser");
@@ -243,11 +243,31 @@ public class NoticeController {
   }
 
   @PostMapping("/remove")
-  public String remove(long noticeNum, RedirectAttributes redirect) {
-    System.out.println("GGGGGGGGG");
-    noticeService.remove(noticeNum);
-    redirect.addAttribute("newNoticeNum", noticeNum);
-    return "redirect:/notice/notice1";
+  public String remove(long noticeNum, RedirectAttributes redirectAttributes, HttpSession session) {
+    String alertMessage = "";
+    Member loginedMember = (Member) session.getAttribute("loggedInUser");
+    if (session.getAttribute("loggedInUser") == null) { 
+      // 로그인하지 않은 경우
+      alertMessage = "관리자만 삭제 가능합니다.";
+      redirectAttributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+      return "redirect:/member/unloginedAlert";
+
+    } else {
+      //로그인한 경우
+
+      if (loginedMember.getEmail().equals("1234@1234.com")) {
+        //관리자인 경우
+        noticeService.remove(noticeNum);
+        redirectAttributes.addAttribute("newNoticeNum", noticeNum);
+        return "redirect:/notice/notice1";
+
+      } else {
+        //관리자가 아닌 회원이 로그인한 경우
+        alertMessage = "관리자만 삭제 가능합니다.";
+        redirectAttributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+        return "redirect:/member/unloginedAlert";
+      }
+    }
   }
 
   @PostMapping("/noticemodify")
@@ -265,9 +285,35 @@ public class NoticeController {
 
   // 신규글등록폼 요청처리하기
   @GetMapping("/noticemodify")
-  public void noticemodify(@ModelAttribute NoticeDTO dto, Model model) {
+  public String noticemodify(@ModelAttribute NoticeDTO dto, Model model, HttpSession session,
+      RedirectAttributes redirectAttributes) {
 
-    model.addAttribute("dto", dto);
+    String alertMessage = "";
+    Member loginedMember = (Member) session.getAttribute("loggedInUser");
+    if (session.getAttribute("loggedInUser") == null) { 
+      // 로그인하지 않은 경우
+      alertMessage = "관리자만 글 수정 가능합니다.";
+      redirectAttributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+      return "redirect:/member/unloginedAlert";
+
+    } else {
+      //로그인한 경우
+
+      if (loginedMember.getEmail().equals("1234@1234.com")) {
+        //관리자인 경우
+        model.addAttribute("dto", dto);
+        return "/notice/noticeWrite"; // 작성페이지 띄우기
+
+      } else {
+        //관리자가 아닌 회원이 로그인한 경우
+        alertMessage = "관리자만 글 수정 가능합니다.";
+        redirectAttributes.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+        return "redirect:/member/unloginedAlert";
+      }
+    }
+
+
+    
   }
 
   // @GetMapping("/question")
