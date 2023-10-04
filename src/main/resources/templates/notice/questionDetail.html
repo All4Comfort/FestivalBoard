@@ -116,10 +116,11 @@
                 <input type="hidden" name="questionNum" th:value="${dto.questionNum}"/>
                 <input type="hidden" name="content"/>
                 <input type="hidden" name="title"/>
+                <input type="hidden" name="nickName"/>
 
             </form>
             <h5 class="card-title" id="questionTitle">[[${dto.title}]]</h5>
-            <h6 class="card-subtitle mb-2 text-muted" id="questionAuthor">[[${dto.writer}]]</h6>
+            <h6 class="card-subtitle mb-2 text-muted" id="nickName">[[${dto.nickName}]]</h6>
         </div>
         <div class="card-body">
             <p class="card-text" id="questionContent">[[${dto.content}]]</p>
@@ -207,6 +208,8 @@
     
     var actionForm = $("form");
     var num = $("input[name='questionNum']").val();
+    $("input[name='nickName']").val($("#nickName").text());
+    var nickName =$("input[name='nickName']").val();
 
     $(".removeBtn").click(()=>{
         if(!confirm("삭제하시겠습니까?")){
@@ -215,8 +218,6 @@
         //console.log(actionForm);
           //nick만 보낼것임
     
-        //console.log(nick);
-        actionForm.append(num);
         
         actionForm.attr("action", "/notice/questionRemove").attr("method","post");
 
@@ -230,16 +231,14 @@
         $("input[name='title']").val($("#questionTitle").text());
         $("input[name='content']").val($("#questionContent").text());
         
-        var a = $("input[name='title']").val();
-        var b = $("input[name='content']").val();
-        console.log("!!-->" + a);
-        console.log("!!-->" + b);
+        var title = $("input[name='title']").val();
+        var content = $("input[name='content']").val();
 
         //actionForm.append(num);
-        //actionForm.append(a);
-        actionForm.append(b);
 
-        console.log(num + " ### " + a + b);
+
+        console.log("번호: " + num + "닉네임: " + nickName);
+        console.log("제목: "  + title + "내용: " + content);
         actionForm.attr("action", "/notice/questionmodify").attr("method", "get").submit();
     });
 
@@ -249,30 +248,7 @@
     <!-- 부트스트랩 JS 링크 -->
      <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gg6vUz1rTL5UHVbNXLKwgpAYNr2NvTAPC5JiKc+2aX8Cxl+U7v2+nSvzvIMnJvWR" crossorigin="anonymous"></script> -->
-<!--
-    <script>
-        // URL에서 파라미터 값을 가져오는 함수
-        function getParameterByName(name, url) {
-            if (!url) url = window.location.href;
-            name = name.replace(/[\[\]]/g, '\\$&');
-            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                results = regex.exec(url);
-            if (!results) return null;
-            if (!results[2]) return '';
-            return decodeURIComponent(results[2].replace(/\+/g, ' '));
-        }
 
-        document.addEventListener('DOMContentLoaded', function () {
-            // URL에서 제목, 작성자, 내용을 가져와서 화면에 표시
-            var title = getParameterByName('title');
-            var writer = getParameterByName('author');
-            var content = getParameterByName('content');
-
-            document.getElementById('noticeTitle').textContent = "제목" +title;
-            document.getElementById('noticeAuthor').textContent = "작성자: " + writer;
-            document.getElementById('noticeContent').textContent = content;
-        });
-    </script> -->
 
     <!--이전/다음키 스크립트-->
 <script>

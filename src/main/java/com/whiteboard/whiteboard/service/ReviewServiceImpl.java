@@ -16,6 +16,7 @@ import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Review;
 import com.whiteboard.whiteboard.repository.MemberRepository;
+import com.whiteboard.whiteboard.repository.ReviewReplyRepository;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class ReviewServiceImpl implements ReviewService {
 
   private final ReviewRepository reviewRepository;
+  private final ReviewReplyRepository reviewReplyRepository;
   private final MemberRepository memberRepository;
   private final MemberService memberService;
 
@@ -50,8 +52,12 @@ public class ReviewServiceImpl implements ReviewService {
 
   }
 
+  @Transactional
   @Override
   public void remove(Long reviewNum) {
+    //댓글이 있는 경우 댓글 먼저 삭제하고 리뷰글 삭제해야 함
+    reviewReplyRepository.deleteByReviewNum(reviewRepository.getReferenceById(reviewNum));
+    
     // 리뷰 ID로 리뷰 삭제
     reviewRepository.deleteById(reviewNum);
   }
