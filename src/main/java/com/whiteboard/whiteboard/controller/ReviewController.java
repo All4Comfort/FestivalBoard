@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.ReplyDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
+import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 import com.whiteboard.whiteboard.service.MemberService;
 import com.whiteboard.whiteboard.service.ReviewReplyService;
@@ -169,11 +170,36 @@ public class ReviewController {
 
    
     @PostMapping("/remove")
-    public String remove(Long reviewNum, RedirectAttributes redirect){
-        System.out.println("GGGGGGGG");
-        reviewService.remove(reviewNum);
-        redirect.addAttribute("reviewDTO",reviewNum);
-        return "redirect:/review/reviewList";
+    public String remove(@ModelAttribute ReviewDTO dto,Long reviewNum, RedirectAttributes redirect, HttpSession session){
+        // System.out.println("GGGGGGGG");
+        // reviewService.remove(reviewNum);
+        // redirect.addAttribute("reviewDTO",reviewNum);
+        // return "redirect:/review/reviewList";
+        String alertMessage = "";
+        Member loginedMember = (Member) session.getAttribute("loggedInUser");
+
+        if (loginedMember != null) { // 로그인했을 시,
+
+            if (loginedMember.getNickname().equals(dto.getNickname())) {
+              // 작성자가 로그인했을 경우
+      
+              reviewService.remove(reviewNum);
+              return "redirect:/review/reviewList";
+      
+            } else { // 로그인한 회원이 작성자가 아닐 경우
+      
+              alertMessage = "해당 글 작성자만 삭제 가능합니다.";
+              redirect.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+              return "redirect:/member/unloginedAlert";
+      
+            }
+          } else {// 로그인 안 했을 경우!
+      
+            alertMessage = "해당 글 작성자만 삭제 가능합니다.";
+            redirect.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+            return "redirect:/member/unloginedAlert";
+      
+          }
     }
 
     
@@ -198,10 +224,30 @@ public class ReviewController {
     // }
 
     @GetMapping("/reviewModify")
-    public void reviewModify(@ModelAttribute ReviewDTO dto, Model model){
+    public String reviewModify(@ModelAttribute ReviewDTO dto, Model model, RedirectAttributes redirect, HttpSession session){
     System.out.println("============================================================");
         System.out.println("수정페이지에서 DTO!!!!!!!!!!!!!!!!!!!!! : " + dto); //reviewNum, title, content옴
         model.addAttribute("dto", dto);
+
+    String alertMessage = "";
+    Member loginedMember = (Member) session.getAttribute("loggedInUser");
+
+    if (loginedMember != null) { // 로그인했을 시,
+        if (loginedMember.getNickname().equals(dto.getNickname())) { // 작성자가 로그인했을 경우
+          model.addAttribute("dto", dto);
+          return "/review/reviewModify";
+        } else { // 로그인한 회원이 작성자가 아닐 경우
+          alertMessage = "해당 글 작성자만 수정 가능합니다.";
+          redirect.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+          return "redirect:/member/unloginedAlert";
+  
+        }
+      } else {// 로그인 안 했을 경우!
+        alertMessage = "해당 글 작성자만 수정 가능합니다.";
+        redirect.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+        return "redirect:/member/unloginedAlert";
+  
+      }
     }
 
     
