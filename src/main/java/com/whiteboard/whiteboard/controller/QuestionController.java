@@ -20,7 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.QuestionDTO;
+import com.whiteboard.whiteboard.dto.ReplyDTO;
 import com.whiteboard.whiteboard.entity.Member;
+import com.whiteboard.whiteboard.service.QuestionReplyService;
 import com.whiteboard.whiteboard.service.QuestionService;
 
 import jakarta.servlet.http.HttpSession;
@@ -31,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/notice")
 public class QuestionController {
   private final QuestionService questionService;
+  private final QuestionReplyService questionReplyService;
 
   // 검색 기능 및 페이징을 위한 메서드
   @GetMapping("/question")
@@ -93,23 +96,21 @@ public class QuestionController {
 
   @GetMapping("/questionDetail")
   public void questionDetail(@ModelAttribute QuestionDTO questionDTO, Model model, HttpSession session) {
+    
+    //해당 질문글의 데이터 DB에서 모두 가져오기
     questionDTO = questionService.get(questionDTO.getQuestionNum());
     //System.out.println("questionDetail의 질문DTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + questionDTO);
     // 질문번호, 닉네임, 제목, 내용, 등록날짜 매핑됨.
 
+    //댓글 목록 가져오기
+    List<ReplyDTO> replyList  = questionReplyService.findAll(questionDTO.getQuestionNum());
+
     model.addAttribute("dto", questionDTO);
+    model.addAttribute("replyList", replyList);
+    model.addAttribute("session", session);
 
   }
 
-  // @GetMapping("/questionDetail")
-  // public void questionDetail(@ModelAttribute QuestionDTO dto,
-  // @RequestParam("questionNum") Long questionNum, Model model, HttpSession
-  // session){
-  // QuestionDTO questionDTO = questionService.get(questionNum);
-  // System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" +
-  // questionDTO);
-  // model.addAttribute("dto", questionDTO);
-  // }
 
   // 신규글등록폼 요청처리
   @GetMapping("/questionWrite")

@@ -28,7 +28,7 @@ public class QuestionReply extends BaseEntity {
     private Long replyNum; //댓글번호
 
     @ManyToOne(fetch = FetchType.LAZY) //FK 외래키
-    @JoinColumn(name = "from_question_num" )
+    @JoinColumn(name = "questionNum" )
     private Question questionNum; //질문번호
 
     @Column(name = "reply_level")

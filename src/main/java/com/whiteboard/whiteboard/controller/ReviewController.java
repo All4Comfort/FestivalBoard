@@ -40,7 +40,7 @@ public class ReviewController {
 
     // 검색 기능 및 페이징을 위한 메서드
     @GetMapping("/reviewList")
-    public String review(String alertMessage,
+    public String review(
             @RequestParam(name = "searchQuery", required = false) String searchQuery,
             PageRequestDTO pageRequestDTO, Model model) {
 
@@ -93,7 +93,6 @@ public class ReviewController {
         model.addAttribute("result", reviews); // 축제 목록을 모델에 추가
         model.addAttribute("searchQuery", searchQuery); // 검색어를 모델에 추가
         model.addAttribute("isSearch", isSearch); // 검색 여부를 모델에 추가
-        model.addAttribute("alertMessage", alertMessage);
         return "review/reviewList"; // "festivalList.html" 페이지로 이동
     }
 
@@ -112,8 +111,6 @@ public class ReviewController {
 
         //댓글 목록 가져오기
         List<ReplyDTO> replyList  = reviewReplyService.findAll(reviewDTO.getReviewNum());
-
-        
 
         //System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%리뷰 댓글목록 : " + replyList);
 

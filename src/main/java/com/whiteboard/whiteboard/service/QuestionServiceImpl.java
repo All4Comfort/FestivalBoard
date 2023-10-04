@@ -2,6 +2,7 @@ package com.whiteboard.whiteboard.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -85,6 +86,13 @@ public class QuestionServiceImpl implements QuestionService {
   .content(questionDTO.getContent())
   .build();
     return question;
+  }
+
+  @Override
+  public QuestionDTO getQuestionByQuestionNum(Long questionNum) {
+    Question question = questionRepository.findById(questionNum)
+        .orElseThrow(() -> new NoSuchElementException(questionNum + "인 id 리뷰를 찾을 수 없습니다."));
+    return entityToDTO(question);
   }
   
 }

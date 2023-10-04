@@ -28,6 +28,8 @@ public interface QuestionService {
   // 게시물 삭제 메서드
   void remove(long questionNum);
 
+  public QuestionDTO getQuestionByQuestionNum(Long questionNum);
+
   // 설명: Entity 객체를 DTO로 변환하는 메서드
     default QuestionDTO entityToDTO(Question question){
         QuestionDTO dto = QuestionDTO.builder()
