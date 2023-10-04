@@ -205,7 +205,6 @@ public class ReviewController {
        @PostMapping("/reviewModify")
     public String modify(@ModelAttribute ReviewDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
         
-        
         reviewService.modify(dto);
         
         redirect.addAttribute("reviewNum", dto.getReviewNum());
@@ -223,8 +222,7 @@ public class ReviewController {
     @GetMapping("/reviewModify")
     public String reviewModify(@ModelAttribute ReviewDTO dto, Model model, RedirectAttributes redirect, HttpSession session){
     System.out.println("============================================================");
-        System.out.println("수정페이지에서 DTO!!!!!!!!!!!!!!!!!!!!! : " + dto); //reviewNum, title, content옴
-        model.addAttribute("dto", dto);
+    System.out.println("수정페이지에서 DTO!!!!!!!!!!!!!!!!!!!!! : " + dto); //reviewNum, title, content옴
 
     String alertMessage = "";
     Member loginedMember = (Member) session.getAttribute("loggedInUser");

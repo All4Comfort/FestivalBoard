@@ -91,7 +91,7 @@ public class QuestionController {
     model.addAttribute("searchQuery", searchQuery); // 검색어를 모델에 추가
     model.addAttribute("isSearch", isSearch); // 검색 여부를 모델에 추가
 
-    return "notice/question"; // "festivalList.html" 페이지로 이동
+    return "/notice/question"; // "festivalList.html" 페이지로 이동
   }
 
   @GetMapping("/questionDetail")
@@ -203,7 +203,7 @@ public class QuestionController {
   }
 
   @GetMapping("/questionmodify")
-  public String questionmodify(@ModelAttribute QuestionDTO dto, Model model, RedirectAttributes attributes,
+  public String questionmodify(@ModelAttribute("dto") QuestionDTO dto, Model model, RedirectAttributes attributes,
       HttpSession session) {
 
     //System.out.println("!!!!!!!!!!!!!!!!!!!!!!질문수정 시 질문DTO!!!!!!!!!!!!!!!!!!!!!!!!");

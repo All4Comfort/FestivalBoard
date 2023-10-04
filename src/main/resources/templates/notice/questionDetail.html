@@ -333,46 +333,7 @@
                 actionForm.submit();
             });
         </script>
-        <!-- <script th:inline="javascript">
-            
-            var actionForm = $("form");
-            var num = $("input[name='questionNum']").val();
-            $("input[name='nickname']").val($("#nickname").text());
-            var nickname =$("input[name='nickname']").val();
-        
-            $(".removeBtn").click(()=>{
-                if(!confirm("삭제하시겠습니까?")){
-                    return ;
-                }
-                //console.log(actionForm);
-                  //nick만 보낼것임
-            
-                
-                actionForm.attr("action", "/notice/questionRemove").attr("method","post");
-        
-                actionForm.submit();
-            });
-        
-            $(".modifyBtn").click(function(){
-                if(!confirm("수정하시겠습니까?")){
-                    return ;
-                }
-                $("input[name='title']").val($("#questionTitle").text());
-                $("input[name='content']").val($("#questionContent").text());
-                
-                var title = $("input[name='title']").val();
-                var content = $("input[name='content']").val();
-        
-                //actionForm.append(num);
-        
-        
-                console.log("번호: " + num + "닉네임: " + nickname);
-                console.log("제목: "  + title + "내용: " + content);
-                actionForm.attr("action", "/notice/questionmodify").attr("method", "get").submit();
-            });
-        
-        
-        </script> -->
+
         
     <!--이전/다음키 스크립트-->
 <script>
