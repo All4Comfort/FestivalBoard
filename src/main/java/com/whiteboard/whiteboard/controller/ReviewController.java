@@ -106,6 +106,7 @@ public class ReviewController {
         //해당 리뷰글의 조회수 1회 올리기 (DB의 데이터 변경)
         reviewService.updateReadCount(reviewDTO.getReviewNum());
 
+
         //해당 리뷰글의 데이터 DB에서 모두 가져오기
         reviewDTO = reviewService.getReviewByReviewNum(reviewDTO.getReviewNum());
         //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 리뷰DTO : " + reviewDTO);
@@ -118,8 +119,7 @@ public class ReviewController {
         model.addAttribute("reviewDTO", reviewDTO);
         model.addAttribute("replyList", replyList);
         model.addAttribute("session", session);
-        
-
+    
     }
 
     //글쓰기 에디터 사용 시 자동 삽입되는 html 태그 제거하는 메서드
@@ -245,6 +245,8 @@ public class ReviewController {
         return "redirect:/member/unloginedAlert";
   
       }
+
+   
     }
 
     
