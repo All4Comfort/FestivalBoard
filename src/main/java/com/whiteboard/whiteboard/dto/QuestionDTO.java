@@ -19,7 +19,7 @@ public class QuestionDTO {
   
   private Long questionNum; //질문번호
   private String writer; //작성자
-  private String nickName; // 작성자의 닉네임 얻는 법.. Question엔티티 타입 변수.getWriter().getNickname()
+  private String nickname; // 작성자의 닉네임 얻는 법.. Question엔티티 타입 변수.getWriter().getNickname()
   private String title; //글제목
   private String content; //글내용
   //private Boolean isSecret; //비밀글 여부

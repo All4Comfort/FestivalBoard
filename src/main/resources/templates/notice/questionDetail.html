@@ -41,6 +41,97 @@
                     margin-left:0 ; /* 내 정보(내비게이션 탭)를 오른쪽으로 이동 */
                 }
             }
+    /* 댓글 작성 폼 스타일 */
+    .reply-form .form-group {
+        margin-bottom: 10px;
+    }
+
+    .reply-form input[type="text"],
+    .reply-form textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .reply-form button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .reply-form button:hover {
+        background-color: #0056b3;
+    }
+
+/* 댓글 목록 창 스타일 */
+.reply-section {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 30px;
+}
+
+.reply-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.reply-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.reply-item {
+    list-style-type: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    position: relative; /* 부모 요소로부터의 상대 위치 설정 */
+}
+/* 목록 항목 앞에 이미지 설정 */
+.reply-item::before {
+    content: "";
+    background-image: url('/src/main/resources/templates/img/reply_icon.png'); /* 이미지 경로 설정 */
+    width: 20px; /* 이미지 너비 조절 */
+    height: 20px; /* 이미지 높이 조절 */
+    background-size: cover; /* 이미지 크기 조절 */
+    display: inline-block;
+    position: absolute;
+    left: -30px; /* 이미지의 왼쪽 여백 조절 */
+    top: 50%; /* 이미지를 수직 중앙에 배치 */
+    transform: translateY(-50%); /* 이미지를 수직 중앙에 배치 */
+    border-radius: 50%; /* 이미지를 원 모양으로 만들기 위해 필요할 경우 */
+}
+
+.reply-writer {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.reply-content {
+    font-size: 18px;
+    margin-top: 5px;
+}
+
+.reply-date {
+    font-size: 14px;
+    color: #888;
+}
+
+.reply-form {
+    margin-top: 20px;
+}
+
 </style>
 </head>
 
@@ -116,11 +207,11 @@
                 <input type="hidden" name="questionNum" th:value="${dto.questionNum}"/>
                 <input type="hidden" name="content"/>
                 <input type="hidden" name="title"/>
-                <input type="hidden" name="nickName"/>
+                <input type="hidden" name="nickname"/>
 
             </form>
             <h5 class="card-title" id="questionTitle">[[${dto.title}]]</h5>
-            <h6 class="card-subtitle mb-2 text-muted" id="nickName">[[${dto.nickName}]]</h6>
+            <h6 class="card-subtitle mb-2 text-muted" id="nickname">[[${dto.nickname}]]</h6>
         </div>
         <div class="card-body">
             <p class="card-text" id="questionContent">[[${dto.content}]]</p>
@@ -145,15 +236,15 @@
 </section>
 
 <!-- 댓글 작성창 -->
-<section class="container my-5 text-center" th:object="${replyDTO}">
+<section class="container my-5 text-center" th:object="${dto}">
     <!-- 리뷰 상세 페이지 HTML -->
     <div class="review-detail-container">
         <!-- ... 리뷰 내용 및 정보 표시 ... -->
         <div class="reply-section" th:if="${session.loggedInUser != null}">
             <!-- 댓글 작성 폼 -->
-            <form class="reply-form" action="/review/save" method="post">
+            <form class="reply-form" action="/notice/replySave" method="post">
 
-                <input type="hidden" name="reviewNum" th:value="${replyDTO.questionNum}"/>
+                <input type="hidden" name="questionNum" th:value="${dto.questionNum}"/>
                 <div th:object="${replyDTO}">
                     <div class="form-group">
                         <input type="text" class="form-control" id="reply-writer" name="nickname" th:value="${session.loggedInUser.nickname}" readonly>
@@ -212,7 +303,7 @@
         <script th:inline="javascript">
             var actionForm = $("form");
             var questionNum = $("input[name='questionNum']").val();
-            var nickName = $("#nickName").text();
+            var nickname = $("#nickname").text();
             
             $(".removeBtn").click(function() {
                 if (!confirm("삭제하시겠습니까?")) {
@@ -222,7 +313,7 @@
                 // 삭제를 위한 폼 데이터 설정
                 actionForm.attr("action", "/notice/questionRemove").attr("method", "post");
                 actionForm.find("input[name='questionNum']").val(questionNum);
-                actionForm.find("input[name='nickName']").val(nickName);
+                actionForm.find("input[name='nickname']").val(nickname);
                 actionForm.submit();
             });
         
@@ -235,7 +326,7 @@
                 // 수정을 위한 폼 데이터 설정
                 actionForm.attr("action", "/notice/questionmodify").attr("method", "get");
                 actionForm.find("input[name='questionNum']").val(questionNum);
-                actionForm.find("input[name='nickName']").val(nickName);
+                actionForm.find("input[name='nickname']").val(nickname);
                 actionForm.find("input[name='title']").val(title);
                 actionForm.find("input[name='content']").val(content);
 
@@ -246,8 +337,8 @@
             
             var actionForm = $("form");
             var num = $("input[name='questionNum']").val();
-            $("input[name='nickName']").val($("#nickName").text());
-            var nickName =$("input[name='nickName']").val();
+            $("input[name='nickname']").val($("#nickname").text());
+            var nickname =$("input[name='nickname']").val();
         
             $(".removeBtn").click(()=>{
                 if(!confirm("삭제하시겠습니까?")){
@@ -275,7 +366,7 @@
                 //actionForm.append(num);
         
         
-                console.log("번호: " + num + "닉네임: " + nickName);
+                console.log("번호: " + num + "닉네임: " + nickname);
                 console.log("제목: "  + title + "내용: " + content);
                 actionForm.attr("action", "/notice/questionmodify").attr("method", "get").submit();
             });

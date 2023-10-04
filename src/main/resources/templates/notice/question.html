@@ -293,7 +293,7 @@
 						<a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.questionNum}]]</a>
 					</th>
 					<td><a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.title}]]</a></td>
-					<td><a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.nickName}]]</a></td>
+					<td><a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.nickname}]]</a></td>
                     <td><a th:text="${#temporals.format(dto.registerDate, 'yyyy-MM-dd')}"></a></td>
 				</tr>
 			</tbody>
