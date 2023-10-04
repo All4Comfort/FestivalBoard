@@ -35,7 +35,7 @@ public interface NoticeService {
                         .title(notice.getTitle())
                         .content(notice.getContent())
                         .registerDate(notice.getRegisterDate())
-                        .nickName(notice.getWriter().getNickname())
+                        .nickname(notice.getWriter().getNickname())
                         .build();
 
         return dto;

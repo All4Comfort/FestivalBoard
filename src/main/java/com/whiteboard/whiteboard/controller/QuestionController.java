@@ -95,17 +95,20 @@ public class QuestionController {
   }
 
   @GetMapping("/questionDetail")
-  public void questionDetail(@ModelAttribute QuestionDTO questionDTO, Model model, HttpSession session) {
+  public void questionDetail(@ModelAttribute("dto") QuestionDTO dto, Model model, HttpSession session) {
     
     //해당 질문글의 데이터 DB에서 모두 가져오기
-    questionDTO = questionService.get(questionDTO.getQuestionNum());
-    //System.out.println("questionDetail의 질문DTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + questionDTO);
+    dto = questionService.get(dto.getQuestionNum());
+    System.out.println("질문상세의 질문DTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + dto);
     // 질문번호, 닉네임, 제목, 내용, 등록날짜 매핑됨.
-
+    
+    System.out.println("//////////질문상세의 Session/////////////////////////////////////" + session.getAttribute("loggedInUser"));
     //댓글 목록 가져오기
-    List<ReplyDTO> replyList  = questionReplyService.findAll(questionDTO.getQuestionNum());
+    List<ReplyDTO> replyList  = questionReplyService.findAll(dto.getQuestionNum());
+    System.out.println("~~~~~~~~~~~~~~~~~~~질문상세의 질문replyList~~~~~~~~~~~"+ replyList);
 
-    model.addAttribute("dto", questionDTO);
+
+    model.addAttribute("dto", dto);
     model.addAttribute("replyList", replyList);
     model.addAttribute("session", session);
 
@@ -165,7 +168,7 @@ public class QuestionController {
 
     if (loginedMember != null) { // 로그인했을 시,
 
-      if (loginedMember.getNickname().equals(dto.getNickName())) {
+      if (loginedMember.getNickname().equals(dto.getNickname())) {
         // 작성자가 로그인했을 경우
 
         questionService.remove(questionNum);
@@ -214,7 +217,7 @@ public class QuestionController {
     //System.out.println(loginedMember);
 
     if (loginedMember != null) { // 로그인했을 시,
-      if (loginedMember.getNickname().equals(dto.getNickName())) { // 작성자가 로그인했을 경우
+      if (loginedMember.getNickname().equals(dto.getNickname())) { // 작성자가 로그인했을 경우
         model.addAttribute("dto", dto);
         return "/notice/questionmodify";
       } else { // 로그인한 회원이 작성자가 아닐 경우

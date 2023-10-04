@@ -52,19 +52,21 @@ public class ReplyController {
 
     //질문글에 댓글 작성 POST 메서드
     @PostMapping("/notice/replySave")
-    public String saveQuestionReply(@RequestParam("reviewNum") Long questionNum, @ModelAttribute ReplyDTO replyDTO,
-    @ModelAttribute QuestionDTO questionDTO, RedirectAttributes attributes ,HttpSession session) {
-        //System.out.println("replyDTO = " + replyDTO);
+    public String saveQuestionReply(@RequestParam("questionNum") Long questionNum, @ModelAttribute ReplyDTO replyDTO,
+    @ModelAttribute QuestionDTO dto, RedirectAttributes attributes ,HttpSession session) {
+        System.out.println("*********************************댓글작성 시 댓글DTO" + replyDTO);
+        System.out.println("*********************************댓글작성 시 질문DTO" + dto);
+        System.out.println("*********************************댓글작성 시 SESSION" + session.getAttribute("loggedInUser"));
 
         //댓글 등록
-        System.out.println("11111111111111111111111111111111111111111111 : "+questionDTO);
-        reviewReplyService.save(replyDTO, session);
-        questionDTO = questionService.getQuestionByQuestionNum(questionNum);
+        System.out.println("11111111111111111111111111111111111111111111 : "+dto);
+        questionReplyService.save(replyDTO, session);
+        dto = questionService.getQuestionByQuestionNum(questionNum);
 
-        System.out.println("22222222222222222222222222222222222222222222 : "+questionDTO);
-        attributes.addAttribute(questionNum);
+        System.out.println("22222222222222222222222222222222222222222222 : "+dto);
+        attributes.addFlashAttribute("dto", dto);
         
-        return "redirect:/notice/question";
+        return "redirect:/notice/questionDetail";
     }
 
     
