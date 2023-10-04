@@ -94,7 +94,7 @@ public class QuestionController {
   @GetMapping("/questionDetail")
   public void questionDetail(@ModelAttribute QuestionDTO questionDTO, Model model, HttpSession session) {
     questionDTO = questionService.get(questionDTO.getQuestionNum());
-    // System.out.println("질문DTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + questionDTO);
+    //System.out.println("questionDetail의 질문DTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + questionDTO);
     // 질문번호, 닉네임, 제목, 내용, 등록날짜 매핑됨.
 
     model.addAttribute("dto", questionDTO);
@@ -188,7 +188,7 @@ public class QuestionController {
   }
 
   @PostMapping("/questionmodify")
-  public String modify(QuestionDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
+  public String modify(@ModelAttribute QuestionDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
       RedirectAttributes redirect) {
 
     // System.out.println("질문수정 ==============================" + dto);
@@ -202,13 +202,15 @@ public class QuestionController {
   public String questionmodify(@ModelAttribute QuestionDTO dto, Model model, RedirectAttributes attributes,
       HttpSession session) {
 
-    // System.out.println("!!!!!!!!!!!!!!!!!!!!!!질문수정 시 질문
-    // DTO!!!!!!!!!!!!!!!!!!!!!!!!");
-    // System.out.println(dto);
+    //System.out.println("!!!!!!!!!!!!!!!!!!!!!!질문수정 시 질문DTO!!!!!!!!!!!!!!!!!!!!!!!!");
+    //System.out.println(dto);
     // 질문번호, 닉네임, 제목, 내용까지 넘어옴
 
     String alertMessage = "";
     Member loginedMember = (Member) session.getAttribute("loggedInUser");
+    
+    //System.out.println("!!!!!!!!!!!!!!!!!!!!!!질문수정 시 Session!!!!!!!!!!!!!!!!!!!!!!!!!");    
+    //System.out.println(loginedMember);
 
     if (loginedMember != null) { // 로그인했을 시,
       if (loginedMember.getNickname().equals(dto.getNickName())) { // 작성자가 로그인했을 경우

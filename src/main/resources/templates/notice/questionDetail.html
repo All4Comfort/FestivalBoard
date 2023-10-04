@@ -112,7 +112,7 @@
     <div class="card" th:object="${dto}">
         <div class="card-header">
 
-            <form>
+           <form>
                 <input type="hidden" name="questionNum" th:value="${dto.questionNum}"/>
                 <input type="hidden" name="content"/>
                 <input type="hidden" name="title"/>
@@ -124,7 +124,7 @@
         </div>
         <div class="card-body">
             <p class="card-text" id="questionContent">[[${dto.content}]]</p>
-        </div>
+        </div> 
     </div>
 
     
@@ -144,112 +144,87 @@
 </div>
 </section>
 
-<!-- 댓글 작성창 -->
-<section class="container my-5 text-center" th:object="${dto}">
-    <!-- 리뷰 상세 페이지 HTML -->
-    <div class="review-detail-container">
-        <!-- ... 리뷰 내용 및 정보 표시 ... -->
-        <div class="reply-section" th:if="${session.loggedInUser != null}">
-            <!-- 댓글 작성 폼 -->
-            <form class="reply-form" action="/review/save" method="post">
 
-                <input type="hidden" name="reviewNum" th:value="${dto.questionNum}"/>
-                <div th:object="${dto}">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="reply-writer" name="nickname" th:value="${session.loggedInUser.nickname}" readonly>
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" id="reply-content" name="content"  placeholder="댓글 내용" required></textarea>
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">
-                    댓글 작성
-                </button>
-            </form>
-            <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&& 내가 작성한 댓글에만 버튼이 보이도록...&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
-            <!-- 수정 및 삭제 버튼 -->
-            <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
-                <button type="button" class="btn btn-custom replyModifyBtn">댓글 수정</button>
-                <button type="button" class="btn btn-danger replyRemoveBtn">댓글 삭제</button>
-            </div>
-        </div>
-    </div>
-    <!-- 댓글 상세보기 -->
-    <div class="review-detail-container">
-        <h3>댓글 목록</h3>
-        <div class="reply-section" th:each="reply : ${replyList}">
-            <!-- 댓글 목록 표시 -->
-            <ul class="reply-list">
-                <!-- 예제 댓글 아이템 -->
-                <li class="reply-item">
-                    <p class="reply-writer">
-                        댓글 작성자: <span th:text="${reply.nickname}">닉네임</span>
-                    </p>
-                    <p class="reply-content" th:text="${reply.content}">이 리뷰가 정말 유용하네요. 감사합니다!</p>
-                    <p class="reply-date" th:text="${reply.regDate}">
-                        작성일: <span th:text="${reply.nickname}">YYYY-MM-DD</span>
-                    </p>
-                </li>
-                <!-- 댓글 아이템 추가 예제 (동적으로 로드해야 함) -->
-                <!-- <li class="reply-item">
-                    <p class="reply-writer">댓글 작성자: Bob</p>
-                    <p class="reply-content">댓글 내용입니다.</p>
-                    <p class="reply-date">작성일: 2023-09-27</p>
-                </li> -->
-            </ul>
-        </div>
-        
-        <!-- 댓글 창 끝 -->
-    </div>
-
-</section>
-
-<script th:inline="javascript">
-    
-    var actionForm = $("form");
-    var num = $("input[name='questionNum']").val();
-    $("input[name='nickName']").val($("#nickName").text());
-    var nickName =$("input[name='nickName']").val();
-
-    $(".removeBtn").click(()=>{
-        if(!confirm("삭제하시겠습니까?")){
-            return ;
-        }
-        //console.log(actionForm);
-          //nick만 보낼것임
-    
-        
-        actionForm.attr("action", "/notice/questionRemove").attr("method","post");
-
-        actionForm.submit();
-    });
-
-    $(".modifyBtn").click(function(){
-        if(!confirm("수정하시겠습니까?")){
-            return ;
-        }
-        $("input[name='title']").val($("#questionTitle").text());
-        $("input[name='content']").val($("#questionContent").text());
-        
-        var title = $("input[name='title']").val();
-        var content = $("input[name='content']").val();
-
-        //actionForm.append(num);
-
-
-        console.log("번호: " + num + "닉네임: " + nickName);
-        console.log("제목: "  + title + "내용: " + content);
-        actionForm.attr("action", "/notice/questionmodify").attr("method", "get").submit();
-    });
-
-
-</script>
 
     <!-- 부트스트랩 JS 링크 -->
      <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gg6vUz1rTL5UHVbNXLKwgpAYNr2NvTAPC5JiKc+2aX8Cxl+U7v2+nSvzvIMnJvWR" crossorigin="anonymous"></script> -->
 
 
+        <script th:inline="javascript">
+            var actionForm = $("form");
+            var questionNum = $("input[name='questionNum']").val();
+            var nickName = $("#nickName").text();
+            
+            $(".removeBtn").click(function() {
+                if (!confirm("삭제하시겠습니까?")) {
+                    return;
+                }
+        
+                // 삭제를 위한 폼 데이터 설정
+                actionForm.attr("action", "/notice/questionRemove").attr("method", "post");
+                actionForm.find("input[name='questionNum']").val(questionNum);
+                actionForm.find("input[name='nickName']").val(nickName);
+                actionForm.submit();
+            });
+        
+            $(".modifyBtn").click(function() {
+                $("input[name='title']").val($("#questionTitle").text());
+                $("input[name='content']").val($("#questionContent").text());
+                
+                var title = $("input[name='title']").val();
+                var content = $("input[name='content']").val();
+                // 수정을 위한 폼 데이터 설정
+                actionForm.attr("action", "/notice/questionmodify").attr("method", "get");
+                actionForm.find("input[name='questionNum']").val(questionNum);
+                actionForm.find("input[name='nickName']").val(nickName);
+                actionForm.find("input[name='title']").val(title);
+                actionForm.find("input[name='content']").val(content);
+
+                actionForm.submit();
+            });
+        </script>
+        <!-- <script th:inline="javascript">
+            
+            var actionForm = $("form");
+            var num = $("input[name='questionNum']").val();
+            $("input[name='nickName']").val($("#nickName").text());
+            var nickName =$("input[name='nickName']").val();
+        
+            $(".removeBtn").click(()=>{
+                if(!confirm("삭제하시겠습니까?")){
+                    return ;
+                }
+                //console.log(actionForm);
+                  //nick만 보낼것임
+            
+                
+                actionForm.attr("action", "/notice/questionRemove").attr("method","post");
+        
+                actionForm.submit();
+            });
+        
+            $(".modifyBtn").click(function(){
+                if(!confirm("수정하시겠습니까?")){
+                    return ;
+                }
+                $("input[name='title']").val($("#questionTitle").text());
+                $("input[name='content']").val($("#questionContent").text());
+                
+                var title = $("input[name='title']").val();
+                var content = $("input[name='content']").val();
+        
+                //actionForm.append(num);
+        
+        
+                console.log("번호: " + num + "닉네임: " + nickName);
+                console.log("제목: "  + title + "내용: " + content);
+                actionForm.attr("action", "/notice/questionmodify").attr("method", "get").submit();
+            });
+        
+        
+        </script> -->
+        
     <!--이전/다음키 스크립트-->
 <script>
     // 이전으로 돌아가는 키
