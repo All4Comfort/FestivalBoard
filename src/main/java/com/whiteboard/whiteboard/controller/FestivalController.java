@@ -111,7 +111,7 @@ public class FestivalController {
     public String getFestivalDetail(@RequestParam("festivalNum") Long festivalNum, Model model) {
         FestivalDTO festivalDTO = festivalService.getfestivalFNum(festivalNum);
         model.addAttribute("festivalDTO", festivalDTO);
-        // System.out.println("festivalNum 숫자: " + festivalDTO);
+        System.err.println("festivalNum 숫자: " + festivalDTO);
         return "festival/festivalDetail"; // 렌더링할 뷰의 이름을 반환
     }
 

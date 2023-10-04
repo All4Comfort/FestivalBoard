@@ -37,6 +37,12 @@ public class KakaoService {
     }
 
     public KakaoDTO getKakaoInfo(String code) throws Exception {
+        // https://shxrecord.tistory.com/290
+        // getKakaoInfo(String code)는 컨트롤러에서 리턴받은 인증 코드값을 통해 카카오 인증 서버에 액세스 토큰을 요청합니다.
+        // 토큰은 액세스 토큰과 리프레쉬 토큰 두가지가 있는데, 리프레쉬 토큰은 액세스 토큰을 갱신할 때 사용됩니다. 액세스 토큰은 만료 시간이
+        // 존재하기 때문에 발급받은 리프레쉬 토큰을 저장해두고 액세스 토큰을 갱신하는 형태로 사용하게 됩니다. 본 예제에서는 발급받은 액세스 토큰을
+        // 통해 사용자 정보를 가져오는데까지만 다루고 있습니다.
+
         if (code == null)
             throw new Exception("Failed get authorization code");
 
@@ -76,6 +82,11 @@ public class KakaoService {
     }
 
     private KakaoDTO getUserInfoWithToken(String accessToken) throws Exception {
+        // getKakaoInfo(String code)는 컨트롤러에서 리턴받은 인증 코드값을 통해 카카오 인증 서버에 액세스 토큰을 요청합니다.
+        // 토큰은 액세스 토큰과 리프레쉬 토큰 두가지가 있는데, 리프레쉬 토큰은 액세스 토큰을 갱신할 때 사용됩니다. 액세스 토큰은 만료 시간이
+        // 존재하기 때문에 발급받은 리프레쉬 토큰을 저장해두고 액세스 토큰을 갱신하는 형태로 사용하게 됩니다. 본 예제에서는 발급받은 액세스 토큰을
+        // 통해 사용자 정보를 가져오는데까지만 다루고 있습니다.
+
         // HttpHeader 생성
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + accessToken);
@@ -96,7 +107,7 @@ public class KakaoService {
         JSONObject account = (JSONObject) jsonObj.get("kakao_account");
         JSONObject profile = (JSONObject) account.get("profile");
 
-        long id = (long) jsonObj.get("id");
+        Long id = (Long) jsonObj.get("id");
         String email = String.valueOf(account.get("email"));
         String nickname = String.valueOf(profile.get("nickname"));
 
@@ -105,5 +116,4 @@ public class KakaoService {
                 .email(email)
                 .nickname(nickname).build();
     }
-
 }
