@@ -227,20 +227,20 @@
     <br>
     <br>
     
-    <div class="card" th:object="${dto}">
+    <div class="card" th:object="${noticeDTO}">
         <div class="card-header">
         <form>
-                <input type="hidden" name="noticeNum" th:value="${dto.noticeNum}"/>
+                <input type="hidden" name="noticeNum" th:value="${noticeDTO.noticeNum}"/>
                 <input type="hidden" name="content"/>
                 <input type="hidden" name="title"/>
         </form>    
-            <h5 class="card-title" id="noticeTitle" th:utext="${dto.title}">[[${dto.title}]]</h5>
+            <h5 class="card-title" id="noticeTitle" th:text="${noticeDTO.title}">[[${noticeDTO.title}]]</h5>
             <!-- <h6 class="card-subtitle mb-2 text-muted" id="noticeAuthor">[[${dto.writer}]]</h6> -->
 
             </div>
             
             <div class="card-body">
-                <p class="card-text" id="noticeContent" th:utext="${dto.content}" value="${dto.content}">[[${dto.content}]]</p>
+                <p class="card-text" id="noticeContent" th:text="${noticeDTO.content}">[[${noticeDTO.content}]]</p>
             </div>
         
     </div>
