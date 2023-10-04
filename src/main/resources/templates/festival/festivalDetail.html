@@ -128,6 +128,7 @@
                 <h6 class="card-subtitle mb-2 text-muted">기간 : <span th:text="${festivalDTO.period}">축제 기간</span></h6>
                 <h6 class="card-subtitle mb-2 text-muted">지역 : <span th:text="${festivalDTO.region}">지역</span></h6>
                 <h6 class="card-subtitle mb-2 text-muted">장소 : <span th:text="${festivalDTO.venue}">장소</span></h6>
+                <h6 class="card-subtitle mb-2 text-muted">홈페이지 : <a href="${festivalDTO.link}" th:text="${festivalDTO.link}">장소</a></h6>
             </div>
             <div class="card-body">
                 <p class="card-text" id="noticeContent" th:text="${festivalDTO.description}">축제 설명</p>
