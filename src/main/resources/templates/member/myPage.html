@@ -164,7 +164,7 @@
         <a class="navbar-brand" style="margin-left: 20px;" href="/main"><b>Fullstival</b></a>
         <ul class="nav nav-pills">
             <div id="welcome-message" th:if="${session.loggedInUser != null}"
-                th:text="${session.loggedInUser.name} + '님 환영합니다'"
+                th:text="${session.loggedInUser.nickname} + '님 환영합니다'"
                 style="display: flex; align-items: center; margin-right: 20px;">
             </div>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
