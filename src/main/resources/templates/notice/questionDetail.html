@@ -143,6 +143,66 @@
 </div>
 </section>
 
+<!-- 댓글 작성창 -->
+<section class="container my-5 text-center" th:object="${dto}">
+    <!-- 리뷰 상세 페이지 HTML -->
+    <div class="review-detail-container">
+        <!-- ... 리뷰 내용 및 정보 표시 ... -->
+        <div class="reply-section" th:if="${session.loggedInUser != null}">
+            <!-- 댓글 작성 폼 -->
+            <form class="reply-form" action="/review/save" method="post">
+
+                <input type="hidden" name="reviewNum" th:value="${dto.questionNum}"/>
+                <div th:object="${dto}">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="reply-writer" name="nickname" th:value="${session.loggedInUser.nickname}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="reply-content" name="content"  placeholder="댓글 내용" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    댓글 작성
+                </button>
+            </form>
+            <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&& 내가 작성한 댓글에만 버튼이 보이도록...&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
+            <!-- 수정 및 삭제 버튼 -->
+            <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
+                <button type="button" class="btn btn-custom replyModifyBtn">댓글 수정</button>
+                <button type="button" class="btn btn-danger replyRemoveBtn">댓글 삭제</button>
+            </div>
+        </div>
+    </div>
+    <!-- 댓글 상세보기 -->
+    <div class="review-detail-container">
+        <h3>댓글 목록</h3>
+        <div class="reply-section" th:each="reply : ${replyList}">
+            <!-- 댓글 목록 표시 -->
+            <ul class="reply-list">
+                <!-- 예제 댓글 아이템 -->
+                <li class="reply-item">
+                    <p class="reply-writer">
+                        댓글 작성자: <span th:text="${reply.nickname}">닉네임</span>
+                    </p>
+                    <p class="reply-content" th:text="${reply.content}">이 리뷰가 정말 유용하네요. 감사합니다!</p>
+                    <p class="reply-date" th:text="${reply.regDate}">
+                        작성일: <span th:text="${reply.nickname}">YYYY-MM-DD</span>
+                    </p>
+                </li>
+                <!-- 댓글 아이템 추가 예제 (동적으로 로드해야 함) -->
+                <!-- <li class="reply-item">
+                    <p class="reply-writer">댓글 작성자: Bob</p>
+                    <p class="reply-content">댓글 내용입니다.</p>
+                    <p class="reply-date">작성일: 2023-09-27</p>
+                </li> -->
+            </ul>
+        </div>
+        
+        <!-- 댓글 창 끝 -->
+    </div>
+
+</section>
+
 <script th:inline="javascript">
     
     var actionForm = $("form");
