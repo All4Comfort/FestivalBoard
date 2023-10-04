@@ -375,6 +375,7 @@
     
         var actionForm = $("form");
         var num = $("input[name='reviewNum']").val();
+        var nickname = $("#nickname").text();
         
         $(".removeBtn").click(()=>{
             if(!confirm("삭제하시겠습니까?")){
@@ -384,11 +385,13 @@
               //nick만 보낼것임
         
             //console.log(nick);
-            actionForm.append(num);
-            
+
             actionForm.attr("action", "/review/remove").attr("method","post");
-    
+            actionForm.find("input[name='reviewNum']").val(reviewNum);
+            actionForm.find("input[name='nickname']").val(nickname);
             actionForm.submit();
+            // actionForm.append(num);
+            // actionForm.submit();
         });
    
         $(".modifyBtn").click(function(){
@@ -403,13 +406,16 @@
         console.log("!!-->" + a);
         console.log("!!-->" + b);
 
-    
-            actionForm.append(num);
-            actionForm.append(a);
-            actionForm.append(b);
+        actionForm.attr("action", "/review/reviewModify").attr("method", "get").submit();
+        actionForm.find("input[name='reviewNum']").val(reviewNum);
+        actionForm.find("input[name='nickname']").val(nickname);
+        actionForm.find("input[name='title']").val(title);
+        actionForm.find("input[name='content']").val(content);
+        // actionForm.append(num);
+        // actionForm.append(a);
+        // actionForm.append(b);
     
             console.log(num + " ### " + a + b);
-            actionForm.attr("action", "/review/reviewModify").attr("method", "get").submit();
         });
     </script>
 
