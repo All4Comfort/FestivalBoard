@@ -29,7 +29,7 @@
       <div class="form-group" th:width="500">
         <!-- <h1><label for="title">NOTICE</label></h1> -->
         <form>
-        <input type="hidden" name="noticeNum" th:value="${noticeDTO.noticeNum}"/>
+        <input type="hidden" id="noticeNum" name="noticeNum" th:value="${noticeDTO.noticeNum}"/>
         </form>
         <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" th:value="${noticeDTO.title}">
         <textarea class="form-control" id="content" name="content" th:style="'width: 800px;'">[[${noticeDTO.content}]]</textarea>
