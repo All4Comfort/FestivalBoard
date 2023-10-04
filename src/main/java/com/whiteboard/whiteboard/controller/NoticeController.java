@@ -218,7 +218,8 @@ public class NoticeController {
   public String modify(@ModelAttribute NoticeDTO noticeDTO, @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
       RedirectAttributes redirect) {
     //System.out.println("수정창띄우기!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    // System.err.println("dto!!!!!!!!!!!!!!!!!!!!! : " + dto);
+    System.err.println("공지POST 수정dto!!!!!!!!!!!!!!!!!!!!! : " + noticeDTO);
+    noticeDTO.setContent(removeHtmlTags(noticeDTO.getContent()));
     noticeService.modify(noticeDTO);
 
     // redirect.addAttribute("page", requestDTO);
@@ -245,8 +246,10 @@ public class NoticeController {
 
       if (loginedMember.getEmail().equals("1234@1234.com")) {
         //관리자인 경우
+        System.err.println("공지GET 수정dto!!!!!!!!!!!!!!!!!!!!! : " + noticeDTO);
+        
         model.addAttribute("noticeDTO", noticeDTO);
-        return "/notice/noticeWrite"; // 작성페이지 띄우기
+        return "/notice/noticemodify"; // 작성페이지 띄우기
 
       } else {
         //관리자가 아닌 회원이 로그인한 경우

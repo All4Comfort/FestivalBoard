@@ -196,6 +196,7 @@ public class QuestionController {
       RedirectAttributes redirect) {
 
     // System.out.println("질문수정 ==============================" + dto);
+    dto.setContent(removeHtmlTags(dto.getContent()));
     questionService.modify(dto);
 
     redirect.addAttribute("questionNum", dto.getQuestionNum());
