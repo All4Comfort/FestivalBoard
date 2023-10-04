@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.ReplyDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
+import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 import com.whiteboard.whiteboard.service.MemberService;
 import com.whiteboard.whiteboard.service.ReviewReplyService;
@@ -40,7 +41,7 @@ public class ReviewController {
 
     // 검색 기능 및 페이징을 위한 메서드
     @GetMapping("/reviewList")
-    public String review(String alertMessage,
+    public String review(
             @RequestParam(name = "searchQuery", required = false) String searchQuery,
             PageRequestDTO pageRequestDTO, Model model) {
 
@@ -93,7 +94,6 @@ public class ReviewController {
         model.addAttribute("result", reviews); // 축제 목록을 모델에 추가
         model.addAttribute("searchQuery", searchQuery); // 검색어를 모델에 추가
         model.addAttribute("isSearch", isSearch); // 검색 여부를 모델에 추가
-        model.addAttribute("alertMessage", alertMessage);
         return "review/reviewList"; // "festivalList.html" 페이지로 이동
     }
 
@@ -106,6 +106,7 @@ public class ReviewController {
         //해당 리뷰글의 조회수 1회 올리기 (DB의 데이터 변경)
         reviewService.updateReadCount(reviewDTO.getReviewNum());
 
+
         //해당 리뷰글의 데이터 DB에서 모두 가져오기
         reviewDTO = reviewService.getReviewByReviewNum(reviewDTO.getReviewNum());
         //System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 리뷰DTO : " + reviewDTO);
@@ -113,15 +114,12 @@ public class ReviewController {
         //댓글 목록 가져오기
         List<ReplyDTO> replyList  = reviewReplyService.findAll(reviewDTO.getReviewNum());
 
-        
-
         //System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%리뷰 댓글목록 : " + replyList);
 
         model.addAttribute("reviewDTO", reviewDTO);
         model.addAttribute("replyList", replyList);
         model.addAttribute("session", session);
-        
-
+    
     }
 
     //글쓰기 에디터 사용 시 자동 삽입되는 html 태그 제거하는 메서드
@@ -169,11 +167,36 @@ public class ReviewController {
 
    
     @PostMapping("/remove")
-    public String remove(Long reviewNum, RedirectAttributes redirect){
-        System.out.println("GGGGGGGG");
-        reviewService.remove(reviewNum);
-        redirect.addAttribute("reviewDTO",reviewNum);
-        return "redirect:/review/reviewList";
+    public String remove(@ModelAttribute ReviewDTO dto,Long reviewNum, RedirectAttributes redirect, HttpSession session){
+        // System.out.println("GGGGGGGG");
+        // reviewService.remove(reviewNum);
+        // redirect.addAttribute("reviewDTO",reviewNum);
+        // return "redirect:/review/reviewList";
+        String alertMessage = "";
+        Member loginedMember = (Member) session.getAttribute("loggedInUser");
+
+        if (loginedMember != null) { // 로그인했을 시,
+
+            if (loginedMember.getNickname().equals(dto.getNickname())) {
+              // 작성자가 로그인했을 경우
+      
+              reviewService.remove(reviewNum);
+              return "redirect:/review/reviewList";
+      
+            } else { // 로그인한 회원이 작성자가 아닐 경우
+      
+              alertMessage = "해당 글 작성자만 삭제 가능합니다.";
+              redirect.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+              return "redirect:/member/unloginedAlert";
+      
+            }
+          } else {// 로그인 안 했을 경우!
+      
+            alertMessage = "해당 글 작성자만 삭제 가능합니다.";
+            redirect.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+            return "redirect:/member/unloginedAlert";
+      
+          }
     }
 
     
@@ -181,7 +204,6 @@ public class ReviewController {
     
        @PostMapping("/reviewModify")
     public String modify(@ModelAttribute ReviewDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
-        
         
         reviewService.modify(dto);
         
@@ -198,10 +220,31 @@ public class ReviewController {
     // }
 
     @GetMapping("/reviewModify")
-    public void reviewModify(@ModelAttribute ReviewDTO dto, Model model){
+    public String reviewModify(@ModelAttribute ReviewDTO dto, Model model, RedirectAttributes redirect, HttpSession session){
     System.out.println("============================================================");
-        System.out.println("수정페이지에서 DTO!!!!!!!!!!!!!!!!!!!!! : " + dto); //reviewNum, title, content옴
-        model.addAttribute("dto", dto);
+    System.out.println("수정페이지에서 DTO!!!!!!!!!!!!!!!!!!!!! : " + dto); //reviewNum, title, content옴
+
+    String alertMessage = "";
+    Member loginedMember = (Member) session.getAttribute("loggedInUser");
+
+    if (loginedMember != null) { // 로그인했을 시,
+        if (loginedMember.getNickname().equals(dto.getNickname())) { // 작성자가 로그인했을 경우
+          model.addAttribute("dto", dto);
+          return "/review/reviewModify";
+        } else { // 로그인한 회원이 작성자가 아닐 경우
+          alertMessage = "해당 글 작성자만 수정 가능합니다.";
+          redirect.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+          return "redirect:/member/unloginedAlert";
+  
+        }
+      } else {// 로그인 안 했을 경우!
+        alertMessage = "해당 글 작성자만 수정 가능합니다.";
+        redirect.addAttribute("alertMessage", alertMessage); // alertMessage 값을 모델에 추가
+        return "redirect:/member/unloginedAlert";
+  
+      }
+
+   
     }
 
     

@@ -10,8 +10,12 @@
       var alertMessage = /*[[${alertMessage}]]*/ ''; // Thymeleaf 변수 사용
       console.log("알럿메시지 : ", '[[${alertMessage}]]');
       
-        alert('[[${alertMessage}]]'); // JavaScript로 알림창 표시
-        location.href = "/member/login"; // 로그인 페이지로 이동
+      var result = confirm('[[${alertMessage}]]'); // JavaScript로 확인 대화 상자 표시
+
+      // 확인 버튼이 눌렸을 때 이전 페이지로 이동
+      if (result) {
+        history.back();
+      }
     </script>
   </body>
 </html>

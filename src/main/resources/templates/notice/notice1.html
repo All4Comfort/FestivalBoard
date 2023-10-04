@@ -168,7 +168,7 @@
         <a class="navbar-brand" style="margin-left: 20px;" href="/main"><b>Fullstival</b></a>
         <ul class="nav nav-pills">
             <div id="welcome-message" th:if="${session.loggedInUser != null}"
-                th:text="${session.loggedInUser.name} + '님 환영합니다'"
+                th:text="${session.loggedInUser.nickname} + '님 환영합니다'"
                 style="display: flex; align-items: center; margin-right: 20px;">
             </div>
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -249,7 +249,7 @@
                         <a th:href="@{/notice/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.noticeNum}]]</a>
                     </th>
                     <td><a th:href="@{/notice/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.title}]]</a></td>
-                    <td><a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.nickName}]]</a></td>
+                    <td><a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.nickname}]]</a></td>
                     <td><a th:text="${#temporals.format(dto.registerDate, 'yyyy-MM-dd')}"></a></td>
                     <!-- <td><a>[[${dto.writer}]]</a></td> -->
                 </tr>

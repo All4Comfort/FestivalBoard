@@ -168,7 +168,7 @@
             <a class="navbar-brand" style="margin-left: 20px;" href="/main"><b>Fullstival</b></a>
             <ul class="nav nav-pills">
                 <div id="welcome-message" th:if="${session.loggedInUser != null}"
-                    th:text="${session.loggedInUser.name} + '님 환영합니다'"
+                    th:text="${session.loggedInUser.nickname} + '님 환영합니다'"
                     style="display: flex; align-items: center; margin-right: 20px;">
                 </div>
                 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -228,6 +228,7 @@
             <input type="hidden" name="reviewNum" th:value="${reviewDTO.reviewNum}"/>
             <input type="hidden" name="title"/>
             <input type="hidden" name="content"/>
+            <input type="hidden" name="nickName"/>
         </form>
             
             
@@ -374,6 +375,7 @@
     
         var actionForm = $("form");
         var num = $("input[name='reviewNum']").val();
+        var nickname = $("#nickname").text();
         
         $(".removeBtn").click(()=>{
             if(!confirm("삭제하시겠습니까?")){
@@ -383,11 +385,13 @@
               //nick만 보낼것임
         
             //console.log(nick);
-            actionForm.append(num);
-            
+
             actionForm.attr("action", "/review/remove").attr("method","post");
-    
+            actionForm.find("input[name='reviewNum']").val(reviewNum);
+            actionForm.find("input[name='nickname']").val(nickname);
             actionForm.submit();
+            // actionForm.append(num);
+            // actionForm.submit();
         });
    
         $(".modifyBtn").click(function(){
@@ -402,13 +406,16 @@
         console.log("!!-->" + a);
         console.log("!!-->" + b);
 
-    
-            actionForm.append(num);
-            actionForm.append(a);
-            actionForm.append(b);
+        actionForm.attr("action", "/review/reviewModify").attr("method", "get").submit();
+        actionForm.find("input[name='reviewNum']").val(reviewNum);
+        actionForm.find("input[name='nickname']").val(nickname);
+        actionForm.find("input[name='title']").val(title);
+        actionForm.find("input[name='content']").val(content);
+        // actionForm.append(num);
+        // actionForm.append(a);
+        // actionForm.append(b);
     
             console.log(num + " ### " + a + b);
-            actionForm.attr("action", "/review/reviewModify").attr("method", "get").submit();
         });
     </script>
 
@@ -488,6 +495,7 @@ document.getElementById('prevNotice').addEventListener('click', function () {
         }
 
     </script>
+
     
 </body>
 </html>

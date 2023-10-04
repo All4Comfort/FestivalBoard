@@ -28,6 +28,8 @@ public interface QuestionService {
   // 게시물 삭제 메서드
   void remove(long questionNum);
 
+  public QuestionDTO getQuestionByQuestionNum(Long questionNum);
+
   // 설명: Entity 객체를 DTO로 변환하는 메서드
     default QuestionDTO entityToDTO(Question question){
         QuestionDTO dto = QuestionDTO.builder()
@@ -35,7 +37,7 @@ public interface QuestionService {
                         .title(question.getTitle())
                         .content(question.getContent())
                         .registerDate(question.getRegisterDate())
-                        .nickName(question.getWriter().getNickname())
+                        .nickname(question.getWriter().getNickname())
                         .build();
 
         return dto;
@@ -44,7 +46,7 @@ public interface QuestionService {
     // dtoToEntity 변환 메서드 정의
     default Question dtoToEntity(QuestionDTO dto, HttpSession session){
         
-        Member member1 = Member.builder().nickname(dto.getNickName()).build();
+        Member member1 = Member.builder().nickname(dto.getNickname()).build();
 
         Question question = Question.builder()
                         .questionNum(dto.getQuestionNum())

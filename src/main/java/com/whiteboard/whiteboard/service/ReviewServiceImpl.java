@@ -16,6 +16,7 @@ import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Review;
 import com.whiteboard.whiteboard.repository.MemberRepository;
+import com.whiteboard.whiteboard.repository.ReviewReplyRepository;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -29,6 +30,7 @@ public class ReviewServiceImpl implements ReviewService {
   private final ReviewRepository reviewRepository;
   private final MemberRepository memberRepository;
   private final MemberService memberService;
+  private final ReviewReplyRepository reviewReplyRepository;
 
   private List<ReviewDTO> searchResults = new ArrayList<>();
 
@@ -53,7 +55,9 @@ public class ReviewServiceImpl implements ReviewService {
   @Override
   public void remove(Long reviewNum) {
     // 리뷰 ID로 리뷰 삭제
+    reviewReplyRepository.deleteByReviewNum(reviewRepository.getReferenceById(reviewNum));
     reviewRepository.deleteById(reviewNum);
+    
   }
 
   @Override

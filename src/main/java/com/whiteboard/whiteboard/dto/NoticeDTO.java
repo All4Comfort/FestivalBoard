@@ -22,7 +22,7 @@ public class NoticeDTO {
     
 
     private String writer;//작성자
-    private String nickName; // 작성자의 닉네임 얻는 법.. Question엔티티 타입 변수.getWriter().getNickname()
+    private String nickname; // 작성자의 닉네임 얻는 법.. Question엔티티 타입 변수.getWriter().getNickname()
     private String title;//제목
     private String content;//글내용
     private String state;//진행상태 : 답변미완료, 답변완료
