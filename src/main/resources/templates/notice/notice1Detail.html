@@ -234,7 +234,8 @@
                 <input type="hidden" name="content"/>
                 <input type="hidden" name="title"/>
         </form>    
-            <h5 class="card-title" id="noticeTitle" th:text="${noticeDTO.title}">[[${noticeDTO.title}]]</h5>
+            <h2 class="card-title" id="noticeTitle" th:text="${noticeDTO.title}">[[${noticeDTO.title}]]</h2>
+            <h6class="card-title" id="noticenickname" th:text="${noticeDTO.nickname}">[[${noticeDTO.nickname}]]></h6>
             </div>
             <div class="card-body">
                 <p class="card-text" id="noticeContent" th:text="${noticeDTO.content}">[[${noticeDTO.content}]]</p>
@@ -352,7 +353,7 @@ document.getElementById('delete').addEventListener('click',function(event){
         var nextNoticeNum = currentNoticeNum + 1;
 
         // 여기에 마지막 게시물의 번호를 지정하세요.
-        var lastNoticeNum = 100; // 마지막 게시물
+        var lastNoticeNum = 17; // 마지막 게시물
 
         // 현재 festivalNum 값이 마지막 게시물 번호와 같거나 큰 경우 "마지막 게시물 입니다" 메시지를 표시하고 이동하지 않습니다.
         //???????????????????????????? 질문이 필요한 부분 !!!!!!!!!!!!!!!!!!!!!!!!
