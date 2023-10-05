@@ -209,13 +209,13 @@
                 <input type="hidden" name="title"/>
                 <input type="hidden" name="nickname"/>
 
+                <h5 class="card-title" id="title" name="title">[[${dto.title}]]</h5>
+                <h6 class="card-subtitle mb-2 text-muted" id="nickname" name="nickname">[[${dto.nickname}]]</h6>
+            </div>
+            <div class="card-body">
+                <p class="card-text" id="content" name="content">[[${dto.content}]]</p>
             </form>
-            <h5 class="card-title" id="questionTitle">[[${dto.title}]]</h5>
-            <h6 class="card-subtitle mb-2 text-muted" id="nickname">[[${dto.nickname}]]</h6>
-        </div>
-        <div class="card-body">
-            <p class="card-text" id="questionContent">[[${dto.content}]]</p>
-        </div> 
+            </div> 
     </div>
 
     
@@ -318,20 +318,19 @@
             });
         
             $(".modifyBtn").click(function() {
-                $("input[name='title']").val($("#questionTitle").text());
-                $("input[name='content']").val($("#questionContent").text());
-                
-                var title = $("input[name='title']").val();
-                var content = $("input[name='content']").val();
-                // 수정을 위한 폼 데이터 설정
-                actionForm.attr("action", "/notice/questionmodify").attr("method", "get");
-                actionForm.find("input[name='questionNum']").val(questionNum);
-                actionForm.find("input[name='nickname']").val(nickname);
-                actionForm.find("input[name='title']").val(title);
-                actionForm.find("input[name='content']").val(content);
+    var title = $("h5#title").text();
+    var content = $("p#content").text();
 
-                actionForm.submit();
-            });
+    // 수정을 위한 폼 데이터 설정
+    actionForm.attr("action", "/notice/questionmodify").attr("method", "get");
+    actionForm.find("input[name='questionNum']").val(questionNum);
+    actionForm.find("input[name='nickname']").val(nickname);
+    actionForm.find("input[name='title']").val(title);
+    actionForm.find("input[name='content']").val(content);
+
+    actionForm.submit();
+});
+
         </script>
 
         

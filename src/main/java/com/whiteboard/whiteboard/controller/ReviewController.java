@@ -167,8 +167,8 @@ public class ReviewController {
 
    
     @PostMapping("/remove")
-    public String remove(@ModelAttribute ReviewDTO dto,Long reviewNum, RedirectAttributes redirect, HttpSession session){
-        // System.out.println("GGGGGGGG");
+    public String remove(@ModelAttribute ReviewDTO reviewDTO,Long reviewNum, RedirectAttributes redirect, HttpSession session){
+        System.out.println("================================================삭제시 리뷰dto" + reviewDTO);
         // reviewService.remove(reviewNum);
         // redirect.addAttribute("reviewDTO",reviewNum);
         // return "redirect:/review/reviewList";
@@ -177,10 +177,10 @@ public class ReviewController {
 
         if (loginedMember != null) { // 로그인했을 시,
 
-            if (loginedMember.getNickname().equals(dto.getNickname())) {
+            if (loginedMember.getNickname().equals(reviewDTO.getNickname())) {
               // 작성자가 로그인했을 경우
       
-              reviewService.remove(reviewNum);
+              reviewService.remove(reviewDTO.getReviewNum());
               return "redirect:/review/reviewList";
       
             } else { // 로그인한 회원이 작성자가 아닐 경우
@@ -203,11 +203,12 @@ public class ReviewController {
  
     
        @PostMapping("/reviewModify")
-    public String modify(@ModelAttribute ReviewDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
+    public String modify(@ModelAttribute ReviewDTO reviewDTO, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirect){
+        System.out.println("================================================수정시 리뷰dto" + reviewDTO);
+        reviewDTO.setContent(removeHtmlTags(reviewDTO.getContent()));
+        reviewService.modify(reviewDTO);
         
-        reviewService.modify(dto);
-        
-        redirect.addAttribute("reviewNum", dto.getReviewNum());
+        redirect.addAttribute("reviewNum", reviewDTO.getReviewNum());
         return "redirect:/review/reviewDetail";
     }
 
@@ -220,16 +221,18 @@ public class ReviewController {
     // }
 
     @GetMapping("/reviewModify")
-    public String reviewModify(@ModelAttribute ReviewDTO dto, Model model, RedirectAttributes redirect, HttpSession session){
+    public String reviewModify(@ModelAttribute ReviewDTO reviewDTO, Model model, RedirectAttributes redirect, HttpSession session){
     System.out.println("============================================================");
-    System.out.println("수정페이지에서 DTO!!!!!!!!!!!!!!!!!!!!! : " + dto); //reviewNum, title, content옴
+    System.out.println("수정페이지에서 DTO!!!!!!!!!!!!!!!!!!!!! : " + reviewDTO); //reviewNum, title, content옴
 
+
+    reviewDTO = reviewService.getReviewByReviewNum(reviewDTO.getReviewNum());
     String alertMessage = "";
     Member loginedMember = (Member) session.getAttribute("loggedInUser");
-
+    System.out.println("수정페이지에서 loginedMember!!!!!!!!!!!!!!!!!!!!! : " + loginedMember);
     if (loginedMember != null) { // 로그인했을 시,
-        if (loginedMember.getNickname().equals(dto.getNickname())) { // 작성자가 로그인했을 경우
-          model.addAttribute("dto", dto);
+        if (loginedMember.getNickname().equals(reviewDTO.getNickname())) { // 작성자가 로그인했을 경우
+          model.addAttribute("dto", reviewDTO);
           return "/review/reviewModify";
         } else { // 로그인한 회원이 작성자가 아닐 경우
           alertMessage = "해당 글 작성자만 수정 가능합니다.";
