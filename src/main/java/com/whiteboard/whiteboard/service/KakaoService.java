@@ -43,11 +43,13 @@ public class KakaoService {
         // 존재하기 때문에 발급받은 리프레쉬 토큰을 저장해두고 액세스 토큰을 갱신하는 형태로 사용하게 됩니다. 본 예제에서는 발급받은 액세스 토큰을
         // 통해 사용자 정보를 가져오는데까지만 다루고 있습니다.
 
+        
         if (code == null)
             throw new Exception("Failed get authorization code");
 
         String accessToken = "";
         String refreshToken = "";
+
 
         try {
             HttpHeaders headers = new HttpHeaders();
@@ -63,6 +65,11 @@ public class KakaoService {
             RestTemplate restTemplate = new RestTemplate();
             HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(params, headers);
 
+            System.out.println("HttpEntity 확인 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + httpEntity);
+
+
+            System.out.println("--------------------------------------------------------------------------------------------------------------");
+
             ResponseEntity<String> response = restTemplate.exchange(
                     KAKAO_AUTH_URI + "/oauth/token",
                     HttpMethod.POST,
@@ -75,7 +82,7 @@ public class KakaoService {
             accessToken = (String) jsonObj.get("access_token");
             refreshToken = (String) jsonObj.get("refresh_token");
         } catch (Exception e) {
-            throw new Exception("API call failed");
+            throw new Exception("API call failed" + e.getMessage());
         }
 
         return getUserInfoWithToken(accessToken);

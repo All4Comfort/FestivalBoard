@@ -11,7 +11,7 @@
 
     <style>
         footer {
-            position: fixed;
+            /* position: fixed; */
             bottom: 0;
             left: 0;
             width: 100%;
@@ -20,7 +20,7 @@
             color: #ffffff;
             /* 텍스트 색상을 원하는 색상으로 지정하세요. */
             text-align: center;
-            padding: 10px 0;
+            padding: 10px 30vh;
             /* 위아래 여백 조정 가능 */
         }
 
@@ -39,8 +39,9 @@
         .card-img-top {
             max-width: 100%;
             /* 이미지가 카드 내에 맞게 크기 조절 */
-            height: 300px;
+            height: 600px;
             margin: auto;
+            
         }
 
         /* 중간 검색 폼 관련 스타일 수정 */
@@ -160,17 +161,19 @@
         </nav>
     </header>
 
-    <section class="container my-5">
-        <h1>Fullstival 프로젝트</h1>
+    <section class="container my-5" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 15vh;">
+        <h1><strong>Fullstival</strong></h1>
         <p>축제 게시판</p>
     </section>
+
 
     <!-- 중간에 검색 폼을 추가하고 화면의 80% 폭으로 설정합니다. -->
     <div class="container" style="width: 60%; margin-top: 100px;">
         <form class="d-flex" method="get" action="/festival/festivalList">
             <input class="form-control me-1" type="search" placeholder="축제검색" aria-label="Search" name="searchQuery"
                 th:value="${searchQuery}">
-            <button class="btn btn-outline-success" type="submit">Search</button>
+                <button class="btn btn-outline-secondary" type="submit" style="width: 100px;">검색</button>
+
         </form>
     </div>
 
