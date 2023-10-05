@@ -20,4 +20,8 @@ public interface ReviewReplyRepository extends JpaRepository<ReviewReply, Long>{
     @Modifying
     @Query("Delete From ReviewReply r WHERE r.reviewNum = :reviewNum")
     void deleteByReviewNum(@Param("reviewNum") Review review);
+
+    
+  @Query("DELETE FROM ReviewReply rr WHERE rr.reviewNum = :reviewNum")
+  void removeReplyByReviewNum(@Param("reviewNum") Review review);
 }

@@ -15,6 +15,7 @@ import com.whiteboard.whiteboard.dto.PageResultDTO;
 import com.whiteboard.whiteboard.dto.ReviewDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Review;
+import com.whiteboard.whiteboard.entity.ReviewReply;
 import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.repository.ReviewReplyRepository;
 import com.whiteboard.whiteboard.repository.ReviewRepository;
@@ -52,11 +53,23 @@ public class ReviewServiceImpl implements ReviewService {
 
   }
 
+  @Transactional
   @Override
   public void remove(Long reviewNum) {
-    // 리뷰 ID로 리뷰 삭제
-    reviewReplyRepository.deleteByReviewNum(reviewRepository.getReferenceById(reviewNum));
-    reviewRepository.deleteById(reviewNum);
+    Review review = reviewRepository.getReferenceById(reviewNum);
+    List<ReviewReply> replyList = reviewReplyRepository.findAllByReviewNumOrderByReplyNumDesc(review);
+    for (ReviewReply reviewReply : replyList) {
+      
+      if (reviewReply.getReplyNum() != null) { //해당 리뷰글에 댓글이 있는 경우
+        reviewReplyRepository.deleteByReviewNum(review);
+        reviewRepository.deleteById(reviewNum);
+        return;
+      } else {//해당 리뷰글에 댓글이 없는 경우
+        System.out.println("리뷰글에 댓글이 없는 경우 삭제메서드!!!!!!!!!!!!!!!!!!!!!");
+        reviewRepository.deleteById(reviewNum);
+        return;
+      }
+    }
     
   }
 

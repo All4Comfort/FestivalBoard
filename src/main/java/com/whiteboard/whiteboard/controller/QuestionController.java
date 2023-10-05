@@ -207,9 +207,11 @@ public class QuestionController {
   public String questionmodify(@ModelAttribute("dto") QuestionDTO dto, Model model, RedirectAttributes attributes,
       HttpSession session) {
 
-    //System.out.println("!!!!!!!!!!!!!!!!!!!!!!질문수정 시 질문DTO!!!!!!!!!!!!!!!!!!!!!!!!");
-    //System.out.println(dto);
-    // 질문번호, 닉네임, 제목, 내용까지 넘어옴
+    System.out.println("!!!!!!!!!!!!!!!!!!!!!!질문수정 시 질문DTO!!!!!!!!!!!!!!!!!!!!!!!!");
+    System.out.println(dto);
+    // 질문번호, 닉네임
+
+    dto = questionService.get(dto.getQuestionNum());
 
     String alertMessage = "";
     Member loginedMember = (Member) session.getAttribute("loggedInUser");
