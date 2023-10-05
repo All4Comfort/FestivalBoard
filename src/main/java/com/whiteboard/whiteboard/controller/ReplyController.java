@@ -42,9 +42,15 @@ public class ReplyController {
         //댓글 등록
         System.out.println("11111111111111111111111111111111111111111111 : "+reviewDTO);
         reviewReplyService.save(replyDTO, session);
+        
         reviewDTO = reviewService.getReviewByReviewNum(reviewNum);
         System.out.println("22222222222222222222222222222222222222222222 : "+reviewDTO);
-        attributes.addAttribute(reviewDTO);
+        //attributes.addFlashAttribute("reviewNum",reviewDTO.getReviewNum());
+        // // System.out.println("!GGGGGGGGGGGGGGGGGGGGGGGGGGGGG리뷰DTO : " + reviewDTO);
+        // // System.out.println("!GGGGGGGGGGGGGGGGGGGGGGGGGGGGG리뷰넘 : " + reviewNum);
+        // // System.out.println("!GGGGGGGGGGGGGGGGGGGGGGGGGGGGG리플라이 : " + replyDTO);
+        //attributes.addAttribute(reviewDTO);
+        attributes.addFlashAttribute("reviewDTO",reviewDTO);
         
         return "redirect:/review/reviewDetail";
     }
