@@ -17,14 +17,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.whiteboard.whiteboard.dto.KakaoDTO;
 import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.entity.Member;
+import com.whiteboard.whiteboard.entity.MsgEntity;
 import com.whiteboard.whiteboard.repository.MemberRepository;
+import com.whiteboard.whiteboard.service.KakaoService;
 import com.whiteboard.whiteboard.service.MemberService;
 import com.whiteboard.whiteboard.service.MemberServiceImpl;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -49,9 +54,22 @@ public class MemberController {
     // }
 
     // main.html에서 login.html 로 넘어가는 메서드
+    private final KakaoService kakaoService; //카카오 로그인
     @GetMapping("/member/login")
-    public String moveTologin() {
+    public String moveTologin(Model model) {
+        model.addAttribute("kakaoUrl", kakaoService.getKakaoLogin()); //카카오 로그인용
+        System.out.println("이건 모델>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + model);
+
         return "/member/login";
+    }
+
+    @GetMapping("/kakao/callback")
+    public ResponseEntity<MsgEntity> callback(HttpServletRequest request) throws Exception {
+        KakaoDTO kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"));
+
+        System.out.println("이건 카카오인포>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + kakaoInfo);
+        return ResponseEntity.ok()
+                .body(new MsgEntity("Success", kakaoInfo));
     }
 
     // // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
@@ -258,7 +276,7 @@ public class MemberController {
             HttpSession session,
             @RequestParam("currentPassword") String currentPassword,
             @RequestParam("newPassword") String newPassword,
-            @RequestParam("confirmPassword") String confirmPassword) {
+            @RequestParam("confirmPassword") String confirmPassword, RedirectAttributes redirectAttributes) {
         // 세션에서 현재 로그인한 사용자 정보를 가져옵니다.
         Member loggedInUser = (Member) session.getAttribute("loggedInUser");
 
@@ -282,12 +300,14 @@ public class MemberController {
                 // 새 비밀번호와 비밀번호 확인이 일치하지 않는 경우
                 // 에러 처리 또는 다른 처리 로직을 추가하세요.
                 // ...
+                redirectAttributes.addFlashAttribute("duplicatePw", "새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
                 return "redirect:/member/modifyPassword"; // 다시 비밀번호 변경 페이지로 리다이렉트
             }
         } else {
             // 현재 비밀번호가 일치하지 않는 경우
             // 에러 처리 또는 다른 처리 로직을 추가하세요.
             // ...
+            redirectAttributes.addFlashAttribute("duplicatePw", "사용중인 비밀번호가 일치하지 않습니다.");
             return "redirect:/member/modifyPassword"; // 다시 비밀번호 변경 페이지로 리다이렉트
         }
     }
@@ -438,5 +458,11 @@ public class MemberController {
     public void goUnloginedAlert(@ModelAttribute("alertMessage") String alertMessage){
 
     }
+
+
+
+    
+    
+    
 
 }

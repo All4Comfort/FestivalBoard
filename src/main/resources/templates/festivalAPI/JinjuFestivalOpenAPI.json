@@ -1,10 +1,7 @@
 {
-  "record_count": 8,
-  "address": "",
-  "name": "",
-  "pageunit": 10,
-  "page": 1,
-  "results": [
+"getFestivalJinju": {
+  "header": { "code": "00", "message": "NORMAL_CODE" },
+  "item": [
     {
       "idx": 700,
       "name": "개천예술제",
@@ -20,14 +17,9 @@
       "xposition": "35.189555542035485",
       "yposition": "128.0800955893282",
       "parking": "전화문의 또는 홈페이지 참고",
-      "images": [
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000579&idx=81787",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000579&idx=81788",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000579&idx=81789",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000579&idx=81790",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000579&idx=81791",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000579&idx=81792",
-      ],
+      "images":
+        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000579&idx=81787"
+      ,
       "sdate": "2023-10-13",
       "edate": "2023-10-22",
       "undecided": "",
@@ -48,15 +40,9 @@
       "xposition": "35.1872065621688",
       "yposition": "128.082176260142",
       "parking": "전화문의 또는 홈페이지 참고",
-      "images": [
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00080697&idx=81887",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00080697&idx=81888",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00080697&idx=81889",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00080697&idx=81890",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00080697&idx=81891",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00080697&idx=81892",
+      "images":
         "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00080697&idx=81893"
-      ],
+      ,
       "sdate": "2023-08-04",
       "edate": "2023-08-06",
       "undecided": "",
@@ -77,22 +63,9 @@
       "xposition": "35.182954439557975",
       "yposition": "128.13585173331245",
       "parking": "전화문의 또는 홈페이지 참고",
-      "images": [
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81842",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81843",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81844",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81845",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81846",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81847",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81848",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81849",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81850",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81851",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81852",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81853",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81854",
+      "images": 
         "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000592&idx=81855"
-      ],
+      ,
       "sdate": "2022-11-02",
       "edate": "2022-11-06",
       "undecided": "",
@@ -113,19 +86,9 @@
       "xposition": "35.189570283806155",
       "yposition": "128.07995854638725",
       "parking": "주변 임시주차장 사용",
-      "images": [
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000541&idx=69438",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000541&idx=81777",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000541&idx=81778",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000541&idx=81779",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000541&idx=81780",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000541&idx=81781",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000541&idx=81782",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000541&idx=81783",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000541&idx=81784",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000541&idx=81785",
+      "images": 
         "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000541&idx=81786"
-      ],
+      ,
       "sdate": "2023-10-08",
       "edate": "2023-10-22",
       "undecided": "",
@@ -146,18 +109,9 @@
       "xposition": "35.1904337221299",
       "yposition": "128.080222164043",
       "parking": "전화문의",
-      "images": [
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000580&idx=14617",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000580&idx=14620",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000580&idx=14621",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000580&idx=14622",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000580&idx=69654",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000580&idx=69655",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000580&idx=69656",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000580&idx=69657",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000580&idx=80348",
+      "images": 
         "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000580&idx=80349"
-      ],
+      ,
       "sdate": "",
       "edate": "",
       "undecided": "2023-05-05 ~ 2023-05-08 (예정)",
@@ -178,15 +132,9 @@
       "xposition": "35.175983071637674",
       "yposition": "128.04063945485606",
       "parking": "전화문의",
-      "images": [
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000582&idx=69698",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000582&idx=69699",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000582&idx=81799",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000582&idx=81800",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000582&idx=81801",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000582&idx=81802",
+      "images": 
         "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000582&idx=81803"
-      ],
+      ,
       "sdate": "2022-10-26",
       "edate": "2022-10-31",
       "undecided": "",
@@ -207,23 +155,9 @@
       "xposition": "35.1729674963795",
       "yposition": "128.069637950671",
       "parking": "전화문의",
-      "images": [
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=14653",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=14654",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=69734",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=69735",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=69736",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=69737",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=69738",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=80907",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=80905",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=80906",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=80908",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=80909",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=80910",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=80911",
+      "images": 
         "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000591&idx=80912"
-      ],
+      ,
       "sdate": "2022-10-19",
       "edate": "2022-10-23",
       "undecided": "",
@@ -244,14 +178,9 @@
       "xposition": "35.1872737248857",
       "yposition": "128.091744012716",
       "parking": "전화문의 또는 홈페이지 참고",
-      "images": [
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000581&idx=81793",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000581&idx=81794",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000581&idx=81795",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000581&idx=81796",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000581&idx=81797",
-        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000581&idx=81798",
-      ],
+      "images": 
+        "http://www.jinju.go.kr/CmsMultiFile/view.do?multifileId=MF00000581&idx=81798"
+      ,
       "sdate": "2023-10-13",
       "edate": "2023-10-22",
       "undecided": "",
@@ -260,4 +189,5 @@
   ],
   "page_count": 1,
   "status": "OK"
+}
 }

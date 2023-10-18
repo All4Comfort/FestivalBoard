@@ -169,7 +169,7 @@
             <a class="navbar-brand" style="margin-left: 20px;" href="/main"><b>Fullstival</b></a>
             <ul class="nav nav-pills">
                 <div id="welcome-message" th:if="${session.loggedInUser != null}"
-                    th:text="${session.loggedInUser.name} + '님 환영합니다'"
+                    th:text="${session.loggedInUser.nickname} + '님 환영합니다'"
                     style="display: flex; align-items: center; margin-right: 20px;">
                 </div>
                 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -188,7 +188,7 @@
                                     <a class="nav-link" href="/review/reviewList">Review</a>
                                 </li>
                                 <li class="nav-item" style="margin-right: 30px;">
-                                    <a class="nav-link" href="/notice/notice1">Notice</a>
+                                    <a class="nav-link" href="/notice/question">Q&A</a>
                                 </li>
                                 <li class="nav-item" style="margin-right: 30px;"
                                     th:unless="${session.loggedInUser != null}">
@@ -227,27 +227,22 @@
     <br>
     <br>
     
-    <div class="card" th:each="dto : ${result}">
+    <div class="card" th:object="${noticeDTO}">
         <div class="card-header">
         <form>
-                <input type="hidden" name="noticeNum" th:value="${dto.noticeNum}"/>
+                <input type="hidden" name="noticeNum" th:value="${noticeDTO.noticeNum}"/>
                 <input type="hidden" name="content"/>
                 <input type="hidden" name="title"/>
         </form>    
-            <h5 class="card-title" id="noticeTitle" th:utext="${dto.title}">[[${dto.title}]]</h5>
-            <!-- <h6 class="card-subtitle mb-2 text-muted" id="noticeAuthor">[[${dto.writer}]]</h6> -->
-
+            <h2 class="card-title" id="noticeTitle" th:text="${noticeDTO.title}">[[${noticeDTO.title}]]</h2>
+            <h6class="card-title" id="noticenickname" th:text="${noticeDTO.nickname}">[[${noticeDTO.nickname}]]></h6>
             </div>
-            
             <div class="card-body">
-                <p class="card-text" id="noticeContent" th:utext="${dto.content}" value="${dto.content}">[[${dto.content}]]</p>
+                <p class="card-text" id="noticeContent" th:text="${noticeDTO.content}">[[${noticeDTO.content}]]</p>
             </div>
         
     </div>
-    <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
-        <button type="button" class="btn btn-custom modifyBtn btn-lg"><b>수정</b></button>
-        <button type="button" class="btn btn-danger removeBtn"><strong>삭제</strong></button>
-    </div>
+    
     
     
     
@@ -259,7 +254,11 @@
             </ul>
         </div>
 
-        
+
+        <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
+            <button type="button" class="btn btn-custom modifyBtn btn-lg">수정</button>
+            <button type="button" class="btn btn-danger removeBtn">삭제</button>
+        </div>
         
 </div>
 </section>
@@ -279,7 +278,7 @@ document.getElementById('delete').addEventListener('click',function(event){
 <script th:inline="javascript">
     
     var actionForm = $("form");
-    var num = $("input[name='noticeNum']").val();
+    var noticeNum = $("input[name='noticeNum']").val();
 
     $(".removeBtn").click(()=>{
         if(!confirm("삭제하시겠습니까?")){
@@ -289,10 +288,9 @@ document.getElementById('delete').addEventListener('click',function(event){
           //nick만 보낼것임
     
         //console.log(nick);
-        actionForm.append(num);
         
         actionForm.attr("action", "/notice/remove").attr("method","post");
-
+        actionForm.find("input[name='noticeNum']").val(noticeNum);
         actionForm.submit();
     });
 
@@ -303,17 +301,15 @@ document.getElementById('delete').addEventListener('click',function(event){
         $("input[name='title']").val($("#noticeTitle").text());
         $("input[name='content']").val($("#noticeContent").text());
         
-        var a = $("input[name='title']").val();
-        var b = $("input[name='content']").val();
-        console.log("!!-->" + a);
-        console.log("!!-->" + b);
+        var title = $("input[name='title']").val();
+        var content = $("input[name='content']").val();
 
-        //actionForm.append(num);
-        //actionForm.append(a);
-        actionForm.append(b);
+        actionForm.attr("action", "/notice/noticemodify").attr("method", "get");
+        actionForm.find("input[name='noticeNum']").val(noticeNum);
+        actionForm.find("input[name='title']").val(title);
+        actionForm.find("input[name='content']").val(content);
 
-        console.log(num + " ### " + a + b);
-        actionForm.attr("action", "/notice/noticemodify").attr("method", "get").submit();
+        actionForm.submit();
     });
 
 
@@ -357,7 +353,7 @@ document.getElementById('delete').addEventListener('click',function(event){
         var nextNoticeNum = currentNoticeNum + 1;
 
         // 여기에 마지막 게시물의 번호를 지정하세요.
-        var lastNoticeNum = 100; // 마지막 게시물
+        var lastNoticeNum = 17; // 마지막 게시물
 
         // 현재 festivalNum 값이 마지막 게시물 번호와 같거나 큰 경우 "마지막 게시물 입니다" 메시지를 표시하고 이동하지 않습니다.
         //???????????????????????????? 질문이 필요한 부분 !!!!!!!!!!!!!!!!!!!!!!!!

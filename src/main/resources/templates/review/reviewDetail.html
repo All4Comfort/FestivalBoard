@@ -168,7 +168,7 @@
             <a class="navbar-brand" style="margin-left: 20px;" href="/main"><b>Fullstival</b></a>
             <ul class="nav nav-pills">
                 <div id="welcome-message" th:if="${session.loggedInUser != null}"
-                    th:text="${session.loggedInUser.name} + '님 환영합니다'"
+                    th:text="${session.loggedInUser.nickname} + '님 환영합니다'"
                     style="display: flex; align-items: center; margin-right: 20px;">
                 </div>
                 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -220,64 +220,113 @@
     </header>
   
 <!-- 중간 게시물 공간 -->
- <section class="container my-5 text-center">
+<section class="container my-5 text-center">
     <!-- 리뷰 상세 페이지 HTML -->
     <div class="review-detail-container" th:object="${reviewDTO}">
-        <!--  th:each="reviewDTO : ${result}"  -->
         <form>
             <input type="hidden" name="reviewNum" th:value="${reviewDTO.reviewNum}"/>
             <input type="hidden" name="title"/>
             <input type="hidden" name="content"/>
+            <input type="hidden" name="nickname"/>
         </form>
-            
-            
-            <h2 class="review-detail-title"  id="reviewTitle" th:text="${reviewDTO.title}">리뷰 제목</h2>
-            <p class="review-detail-writer" name="nickname" th:text="'작성자: ' + ${reviewDTO.nickname}">작성자: John Doe</p>
-            <!-- <p class="review-detail-date" th:text="'작성일: ' + ${reviewData.date}">작성일: 2023-09-25</p> -->
-            
-            <p class="review-detail-content" id="reviewContent" th:utext="${reviewDTO.content}" value="${reviewDTO.content}">
-                리뷰 내용
+        
+        <h2 class="review-detail-title" id="reviewTitle" th:text="${reviewDTO.title}">리뷰 제목</h2>
+        
+        <!-- 작성자와 작성일을 나란히 배치하는 <div> 태그 -->
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <p class="review-detail-writer">
+                <span>작성자: </span> <span  id="nickname" th:text="${reviewDTO.nickname}"></span>
             </p>
-            <p class="review-detail-views" th:text="'조회수: ' + ${reviewDTO.readCount}">조회수: 100</p>
-            <p class="review-detail-hashtags" th:text="'해시태그: ' + ${reviewDTO.hashTag1}">해시태그: #프로젝트 #리뷰</p>
-            <p class="review-detail-likes" th:text="'좋아요 수: ' + ${reviewDTO.goodCount}">좋아요 수: 50</p>
-            
+            <!-- <p class="review-detail-date">
+                <span>작성일: </span> <span th:text="${reviewDTO.date}"></span>
+            </p> -->
+        </div>
+        
+        <p class="review-detail-content" id="reviewContent" th:text="${reviewDTO.content}">
+        </p>
+        
+        <span>조회수: </span><span class="review-detail-views" name="readCount" th:text="${reviewDTO.readCount}"></span>
+        <span>해시태그: </span><span class="review-detail-hashtags" name="hashTag1" th:text="${reviewDTO.hashTag1}"></span>
+        
+        <button id="likeButton" class="btn btn-primary">좋아요</button>
+        <span id="goodCount" name="goodCount" th:text="${reviewDTO.goodCount}">0</span>
     </div> 
 
-    <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
+    <div style="display: flex; justify-content: flex-end; margin-top: 15px;">
         <button type="button" class="btn btn-custom modifyBtn">수정</button>
         <button type="button" class="btn btn-danger removeBtn">삭제</button>
     </div>
 </section>
 
 <!-- 댓글 작성창 -->
-<section class="container my-5 text-center">
+<section class="container my-5 text-center" th:object="${reviewDTO}">
     <!-- 리뷰 상세 페이지 HTML -->
-    <div class="review-detail-container" th:object="${replyDTO}">
-        <!-- ... 리뷰 내용 및 정보 표시 ... -->
-        <div class="reply-section">
-            <!-- 댓글 작성 폼 -->
-            <form class="reply-form">
-                <div class="form-group">
-                    <input type="text" class="form-control" id="reply-writer" placeholder="이름" required>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" id="reply-content" placeholder="댓글 내용" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">댓글 작성</button>
-            </form>
-        </div>
-    </div>
-    <!-- 댓글 상세보기 -->
     <div class="review-detail-container">
-        <div class="reply-section">
+        <!-- ... 리뷰 내용 및 정보 표시 ... -->
+        <div class="reply-section" th:if="${session.loggedInUser != null}">
+            <!-- 댓글 작성 폼 -->
+            <form class="reply-form" action="/review/save" method="post">
+
+                <input type="hidden" name="reviewNum" th:value="${reviewDTO.reviewNum}"/>
+                <div th:object="${replyDTO}">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="reply-writer" name="nickname" th:value="${session.loggedInUser.nickname}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="reply-content" name="content"  placeholder="댓글 내용" required></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    댓글 작성
+                </button>
+            </form>
+
+
+            <div class="reply-section" th:each="reply : ${replyList}">
             <!-- 댓글 목록 표시 -->
             <ul class="reply-list">
                 <!-- 예제 댓글 아이템 -->
                 <li class="reply-item">
-                    <p class="reply-writer">댓글 작성자: Alice</p>
-                    <p class="reply-content">이 리뷰가 정말 유용하네요. 감사합니다!</p>
-                    <p class="reply-date">작성일: 2023-09-26</p>
+                    <p class="reply-writer">
+                        댓글 작성자: <span th:text="${reply.nickname}">닉네임</span>
+                    </p>
+                    <p class="reply-content" th:text="${reply.content}">이 리뷰가 정말 유용하네요. 감사합니다!</p>
+                    <p class="reply-date" th:text="${reply.regDate}">
+                        작성일: <span th:text="${reply.nickname}">YYYY-MM-DD</span>
+                    </p>
+                </li>
+                <!-- 댓글 아이템 추가 예제 (동적으로 로드해야 함) -->
+                <!-- <li class="reply-item">
+                    <p class="reply-writer">댓글 작성자: Bob</p>
+                    <p class="reply-content">댓글 내용입니다.</p>
+                    <p class="reply-date">작성일: 2023-09-27</p>
+                </li> -->
+            </ul>
+        </div>
+        
+            <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&& 내가 작성한 댓글에만 버튼이 보이도록...&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& -->
+            <!-- 수정 및 삭제 버튼 -->
+            <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
+                <button type="button" class="btn btn-custom replyModifyBtn">댓글 수정</button>
+                <button type="button" class="btn btn-danger replyRemoveBtn">댓글 삭제</button>
+            </div>
+        </div>
+    </div>
+    <!-- 댓글 상세보기 -->
+    <div class="review-detail-container">
+        <h3>댓글 목록</h3>
+        <div class="reply-section" th:each="reply : ${replyList}">
+            <!-- 댓글 목록 표시 -->
+            <ul class="reply-list">
+                <!-- 예제 댓글 아이템 -->
+                <li class="reply-item">
+                    <p class="reply-writer">
+                        댓글 작성자: <span th:text="${reply.nickname}">닉네임</span>
+                    </p>
+                    <p class="reply-content" th:text="${reply.content}">이 리뷰가 정말 유용하네요. 감사합니다!</p>
+                    <p class="reply-date" th:text="${reply.regDate}">
+                        작성일: <span th:text="${reply.nickname}">YYYY-MM-DD</span>
+                    </p>
                 </li>
                 <!-- 댓글 아이템 추가 예제 (동적으로 로드해야 함) -->
                 <!-- <li class="reply-item">
@@ -291,11 +340,6 @@
         <!-- 댓글 창 끝 -->
     </div>
 
-    <!-- 수정 및 삭제 버튼 -->
-    <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
-        <button type="button" class="btn btn-custom replyModifyBtn">댓글 수정</button>
-        <button type="button" class="btn btn-danger replyRemoveBtn">댓글 삭제</button>
-    </div>
 </section>
 
     <div class="my-3">
@@ -350,52 +394,48 @@
             });
     </script>
 
+
+
     <!-- 리뷰글 수정삭제 스크립트! -->
     <script th:inline="javascript">
     
-        var actionForm = $("form");
-        var num = $("input[name='reviewNum']").val();
-        
-        $(".removeBtn").click(()=>{
-            if(!confirm("삭제하시겠습니까?")){
-                return ;
-            }
-            //console.log(actionForm);
-              //nick만 보낼것임
-        
-            //console.log(nick);
-            actionForm.append(num);
-            
-            actionForm.attr("action", "/review/remove").attr("method","post");
-    
-            actionForm.submit();
-        });
-   
-        $(".modifyBtn").click(function(){
-            
-           $("input[name='title']").val($("#reviewTitle").text());
-         $("input[name='content']").val($("#reviewContent").text());
-        
-        // var a = $("input[name='title']").val();
-        // var b = $("input[name='content']").val();
-        var a = $("input[name='title']").val();
-        var b = $("input[name='content']").val();
-        console.log("!!-->" + a);
-        console.log("!!-->" + b);
+    $(".removeBtn").click(() => {
+    if (!confirm("삭제하시겠습니까?")) {
+        return;
+    }
 
-    
-            actionForm.append(num);
-            actionForm.append(a);
-            actionForm.append(b);
-    
-            console.log(num + " ### " + a + b);
-            actionForm.attr("action", "/review/reviewModify").attr("method", "get").submit();
-        });
+    var actionForm = $("form");
+    // var num = $("input[name='reviewNum']").val();
+    // $("input[name='nickname']").val($("#nickname").text());
+    // var nickname = $("input[name='nickname']").val();
+
+    actionForm.attr("action", "/review/remove").attr("method", "post");
+    // actionForm.find("input[name='reviewNum']").val(num);
+    // actionForm.find("input[name='nickname']").val(nickname);
+    actionForm.submit();
+});
+
+$(".modifyBtn").click(function () {
+    $("input[name='title']").val($("#reviewTitle").text());
+    $("input[name='content']").val($("#reviewContent").text());
+
+    var actionForm = $("form");
+    // var num = $("input[name='reviewNum']").val();
+    // var title = $("input[name='title']").val();
+    // var content = $("input[name='content']").val();
+
+    actionForm.attr("action", "/review/reviewModify").attr("method", "get");
+    // actionForm.find("input[name='reviewNum']").val(num);
+    // actionForm.find("input[name='nickname']").val(nickname);
+    // actionForm.find("input[name='title']").val(title);
+    // actionForm.find("input[name='content']").val(content);
+
+    actionForm.submit();
+});
+
     </script>
 
-    <script>
-        
-    </script>
+
 
     <!-- 페이징 스크립트! -->
     <script>
@@ -471,48 +511,7 @@ document.getElementById('prevNotice').addEventListener('click', function () {
         }
 
     </script>
-    <script>
-        //로그인 체크 후 비로그인 시 login 으로 이동
-        //로그인 시 myPage 로 이동
-        document.addEventListener('DOMContentLoaded', function () {
+
     
-            if (document.getElementById('login-link')) {
-                document.getElementById('login-link').addEventListener('click', function (event) {
-                    // 사용자가 로그인하지 않은 경우
-                    alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-                    event.preventDefault(); // 기본 동작 방지
-                    window.location.href = "/member/login"; // 로그인 페이지로 이동
-                });
-            }
-            if (document.getElementById('myPage')) {
-                document.getElementById('myPage').addEventListener('click', function (event) {
-                    // 사용자가 로그인한 경우
-                    event.preventDefault(); // 기본 동작 방지
-                    window.location.href = "/member/checkedPassword"; // 마이페이지로 이동
-                });
-            }
-            if (document.getElementById('logout')) {
-                document.getElementById('logout').addEventListener('click', function (event) {
-                    // 사용자가 로그인한 경우
-                    console.log('logout 클릭 이벤트 확인용');
-                    alert('로그아웃 하겠습니다.');
-                    event.preventDefault(); // 기본 동작 방지
-                    window.location.href = "/logout"; // 로그아웃으로 이동
-                });
-            }
-            if (document.getElementById('modifyPassword')) {
-                document.getElementById('modifyPassword').addEventListener('click', function (event){
-                    
-                    alert('비밀번호 변경 페이지로 이동합니다.');
-                    event.preventDefault(); // 기본 동작 방지
-                    window.location.href = "/logout"; // 비밀번호 변경 페이지로 이동
-                });
-            }
-    
-    
-    
-    
-        });
-    </script>
 </body>
 </html>

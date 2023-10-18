@@ -7,8 +7,6 @@ import java.util.stream.IntStream;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.whiteboard.whiteboard.dto.FestivalDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
-import com.whiteboard.whiteboard.dto.ReplyDTO;
+import com.whiteboard.whiteboard.entity.FestivalReply;
+import com.whiteboard.whiteboard.entity.Member;
+import com.whiteboard.whiteboard.repository.FestivalReplyRepository;
+import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.service.FestivalService;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -30,6 +32,10 @@ import lombok.RequiredArgsConstructor;
 public class FestivalController {
 
     private final FestivalService festivalService;
+
+    private final FestivalReplyRepository festivalReplyRepository;
+
+    private final MemberRepository memberRepository;
 
     // 메인화면에서 롤페이지 5개 랜덤 이미지 포스터
     @GetMapping("/member/main")
@@ -105,38 +111,69 @@ public class FestivalController {
     public String getFestivalDetail(@RequestParam("festivalNum") Long festivalNum, Model model) {
         FestivalDTO festivalDTO = festivalService.getfestivalFNum(festivalNum);
         model.addAttribute("festivalDTO", festivalDTO);
-        // System.out.println("festivalNum 숫자: " + festivalDTO);
+        System.err.println("festivalNum 숫자: " + festivalDTO);
         return "festival/festivalDetail"; // 렌더링할 뷰의 이름을 반환
     }
 
-    // 댓글 작성 요청 처리
-@PostMapping("/festival/addComment")
-@ResponseBody
-public ResponseEntity<String> addComment(@RequestParam("festivalNum") Long festivalNum,
-        @RequestParam("content") String content) {
-    try {
-        // 댓글을 데이터베이스에 저장
-        ReplyDTO replyDTO = new ReplyDTO();
-        replyDTO.setFestivalNum(festivalNum); // 축제 번호 설정
-        replyDTO.setContent(content); // 댓글 내용 설정
-        replyDTO.setWriter(SecurityContextHolder.getContext().getAuthentication().getName()); // 현재 로그인한 사용자의 이메일 설정
-        festivalService.addComment(replyDTO);
-        return ResponseEntity.ok("댓글이 등록되었습니다.");
-    } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.badRequest().body("댓글 등록에 실패했습니다.");
+    // 세션에서 현재 로그인한 사용자의 이메일을 가져오는 메서드
+    private Member getCurrentUserEmail(HttpSession session) {
+        Object userEmail = session.getAttribute("userEmail"); // "userEmail"은 세션에서 사용자 이메일을 저장한 속성 이름입니다.
+        if (userEmail != null && userEmail instanceof String) {
+            return (Member) userEmail;
+        }
+        return null;
     }
-}
 
+    // 댓글 작성 메서드
+    @PostMapping("/festival/festivalDetail/addComment")
+    public String addComment(@RequestParam("festivalNum") Long festivalNum,
+            @RequestParam("content") String content,
+            HttpSession session) {
+        // 세션에서 현재 로그인한 사용자 정보를 가져옴
+        Member currentUser = getCurrentUserEmail(session);
 
-    // 페이징전 축제리스트
-    // 전체 죽제 목록을 가져오기
-    // @GetMapping("/festival/festivalList")
-    // public String showFestivalList(PageRequestDTO pageRequestDTO, Model model) {
-    // List<FestivalDTO> festivals =
-    // festivalService.findAllByOrderByFestivalNumAsc();
-    // // System.out.println("축제 목록: " + festivals);
-    // model.addAttribute("festivals", festivals);
-    // return "/festival/festivalList";
-    // }
+        if (currentUser != null) {
+            // 댓글 엔티티 생성 및 설정
+            FestivalReply reply = new FestivalReply();
+            FestivalDTO festivalDTO = festivalService.getfestivalFNum(festivalNum);
+            reply.setFestivalNum(festivalNum); // Festival 엔티티를 설정
+            reply.setWriter(currentUser);
+            reply.setContent(content);
+
+            // 댓글 저장
+            festivalReplyRepository.save(reply);
+        }
+
+        // 댓글 작성 후, 상세 페이지로 리다이렉트
+        return "redirect:/festival/festivalDetail?festivalNum=" + festivalNum;
+    }
+
+    // 댓글 수정 메서드
+    @PostMapping("/festival/festivalDetail/editComment")
+    public String editComment(@RequestParam("festivalNum") Long festivalNum,
+            @RequestParam("commentNum") Long commentNum,
+            @RequestParam("content") String content) {
+        // 댓글 수정 서비스 호출
+        festivalService.editComment(commentNum, content);
+
+        // 댓글 수정 후 다시 상세페이지로 리다이렉트
+        return "redirect:/festival/festivalDetail?festivalNum=" + festivalNum;
+    }
+
+    // 댓글 삭제 메서드
+    @PostMapping("/festival/festivalDetail/deleteComment")
+    public String deleteComment(@RequestParam("festivalNum") Long festivalNum,
+            @RequestParam("commentNum") Long commentNum) {
+        // 댓글 삭제 서비스 호출
+        festivalService.deleteComment(commentNum);
+
+        // 댓글 삭제 후 다시 상세페이지로 리다이렉트
+        return "redirect:/festival/festivalDetail?festivalNum=" + festivalNum;
+    }
+
+    // 로그인한 사용자의 닉네임을 가져오는 메서드 (로그인 기능을 구현해야 함)
+    private String getCurrentUserNickname() {
+        // 로그인한 사용자의 닉네임을 가져오는 로직을 구현
+        return "사용자의 닉네임"; // 실제 구현에서는 세션 또는 인증 정보를 이용하여 가져옵니다.
+    }
 }

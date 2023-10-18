@@ -25,19 +25,21 @@
   </head>
   <body>
     <h1><strong>NOTICE</strong></h1>
-    <form action="/notice/noticeWrite" method="post" th:object="${dto}">
+    <form action="/notice/noticeWrite" method="post" th:object="${noticeDTO}">
       <div class="form-group" th:width="500">
         <!-- <h1><label for="title">NOTICE</label></h1> -->
         <form>
-        <input type="hidden" name="noticeNum" th:value="${dto.noticeNum}"/>
+        <input type="hidden" id="noticeNum" name="noticeNum" th:value="${noticeDTO.noticeNum}"/>
         </form>
-        <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" th:value="${dto.title}">
-        <textarea class="form-control" id="content" name="content" th:style="'width: 800px;'">[[${dto.content}]]</textarea>
+        <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" th:value="${noticeDTO.title}">
+        <textarea class="form-control" id="content" name="content" th:style="'width: 800px;'">[[${noticeDTO.content}]]</textarea>
       </div>
+      <div style="display: flex; justify-content: right;">
       <button type="submit" class="btn btn-link btn-lg" id="submit"><b>수정</b></button>
       <a th:href="@{/notice/notice1}" class="btn btn-secondary">
         <button type="button" class="btn btn-link btn-lg" id="boardList"><b>목록</b></button>
       </a>
+    </div>
     </form>
     <script th:inline="javascript">
       // $(document).ready(function() {

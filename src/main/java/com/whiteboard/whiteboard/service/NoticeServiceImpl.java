@@ -8,12 +8,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.dto.NoticeDTO;
 import com.whiteboard.whiteboard.dto.PageRequestDTO;
 import com.whiteboard.whiteboard.dto.PageResultDTO;
+import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Notice;
+import com.whiteboard.whiteboard.repository.MemberRepository;
 import com.whiteboard.whiteboard.repository.NoticeRepository;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -26,11 +30,14 @@ public class NoticeServiceImpl implements NoticeService{
 
   private List<NoticeDTO> searchResults = new ArrayList<>();
 
+  private final MemberService memberService;
+  private final MemberRepository memberRepository;
+
   // 게시글 등록 메서드
   @Override
-  public Long register(NoticeDTO dto) {
+  public Long register(NoticeDTO dto, HttpSession session) {
     // DTO를 엔티티로 변환하고 저장 후, 저장된 게시글의 번호를 반환
-    Notice notice = dtoToEntity(dto);
+    Notice notice = dtoToEntity(dto,session);
     noticeRepository.save(notice);
     return notice.getNoticeNum();
   }
@@ -113,5 +120,20 @@ public List<NoticeDTO> searchNotices(String searchQuery) {
         
         return noticeDTOs;
 }
+
+  public Notice dtoToEntity(NoticeDTO noticeDTO, HttpSession session) {
+    
+    MemberDTO memberDTO = memberService.covertSessionToDTO(session);
+    
+    Member member = memberRepository.getReferenceById(memberDTO.getEmail());
+    
+    Notice notice = Notice.builder()
+    //리뷰 엔티티의 writer는 Member타입임!!!!!!!!!!!!!!!
+    .writer(member)
+    .title(noticeDTO.getTitle())
+    .content(noticeDTO.getContent())
+    .build();
+      return notice;
+    }
  
 }

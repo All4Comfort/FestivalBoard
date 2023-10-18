@@ -7,9 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>리뷰 게시판 목록</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Firefly 웹사이트</title>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
@@ -263,7 +260,7 @@
             <a class="navbar-brand" style="margin-left: 20px;" href="/main"><b>Fullstival</b></a>
             <ul class="nav nav-pills">
                 <div id="welcome-message" th:if="${session.loggedInUser != null}"
-                    th:text="${session.loggedInUser.name} + '님 환영합니다'"
+                    th:text="${session.loggedInUser.nickname} + '님 환영합니다'"
                     style="display: flex; align-items: center; margin-right: 20px;">
                 </div>
                 <nav class="navbar navbar-expand-lg bg-body-tertiary">

@@ -26,6 +26,8 @@
             /* 테두리 스타일 지정 */
             padding: 10px;
             /* 내부 여백 설정 */
+            max-width: 1000px;
+            margin: auto;
         }
 
         /* 별점 */
@@ -81,18 +83,19 @@
 
     <!-- 중간 게시물 공간 -->
     <section class="container my-5 text-center">
-        <h1 class="card-title" id="festivalDetail" th:text="${festivalDTO.festivalTitle}">축제 제목</h1>
+        <h1 class="card-title" th:text="${festivalDTO.festivalTitle}">축제 제목</h1>
         <br>
         <!-- festivalDTO의 정보를 사용하여 페이지에 표시 -->
         <div class="card">
             <div class="card-header">
                 <input type="hidden" name="from" th:value="${festivalDTO.festivalNum}">
-                <img th:src="${festivalDTO.poster}" alt="포스터" width="100%" height="300px" />
+                <img th:src="${festivalDTO.poster}" alt="포스터" width="100%" height="600px" />
                 <br>
                 <br>
-                <h5 class="card-subtitle mb-2 text-muted">기간 : <span th:text="${festivalDTO.period}">축제 기간</span></h6>
-                <h5 class="card-subtitle mb-2 text-muted">지역 : <span th:text="${festivalDTO.region}">지역</span></h6>
-                <h5 class="card-subtitle mb-2 text-muted">장소 : <span th:text="${festivalDTO.venue}">장소</span></h6>
+                <h6 class="card-subtitle mb-2 text-muted">기간 : <span th:text="${festivalDTO.period}">축제 기간</span></h6>
+                <h6 class="card-subtitle mb-2 text-muted">지역 : <span th:text="${festivalDTO.region}">지역</span></h6>
+                <h6 class="card-subtitle mb-2 text-muted">장소 : <span th:text="${festivalDTO.venue}">장소</span></h6>
+                <h6 class="card-subtitle mb-2 text-muted">홈페이지 : <a href="${festivalDTO.link}" th:text="${festivalDTO.link}">장소</a></h6>
             </div>
             <div class="card-body">
                 <p class="card-text" id="noticeContent" th:text="${festivalDTO.description}" style="padding: 10px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size: 18px;">축제 설명</p>
@@ -108,15 +111,29 @@
             </ul>
         </div>
 
-        <!-- 댓글 목록을 표시할 곳  -->
-        <div class="comment-container" id="commentSection">
-            <p> 댓글목록</p>
-            <div th:each="reply : ${replies}" class="comment">
-                <p class="nickname" th:text="${reply.writer.email}"></p>
-                <p class="content" th:text="${reply.content}"></p>
-                <button th:onclick="'editComment(' + ${reply.replyNum} + ')'" class="edit-button">수정</button>
-                <button th:onclick="'deleteComment(' + ${reply.replyNum} + ')'" class="delete-button">삭제</button>
+        <div class="container mt-4">
+            <h4>댓글</h4>
+            <!-- 댓글 목록을 표시할 영역 -->
+            <div id="comments">
+                <div th:each="comment : ${comments}">
+                    <!-- 각 댓글을 동적으로 추가 -->
+                    <div>
+                        <!-- 작성자의 닉네임을 출력 -->
+                        <p th:text="${comment.writer.nickname}"></p>
+                        <!-- 댓글 내용을 출력 -->
+                        <div th:text="${comment.content}"></div>
+                    </div>
+                </div>
             </div>
+            <!-- 댓글 작성 폼 -->
+            <form id="commentForm" class="mt-3" action="/festival/festivalDetail/addComment" method="POST">
+                <input type="hidden" name="festivalNum" th:value="${festivalDTO.festivalNum}">
+                <div class="form-group">
+                    <label for="content">댓글 작성</label>
+                    <textarea class="form-control" id="content" name="content" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">댓글 작성</button>
+            </form>
         </div>
         <br>
         
@@ -183,8 +200,6 @@
             window.location.href = prevPageUrl;
         });
 
-
-
         // 다음으로 넘어가는 키
         document.getElementById('nextNotice').addEventListener('click', function () {
             // 현재 페이지의 URL을 가져옵니다.
@@ -194,7 +209,7 @@
             var currentFestivalNum = getFestivalNumFromUrl(currentUrl);
 
             // 여기에 마지막 게시물의 번호를 지정하세요.
-            var lastFestivalNum = 37; // 마지막 게시물
+            var lastFestivalNum = 45; // 마지막 게시물
 
             // 현재 festivalNum 값이 마지막 게시물 번호와 같거나 큰 경우 "마지막 게시물 입니다" 메시지를 표시하고 이동하지 않습니다.
             if (currentFestivalNum >= lastFestivalNum) {
@@ -235,24 +250,51 @@
     <!--댓글 처리 스크립트-->
 
     <script>
+        // 댓글 입력
         function addComment() {
-            var festivalNum = $("#festivalNum").val(); // 축제 번호 가져오기
-            var content = $("#commentContent").val(); // 댓글 내용 가져오기
+            // 폼 데이터 가져오기
+            var festivalNum = $('#festivalNum').val();
+            var content = $('#content').val();
 
-            // AJAX를 사용하여 서버로 Post 요청 보내기
+            // JSON 데이터 생성
+            var postData = {
+                festivalNum: festivalNum,
+                content: content
+            };
+
             $.ajax({
-                type: "POST",
-                url: "/festival/addComment",
+                url: '/festival/festivalDetail/addComment',
+                method: 'POST', // POST 메서드로 변경
+                data: postData, // 데이터 객체로 전달
+                success: function () {
+                    // 댓글 작성 성공 시 댓글 목록을 다시 로드
+                    loadComments();
+                },
+                error: function (xhr, status, error) {
+                    // 댓글 작성 실패 시 오류 메시지를 콘솔에 출력
+                    console.error('댓글 작성 실패:', error);
+                }
+            });
+        }
+
+
+        // 댓글 수정
+        function editComment(festivalNum, commentNum, content) {
+            $.ajax({
+                url: '/festival/festivalDetail/editComment',
+                method: 'POST',
                 data: {
                     festivalNum: festivalNum,
+                    commentNum: commentNum,
                     content: content
                 },
-                success: function (response) {
-                    alert(response); // 성공한 경우 메시지 표시 (서버에서 반환한 메시지)
-                    // 댓글 목록 새로고침 또는 화면 갱신 등의 동작을 수행할 수 있음
+                success: function () {
+                    // 댓글 수정 후, 필요한 업데이트 작업 수행
+                    // 예: 댓글 목록 업데이트, 페이지 새로고침
+                    loadComments();
                 },
-                error: function (error) {
-                    alert("댓글 등록 실패"); // 실패한 경우 메시지 표시
+                error: function () {
+                    // 댓글 수정 실패 시 처리할 코드
                 }
             });
         }

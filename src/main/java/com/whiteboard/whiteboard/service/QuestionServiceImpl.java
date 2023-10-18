@@ -2,6 +2,7 @@ package com.whiteboard.whiteboard.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -13,9 +14,11 @@ import com.whiteboard.whiteboard.dto.QuestionDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.Question;
 import com.whiteboard.whiteboard.repository.MemberRepository;
+import com.whiteboard.whiteboard.repository.QuestionReplyRepository;
 import com.whiteboard.whiteboard.repository.QuestionRepository;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -23,12 +26,12 @@ import lombok.RequiredArgsConstructor;
 public class QuestionServiceImpl implements QuestionService {
 
   private final QuestionRepository questionRepository;
+  private final QuestionReplyRepository questionReplyRepository;
+  private final MemberService memberService;
+  private final MemberRepository memberRepository;
 
   private List<QuestionDTO> searchResults = new ArrayList<>();
 
-  private final MemberService memberService;
-
-  private final MemberRepository memberRepository;
 
   @Override
   public void register(QuestionDTO dto, HttpSession session) {
@@ -58,8 +61,13 @@ public class QuestionServiceImpl implements QuestionService {
     return entityToDTO(question);
   }
 
+  @Transactional
   @Override
   public void remove(long questionNum) {
+    //댓글이 있는 경우 댓글 먼저 삭제하고 리뷰글 삭제해야 함
+    questionReplyRepository.deleteByQuestionNum(questionRepository.getReferenceById(questionNum));
+    
+    // 리뷰 ID로 리뷰 삭제
     questionRepository.deleteById(questionNum);
   }
 
@@ -67,8 +75,10 @@ public class QuestionServiceImpl implements QuestionService {
   public void modify(QuestionDTO dto) {
     System.out.println("모디파이 메서드 ~~!!!!!!!!!!!!!!!!!!!!!!!!!!!" + dto);
     Question question = questionRepository.getReferenceById(dto.getQuestionNum());
+    
     question.updateContent(dto.getContent());
     question.updateTitle(dto.getTitle());
+    
     questionRepository.save(question);
   }
   
@@ -85,6 +95,13 @@ public class QuestionServiceImpl implements QuestionService {
   .content(questionDTO.getContent())
   .build();
     return question;
+  }
+
+  @Override
+  public QuestionDTO getQuestionByQuestionNum(Long questionNum) {
+    Question question = questionRepository.findById(questionNum)
+        .orElseThrow(() -> new NoSuchElementException(questionNum + "인 id 리뷰를 찾을 수 없습니다."));
+    return entityToDTO(question);
   }
   
 }
