@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.whiteboard.whiteboard.dto.KakaoDTO;
 import com.whiteboard.whiteboard.dto.MemberDTO;
 import com.whiteboard.whiteboard.entity.Member;
 import com.whiteboard.whiteboard.entity.MsgEntity;
@@ -57,7 +56,7 @@ public class MemberController {
     private final KakaoService kakaoService; //카카오 로그인
     @GetMapping("/member/login")
     public String moveTologin(Model model) {
-        model.addAttribute("kakaoUrl", kakaoService.getKakaoLogin()); //카카오 로그인용
+        //model.addAttribute("kakaoUrl", kakaoService.getKakaoLogin()); //카카오 로그인용
         System.out.println("이건 모델>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + model);
 
         return "/member/login";
@@ -65,11 +64,12 @@ public class MemberController {
 
     @GetMapping("/kakao/callback")
     public ResponseEntity<MsgEntity> callback(HttpServletRequest request) throws Exception {
-        KakaoDTO kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"));
+        //KakaoDTO kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"));
 
-        System.out.println("이건 카카오인포>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + kakaoInfo);
-        return ResponseEntity.ok()
-                .body(new MsgEntity("Success", kakaoInfo));
+        // System.out.println("이건 카카오인포>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + kakaoInfo);
+        // return ResponseEntity.ok();
+        //         .body(new MsgEntity("Success", kakaoInfo));
+        return null;
     }
 
     // // login.html 에서 로그인 정보를 받아서 main.html 로 넘어오는 메서드
