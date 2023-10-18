@@ -41,7 +41,7 @@
             /* 이미지가 카드 내에 맞게 크기 조절 */
             height: 600px;
             margin: auto;
-            
+
         }
 
         /* 중간 검색 폼 관련 스타일 수정 */
@@ -75,12 +75,21 @@
             color: inherit;
             /* 기본 텍스트 색상 상속 */
         }
+
+        @import url('https://fonts.googleapis.com/css2?family=Cairo+Play:wght@900&display=swap');
+
+        .container h4 h1  {
+            font-family: 'Fullstival', serif;
+            font-weight: 900;
+        }
     </style>
 
 </head>
 
 <body>
     <header>
+        <link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@900&display=swap" rel="stylesheet">
+
         <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
             <a class="navbar-brand" href="/main"><b>Fullstival</b></a>
             <ul class="nav nav-pills">
@@ -159,27 +168,38 @@
 
             </ul>
         </nav>
+
     </header>
 
-    <section class="container my-5" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 15vh;">
-        <h1><strong>Fullstival</strong></h1>
-        <p>축제 게시판</p>
+    <section class="container my-5"
+        style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 15vh;">
+        <div>Hello &amp; welcome</div>
+        <p class="lead">
+        <div>
+            <a href="/festival/festivalList">
+                <h1 class="display-2">
+                    <strong>Fullstival</strong>
+                </h1>
+            </a>
+        </div>
+        </p>
+
     </section>
 
 
     <!-- 중간에 검색 폼을 추가하고 화면의 80% 폭으로 설정합니다. -->
-    <div class="container" style="width: 60%; margin-top: 100px;">
+    <div class="container" style="width: 50%; margin-top: 50px;">
         <form class="d-flex" method="get" action="/festival/festivalList">
             <input class="form-control me-1" type="search" placeholder="축제검색" aria-label="Search" name="searchQuery"
                 th:value="${searchQuery}">
-                <button class="btn btn-outline-secondary" type="submit" style="width: 100px;">검색</button>
+            <button class="btn btn-outline-secondary" type="submit" style="width: 100px;">검색</button>
 
         </form>
     </div>
 
     <section class="container my-5">
-        <h2>축제</h2>
-        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" style="margin-top: 70px;">
+            <h2>축제</h2>
             <div class="carousel-inner">
                 <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
                 <div th:each="festival, iterStat : ${festivals}"
@@ -198,11 +218,11 @@
             </div>
             <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+                <span class="visually-hidden">이전</span>
             </a>
             <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
+                <span class="visually-hidden">다음</span>
             </a>
         </div>
     </section>
@@ -256,8 +276,8 @@
                 });
             }
             if (document.getElementById('modifyPassword')) {
-                document.getElementById('modifyPassword').addEventListener('click', function (event){
-                    
+                document.getElementById('modifyPassword').addEventListener('click', function (event) {
+
                     alert('비밀번호 변경 페이지로 이동합니다.');
                     event.preventDefault(); // 기본 동작 방지
                     window.location.href = "/logout"; // 비밀번호 변경 페이지로 이동
