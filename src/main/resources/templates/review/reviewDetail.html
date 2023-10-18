@@ -237,17 +237,19 @@
             <p class="review-detail-writer">
                 <span>작성자: </span> <span  id="nickname" th:text="${reviewDTO.nickname}"></span>
             </p>
+            <p class="review-detail-date">
+                <span>작성일: </span> <span id="regDate" h:text="${reviewDTO.regDate}"></span>
+            </p>
+            
             <!-- <p class="review-detail-date">
-                <span>작성일: </span> <span th:text="${reviewDTO.date}"></span>
             </p> -->
         </div>
         
         <p class="review-detail-content" id="reviewContent" th:text="${reviewDTO.content}">
         </p>
         
-        <span>조회수: </span><span class="review-detail-views" name="readCount" th:text="${reviewDTO.readCount}"></span>
-        <span>해시태그: </span><span class="review-detail-hashtags" name="hashTag1" th:text="${reviewDTO.hashTag1}"></span>
-        
+        <span>조회수: </span><span class="review-detail-views" name="readCount" th:text="${reviewDTO.readCount}"></span><br>
+        <!-- <span>해시태그: </span><span class="review-detail-hashtags" name="hashTag1" th:text="${reviewDTO.hashTag1}"></span><br> -->
         <button id="likeButton" class="btn btn-primary">좋아요</button>
         <span id="goodCount" name="goodCount" th:text="${reviewDTO.goodCount}">0</span>
     </div> 
@@ -342,15 +344,14 @@
 
 </section>
 
-    <div class="my-3">
-        <ul class="list-inline">
-            
-            <li class="list-inline-item"><a href="#" class="btn btn-light" id="prevNotice">이전글</a></li>
-            <li class="list-inline-item"><a href="/review/reviewList" class="btn btn-light">목록</a></li>
-            <!-- <li class="list-inline-item"><a href="#" class="btn btn-light" id="go_Back">목록</a></li> -->
-            <li class="list-inline-item"><a href="#" class="btn btn-light" id="nextNotice">다음글</a></li>
-        </ul>
-    </div>
+<div class="my-3 text-center">
+    <ul class="list-inline d-flex justify-content-center">
+        <li class="list-inline-item mx-3"><a href="#" class="btn btn-light" id="prevNotice">이전글</a></li>
+        <li class="list-inline-item mx-3"><a href="/review/reviewList" class="btn btn-light">목록</a></li>
+        <li class="list-inline-item mx-3"><a href="#" class="btn btn-light" id="nextNotice">다음글</a></li>
+    </ul>
+</div>
+
 
 
 
@@ -509,9 +510,7 @@ document.getElementById('prevNotice').addEventListener('click', function () {
             }
             return 0; // 기본값을 설정할 수 있습니다.
         }
-
     </script>
-
     
 </body>
 </html>
