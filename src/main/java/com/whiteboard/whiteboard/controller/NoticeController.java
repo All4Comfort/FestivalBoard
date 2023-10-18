@@ -147,7 +147,7 @@ public class NoticeController {
     } else {
       //로그인한 경우
 
-      if (loginedMember.getEmail().equals("1234@1234.com")) {
+      if (loginedMember.getEmail().equals("manager123@naver.com")) {
         //관리자인 경우
         return "/notice/noticeWrite"; // 작성페이지 띄우기
 
@@ -199,7 +199,7 @@ public class NoticeController {
     } else {
       //로그인한 경우
 
-      if (loginedMember.getEmail().equals("1234@1234.com")) {
+      if (loginedMember.getEmail().equals("manager123@naver.com")) {
         //관리자인 경우
         noticeService.remove(noticeNum);
         redirectAttributes.addAttribute("newNoticeNum", noticeNum);
@@ -244,7 +244,7 @@ public class NoticeController {
     } else {
       //로그인한 경우
 
-      if (loginedMember.getEmail().equals("1234@1234.com")) {
+      if (loginedMember.getEmail().equals("manager123@naver.com")) {
         //관리자인 경우
         System.err.println("공지GET 수정dto!!!!!!!!!!!!!!!!!!!!! : " + noticeDTO);
         
