@@ -25,7 +25,7 @@
         .card-img-top {
             max-width: 100%;
             /* 이미지가 카드 내에 맞게 크기 조절 */
-            height: 600px;
+            height: 500px;
             margin: auto;
 
         }
@@ -204,8 +204,7 @@
     </div>
 
     <section class="container my-5">
-        <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" style="margin-top: 70px;">
-            <h2>축제</h2>
+        <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" style="margin-top: 70px; margin-bottom: 70px;">
             <div class="carousel-inner">
                 <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
                 <div th:each="festival, iterStat : ${festivals}"
