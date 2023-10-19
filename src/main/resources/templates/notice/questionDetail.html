@@ -132,6 +132,63 @@
     margin-top: 20px;
 }
 
+.card-title{
+    font-weight: bold;
+    /* border: none;
+    border-right: 1px solid #ccc;
+    padding-right: 20px; */
+}
+
+.card-nickname{
+    /* background-color: #007bff; */
+    color: #007bff;
+    /* height: 30px; */
+    /* display: inline; */
+    /* text-align: center; */
+    border: none;
+    border-right: 1px solid #ccc;
+    padding-right: 20px;
+    
+}
+
+.small-div{
+    height: 20px;
+        display: inline-block;
+        /* background-color: aqua; */
+}
+
+.card-title{
+    /* background-color: #0056b3; */
+    /* height: 30px; */
+    /* display: inline; */
+    padding-left: 20px;
+
+    /* text-align: center; */
+}
+
+.reg{
+    padding-left: 20px;
+}
+
+.allbtn {
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    height: 30px; /* 컨테이너 높이를 100%로 설정 */
+}
+
+hr{
+    border: 1px solid #333; /* 선의 두께와 색상을 지정합니다. */
+            width: 96%;
+            margin: auto;
+}
+p{
+            font-size: 20px;
+        }
+
+        .my-3.text-center.custom-margin {
+            margin-top: 50px !important;
+        }
+
 </style>
 </head>
 
@@ -192,35 +249,55 @@
         </nav>
     </header>
 
-  <section class="container my-5 text-center">
+  <section class="container my-5">
     <div class="d-flex justify-content-end mb-3">
     </div>
-    <h2>Q&A</h2>
+    <h2 style="font-weight: bold;">Q&A</h2>
     <br>
     <br>
 
 
     <div class="card" th:object="${dto}">
-        <div class="card-header">
-
+        <div>
            <form>
                 <input type="hidden" name="questionNum" th:value="${dto.questionNum}"/>
                 <input type="hidden" name="content"/>
                 <input type="hidden" name="title"/>
                 <input type="hidden" name="nickname"/>
-
-                <h5 class="card-title" id="title" name="title">[[${dto.title}]]</h5>
-                <h6 class="card-subtitle mb-2 text-muted" id="nickname" name="nickname">[[${dto.nickname}]]</h6>
-            </div>
-            <div class="card-body">
-                <p class="card-text" id="content" name="content">[[${dto.content}]]</p>
             </form>
-            </div> 
-    </div>
+            <div class="small-divfive" style="margin-top: 50px;">
+                <h3 class="card-title" id="title" name="title"  th:text="${dto.title}">[[${dto.title}]]</h3>
+            </div>
 
+            <div style="margin-top: 20px; margin-bottom: 10px;" class="small-div">
+                <h6 class="card-nickname" id="nickname" name="nickname" th:text="${dto.nickname}" style="padding-left: 20px;">[[${dto.nickname}]]</h6>
+            </div>
+            
+                <div style="margin-top: 20px; margin-bottom: 10px; "  class="small-div">
+                <h6 th:text="${#temporals.format(dto.registerDate, 'yyyy-MM-dd')}" style="color: gray;" class="reg"></h6>
+            </div>
+
+            <div  style="display: flex; justify-content: flex-end; padding-right: 20px; margin-bottom: 15px;" class="allbtn">
+                <button type="button" class="btn btn-custom modifyBtn">수정</button>
+                <button type="button" class="btn btn-danger removeBtn">삭제</button>
+            </div>
+
+
+            <br>
+
+            <hr>
+
+            <br>
+
+            <div class="content" style="padding-left: 20px; margin-top: 30px; margin-bottom: 500px;">
+                <p class="card-text" id="content" name="content">[[${dto.content}]]</p>
+            </div> 
+
+    </div>
+</div>
     
 
-    <div class="my-3">
+    <div class="my-3 text-center custom-margin">
         <ul class="list-inline">
             <li class="list-inline-item"><a href="#" class="btn btn-light" id="prevQuestion">이전글</a></li>
             <li class="list-inline-item"><a href="#" class="btn btn-light" id="go_Back">목록</a></li>
@@ -228,10 +305,10 @@
         </ul>
     </div>
 
-    <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
+    <!-- <div style="display: flex; justify-content: flex-end; margin-right: -1px; margin-top: 15px;">
         <button type="button" class="btn btn-custom modifyBtn">수정</button>
         <button type="button" class="btn btn-danger removeBtn">삭제</button>
-    </div>
+    </div> -->
 </div>
 </section>
 
