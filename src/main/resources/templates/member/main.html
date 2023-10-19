@@ -10,6 +10,31 @@
         integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 
     <style>
+        .custom-section {
+            /* 배경 이미지로 GIF 파일을 설정합니다. */
+            background-image: url('https://gifburg.com/images/gifs/fireworks/webp/0016.webp');
+            background-size: cover;
+            /* 화면 크기에 맞게 이미지 크기 조정 */
+            background-repeat: no-repeat;
+            /* 배경 이미지 반복 방지 */
+            background-position: center center ;
+            /* 이미지를 수평 및 수직 중앙에 정렬 */
+
+            /* 다른 스타일을 적용할 수 있습니다. */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 400px; /* 높이를 400px로 늘립니다. */
+        }
+
+        /* 텍스트 색상을 흰색으로 변경 */
+        .custom-section h1,
+        .custom-section h5 {
+            color: white;
+        }
+
         /* 중요: 화면이 짤리지 않도록 스타일을 조정합니다. */
         .carousel-item {
             text-align: left;
@@ -177,8 +202,8 @@
 
     </header>
 
-    <section class="container my-5"
-        style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 15vh;">
+    <section class="container my-5 custom-section"
+        style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 20vh;">
         <div>
             <h5>Hello &amp; welcome</h5>
         </div>
@@ -191,7 +216,6 @@
             </a>
         </div>
         </p>
-
     </section>
 
 
@@ -241,8 +265,7 @@
     <div th:replace="/fragments/footer :: footer"></div>
 
     <!-- 상담채팅 -->
-    <div id="tawk_12345"
-        style="height: 50px; width: 50px; position: fixed; bottom: 20px; ">
+    <div id="tawk_12345" style="height: 50px; width: 50px; position: fixed; bottom: 20px; ">
         <a href="javascript:void(0);" onclick="Tawk_API.toggle();"></a>
     </div>
 
