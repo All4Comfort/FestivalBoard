@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-
 <head>
     <meta charset="ko">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,36 +13,12 @@
         integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
         crossorigin="anonymous"></script>
 
-        
+    <!-- 헤더 스타일 -->
+    <link th:replace="fragments/header :: style" rel="stylesheet" />
+    <!-- 푸터 스타일 -->
+    <link th:replace="fragments/footer :: style" rel="stylesheet" />
 
     <style>
-        /* 푸터를 브라우저 맨 아래로 고정합니다. */
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #f8f9fa;
-            /* 푸터의 배경색 설정 */
-            text-align: center;
-            /* 푸터 내용 가운데 정렬 */
-            padding: 10px;
-            /* 원하는 여백 설정 */
-        }
-
-        /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
-        .dropdown-toggle::after {
-            display: none;
-        }
-
-        /* 드롭다운 메뉴의 위치를 조절합니다. */
-        .dropdown-menu {
-            left: 0;
-            /* 드롭다운 메뉴가 화면 왼쪽에 정렬되도록 설정합니다. */
-            margin-left: -30px;
-            /* 원하는 만큼 왼쪽으로 이동시킵니다. */
-        }
-
         /* 이미지 썸네일 스타일 */
         .thumbnail {
             max-width: 100px;
@@ -52,25 +27,25 @@
             /* 이미지 썸네일의 최대 높이 */
         }
 
-   /* 리뷰 목록 스타일 */
-.review-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
+        /* 리뷰 목록 스타일 */
+        .review-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
 
-/* 리뷰 아이템 스타일 */
-.review-item {
-    flex-basis: calc(30.33% - 20px); /* 3개씩 가로로 정렬하므로 33.33%의 폭을 가짐 */
-    margin-bottom: 20px;
-    box-sizing: border-box;
-    border: 1px solid #e1e1e1;
-    border-radius: 4px;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-    text-align: center; /* 글씨를 가운데 정렬 */
-}
+        /* 리뷰 아이템 스타일 */
+        .review-item {
+            flex-basis: calc(30.33% - 20px); /* 3개씩 가로로 정렬하므로 33.33%의 폭을 가짐 */
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            border: 1px solid #e1e1e1;
+            border-radius: 4px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            text-align: center; /* 글씨를 가운데 정렬 */
+        }
 
         /* 검색 입력 상자 스타일 */
         .search-box {
@@ -100,6 +75,11 @@
 
         }
 
+        /* 리뷰 작성하기 버튼 스타일 */
+        .write-review-button {
+            right: 10px;
+        }
+
         /* 버튼 디자인 스타일 */
         .write-review-button a {
             display: inline-block;
@@ -114,28 +94,18 @@
             transition: background-color 0.3s ease;
         }
 
-        .write-review-button a:hover {
-            background-color: black;
-            /* 마우스 오버 시 배경색 변경 */
-        }
-
-        /* 리뷰 작성하기 버튼 스타일 */
-        .write-review-button {
-            right: 10px;
-        }
-
-        .write-review-button a {
+        /* .write-review-button a {
             display: inline-block;
             padding: 10px 20px;
-            background-color: transparent;
+            background-color: transparent; */
             /* 배경색을 투명으로 설정 */
-            color: #000;
+            /* color: #000; */
             /* 텍스트 색상을 검정색으로 설정 */
-            text-decoration: none;
+            /* text-decoration: none;
             border-radius: 4px;
             font-weight: bold;
             transition: background-color 0.3s ease;
-        }
+        }  */
 
         .write-review-button a:hover {
             background-color: #333;
@@ -233,294 +203,89 @@
             background-color: #007bff;
             color: #fff;
         }
-        /* 메뉴 항목 사이에 오른쪽 마진(간격)을 추가합니다. */
-  .nav-item:not(:last-child) {
-                margin-right: 50px; /* 원하는 간격 크기(픽셀)를 지정합니다. */
-            }
-            
-            /* 내 정보(내비게이션 탭)를 오른쪽으로 이동합니다. */
-            @media (max-width: 991px) {
-                .navbar-nav {
-                    flex-direction: row; /* 메뉴 항목을 가로로 나열합니다. */
-                }
-                .nav-item {
-                    margin-right: 20px; /* 메뉴 항목 사이 간격 설정 */
-                }
-                .nav-pills {
-                    margin-left:0 ; /* 내 정보(내비게이션 탭)를 오른쪽으로 이동 */
-                }
-            }
 </style>
-    </style>
 </head>
 
 <body>
-    <header>
-        <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
-            <a class="navbar-brand" style="margin-left: 20px;" href="/main"><b>Fullstival</b></a>
-            <ul class="nav nav-pills">
-                <div id="welcome-message" th:if="${session.loggedInUser != null}"
-                    th:text="${session.loggedInUser.nickname} + '님 환영합니다'"
-                    style="display: flex; align-items: center; margin-right: 20px;">
-                </div>
-                <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                    <div class="container-fluid">
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav ">
-                                <li class="nav-item" style="margin-right: 30px;">
-                                    <a class="nav-link" href="/festival/festivalList">Festival</a>
-                                </li>
-                                <li class="nav-item" style="margin-right: 30px;">
-                                    <a class="nav-link" href="/review/reviewList">Review</a>
-                                </li>
-                                <li class="nav-item" style="margin-right: 30px;">
-                                    <a class="nav-link" href="/notice/notice1">Notice</a>
-                                </li>
-                                <li class="nav-item" style="margin-right: 30px;"
-                                    th:unless="${session.loggedInUser != null}">
-                                    <a class="nav-link" id="login-link">
-                                        My Page
-                                    </a>
-                                </li>
-                                <li class="nav-item dropdown" style="margin-right: 30px;"
-                                    th:if="${session.loggedInUser != null}">
-                                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="/member/checkedPassword" role="button"
-                                        aria-expanded="false">
-                                        My Page
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <a class="dropdown-item" id="myPage">
-                                            <li>마이페이지</li>
-                                        </a>
-                                        <hr class="dropdown-divider">
-                                        <a class="dropdown-item" id="logout">
-                                            <li>로그아웃</li>
-                                        </a>
-                                    </ul>
-                                </li>
-                            </ul>
+
+    <!-- 공통 헤더 -->
+    <div th:replace="/fragments/header :: header"></div>
+
+    <!-- 페이지 타이틀 -->
+    <section>
+        <h1 style="text-align: center;">리뷰 게시판 목록</h1>
+        
+        <!-- 검색 부분 -->
+        <div class="search-box">
+            <form id="search-form" method="get" action="/review/reviewList">
+                <input type="text" id="search-input" placeholder="상품을 검색하세요" name="searchQuery" th:value="${searchQuery}">
+                <button type="submit" class="search-button">검색</button>
+            </form>
+        </div>
+        
+        
+        <!-- 리뷰 목록 -->
+        <div class="container" style="max-width: 1700px;">
+            <!-- 리뷰 작성하기 버튼 -->
+            <div class="write-review-button" id="write-review-button">
+                <!-- href="/src/main/resources/templates/review/reviewWrite.html" -->
+                <!-- <a >리뷰 작성하기</a> -->
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#writeModal">
+                    <a th:href="@{/review/reviewWrite}">리뷰작성하기</a>
+                </button>
+            </div>
+            <div class="album py-5 bg-body-tertiary">
+                    <div class="carousel-inner">
+                        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                            <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
+                    <div th:each="review, iterStat : ${result}">
+                        <!-- 각 축제 정보 표시 -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <a th:href="@{/review/reviewDetail(reviewNum=${review.reviewNum})}">
+                                    <h3 class="card-text" th:text="${review.title}" alt="리뷰 제목"></h3>
+                                    <p class="card-title" th:text="${review.nickname}" alt="닉네임"></p>
+                                    <!-- <p class="card-text" th:utext="${review.content}" alt="축제 기간">축제 기간</p> -->
+                                    <div class="d-flex justify-content-between align-items-center">
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </nav>
-            </ul>
-        </nav>
-    </header>
-  
-   
-
-    <div class="container">
-    </div>
-    <h1 style="text-align: center;">리뷰 게시판 목록</h1>
-    
-    <div class="search-box">
-        <form id="search-form" method="get" action="/review/reviewList">
-            <input type="text" id="search-input" placeholder="상품을 검색하세요" name="searchQuery" th:value="${searchQuery}">
-            <button type="submit" class="search-button">검색</button>
-        </form>
-    </div>
-    
-    <!-- 리뷰 목록 -->
-    <div class="album py-5 bg-body-tertiary">
-        <div class="carousel-inner">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
-                <div th:each="review, iterStat : ${result}">
-                    <!-- 각 축제 정보 표시 -->
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <a th:href="@{/review/reviewDetail(reviewNum=${review.reviewNum})}">
-                                <h3 class="card-text" th:text="${review.title}" alt="리뷰 제목"></h3>
-                                <p class="card-title" th:text="${review.nickname}" alt="닉네임"></p>
-                                <!-- <p class="card-text" th:utext="${review.content}" alt="축제 기간">축제 기간</p> -->
-                                <div class="d-flex justify-content-between align-items-center">
-                                </div>
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-
+        
         <!-- 페이지 번호 목록 표시 -->
         <div class="pagination">
             <!-- 이전 페이지 버튼 -->
             <a th:if="${hasPrevPage}" th:href="@{'/review/reviewList?page=' + ${prevPageNumber}}"
                 class="page-link prev">이전</a>
-            <!-- 페이지 번호 표시 -->
-            <ul class="pagination justify-content-center" id="pagination">
-                <li th:each="pageNumber : ${pageNumbers}">
-                    <a th:href="@{'/review/reviewList?page=' + ${pageNumber}}" th:text="${pageNumber}"
+                <!-- 페이지 번호 표시 -->
+                <ul class="pagination justify-content-center" id="pagination">
+                    <li th:each="pageNumber : ${pageNumbers}">
+                        <a th:href="@{'/review/reviewList?page=' + ${pageNumber}}" th:text="${pageNumber}"
                         th:class="${pageNumber == currentPage ? 'active' : ''}"></a>
-                </li>
-            </ul>
-            <!-- 다음 페이지 버튼 -->
-            <a th:if="${hasNextPage}" th:href="@{'/review/reviewList?page=' + ${nextPageNumber}}"
+                    </li>
+                </ul>
+                <!-- 다음 페이지 버튼 -->
+                <a th:if="${hasNextPage}" th:href="@{'/review/reviewList?page=' + ${nextPageNumber}}"
                 class="page-link next">다음</a>
+            </div>
         </div>
-    </section>
+        </section>
 
-
-
- <!-- 리뷰 작성하기 버튼 -->
- <div class="write-review-button" id="write-review-button">
-    <!-- href="/src/main/resources/templates/review/reviewWrite.html" -->
-    <!-- <a >리뷰 작성하기</a> -->
-    <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal">
-        <a th:href="@{/review/reviewWrite}">리뷰작성하기</a>
-    </button>
-</div>
-
-
-
-
-
+    <!-- 공통 푸터 -->
+    <div th:replace="/fragments/footer :: footer"></div>
        
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-gg6vUz1rTL5UHVbNXLKwgpAYNr2NvTAPC5JiKc+2aX8Cxl+U7v2+nSvzvIMnJvWR"
+    crossorigin="anonymous"></script>
             
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-integrity="sha384-gg6vUz1rTL5UHVbNXLKwgpAYNr2NvTAPC5JiKc+2aX8Cxl+U7v2+nSvzvIMnJvWR"
-crossorigin="anonymous"></script>
-            
-
-
-    <script>
-        // // 가상의 리뷰 데이터 배열 (예시)
-        // const reviewsData = [
-        //     // 리뷰 데이터 객체들...
-        // ];
-
-        // // 한 페이지에 보여줄 리뷰 개수
-        // const reviewsPerPage = 3;
-
-        // // 현재 페이지 번호
-        // let currentPage = 1;
-
-        // // 페이지 링크를 동적으로 생성하는 함수
-        // function createPagination() {
-        //     const pagination = document.getElementById('pagination');
-        //     pagination.innerHTML = ''; // 이전에 생성된 페이지 링크를 초기화
-
-        //     // 전체 페이지 수 계산
-        //     const totalPages = Math.ceil(reviewsData.length / reviewsPerPage);
-
-        //     // '이전' 링크 추가
-        //     if (currentPage > 1) {
-        //         pagination.innerHTML += `<a href="#" class="page-link prev" onclick="changePage(${currentPage - 1})">이전</a>`;
-        //     }
-
-        //     // 페이지 번호 링크 추가
-        //     for (let i = 1; i <= totalPages; i++) {
-        //         const pageLinkClass = (i === currentPage) ? 'page-link active' : 'page-link';
-        //         pagination.innerHTML += `<a href="#" class="${pageLinkClass}" onclick="changePage(${i})">${i}</a>`;
-        //     }
-
-        //     // '다음' 링크 추가
-        //     if (currentPage < totalPages) {
-        //         pagination.innerHTML += `<a href="#" class="page-link next" onclick="changePage(${currentPage + 1})">다음</a>`;
-        //     }
-        // }
-
-        // // 페이지 변경 시 호출되는 함수
-        // function changePage(page) {
-        //     currentPage = page;
-        //     displayReviews();
-        //     createPagination();
-        // }
-
-        // // 리뷰 표시 함수 (현재 페이지의 리뷰만 표시)
-        // function displayReviews() {
-        //     const reviewContainer = document.getElementById('review-list');
-        //     reviewContainer.innerHTML = ''; // 이전에 표시된 리뷰를 초기화
-
-        //     const startIndex = (currentPage - 1) * reviewsPerPage;
-        //     const endIndex = startIndex + reviewsPerPage;
-        //     const reviewsToDisplay = reviewsData.slice(startIndex, endIndex);
-
-        //     for (const review of reviewsToDisplay) {
-        //         // 리뷰 데이터를 사용하여 리뷰 아이템을 생성하고 표시
-        //         const reviewItem = document.createElement('div');
-        //         // 리뷰 아이템의 내용을 구성하고 reviewItem에 추가하는 코드 작성
-        //         reviewContainer.appendChild(reviewItem);
-        //     }
-        // }
-
-        // // 페이지 로드 시 초기 페이지 설정 및 리뷰 표시
-        // window.onload = function () {
-        //     createPagination();
-        //     displayReviews();
-        // };
-
-
-//         // 페이지 로드 시 리뷰 데이터를 서버에서 가져오고 목록을 표시
-//         window.onload = function () {
-//             fetchReviewsData(); // 서버에서 리뷰 데이터를 가져오는 함수 호출
-//         };
-
-//         // 리뷰 상세 페이지로 이동하는 함수
-// function showReviewDetail(reviewId) {
-//     // reviewId를 사용하여 게시물 상세 페이지 URL을 생성
-//     const reviewDetailUrl = `/review/reviewDetail?=${reviewId}`; // 리뷰 상세 페이지의 URL을 생성
-
-//     // 페이지를 해당 URL로 이동
-//     window.location.href = reviewDetailUrl;
-// }
-
-
-//       
-  </script> 
-
-<script>
-    //로그인 체크 후 비로그인 시 login 으로 이동
-    //로그인 시 myPage 로 이동
-    document.addEventListener('DOMContentLoaded', function () {
-
-        if (document.getElementById('login-link')) {
-            document.getElementById('login-link').addEventListener('click', function (event) {
-                // 사용자가 로그인하지 않은 경우
-                alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-                event.preventDefault(); // 기본 동작 방지
-                window.location.href = "/member/login"; // 로그인 페이지로 이동
-            });
-        }
-        if (document.getElementById('myPage')) {
-            document.getElementById('myPage').addEventListener('click', function (event) {
-                // 사용자가 로그인한 경우
-                event.preventDefault(); // 기본 동작 방지
-                window.location.href = "/member/checkedPassword"; // 마이페이지로 이동
-            });
-        }
-        if (document.getElementById('logout')) {
-            document.getElementById('logout').addEventListener('click', function (event) {
-                // 사용자가 로그인한 경우
-                console.log('logout 클릭 이벤트 확인용');
-                alert('로그아웃 하겠습니다.');
-                event.preventDefault(); // 기본 동작 방지
-                window.location.href = "/logout"; // 로그아웃으로 이동
-            });
-        }
-        if (document.getElementById('modifyPassword')) {
-            document.getElementById('modifyPassword').addEventListener('click', function (event){
-                
-                alert('비밀번호 변경 페이지로 이동합니다.');
-                event.preventDefault(); // 기본 동작 방지
-                window.location.href = "/logout"; // 비밀번호 변경 페이지로 이동
-            });
-        }
-
-
-
-
-    });
-</script>
+    <!-- 헤더 스크립트 -->
+    <script th:replace="fragments/header :: script"></script>
 
 </body>
-
 </html>
