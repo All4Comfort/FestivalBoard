@@ -22,15 +22,29 @@
     <link th:replace="fragments/footer :: style" rel="stylesheet" />
     
     <style>
-      /* body {
+      /* 푸터스타일 추가 */
+      footer {
+        position: fixed;
+      }
+
+      section  {
         display: flex;
-        justify-content: center;
+        /* justify-content: center; */
         align-items: center;
-        height: 100vh;
+        /* height: 100vh; */
         flex-direction: column;
-      } */
+      }
+
+      .box{
+        margin: 20px;
+      }
 
       #title::placeholder {
+        text-align: center;
+      }
+      .bnt {
+        padding: 10px;
+        width: 800px;
         text-align: center;
       }
     </style>
@@ -41,23 +55,24 @@
     <div th:replace="/fragments/header :: header"></div>
 
     <section>
-      <div class="container">
-        <h1 style="text-align: center;">REVIEW</h1>
-      </div>
+      <div class="box">
+        <div>
+          <h1 style="text-align: center;">REVIEW</h1>
+        </div>
         <form action="/review/reviewModify" method="post" th:object="${dto}">
           <div class="form-group" th:width="500">
-            <!-- <h1><label for="title">REVIEW</label></h1> -->
-            <form>
             <input type="hidden" name="reviewNum" th:value="${dto.reviewNum}" readonly/>
-            </form>
             <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" th:value="${dto.title}">
             <textarea class="form-control" id="content" name="content" th:style="'width: 800px;'">[[${dto.content}]]</textarea> 
           </div>
-          <button type="submit" class="btn btn-light" id="submit">작성</button>
-          <a th:href="@{/review/reviewList}" class="btn btn-secondary">
-            <button type="button" class="btn btn-light" id="boardList">목록</button>
-          </a>
+          <div class="bnt">
+            <button type="submit" class="btn btn-dark" id="submit">작성</button>
+            <a th:href="@{/review/reviewList}">
+              <button type="button" class="btn btn-dark" id="boardList">목록</button>
+            </a>
+          </div>
         </form>
+      </div>
     </section>
 
     <!-- 공통 푸터 -->
