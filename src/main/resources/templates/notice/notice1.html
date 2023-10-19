@@ -14,42 +14,6 @@
         crossorigin="anonymous"></script>
 
     <style>
-        /* 메뉴 항목 사이에 오른쪽 마진(간격)을 추가합니다. */
-        .nav-item:not(:last-child) {
-            margin-right: 50px;
-            /* 원하는 간격 크기(픽셀)를 지정합니다. */
-        }
-
-        /* 내 정보(내비게이션 탭)를 오른쪽으로 이동합니다. */
-        @media (max-width: 991px) {
-            .navbar-nav {
-                flex-direction: row;
-                /* 메뉴 항목을 가로로 나열합니다. */
-            }
-
-            .nav-item {
-                margin-right: 20px;
-                /* 메뉴 항목 사이 간격 설정 */
-            }
-
-            .nav-pills {
-                margin-left: 0;
-                /* 내 정보(내비게이션 탭)를 오른쪽으로 이동 */
-            }
-        }
-
-        /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
-        .dropdown-toggle::after {
-            display: none;
-        }
-
-        /* 드롭다운 메뉴의 위치를 조절합니다. */
-        .dropdown-menu {
-            left: 0;
-            /* 드롭다운 메뉴가 화면 왼쪽에 정렬되도록 설정합니다. */
-            margin-left: -30px;
-            /* 원하는 만큼 왼쪽으로 이동시킵니다. */
-        }
 
         /* 링크 스타일 수정 */
         a {
@@ -137,233 +101,91 @@
         .search-form input[type="search"] {
             max-width: 80%;
         }
-
-        /* 드롭다운 메뉴에서 화살표를 숨깁니다. */
-        .dropdown-toggle::after {
-            display: none;
-        }
-
-        /* 드롭다운 메뉴의 위치를 조절합니다. */
-        .dropdown-menu {
-            left: 0;
-            /* 드롭다운 메뉴가 화면 왼쪽에 정렬되도록 설정합니다. */
-            margin-left: -30px;
-            /* 원하는 만큼 왼쪽으로 이동시킵니다. */
-        }
-
-        footer {
-            position: relative;
-            /* 이전에는 fixed 였습니다 */
-            background-color: #f8f9fa;
-            text-align: center;
-            padding: 10px;
-            /* 원하는 여백 설정 */
-        }
     </style>
 </head>
 
 <body>
-    <header>
-    <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
-        <a class="navbar-brand" style="margin-left: 20px;" href="/main"><b>Fullstival</b></a>
-        <ul class="nav nav-pills">
-            <div id="welcome-message" th:if="${session.loggedInUser != null}"
-                th:text="${session.loggedInUser.nickname} + '님 환영합니다'"
-                style="display: flex; align-items: center; margin-right: 20px;">
+    <!-- 공통 헤더 -->
+    <div th:replace="/fragments/header :: header"></div>
+    <main>
+        <section class="container my-5 text-center">
+            <div class="d-flex justify-content-end mb-3" style="margin-top: -25px;">
+                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal" id="myButton">
+                    <a th:href="@{/notice/noticeWrite}">글쓰기</a>
+                </button>
             </div>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
-                <div class="container-fluid">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ">
-                            <li class="nav-item" style="margin-right: 30px;">
-                                <a class="nav-link" href="/festival/festivalList">Festival</a>
-                            </li>
-                            <li class="nav-item" style="margin-right: 30px;">
-                                <a class="nav-link" href="/review/reviewList">Review</a>
-                            </li>
-                            <li class="nav-item" style="margin-right: 30px;">
-                                <a class="nav-link" href="/notice/question">Q&A</a>
-                            </li>
-                            <li class="nav-item" style="margin-right: 30px;"
-                                th:unless="${session.loggedInUser != null}">
-                                <a class="nav-link" id="login-link">
-                                    My Page
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown" style="margin-right: 30px;"
-                                th:if="${session.loggedInUser != null}">
-                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="/member/checkedPassword" role="button"
-                                    aria-expanded="false">
-                                    My Page
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <a class="dropdown-item" id="myPage">
-                                        <li>마이페이지</li>
-                                    </a>
-                                    <hr class="dropdown-divider">
-                                    <a class="dropdown-item" id="logout">
-                                        <li>로그아웃</li>
-                                    </a>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </ul>
-    </nav>
-</header>
-
-    <section class="container my-5 text-center">
-        <div class="d-flex justify-content-end mb-3" style="margin-top: -25px;">
-            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal" id="myButton">
-                <a th:href="@{/notice/noticeWrite}">글쓰기</a>
-            </button>
-        </div>
-        <div class="d-flex justify-content-end mb-3">
-        </div>
-        <h2>NOTICE</h2>
-        <div style="display: flex; justify-content: flex-end;">
-            <a href="/notice/question" class="btn btn-secondary">Q&A</a>
-        </div>
-        <br>
-        <br>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">번호</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">작성자</th>
-                    <th scope="col">작성일</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="dto : ${result}">
-                    <th scope="row">
-                        <!-- 아래는 글번호에 페이지 넘버와 글번호를 추가로 설정하는것...List 를 모두 확인 후 추가 작업할것. -->
-                        <a th:href="@{/notice/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.noticeNum}]]</a>
-                    </th>
-                    <td><a th:href="@{/notice/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.title}]]</a></td>
-                    <td><a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.nickname}]]</a></td>
-                    <td><a th:text="${#temporals.format(dto.registerDate, 'yyyy-MM-dd')}"></a></td>
-                    <!-- <td><a>[[${dto.writer}]]</a></td> -->
-                </tr>
-            </tbody>
-        </table>
-
-        <!-- 페이지 번호 목록 표시 -->
-        <div class="pagination">
-            <!-- 이전 페이지 버튼 -->
-            <a th:if="${hasPrevPage}" th:href="@{'/notice/notice1?page=' + ${prevPageNumber}}"
-                class="page-link prev">이전</a>
-            <!-- 페이지 번호 표시 -->
-            <ul class="pagination justify-content-center" id="pagination">
-                <li th:each="pageNumber : ${pageNumbers}">
-                    <a th:href="@{'/notice/notice1?page=' + ${pageNumber}}" th:text="${pageNumber}"
-                        th:class="${pageNumber == currentPage ? 'active' : ''}"></a>
-                </li>
-            </ul>
-            <!-- 다음 페이지 버튼 -->
-            <a th:if="${hasNextPage}" th:href="@{'/notice/notice1?page=' + ${nextPageNumber}}"
-                class="page-link next">다음</a>
-        </div>
-    </section>
-
-
-
-
-
-
-    <form action="/notice/notice1" method="get" style="margin-top: -100px;">
-        <div class="container">
             <div class="d-flex justify-content-end mb-3">
-                <div class="ms-auto">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search" name="searchQuery"
-                            th:value="${searchQuery}">
-                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
+            </div>
+            <h2>NOTICE</h2>
+            <div style="display: flex; justify-content: flex-end;">
+                <a href="/notice/question" class="btn btn-secondary">Q&A</a>
+            </div>
+            <br>
+            <br>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">작성자</th>
+                        <th scope="col">작성일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="dto : ${result}">
+                        <th scope="row">
+                            <!-- 아래는 글번호에 페이지 넘버와 글번호를 추가로 설정하는것...List 를 모두 확인 후 추가 작업할것. -->
+                            <a th:href="@{/notice/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.noticeNum}]]</a>
+                        </th>
+                        <td><a th:href="@{/notice/notice1Detail(noticeNum=${dto.noticeNum})}">[[${dto.title}]]</a></td>
+                        <td><a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.nickname}]]</a></td>
+                        <td><a th:text="${#temporals.format(dto.registerDate, 'yyyy-MM-dd')}"></a></td>
+                        <!-- <td><a>[[${dto.writer}]]</a></td> -->
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 페이지 번호 목록 표시 -->
+            <div class="pagination">
+                <!-- 이전 페이지 버튼 -->
+                <a th:if="${hasPrevPage}" th:href="@{'/notice/notice1?page=' + ${prevPageNumber}}"
+                    class="page-link prev">이전</a>
+                <!-- 페이지 번호 표시 -->
+                <ul class="pagination justify-content-center" id="pagination">
+                    <li th:each="pageNumber : ${pageNumbers}">
+                        <a th:href="@{'/notice/notice1?page=' + ${pageNumber}}" th:text="${pageNumber}"
+                            th:class="${pageNumber == currentPage ? 'active' : ''}"></a>
+                    </li>
+                </ul>
+                <!-- 다음 페이지 버튼 -->
+                <a th:if="${hasNextPage}" th:href="@{'/notice/notice1?page=' + ${nextPageNumber}}"
+                    class="page-link next">다음</a>
+            </div>
+        </section>
+        <!-- 검색 -->
+        <form action="/notice/notice1" method="get" style="margin-top: -100px;">
+            <div class="container">
+                <div class="d-flex justify-content-end mb-3">
+                    <div class="ms-auto">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="searchQuery"
+                                th:value="${searchQuery}">
+                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </main>
 
+    <!-- 공통 푸터   -->
+    <div th:replace="/fragments/footer :: footer"></div>
 
-    <!-- <section class="container my-5">
-    </section>
-    <footer class="bg-dark text-light text-center py-3">
-        <p>&copy; 2023 Fullstival. 모든 권리 보유.</p>
-    </footer> -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-gg6vUz1rTL5UHVbNXLKwgpAYNr2NvTAPC5JiKc+2aX8Cxl+U7v2+nSvzvIMnJvWR" crossorigin="anonymous"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-gg6vUz1rTL5UHVbNXLKwgpAYNr2NvTAPC5JiKc+2aX8Cxl+U7v2+nSvzvIMnJvWR"
-        crossorigin="anonymous"></script>
-
-        <script>
-            //로그인 체크 후 비로그인 시 login 으로 이동
-            //로그인 시 myPage 로 이동
-            document.addEventListener('DOMContentLoaded', function () {
-    
-                if (document.getElementById('login-link')) {
-                    document.getElementById('login-link').addEventListener('click', function (event) {
-                        // 사용자가 로그인하지 않은 경우
-                        alert('로그인이 필요합니다. 로그인 페이지로 이동합니다.');
-                        event.preventDefault(); // 기본 동작 방지
-                        window.location.href = "/member/login"; // 로그인 페이지로 이동
-                    });
-                }
-                if (document.getElementById('myPage')) {
-                    document.getElementById('myPage').addEventListener('click', function (event) {
-                        // 사용자가 로그인한 경우
-                        event.preventDefault(); // 기본 동작 방지
-                        window.location.href = "/member/checkedPassword"; // 마이페이지로 이동
-                    });
-                }
-                if (document.getElementById('logout')) {
-                    document.getElementById('logout').addEventListener('click', function (event) {
-                        // 사용자가 로그인한 경우
-                        console.log('logout 클릭 이벤트 확인용');
-                        alert('로그아웃 하겠습니다.');
-                        event.preventDefault(); // 기본 동작 방지
-                        window.location.href = "/logout"; // 로그아웃으로 이동
-                    });
-                }
-                if (document.getElementById('modifyPassword')) {
-                    document.getElementById('modifyPassword').addEventListener('click', function (event){
-                        
-                        alert('비밀번호 변경 페이지로 이동합니다.');
-                        event.preventDefault(); // 기본 동작 방지
-                        window.location.href = "/logout"; // 비밀번호 변경 페이지로 이동
-                    });
-                }
-    
-    
-    
-    
-            });
-        </script>
-        <!-- <script>
-            // 조건을 확인하고 버튼을 표시하거나 숨기는 함수
-            function toggleButton() {
-                var button = document.getElementById("myButton"); // 버튼 요소 가져오기
-                console.log("이메일값 : ",'[[${mEmail}]]');
-                if ('[[${mEmail}]]'.equals("123@123.com")) {
-                    button.style.display = "block"; // 버튼을 표시
-                } else {
-                    button.style.display = "none"; // 버튼을 숨김
-                }
-            }
-            
-            // 페이지가 로드될 때 초기 상태 설정
-            window.onload = function() {
-                toggleButton();
-            };
-            </script> -->
+    <!-- 헤더 스크립트 -->
+    <script th:replace="fragments/header :: script"></script>
 </body>
 
 </html>
