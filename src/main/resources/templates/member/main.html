@@ -71,10 +71,12 @@
             color: inherit;
             /* 기본 텍스트 색상 상속 */
         }
-           /* 화살표 아이콘만 시각적으로 숨기기 */
-    .carousel-control-prev-icon, .carousel-control-next-icon {
-        background-image: none !important;
-    }
+
+        /* 화살표 아이콘만 시각적으로 숨기기 */
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-image: none !important;
+        }
 
         /* 구글 폰트변경 임포트 */
         @import url('https://fonts.googleapis.com/css2?family=Cairo+Play:wght@900&display=swap');
@@ -204,7 +206,8 @@
     </div>
 
     <section class="container my-5">
-        <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" style="margin-top: 70px; margin-bottom: 70px;">
+        <div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel"
+            style="margin-top: 70px; margin-bottom: 70px;">
             <div class="carousel-inner">
                 <!-- festivals 데이터를 순회하며 각 축제 정보를 표시합니다. -->
                 <div th:each="festival, iterStat : ${festivals}"
@@ -237,6 +240,12 @@
     <!-- 공통 푸터 -->
     <div th:replace="/fragments/footer :: footer"></div>
 
+    <div id="tawk_12345"
+        style="height: 50px; width: 50px; position: fixed; bottom: 20px; ">
+        <a href="javascript:void(0);" onclick="Tawk_API.toggle();"></a>
+    </div>
+
+
 
 
     <!-- jQuery 라이브러리를 먼저 로드합니다. -->
@@ -267,7 +276,7 @@
                 document.getElementById('myPage').addEventListener('click', function (event) {
                     // 사용자가 로그인한 경우
                     event.preventDefault(); // 기본 동작 방지
-                    window.location.href = "/member/checkedPassword"; // 마이페이지로 이동
+                    window.location.href = "/member/myPage"; // 마이페이지로 이동
                 });
             }
             if (document.getElementById('logout')) {
@@ -358,7 +367,19 @@
     </script>
 
 
-
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/653097a4f2439e1631e5f24b/1hd2t0nc9';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
 
 
 
