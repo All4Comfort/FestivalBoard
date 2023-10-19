@@ -22,21 +22,11 @@
     <link th:replace="fragments/footer :: style" rel="stylesheet" />
     
     <style>
-      /* 푸터스타일 추가 */
-      footer {
-        position: fixed;
-      }
-
       section  {
         display: flex;
-        /* justify-content: center; */
         align-items: center;
-        /* height: 100vh; */
         flex-direction: column;
-      }
-
-      .box{
-        margin: 20px;
+        padding-top: 30px;
       }
 
       #title::placeholder {
@@ -54,27 +44,27 @@
     <!-- 공통 헤더 -->
     <div th:replace="/fragments/header :: header"></div>
 
-    <section>
-      <div class="box">
-        <div>
-          <h1 style="text-align: center;">REVIEW</h1>
-        </div>
-        <form action="/review/reviewModify" method="post" th:object="${dto}">
-          <div class="form-group" th:width="500">
-            <input type="hidden" name="reviewNum" th:value="${dto.reviewNum}" readonly/>
-            <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" th:value="${dto.title}">
-            <textarea class="form-control" id="content" name="content" th:style="'width: 800px;'">[[${dto.content}]]</textarea> 
+    <main>
+      <section>
+          <div>
+            <h1 style="text-align: center;">REVIEW</h1>
           </div>
-          <div class="bnt">
-            <button type="submit" class="btn btn-dark" id="submit">작성</button>
-            <a th:href="@{/review/reviewList}">
-              <button type="button" class="btn btn-dark" id="boardList">목록</button>
-            </a>
-          </div>
-        </form>
-      </div>
-    </section>
-
+          <form action="/review/reviewModify" method="post" th:object="${dto}">
+            <div class="form-group" th:width="500">
+              <input type="hidden" name="reviewNum" th:value="${dto.reviewNum}" readonly/>
+              <input type="text" class="form-control" id="title" name="title" th:style="'width: 800px;'" th:value="${dto.title}">
+              <textarea class="form-control" id="content" name="content" th:style="'width: 800px;'">[[${dto.content}]]</textarea> 
+            </div>
+            <div class="bnt">
+              <button type="submit" class="btn btn-dark" id="submit">작성</button>
+              <a th:href="@{/review/reviewList}">
+                <button type="button" class="btn btn-dark" id="boardList">목록</button>
+              </a>
+            </div>
+          </form>
+      </section>
+    </main>
+    
     <!-- 공통 푸터 -->
     <div th:replace="/fragments/footer :: footer"></div>
     

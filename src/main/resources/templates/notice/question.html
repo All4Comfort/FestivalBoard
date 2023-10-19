@@ -118,7 +118,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 20px 0;
+            margin-top: 10px;
+            margin-bottom: 30px;
         }
 
         .pagination li {
@@ -154,7 +155,6 @@
             height: 350px;
             /* 가로 너비 100%로 설정 */
         }
-        
     </style>
 </head>
 
@@ -163,72 +163,68 @@
     <div th:replace="/fragments/header :: header"></div>
 
     <main>
-    <section class="container my-5 text-center">
-        <div class="d-flex justify-content-end mb-3" style="margin-top: -25px;">
-            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#writeModal">
-                <a th:href="@{/notice/questionWrite}">글쓰기</a>
-            </button>
-        </div>
-        <div class="d-flex justify-content-end mb-3">
-        </div>
-        <h2>Q&A</h2>
-        <div style="display: flex; justify-content: flex-end;">
-            <a href="/notice/notice1" class="btn btn-secondary">NOTICE</a>
-        </div>
-        <br>
-        <br>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">번호</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">작성자</th>
-                    <th scope="col">작성일</th>
-                </tr>
-            </thead>
-            <tbody>
-				<tr th:each="dto : ${result}">
-					<th scope="row">
-						<!-- 아래는 글번호에 페이지 넘버와 글번호를 추가로 설정하는것...List 를 모두 확인 후 추가 작업할것. -->
-						<a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.questionNum}]]</a>
-					</th>
-					<td><a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.title}]]</a></td>
-					<td><a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.nickname}]]</a></td>
-                    <td><a th:text="${#temporals.format(dto.registerDate, 'yyyy-MM-dd')}"></a></td>
-				</tr>
-			</tbody>
-        </table>
-
-        <!-- 페이지 번호 목록 표시 -->
-        <div class="pagination">
-            <!-- 이전 페이지 버튼 -->
-            <a th:if="${hasPrevPage}" th:href="@{'/notice/question?page=' + ${prevPageNumber}}"
-                class="page-link prev">이전</a>
-            <!-- 페이지 번호 표시 -->
-            <ul class="pagination justify-content-center" id="pagination">
-                <li th:each="pageNumber : ${pageNumbers}">
-                    <a th:href="@{'/notice/question?page=' + ${pageNumber}}" th:text="${pageNumber}"
-                        th:class="${pageNumber == currentPage ? 'active' : ''}"></a>
-                </li>
-            </ul>
-            <!-- 다음 페이지 버튼 -->
-            <a th:if="${hasNextPage}" th:href="@{'/notice/question?page=' + ${nextPageNumber}}"
-                class="page-link next">다음</a>
-        </div>
-        <form action="/notice/question" method="get" style="margin-top: -99px;">
-            <div class="container">
-                <div class="d-flex justify-content-end mb-3">
-                    <div class="ms-auto">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="searchQuery"
-                                th:value="${searchQuery}">
-                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
-                        </div>
-                    </div>
-                </div>
+        <section class="container my-5 text-center">
+            <div class="d-flex justify-content-end mb-3" style="margin-top: -25px;">
+                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#writeModal">
+                    <a th:href="@{/notice/questionWrite}">글쓰기</a>
+                </button>
             </div>
-        </form>
-    </section>
+            <div class="d-flex justify-content-end mb-3">
+            </div>
+            <h2>Q&A</h2>
+            <!-- <div style="display: flex; justify-content: flex-end;">
+                <a href="/notice/notice1" class="btn btn-secondary">NOTICE</a>
+            </div> -->
+            <br>
+            <br>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">작성자</th>
+                        <th scope="col">작성일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="dto : ${result}">
+                        <th scope="row">
+                            <!-- 아래는 글번호에 페이지 넘버와 글번호를 추가로 설정하는것...List 를 모두 확인 후 추가 작업할것. -->
+                            <a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.questionNum}]]</a>
+                        </th>
+                        <td><a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.title}]]</a></td>
+                        <td><a th:href="@{/notice/questionDetail(questionNum=${dto.questionNum})}">[[${dto.nickname}]]</a></td>
+                        <td><a th:text="${#temporals.format(dto.registerDate, 'yyyy-MM-dd')}"></a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- 페이지 번호 목록 표시 -->
+            <div class="pagination">
+                <!-- 이전 페이지 버튼 -->
+                <a th:if="${hasPrevPage}" th:href="@{'/notice/question?page=' + ${prevPageNumber}}"
+                    class="page-link prev">이전</a>
+                <!-- 페이지 번호 표시 -->
+                <ul class="pagination justify-content-center" id="pagination">
+                    <li th:each="pageNumber : ${pageNumbers}">
+                        <a th:href="@{'/notice/question?page=' + ${pageNumber}}" th:text="${pageNumber}"
+                            th:class="${pageNumber == currentPage ? 'active' : ''}"></a>
+                    </li>
+                </ul>
+                <!-- 다음 페이지 버튼 -->
+                <a th:if="${hasNextPage}" th:href="@{'/notice/question?page=' + ${nextPageNumber}}"
+                    class="page-link next">다음</a>
+            </div>
+            <div class="d-flex justify-content-end mb-3" style="margin-top: -90px;">
+                <form action="/notice/question" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="searchQuery"
+                            th:value="${searchQuery}">
+                        <button class="btn btn-outline-secondary" type="submit" id="button-addon2">검색</button>
+                    </div>
+                </form>
+            </div>
+        </section>
     </main>
 
     <!-- 공통 푸터 -->
