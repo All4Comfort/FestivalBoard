@@ -66,7 +66,7 @@
 <div align="center">
   <p>✔ 공공 Open API 활용 및 재가공</p>
   </b>
-  <p>공공데이터포털(http://data.go.kr)에서 제공하는 지역 축제 정보</p>
+  <p>공공데이터포털(https://www.data.go.kr)에서 제공하는 지역 축제 정보</p>
   <img src="src\main\resources\images\openAPI.png" width="500">
 </div>
   </br>
