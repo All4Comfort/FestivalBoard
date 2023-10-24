@@ -1,6 +1,6 @@
 ## 축제정보 웹게시판
 <div text-align="center">
-  <img src="https://gifburg.com/images/gifs/fireworks/webp/0016.webp" width="500">
+  <img src="https://gifburg.com/images/gifs/fireworks/webp/0016.webp" width="800" height="200">
 <p>그린컴퓨터아카데미 풀스텍과정 2기 팀 '풀개'(풀스텍개발자)</p>
 <p>개발 기간: 2023.09 ~ 2023. 09</p>
 </div>
