@@ -19,18 +19,28 @@
 
 ## Stacks 
 <div align="center">
-  <!--스프링부트 로고-->
-  <img src="https://img.shields.io/badge/springboot-6DB33F?style=flat-square&logo=springboot&logoColor=white" height=20/>
-  <!--부트스트랩 로고-->
-  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white" height=20/>
   <!--자바 로고-->
   <img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=java&logoColor=white" height=20>
   <!--제이슨 로고-->
   <img src="https://img.shields.io/badge/json-000000?style=flat-square&logo=json&logoColor=white" height=20/>
-  <!--타임리프 로고-->
-  <img src="https://img.shields.io/badge/thymeleaf-005F0F?style=flat-square&logo=thymeleaf&logoColor=white" height=20/>
   <!--마리아 DB 로고-->
   <img src="https://img.shields.io/badge/mariadb-003545?style=flat-square&logo=mariadb&logoColor=white" height=20/></br>
+</div>
+<div align="center">
+  <!--스프링부트 로고-->
+  <img src="https://img.shields.io/badge/springboot-6DB33F?style=flat-square&logo=springboot&logoColor=white" height=20/>
+  <!--HTML5 로고-->
+  <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white" height=20/>
+  <!--css3 로고-->
+  <img src="https://img.shields.io/badge/css3-1572B6?style=flat-square&logo=css3&logoColor=white" height=20/>
+  <!--자바스크립트 로고-->
+  <img src="https://img.shields.io/badge/javascript-F7DF1E?style=flat-square&logo=javascript&logoColor=white" height=20/>
+  <!--부트스트랩 로고-->
+  <img src="https://img.shields.io/badge/bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white" height=20/>
+  <!--타임리프 로고-->
+  <img src="https://img.shields.io/badge/thymeleaf-005F0F?style=flat-square&logo=thymeleaf&logoColor=white" height=20/>
+</div>
+<div align="center">
   <!--VS코드 로고-->
   <img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white" height=20/></br>
   <!--Git 로고-->
