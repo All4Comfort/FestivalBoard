@@ -1,5 +1,5 @@
 ## 축제정보 웹게시판
-<div text-align="center">
+<div align="center">
   <img src="https://gifburg.com/images/gifs/fireworks/webp/0016.webp" width="800" height="200">
 <p>그린컴퓨터아카데미 풀스텍과정 2기 팀 '풀개'(풀스텍개발자)</p>
 <p>개발 기간: 2023.09 ~ 2023. 09</p>
@@ -13,7 +13,7 @@
   <p>공공 Open API를 끌어와 전국의 각 축제 정보를 한 곳에 모아뒀습니다. 사이트 회원들은 다녀온 뒤의 경험을 공유하며, 별점으로 평가할 수 있습니다.</p>
 </div>
 
-## Stack
+## Stacks
 <div align="center">
   <!--스프링부트 로고-->
   <img src="https://img.shields.io/badge/springboot-6DB33F?style=flat-square&logo=springboot&logoColor=white" height=20/>
