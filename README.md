@@ -1,8 +1,11 @@
 ## 축제정보 웹게시판
 <div align="center">
   <img src="https://gifburg.com/images/gifs/fireworks/webp/0016.webp" width="800" height="200">
-<p>그린컴퓨터아카데미 풀스텍과정 2기 팀 '풀개'(풀스텍개발자)</p>
-<p>개발 기간: 2023.09 ~ 2023. 09</p>
+</div>
+<br/>
+<div align="center">
+<b><p>그린컴퓨터아카데미 풀스텍과정 2기 팀 '풀개'(풀스텍개발자)</p>
+<p>개발 기간: 2023.09 ~ 2023. 09</p></b>
 </div>
 
 ## 프로젝트 소개
@@ -10,8 +13,8 @@
   <img src="src\main\resources\images\main.png">
   </br>
   <h3>Fullstival = Full + Festival</h3>
-  <p>Spring Boot를 기반으로 웹게시판 제작</p>
-  <p>공공 Open API를 활용하여 지역 축제 제공 및 리뷰 공유 사이트</p>
+  <b><p>Spring Boot를 기반으로 웹게시판 제작</p>
+  <p>공공 Open API를 활용하여 지역 축제 제공 및 리뷰 공유 사이트</p></b>
 </div>
 
 ## Stacks 
@@ -39,6 +42,7 @@
 
 ## 담당한 부분
 <div align="center">
+  <b>
   <p>PM으로서 프로젝트 전체에 대한 진행 관리✔ 및 디버깅🛠</p>
   <p>DB 설계</p>
   <!--ERD 이미지 넣을 것-->
@@ -49,7 +53,10 @@
   </br>
   <p>Open API 에디터를 활용한 글 작성 페이지 구성</p>
   <p>각 게시판 댓글 기능 구현</p>
+  </b>
+</div>
   </br>
+<div align="center">
   <table>
     <tr>
       <td>
