@@ -43,17 +43,18 @@
 ## 담당한 부분
 <div align="center">
   <b>
-  <p>PM으로서 프로젝트 전체에 대한 진행 관리✔ 및 디버깅🛠</p>
-  <p>DB 설계</p>
+  <p>✔ PM으로서 프로젝트 전체에 대한 진행 관리 및 디버깅🛠</p>
+  <p>✔ DB 설계</p>
   <!--ERD 이미지 넣을 것-->
   </br>
-  <p>공공 Open API 활용 및 재가공</p>
+  <p>✔ 공공 Open API 활용 및 재가공</p>
+  </b>
   <p>공공데이터포털(http://data.go.kr)에서 제공하는 지역 축제 정보</p>
   <img src="src\main\resources\images\openAPI.png" width="500">
   </br>
-  <p>Open API 에디터를 활용한 글 작성 페이지 구성</p>
-  
-  <p>각 게시판 댓글 기능 구현</p>
+  <b>
+  <p>✔ Open API 에디터를 활용한 글 작성 페이지 구성</p>
+  <p>✔ 각 게시판 댓글 기능 구현</p>
   </b>
 </div>
   </br>
