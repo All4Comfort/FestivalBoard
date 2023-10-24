@@ -14,7 +14,7 @@
   </br>
   <h3>Fullstival = Full + Festival</h3>
   <b><p>Spring Boot를 기반으로 웹게시판 제작</p>
-  <p>공공 Open API를 활용하여 지역 축제 제공 및 리뷰 공유 사이트</p></b>
+  <p>공공 Open API를 활용하여 지역축제 정보 제공 및 리뷰 공유 사이트</p></b>
 </div>
 
 ## Stacks 
@@ -46,19 +46,22 @@
   <p>✔ PM으로서 프로젝트 전체에 대한 진행 관리 및 디버깅🛠</p>
   <p>✔ DB 설계</p>
   <!--ERD 이미지 넣을 것-->
+</div>
   </br>
+<div align="center">
   <p>✔ 공공 Open API 활용 및 재가공</p>
   </b>
   <p>공공데이터포털(http://data.go.kr)에서 제공하는 지역 축제 정보</p>
   <img src="src\main\resources\images\openAPI.png" width="500">
+</div>
   </br>
+<div align="center">
   <b>
   <p>✔ Open API 에디터를 활용한 글 작성 페이지 구성</p>
   <p>✔ 각 게시판 댓글 기능 구현</p>
   </b>
-</div>
   </br>
-<div align="center">
+
   <table>
     <tr>
       <td>
