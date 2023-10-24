@@ -1,15 +1,15 @@
 ## 축제정보 웹게시판
-<div align="center">
+<div align="left">
   <img src="https://gifburg.com/images/gifs/fireworks/webp/0016.webp" width="800" height="200">
 </div>
 <br/>
-<div align="center">
+<div align="left">
 <b><p>그린컴퓨터아카데미 풀스텍과정 2기 팀 '풀개'(풀스텍개발자)</p>
 <p>개발 기간: 2023.09 ~ 2023. 09</p></b>
 </div>
 
 ## 프로젝트 소개
-<div align="center">
+<div align="left">
   <img src="src\main\resources\images\main.png">
   </br>
   <h3>Fullstival = Full + Festival</h3>
@@ -18,8 +18,8 @@
 </div>
 
 ## Stacks 
-<div align="center">
-  <h3>Back</h3>
+<div align="left">
+  <h3>Backend</h3>
   <!--스프링부트 로고-->
   <img src="https://img.shields.io/badge/springboot-6DB33F?style=flat-square&logo=springboot&logoColor=white" height=20/>
   <!--자바 로고-->
@@ -29,8 +29,8 @@
   <!--마리아 DB 로고-->
   <img src="https://img.shields.io/badge/mariadb-003545?style=flat-square&logo=mariadb&logoColor=white" height=20/></br>
 </div>
-<div align="center">
-  <h3>Front</h3>
+<div align="left">
+  <h3>Frontend</h3>
   <!--스프링부트 로고-->
   <img src="https://img.shields.io/badge/springboot-6DB33F?style=flat-square&logo=springboot&logoColor=white" height=20/>
   <!--HTML5 로고-->
@@ -44,7 +44,7 @@
   <!--타임리프 로고-->
   <img src="https://img.shields.io/badge/thymeleaf-005F0F?style=flat-square&logo=thymeleaf&logoColor=white" height=20/>
 </div>
-<div align="center">
+<div align="left">
   <h3>Tool & SCM</h3>
   <!--VS코드 로고-->
   <img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white" height=20/></br>
@@ -56,21 +56,21 @@
 </div>
 
 ## 담당한 부분
-<div align="center">
+<div align="left">
   <b>
   <p>✔ PM으로서 프로젝트 전체에 대한 진행 관리 및 디버깅🛠</p>
   <p>✔ DB 설계</p>
   <!--ERD 이미지 넣을 것-->
 </div>
   </br>
-<div align="center">
+<div align="left">
   <p>✔ 공공 Open API 활용 및 재가공</p>
   </b>
   <p>공공데이터포털(https://www.data.go.kr)에서 제공하는 지역 축제 정보</p>
   <img src="src\main\resources\images\openAPI.png" width="500">
 </div>
   </br>
-<div align="center">
+<div align="left">
   <b>
   <p>✔ Open API 에디터를 활용한 글 작성 페이지 구성</p>
   <p>✔ 각 게시판 댓글 기능 구현</p>
@@ -99,7 +99,7 @@
 
 ## 화면 구성
 
-<div align="center">
+<div align="left">
    <table>
     <tr>
       <td>
