@@ -53,8 +53,6 @@
       <td>
         <img src="src\main\resources\images\review.png">
       </td>
-    </tr>
-    <tr>  
       <td>
         <img src="src\main\resources\images\question.png">
       </td>
@@ -75,8 +73,6 @@
       <td>
         <img src="src\main\resources\images\login.png">
       </td>
-    </tr>
-    <tr>
       <td>
         <img src="src\main\resources\images\myPage.png">
       </td>
