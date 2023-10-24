@@ -19,6 +19,9 @@
 
 ## Stacks 
 <div align="center">
+  <h3>Back</h3>
+  <!--스프링부트 로고-->
+  <img src="https://img.shields.io/badge/springboot-6DB33F?style=flat-square&logo=springboot&logoColor=white" height=20/>
   <!--자바 로고-->
   <img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=java&logoColor=white" height=20>
   <!--제이슨 로고-->
@@ -27,6 +30,7 @@
   <img src="https://img.shields.io/badge/mariadb-003545?style=flat-square&logo=mariadb&logoColor=white" height=20/></br>
 </div>
 <div align="center">
+  <h3>Front</h3>
   <!--스프링부트 로고-->
   <img src="https://img.shields.io/badge/springboot-6DB33F?style=flat-square&logo=springboot&logoColor=white" height=20/>
   <!--HTML5 로고-->
@@ -41,6 +45,7 @@
   <img src="https://img.shields.io/badge/thymeleaf-005F0F?style=flat-square&logo=thymeleaf&logoColor=white" height=20/>
 </div>
 <div align="center">
+  <h3>Tool & SCM</h3>
   <!--VS코드 로고-->
   <img src="https://img.shields.io/badge/visualstudiocode-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white" height=20/></br>
   <!--Git 로고-->
