@@ -38,8 +38,8 @@ public class MemberController {
     private final MemberRepository memberRepository;
 
     @GetMapping({ "/", "", "main" }) // 모든 요청에서 메인으로 갈수있게.
-    public String main() {
-        return "/member/main";
+    public void main() {
+
     }
 
     // @GetMapping("/main")
@@ -54,12 +54,11 @@ public class MemberController {
 
     // main.html에서 login.html 로 넘어가는 메서드
     private final KakaoService kakaoService; //카카오 로그인
-    @GetMapping("/member/login")
-    public String moveTologin(Model model) {
-        //model.addAttribute("kakaoUrl", kakaoService.getKakaoLogin()); //카카오 로그인용
-        System.out.println("이건 모델>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + model);
 
-        return "/member/login";
+    @GetMapping("/member/login")
+    public void moveTologin() {
+        //model.addAttribute("kakaoUrl", kakaoService.getKakaoLogin()); //카카오 로그인용
+        //System.out.println("이건 모델>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + model);
     }
 
     @GetMapping("/kakao/callback")
@@ -106,6 +105,7 @@ public class MemberController {
     public String login(@RequestParam("email") String email, @RequestParam("pw") String pw, HttpSession session,
             Model model, MemberDTO memberDTO) {
 
+        //System.out.println("로그인 시도 회원정보~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ " + memberDTO);
         Optional<Member> optionalMember = memberService.login(email, pw);
 
         if (optionalMember.isPresent()) { // 회원의 이메일, 비밀번호가 일치할 때
