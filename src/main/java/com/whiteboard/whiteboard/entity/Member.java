@@ -41,7 +41,7 @@ public class Member extends BaseEntity{ //security설정을 위해 UserDetail �
 	private String gender; //성별
 
 	@Column(nullable = false)
-	private LocalDate birthDay; //생년월일
+	private LocalDate birthday; //생년월일
 
 	@Column(nullable = false)
 	private boolean isSns; //소셜계정 인증을 통한 가입 여부
