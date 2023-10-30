@@ -76,15 +76,13 @@
 <div align="left">
   <b>
   <p>✔ Open API 에디터를 활용한 글 작성 페이지 구성</p>
+
   <p>✔ 각 게시판 댓글 기능 구현</p>
   </b>
   </br>
-
+  <img src="src\main\resources\images\write.png" width="500">
   <table>
     <tr>
-      <td>
-        <img src="src\main\resources\images\write.png">
-      </td>
       <td>
         <img src="src\main\resources\images\review.png">
       </td>
