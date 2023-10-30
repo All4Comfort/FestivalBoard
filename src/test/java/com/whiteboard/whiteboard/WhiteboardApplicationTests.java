@@ -32,7 +32,7 @@ class WhiteboardApplicationTests {
 				.phoneNum("01094800129")
 				.nickname("민건왕자")
 				.gender("하남자")
-				.birthDay(LocalDate.parse("1991-05-02"))
+				.birthday(LocalDate.parse("1991-05-02"))
 				.name("김민건")
 				.isSns(false)
 				.build();
@@ -57,7 +57,7 @@ class WhiteboardApplicationTests {
 			System.out.println("전화번호: " + member.getPhoneNum());
 			System.out.println("닉네임: " + member.getNickname());
 			System.out.println("성별: " + member.getGender());
-			System.out.println("생년월일: " + member.getBirthDay());
+			System.out.println("생년월일: " + member.getBirthday());
 			System.out.println("이름: " + member.getName());
 			System.out.println("sns로그인: " + member.isSns());
 			System.out.println("비밀번호: " + member.getPw());
@@ -161,7 +161,7 @@ class WhiteboardApplicationTests {
 					.nickname("닉네임" + i)
 					.phoneNum("010-0000-000" + i)
 					.gender("남")
-					.birthDay(LocalDate.parse("2000-01-01"))
+					.birthday(LocalDate.parse("2000-01-01"))
 					.isSns(false)
 					.build();
 			memberRepository.save(member);

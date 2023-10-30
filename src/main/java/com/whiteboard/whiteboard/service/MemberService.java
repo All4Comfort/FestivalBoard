@@ -45,7 +45,7 @@ public interface MemberService {
     MemberDTO memberDTO = MemberDTO.builder()
         .email(member.getEmail())
         .pw(member.getPw())
-        .birthDay(member.getBirthDay())
+        .birthDay(member.getBirthday())
         .gender(member.getGender())
         .isSns(member.isSns())
         .name(member.getName())
@@ -59,7 +59,7 @@ public interface MemberService {
     Member member = Member.builder()
         .email(memberDTO.getEmail())
         .pw(memberDTO.getPw())
-        .birthDay(memberDTO.getBirthDay())
+        .birthday(memberDTO.getBirthDay())
         .gender(memberDTO.getGender())
         .isSns(memberDTO.isSns())
         .name(memberDTO.getName())
@@ -77,7 +77,7 @@ public interface MemberService {
         .phoneNum(((Member) (session.getAttribute("loggedInUser"))).getPhoneNum())
         .nickname(((Member) (session.getAttribute("loggedInUser"))).getNickname())
         .gender(((Member) (session.getAttribute("loggedInUser"))).getGender())
-        .birthDay(((Member) (session.getAttribute("loggedInUser"))).getBirthDay())
+        .birthDay(((Member) (session.getAttribute("loggedInUser"))).getBirthday())
         .isSns(((Member) (session.getAttribute("loggedInUser"))).isSns())
         .build();
     return memberDTO;
