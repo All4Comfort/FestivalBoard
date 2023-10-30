@@ -92,6 +92,8 @@
       <td>
         <img src="src\main\resources\images\question.png">
       </td>
+    </tr>
+    <tr>
       <td>
         <img src="src\main\resources\images\infoDetail.png">
       </td>
@@ -99,7 +101,7 @@
   </table>
 </div>
 
-## 화면 구성
+## 기타 화면 구성
 
 <div align="left">
    <table>
