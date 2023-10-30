@@ -128,7 +128,7 @@
 
 <div align="left">
   <video controls muted>
-    <source src="src\main\resources\images\풀개_축제정보게시판.mp4" type="mp4">
-    <strong>Your browser does not support the video tag.</strong>
+    <source src="src\main\resources\images\풀개_축제정보게시판.mp4" type="video/mp4">
+    <!-- <strong>Your browser does not support the video tag.</strong> -->
   </video>
 </div>
